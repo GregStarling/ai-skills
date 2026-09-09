@@ -17,3 +17,7 @@ Write a short implementation plan before substantial code. Prefer strict TypeScr
 ## Planning recovery constraints
 
 Use one full-v1 execution phase, covering all 20 requirements and 44 scenarios, with ordered internal task checkpoints. Read docs/implementation-handoff.md before planning. This supersedes the earlier foundation-only phase decomposition, while preserving the foundation-before-adapters construction order. Build inert portable skill source under skills/; do not activate it in this development checkout. Final verification must reference real executed checks and hashed artifacts, and must exercise available local provider CLIs separately from production qualification.
+
+## CTO execution correction — 2026-09-09
+
+The user requires quality with timely product delivery (GEMO). Foreman has stopped; the supervising CTO now owns direct bounded parallel implementation and integration. Use Foreman for substantive checkpoint reviews, not as a mandatory dispatcher for every edit. Fix demonstrated correctness defects and required outcomes; do not block usable increments on nits, speculative refinements, or repeated tool-recovery cycles. Preserve existing Foreman history and report its state honestly. No global installation or remote publication.

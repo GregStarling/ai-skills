@@ -1,0 +1,143 @@
+{
+  "schema_version": "governance_policy.v1",
+  "policy_version": 1,
+  "provenance": {
+    "status": "proposed",
+    "author": "Model Governor v1 implementation",
+    "source": "docs/model-governor-spec.md",
+    "rationale": "Initial explicit operating proposals for review, not empirical performance claims. Qualify from measured versioned task outcomes; no candidate names or inferred universal scores."
+  },
+  "roles": [
+    {
+      "role_id": "planner",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "implementer",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "reviewer",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "researcher",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    }
+  ],
+  "task_classes": [
+    {
+      "task_class_id": "bounded_backend",
+      "risk_floor": "low",
+      "required_capabilities": [
+        "terminal"
+      ],
+      "eval_bucket": {
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "fixture_ids": [
+          "bounded_backend_baseline"
+        ]
+      }
+    },
+    {
+      "task_class_id": "hard_debugging",
+      "risk_floor": "low",
+      "required_capabilities": [
+        "terminal"
+      ],
+      "eval_bucket": {
+        "suite_id": "hard_debugging",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "fixture_ids": [
+          "hard_debugging_baseline"
+        ]
+      }
+    }
+  ],
+  "risk_signals": {
+    "authentication": "high",
+    "authorization": "high",
+    "permissions": "high",
+    "secrets": "critical",
+    "cryptography": "critical",
+    "payments": "high",
+    "billing": "high",
+    "database_schema": "high",
+    "data_migration": "high",
+    "destructive_operation": "critical",
+    "irreversible_operation": "critical",
+    "production_infrastructure": "critical",
+    "public_api": "high",
+    "user_data": "high",
+    "dependency_boundary": "high"
+  },
+  "review": {
+    "low": {
+      "required": false,
+      "different_model": false,
+      "different_family": false,
+      "fresh_context": false,
+      "frontier": false
+    },
+    "medium": {
+      "required": true,
+      "different_model": true,
+      "different_family": false,
+      "fresh_context": true,
+      "frontier": false
+    },
+    "high": {
+      "required": true,
+      "different_model": true,
+      "different_family": true,
+      "fresh_context": true,
+      "frontier": false
+    },
+    "critical": {
+      "required": true,
+      "different_model": true,
+      "different_family": true,
+      "fresh_context": true,
+      "frontier": true
+    }
+  },
+  "qualification": {
+    "minimum_tasks": 20,
+    "minimum_success_rate": 0.9,
+    "maximum_cost_per_accepted_task_usd": 5,
+    "maximum_latency_ms": 300000,
+    "evidence_max_age_days": 30,
+    "maximum_failure_rates": {
+      "security_incident": 0
+    }
+  },
+  "promotion": {
+    "minimum_paired_tasks": 30,
+    "alpha": 0.05,
+    "superiority_margin": 0.03,
+    "maximum_cost_increase": 0.15,
+    "non_inferiority_margin": 0.01,
+    "minimum_cost_improvement": 0.2
+  },
+  "binding": {
+    "refresh_after_hours": 24,
+    "hard_expiry_hours": 72
+  }
+}

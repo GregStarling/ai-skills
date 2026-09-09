@@ -1,0 +1,2165 @@
+{
+  "binding": {
+    "schema_version": "binding.v1",
+    "binding_id": "binding_6ca188f1c7dc1f9d571a365f",
+    "mode": "simulation",
+    "policy_version": 1,
+    "policy_digest": "sha256:17294a4b13ab28719a41fca58a5b5b4cbb21123c43f7b012fd9d6f4ba7576c93",
+    "schema_digest": "sha256:bb782badd870ed782578e2ae6b113ce3ca6ea88de756e922fadc687a6eb50b79",
+    "generated_at": "2026-09-09T00:00:00.000Z",
+    "refresh_due_at": "2026-09-10T00:00:00.000Z",
+    "hard_expiry_at": "2026-09-12T00:00:00.000Z",
+    "role_id": "implementer",
+    "task_class_id": "bounded_backend",
+    "risk": "low",
+    "candidate": {
+      "schema_version": "candidate.v1",
+      "candidate_id": "candidate_alpha",
+      "provider": "synthetic",
+      "model_id": "fixture-alpha",
+      "snapshot_id": "fixture-alpha",
+      "effort": "low",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": true
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use",
+        "json_schema"
+      ],
+      "provenance": {
+        "registry_id": "fixture_registry",
+        "model_record_id": "record_alpha",
+        "registry_content_digest": "sha256:dac1501b79fcf3347937af68ce504814fea046dbbf4a811056afd6267bf0adc7"
+      }
+    },
+    "decision": {
+      "schema_version": "decision_record.v1",
+      "decision_id": "decision_77885f951f74c281cddb1ce2",
+      "policy_version": 1,
+      "policy_digest": "sha256:17294a4b13ab28719a41fca58a5b5b4cbb21123c43f7b012fd9d6f4ba7576c93",
+      "candidate_set_digest": "sha256:014436505dc835555977d147a72e13be16d4a77fe82fef9d97092bc6e1d27e06",
+      "evidence_digest": "sha256:33a833e4c524a4bf6625ad805304b344a2d952ccd233458a7fd3498ce9152b1f",
+      "outcome": "SELECT",
+      "selected_candidate_id": "candidate_alpha",
+      "considered_candidate_ids": [
+        "candidate_alpha",
+        "candidate_beta"
+      ],
+      "evidence_refs": [
+        "observation_0_0",
+        "observation_0_1",
+        "observation_0_10",
+        "observation_0_11",
+        "observation_0_12",
+        "observation_0_13",
+        "observation_0_14",
+        "observation_0_15",
+        "observation_0_16",
+        "observation_0_17",
+        "observation_0_18",
+        "observation_0_19",
+        "observation_0_2",
+        "observation_0_3",
+        "observation_0_4",
+        "observation_0_5",
+        "observation_0_6",
+        "observation_0_7",
+        "observation_0_8",
+        "observation_0_9",
+        "observation_1_0",
+        "observation_1_1",
+        "observation_1_10",
+        "observation_1_11",
+        "observation_1_12",
+        "observation_1_13",
+        "observation_1_14",
+        "observation_1_15",
+        "observation_1_16",
+        "observation_1_17",
+        "observation_1_18",
+        "observation_1_19",
+        "observation_1_2",
+        "observation_1_3",
+        "observation_1_4",
+        "observation_1_5",
+        "observation_1_6",
+        "observation_1_7",
+        "observation_1_8",
+        "observation_1_9"
+      ],
+      "rule_ids": [
+        "cheapest_qualified_initial_selection"
+      ],
+      "created_at": "2026-09-09T00:00:00.000Z"
+    },
+    "evidence_refs": [
+      "observation_0_0",
+      "observation_0_1",
+      "observation_0_10",
+      "observation_0_11",
+      "observation_0_12",
+      "observation_0_13",
+      "observation_0_14",
+      "observation_0_15",
+      "observation_0_16",
+      "observation_0_17",
+      "observation_0_18",
+      "observation_0_19",
+      "observation_0_2",
+      "observation_0_3",
+      "observation_0_4",
+      "observation_0_5",
+      "observation_0_6",
+      "observation_0_7",
+      "observation_0_8",
+      "observation_0_9",
+      "observation_1_0",
+      "observation_1_1",
+      "observation_1_10",
+      "observation_1_11",
+      "observation_1_12",
+      "observation_1_13",
+      "observation_1_14",
+      "observation_1_15",
+      "observation_1_16",
+      "observation_1_17",
+      "observation_1_18",
+      "observation_1_19",
+      "observation_1_2",
+      "observation_1_3",
+      "observation_1_4",
+      "observation_1_5",
+      "observation_1_6",
+      "observation_1_7",
+      "observation_1_8",
+      "observation_1_9"
+    ],
+    "candidate_set_digest": "sha256:014436505dc835555977d147a72e13be16d4a77fe82fef9d97092bc6e1d27e06",
+    "evidence_digest": "sha256:33a833e4c524a4bf6625ad805304b344a2d952ccd233458a7fd3498ce9152b1f",
+    "production_synthetic_evidence": false
+  },
+  "selection": {
+    "policy": {
+      "schema_version": "governance_policy.v1",
+      "policy_version": 1,
+      "provenance": {
+        "status": "proposed",
+        "author": "Model Governor v1 implementation",
+        "source": "docs/model-governor-spec.md",
+        "rationale": "Initial explicit operating proposals for review, not empirical performance claims. Qualify from measured versioned task outcomes; no candidate names or inferred universal scores."
+      },
+      "roles": [
+        {
+          "role_id": "planner",
+          "task_class_ids": [
+            "bounded_backend",
+            "hard_debugging"
+          ]
+        },
+        {
+          "role_id": "implementer",
+          "task_class_ids": [
+            "bounded_backend",
+            "hard_debugging"
+          ]
+        },
+        {
+          "role_id": "reviewer",
+          "task_class_ids": [
+            "bounded_backend",
+            "hard_debugging"
+          ]
+        },
+        {
+          "role_id": "researcher",
+          "task_class_ids": [
+            "bounded_backend",
+            "hard_debugging"
+          ]
+        }
+      ],
+      "task_classes": [
+        {
+          "task_class_id": "bounded_backend",
+          "risk_floor": "low",
+          "required_capabilities": [
+            "terminal"
+          ],
+          "eval_bucket": {
+            "suite_id": "bounded_backend",
+            "suite_version": 1,
+            "harness_version": "1",
+            "grader_version": "1",
+            "fixture_ids": [
+              "bounded_backend_baseline"
+            ]
+          }
+        },
+        {
+          "task_class_id": "hard_debugging",
+          "risk_floor": "low",
+          "required_capabilities": [
+            "terminal"
+          ],
+          "eval_bucket": {
+            "suite_id": "hard_debugging",
+            "suite_version": 1,
+            "harness_version": "1",
+            "grader_version": "1",
+            "fixture_ids": [
+              "hard_debugging_baseline"
+            ]
+          }
+        }
+      ],
+      "risk_signals": {
+        "authentication": "high",
+        "authorization": "high",
+        "permissions": "high",
+        "secrets": "critical",
+        "cryptography": "critical",
+        "payments": "high",
+        "billing": "high",
+        "database_schema": "high",
+        "data_migration": "high",
+        "destructive_operation": "critical",
+        "irreversible_operation": "critical",
+        "production_infrastructure": "critical",
+        "public_api": "high",
+        "user_data": "high",
+        "dependency_boundary": "high"
+      },
+      "review": {
+        "low": {
+          "required": false,
+          "different_model": false,
+          "different_family": false,
+          "fresh_context": false,
+          "frontier": false
+        },
+        "medium": {
+          "required": true,
+          "different_model": true,
+          "different_family": false,
+          "fresh_context": true,
+          "frontier": false
+        },
+        "high": {
+          "required": true,
+          "different_model": true,
+          "different_family": true,
+          "fresh_context": true,
+          "frontier": false
+        },
+        "critical": {
+          "required": true,
+          "different_model": true,
+          "different_family": true,
+          "fresh_context": true,
+          "frontier": true
+        }
+      },
+      "qualification": {
+        "minimum_tasks": 20,
+        "minimum_success_rate": 0.9,
+        "maximum_cost_per_accepted_task_usd": 5,
+        "maximum_latency_ms": 300000,
+        "evidence_max_age_days": 30,
+        "maximum_failure_rates": {
+          "security_incident": 0
+        }
+      },
+      "promotion": {
+        "minimum_paired_tasks": 30,
+        "alpha": 0.05,
+        "superiority_margin": 0.03,
+        "maximum_cost_increase": 0.15,
+        "non_inferiority_margin": 0.01,
+        "minimum_cost_improvement": 0.2
+      },
+      "binding": {
+        "refresh_after_hours": 24,
+        "hard_expiry_hours": 72
+      }
+    },
+    "registry": {
+      "schema_version": "model_registry.v1",
+      "registry_id": "fixture_registry",
+      "content_digest": "sha256:dac1501b79fcf3347937af68ce504814fea046dbbf4a811056afd6267bf0adc7",
+      "retrieved_at": "2026-09-09T00:00:00.000Z",
+      "records": [
+        {
+          "schema_version": "model_record.v1",
+          "record_id": "record_alpha",
+          "provider": "synthetic",
+          "model_id": "fixture-alpha",
+          "snapshot_id": "fixture-alpha",
+          "family": "family_alpha",
+          "capabilities": [
+            "terminal",
+            "local_execution"
+          ],
+          "frontier": false,
+          "lifecycle": "available",
+          "content_digest": "sha256:ed796cd3412dc4dae9d335515a8416f7928e4541413f0fbfe0d233a7f48018de",
+          "aliases": [
+            "alpha"
+          ],
+          "supported_efforts": [
+            "low",
+            "high"
+          ],
+          "supported_serving_settings": {
+            "fallback": [
+              "disabled"
+            ],
+            "tool_use": [
+              "host_tools"
+            ],
+            "json_schema": [
+              true
+            ]
+          },
+          "material_serving_settings": [
+            "fallback",
+            "tool_use",
+            "json_schema"
+          ],
+          "context_window_tokens": 100000,
+          "pinning": {
+            "verified": true,
+            "immutable_snapshot": true,
+            "source": "synthetic_fixture",
+            "retrieved_at": "2026-09-09T00:00:00.000Z",
+            "evidence_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        },
+        {
+          "schema_version": "model_record.v1",
+          "record_id": "record_beta",
+          "provider": "synthetic",
+          "model_id": "fixture-beta",
+          "snapshot_id": "fixture-beta",
+          "family": "family_beta",
+          "capabilities": [
+            "terminal",
+            "local_execution"
+          ],
+          "frontier": true,
+          "lifecycle": "available",
+          "content_digest": "sha256:3fe7deb0db30d4a498d3224f742527ba4e09678a7eb234760af48d0421ff0003",
+          "aliases": [
+            "beta"
+          ],
+          "supported_efforts": [
+            "low",
+            "high"
+          ],
+          "supported_serving_settings": {
+            "fallback": [
+              "disabled"
+            ],
+            "tool_use": [
+              "host_tools"
+            ],
+            "json_schema": [
+              true
+            ]
+          },
+          "material_serving_settings": [
+            "fallback",
+            "tool_use",
+            "json_schema"
+          ],
+          "context_window_tokens": 100000,
+          "pinning": {
+            "verified": true,
+            "immutable_snapshot": true,
+            "source": "synthetic_fixture",
+            "retrieved_at": "2026-09-09T00:00:00.000Z",
+            "evidence_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+          }
+        }
+      ]
+    },
+    "candidates": [
+      {
+        "schema_version": "candidate.v1",
+        "candidate_id": "candidate_alpha",
+        "provider": "synthetic",
+        "model_id": "fixture-alpha",
+        "snapshot_id": "fixture-alpha",
+        "effort": "low",
+        "serving": {
+          "fallback": "disabled",
+          "tool_use": "host_tools",
+          "json_schema": true
+        },
+        "material_serving_settings": [
+          "fallback",
+          "tool_use",
+          "json_schema"
+        ],
+        "provenance": {
+          "registry_id": "fixture_registry",
+          "model_record_id": "record_alpha",
+          "registry_content_digest": "sha256:dac1501b79fcf3347937af68ce504814fea046dbbf4a811056afd6267bf0adc7"
+        }
+      },
+      {
+        "schema_version": "candidate.v1",
+        "candidate_id": "candidate_beta",
+        "provider": "synthetic",
+        "model_id": "fixture-beta",
+        "snapshot_id": "fixture-beta",
+        "effort": "low",
+        "serving": {
+          "fallback": "disabled",
+          "tool_use": "host_tools",
+          "json_schema": true
+        },
+        "material_serving_settings": [
+          "fallback",
+          "tool_use",
+          "json_schema"
+        ],
+        "provenance": {
+          "registry_id": "fixture_registry",
+          "model_record_id": "record_beta",
+          "registry_content_digest": "sha256:dac1501b79fcf3347937af68ce504814fea046dbbf4a811056afd6267bf0adc7"
+        }
+      }
+    ],
+    "observations": [
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_0",
+        "content_digest": "sha256:4ce6eb3e4731bb921c67785336d5e80ba6079f74aeb9b3cb1e665fadeb0007e2",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_0",
+        "fixture_digest": "sha256:278168a1f4bb9727b973d8f1fc7fbf9fb6ae8bc748449214fe2ffbd2540ce7d2",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_0",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:21192eb838dfcc0c85c80dc284966f41b5e5c5df2a7bbf26ba2bb0286ad0fb50",
+          "artifact_digest": "sha256:a6f8874d7c3121ec6a1e441705fd208d7a5426822c3b52ef33b28b53516fda73",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_1",
+        "content_digest": "sha256:86ef76fac1f4bba762a8e662a58901c35d06fe55386499d450d313c7b335d6ea",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_1",
+        "fixture_digest": "sha256:ee42ed7cf3b44f8649bb47c1a9986752ce3a63e781f2010abcf763e44c0be945",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_1",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:b574e99cb9dcb2517a91c706ca68f2feff7236805f043420968cedb0236e5772",
+          "artifact_digest": "sha256:93628d16b4ac838166e515469d96cfb035b6f88fbfebaa8aba2d5771c8258a93",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_2",
+        "content_digest": "sha256:bbbd46bcf4ba869c24ca95270e3e8b101b4b88c04dd067053a0c5acf2e25b015",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_2",
+        "fixture_digest": "sha256:bbca37d8862012e419b136f7bd4fdb4438f49c9d9c97967df54985808cdba4f6",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_2",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:b2a02fb80494ae43586c530cf38ba4fbfcc6a3ea14e1d9d318dbb9fe43b66b9e",
+          "artifact_digest": "sha256:928ef1bdec0dac27adbeea7cf0bb7827a0a8959659b90a846dc09281a1fbac1d",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_3",
+        "content_digest": "sha256:c35347d429c35ceef810ecca7bb75ff9266e8992db5c0ab93ae52278c564f132",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_3",
+        "fixture_digest": "sha256:58f0ac9ecff6acf40ee358b88a29a18134ac7695c7ed0060ae8d112a79cd1570",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_3",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:86ec84ab6241f98b5a7187111636daf5c970437965fb63eab5aa42346ef510bf",
+          "artifact_digest": "sha256:b515a0ce489143bcd13addc36fe64bc9e3ad1266dd57c7affc4103afd55c8d4f",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_4",
+        "content_digest": "sha256:d54dc24503918d7c6f1949230cfe380ae309fe4f4f81761c76a1a47634af6e53",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_4",
+        "fixture_digest": "sha256:4e6a7bc26b6ca4fe4f4ce83c21e3fd3b089f0e1b5257226f638f30a76ecc2600",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_4",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:edef56b3fed596a4682bdfe29926093005a0b5ba5b7a73ab97d60c3cf93c3588",
+          "artifact_digest": "sha256:1e4bbaa5f11d22792a8d12d39f53639273179eb05b9d391fe0e5ade4e5325118",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_5",
+        "content_digest": "sha256:c8dc500d07a445b6498543fe34574d562e06355936ea4e4afa78b308cf0e464f",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_5",
+        "fixture_digest": "sha256:3d9fa46642b3356d336f4c985104d9e336711c727b2fc2416fc495c2e7844ac7",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_5",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:c089f850f954a5ef7c061284815ecdd833f87ac84b8ccd403c33a76f38358cf2",
+          "artifact_digest": "sha256:349862163caf3a5dea6eb5e7d3b4517aeed25236465071a80617c8e7c030ccf1",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_6",
+        "content_digest": "sha256:a100a22edaf927155357c233fc35394b31fc455b4215c60e18af7d729899a6f2",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_6",
+        "fixture_digest": "sha256:2ea1fbdb6283dfea7f8da5ba89ab1e9f8b5280d069e5595bae1f823e465f2f8d",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_6",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:aee1849243a99af297af64999ab60e8a99b6c0dbf1d710dacfb4ceb9516c4bdb",
+          "artifact_digest": "sha256:4a78d1a40175fc8f6eb32d60f94f3d6e5bb312dc8bc6b8812d54342b2fdc6980",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_7",
+        "content_digest": "sha256:d806f5ea393bcb4645d82cf2cd1c7777e05dddbd2cc1a67f05c281a99a089852",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_7",
+        "fixture_digest": "sha256:b2e9d1662803b74d734205325249f4324ea212e6827049ac9fdd8af03a888e02",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_7",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:fe84c5c96cdea9e59423ae97b52dcaeaab2c2a10f9f4300dbd538b9a5f36d49e",
+          "artifact_digest": "sha256:f392c4464c7357a3e8d7a16c2e12e8c940140276c6f76490ef20f514c8c31c0f",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_8",
+        "content_digest": "sha256:3bbd20e39cedd50c72ba2f80a42f76a15a670b0373873ef5fb94ee211d276b20",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_8",
+        "fixture_digest": "sha256:d643c74f51200b4699a080838e526da29ee831f53307a9b7da88fd2f58d049cc",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_8",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:8480c917dabf820b01f1b65d51345ee0670b68d85d34556ab686a63893861b22",
+          "artifact_digest": "sha256:14aa2026901c3f71a7410fcb92e6011c65409e87b9a442814a0bf2181ce73a94",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_9",
+        "content_digest": "sha256:a5093334d0b4f7ee3b62298f8ef5a30fe29765e33ea5574768400a88c104b1de",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_9",
+        "fixture_digest": "sha256:4b03fb8ca0d442f02528243d53bfbb7cd20d9f54c9915233d4c4edc6e4cda725",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_9",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:0ac51541f2c4a1f3f0969867354c68b18670736c32f0c68d85410bdadcd91ec2",
+          "artifact_digest": "sha256:7509ef72921c0967bbc38b03fcded609c7be2e8a93795bffee9edd8348da299a",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_10",
+        "content_digest": "sha256:c5588c8c968d1ad02fcab8f5c835e59534f5fba561521b8a74bf8e162d4744a8",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_10",
+        "fixture_digest": "sha256:a536540b03125d2833553acafc3d85fb16cfe930ecacce70b09869ceaace6ff8",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_10",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:baa02f62de7763c8ddfb10da713b7e52f8ba0ff5bc397ff3cd1394d2849b164c",
+          "artifact_digest": "sha256:0eb235812d1ed06ff2010e7c7eb1ab769c95ceb0aa4ef2f3b251c27f9417d76c",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_11",
+        "content_digest": "sha256:9658885b158e6a931b265526ed1d051c64030bff142fb591b6d05ccaad2b7769",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_11",
+        "fixture_digest": "sha256:34c37a9d09975cd04c01866e6bd31f2b73b66414f84a5fa45da58cdf02f22057",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_11",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:c190ae3e29bb1cdbdb9ade5a7e45a6a104b9a730b3911207a96cf343c60b1cca",
+          "artifact_digest": "sha256:187162dad303f51b4cae30dc49b74aa44f4c66d862dae7548b390e3b4f581f68",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_12",
+        "content_digest": "sha256:389caee8234fdecbd30fa9264034818e226cd7a590ca4eae8d12bab906758487",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_12",
+        "fixture_digest": "sha256:855fa109a0ce13b03ab14e5c65d50a1af84ef3f45a2287e1e3820509938e6cb8",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_12",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:899d823f9607897b46641855b80220212408c47903d1bf60ff4e315e50656493",
+          "artifact_digest": "sha256:817bc29c39ca276142fdfb48c1370aee499700f242704bc7b50df37e9f673130",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_13",
+        "content_digest": "sha256:c4227ecd54148190bfa257399f74a5b484cc4570262947d6d86651d13f072192",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_13",
+        "fixture_digest": "sha256:74681edd7ccb49e45b883338183a3ff86642350eec44dcf7c02bcd340883ecf5",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_13",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:0ba2f5c85b0097c8e6cce325887358038e0229326df3344b186cdcfdf2ce0191",
+          "artifact_digest": "sha256:7144ad0efcb5350f1eb863ce92bf952bb963331f542afd1db5b687b79e3067bf",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_14",
+        "content_digest": "sha256:d9265350800439fe3bca49b52aa4837c710badfb6202b16bf4eeb4d5c51b9386",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_14",
+        "fixture_digest": "sha256:1d995215e021bd2039f69181c1434df4a3156cb24caad2b1b83ee4bce8c90f6c",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_14",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:33cf8f62d526ce366a1b428f1ba1066a53fa6ff13c9299dc5394db7f1b737efb",
+          "artifact_digest": "sha256:1f134e818772ad5aa65bb84248ac0f28267a7da458453bd9f4e12417b2ef7b87",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_15",
+        "content_digest": "sha256:8e545ec203953ae2110a561b82f24d4e98977c7d5e19ae22d45d4e01831fae0c",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_15",
+        "fixture_digest": "sha256:b3f0221cb5b69491abd96870ca48206822e47f5dec2f47f1573e928c9dc58565",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_15",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:a3029465c75f1831a3ebf7033b2f8a9df6870d795edde7ff66558434acacbb5a",
+          "artifact_digest": "sha256:743d91047ca5675e13af3d51e5723b6808bfa6f629895096a766c203cb32b6b3",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_16",
+        "content_digest": "sha256:661cff48901db2a5d356493ac46cd47ae99da24f3ad4d1db87e892c2189b0cd6",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_16",
+        "fixture_digest": "sha256:da0a18fb17b084c7693e4eeb42c7c11ce836ae4a3abe34a22ba8fc7818289e48",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_16",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:061638712e2ac66f038587b3c5e3e4e9001bd9030f4dcbf1b87d848905db2158",
+          "artifact_digest": "sha256:e28ac098b98bdb120c82060ce0b61136c18df17813ba8305d15db9157d61e42c",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_17",
+        "content_digest": "sha256:a3c923fc2f505d0ab16f4e2b0a3511d2e06bfebd09260e8658fc6ecfb66a32c2",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_17",
+        "fixture_digest": "sha256:45a35d04711add6bdc3475d02e4a92a2a0bd6f2716871d55e1507d85c5ef34e2",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_17",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:be89fe6a291afe01ec895746cb39af7ba16b405acf656b4a2154fd083b181c74",
+          "artifact_digest": "sha256:ec595c8591f6471df34e958b90849b633e3aa1fac8d72bd190dadd94236b64f8",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_18",
+        "content_digest": "sha256:3048f5539f576e066eb9c2febc1d2ed21ae537ef9ce63db9675ca58367a6432c",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_18",
+        "fixture_digest": "sha256:b5851b07839a93287b327fd981bb53f64f5a2273cbbac9612028701bd3ab0811",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_18",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:8233f7789db95f74b8b1b62431810e5f9400f9736d4f47c808c2212acaab2aab",
+          "artifact_digest": "sha256:2c9a71121dae0d598717bbac41911787e0234e9e4aa39fd974812dc141a7d21c",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_0_19",
+        "content_digest": "sha256:bb84b22f3bc085b8de55711e6ef2fbba65564ecd1711715a612ba97b6e2287a8",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_alpha",
+          "candidate_identity": "sha256:5bab89419b2ef14b9e53d84b31ad8aa37a13f3ec8ed2acdf60f638c66bca08b7"
+        },
+        "task_id": "fixture_task_19",
+        "fixture_digest": "sha256:8b7bca885df01c56d4ea6adb3e5721407b1ed60804a0f9aa0ef3242fefdf4d97",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_0_19",
+            "kind": "worker",
+            "cost_usd": 0.01,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:1540fe7eddf923e1fbe764757fd8bdd912c86b07089bd3d415e0d4145c8afa16",
+          "artifact_digest": "sha256:dda1447d4c0dc4b552c5763064e16acf760a93b3d7b1554299e3d1589fa71292",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_0",
+        "content_digest": "sha256:1381fea1908768aec00636bc1ecab59e9129436d7654a4209bfe951321ca3977",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_0",
+        "fixture_digest": "sha256:278168a1f4bb9727b973d8f1fc7fbf9fb6ae8bc748449214fe2ffbd2540ce7d2",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_0",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:ac76a1f89b48cd30fa3d2e911aff199af449a35235cbcd526d5a60d2c9db6742",
+          "artifact_digest": "sha256:7093953b28a748239c57f4e057ba8c2769b3442332dbf37fc50b2afb9f01dc7c",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_1",
+        "content_digest": "sha256:53d4adccf548208917ea656878aa2f3b13e534c5a6894f2d7a0bea1e10b20d40",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_1",
+        "fixture_digest": "sha256:ee42ed7cf3b44f8649bb47c1a9986752ce3a63e781f2010abcf763e44c0be945",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_1",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:212c0453b7df9fb5c8ab6fe138f53a591e59d09036dfd744e14f5e4a0ebf200a",
+          "artifact_digest": "sha256:60a5a435b0faaf91d77657aed674e55d564aa2e4f6691f61c224593850a388ee",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_2",
+        "content_digest": "sha256:a6162e78243d052e19ac59eef2d3d2fb082282c6bd720c36268845495e2bf807",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_2",
+        "fixture_digest": "sha256:bbca37d8862012e419b136f7bd4fdb4438f49c9d9c97967df54985808cdba4f6",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_2",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:b116b5486c9dec2edf186bd4e4d2ce0e53fdd77e210bf58e7aad3605dcc693fb",
+          "artifact_digest": "sha256:5fbaff2d4a2ff8d480ec6145879191be889624f4f1bf7335b2c07572669966a6",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_3",
+        "content_digest": "sha256:faf58d00c157fd8cfd7d492d05cf51fba81d57e798fc9fa37d96f63610c91f56",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_3",
+        "fixture_digest": "sha256:58f0ac9ecff6acf40ee358b88a29a18134ac7695c7ed0060ae8d112a79cd1570",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_3",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:af9dd34dc8d856cdd973faa5da941e2dbae3278ff2a822a236aee6f69d5dc2e4",
+          "artifact_digest": "sha256:82b896d544b8e58a1fe045a9b55a03e7ea7c95218b38e9343915cf101c493ac3",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_4",
+        "content_digest": "sha256:44f9c87b4cf45c1d3c8bff40f2c985e735ff7ec80118b32f29de6ee40dfdbc44",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_4",
+        "fixture_digest": "sha256:4e6a7bc26b6ca4fe4f4ce83c21e3fd3b089f0e1b5257226f638f30a76ecc2600",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_4",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:8928f9ef544da8b6eb94ad394c24e75f681d928645404071fc94f1680b42191d",
+          "artifact_digest": "sha256:6c2a801476d5a1e1c9209172f36a7f0eb3840e3d65a5b3dcf91b445530272126",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_5",
+        "content_digest": "sha256:b0b108baae0a51ecba0728567970b3b84c92a2988e8db22ee5713ea874cf13a7",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_5",
+        "fixture_digest": "sha256:3d9fa46642b3356d336f4c985104d9e336711c727b2fc2416fc495c2e7844ac7",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_5",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:ea58b0c59586eacc5540c23bf4282a10f78ba65f3c91ed33ce4d5f334e1be264",
+          "artifact_digest": "sha256:c5feb3f27f424e20537f5f16b0f39b3d2c27f698c2e9cd537a947105751ad659",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_6",
+        "content_digest": "sha256:8bfdb4661a0982d0120b9f001b09ab4cc2c8909622c4d83947bb249eb4661db0",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_6",
+        "fixture_digest": "sha256:2ea1fbdb6283dfea7f8da5ba89ab1e9f8b5280d069e5595bae1f823e465f2f8d",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_6",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:13794015bce34a6c1ec6f6be9aae646c0ed9a1713f170cd92909fc06b6b953e3",
+          "artifact_digest": "sha256:07f29d510834a412868c61462ff756bfbf3222086388bf99cb3a9c7f77157557",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_7",
+        "content_digest": "sha256:de9589e8ef5906224b0a3d8201a14c34e3881e85f9d01294af3cc6692e8d216b",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_7",
+        "fixture_digest": "sha256:b2e9d1662803b74d734205325249f4324ea212e6827049ac9fdd8af03a888e02",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_7",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:30257483b561c97f85599d7d208ef0d98e18c4649cbe5572d67efeb30ade16ee",
+          "artifact_digest": "sha256:fd6a5dbda797e69fdfc88604d01a2b6e20c1be975d7cead19d2c1b51fb34e892",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_8",
+        "content_digest": "sha256:02bfcd2d399829cccfe4dd00a456ecbf49a2afca8ca3d2c62927fbd0d3697efb",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_8",
+        "fixture_digest": "sha256:d643c74f51200b4699a080838e526da29ee831f53307a9b7da88fd2f58d049cc",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_8",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:ec3446d445c487da08024a7a529c086eb1ea0e6a4d27ecd79e3fc494c42263b0",
+          "artifact_digest": "sha256:30de9b7ef5678c66cfc8e90ccc6efc597696e46d928f603696d0514602917505",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_9",
+        "content_digest": "sha256:92ea8254b8d10af71be8cce18a6ab0fe723cb0ece2ff9770d482dc08c1a2fbd1",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_9",
+        "fixture_digest": "sha256:4b03fb8ca0d442f02528243d53bfbb7cd20d9f54c9915233d4c4edc6e4cda725",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_9",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:87e837fe4838899fe98afb2cbc255fc5d02f7f9136b20e3410a46da234ba9258",
+          "artifact_digest": "sha256:e6599af551fa978ea59c3a40c59f6c99062ed525a03118740fa182927874e43d",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_10",
+        "content_digest": "sha256:50d8cc8c86bbce878e2c358331f4b84223a277e8a0252ebaf377d437ec2f4d43",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_10",
+        "fixture_digest": "sha256:a536540b03125d2833553acafc3d85fb16cfe930ecacce70b09869ceaace6ff8",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_10",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:22dac7e9d48ad4a83104e4cf83fc86af319e998b6cf6d9e1b0ca5510bfb31f0b",
+          "artifact_digest": "sha256:c5eaa6120b63e703425e23a6aebec34f5bb30b656feb0485fc407b58bcf5153e",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_11",
+        "content_digest": "sha256:176f3d94033533ec56fd064f4cba0f09134d584469a0ddc33028461e221f467d",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_11",
+        "fixture_digest": "sha256:34c37a9d09975cd04c01866e6bd31f2b73b66414f84a5fa45da58cdf02f22057",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_11",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:cabfb56ebf32f7698979d6be3e381487e3ded9e25d0003434243efba63a0522f",
+          "artifact_digest": "sha256:15b84afedfb6033e0f481283408007b32732ea4d668d0070eda64e46e50b3627",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_12",
+        "content_digest": "sha256:7c884a4d008c6ca1f448630134cbb8b75d8c2e84f0b868b3b32b4797d922b6ff",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_12",
+        "fixture_digest": "sha256:855fa109a0ce13b03ab14e5c65d50a1af84ef3f45a2287e1e3820509938e6cb8",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_12",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:b2d96f8cb181e01281c798694c9cd44d5ebfb68acde728129d3fbf15762497b4",
+          "artifact_digest": "sha256:229c1979b555a7f444c64150ef1c30705750583f0282dec76ff102256e6fb0fd",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_13",
+        "content_digest": "sha256:964ea62d9839d287069ee42ce022f66ecc6a73f57f7d418d1ee96148ca51f403",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_13",
+        "fixture_digest": "sha256:74681edd7ccb49e45b883338183a3ff86642350eec44dcf7c02bcd340883ecf5",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_13",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:7ff8d8e0f455836771791b45ebe81ee2e2d9c4d62783c4250a1a5fac7d7582aa",
+          "artifact_digest": "sha256:f2ef7d1cb3d9a1c17fdfedd86cbd6fe8b92be20ce880d4d7e16f2b0c9de6d40b",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_14",
+        "content_digest": "sha256:4878be16efc11e7d0136d1c8b13274455339e56af68ad679a1e7c3e43d1afb01",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_14",
+        "fixture_digest": "sha256:1d995215e021bd2039f69181c1434df4a3156cb24caad2b1b83ee4bce8c90f6c",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_14",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:a3f140bbfdd3c067ff24aa89a157a91912f5ee53a28bd8543b32671ef11a5f7f",
+          "artifact_digest": "sha256:4964d0571f9abd517d07f05921b098ffe1c5e688ebbdefd01c21ff597fbff4a4",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_15",
+        "content_digest": "sha256:9c203c431943ca56846e5a2955ccb34c780c15dc3b318bd6adcf65e7a203add6",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_15",
+        "fixture_digest": "sha256:b3f0221cb5b69491abd96870ca48206822e47f5dec2f47f1573e928c9dc58565",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_15",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:4314d786012db7842a89f1966faa1f4e7328d86dd54aa15505fad971acd558fa",
+          "artifact_digest": "sha256:5696b8751474f8cac268bdba2e322f9eb925dedbe6f62f4aecd04140636a14d5",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_16",
+        "content_digest": "sha256:304dbd9eb1458394c3bb71be1c5dae8becb681aaebc925fe3ab02c3c5f29ed31",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_16",
+        "fixture_digest": "sha256:da0a18fb17b084c7693e4eeb42c7c11ce836ae4a3abe34a22ba8fc7818289e48",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_16",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:1291c0b75507a6ed85f7550a47222b3ff57111f1f61768aeb55f9eb11bd49ffb",
+          "artifact_digest": "sha256:55b10b8c20117941583001a76a76694704e700a777dbfb450467af3502e20908",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_17",
+        "content_digest": "sha256:eac1309d843eaddabb144185052d5f126a2c5161df10f1fdbd8a0284d4bd7496",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_17",
+        "fixture_digest": "sha256:45a35d04711add6bdc3475d02e4a92a2a0bd6f2716871d55e1507d85c5ef34e2",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_17",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:3eedffe94e00e663f3e57abe7930c14941cf86b9196eb3606db3c72447eceb5b",
+          "artifact_digest": "sha256:905535c4f53fa1e6a917470ddca466e754976689ae7cda853e41e950d72cd63d",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_18",
+        "content_digest": "sha256:c62bf719748bf527168e71f47130e3c144b9c7aab78232653243b913ed5c647d",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_18",
+        "fixture_digest": "sha256:b5851b07839a93287b327fd981bb53f64f5a2273cbbac9612028701bd3ab0811",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_18",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:6ce0780173b3745d5b04c5196a62d93dbac01bcbc00e065ba7e820cac3481964",
+          "artifact_digest": "sha256:2cfddf20c6b0c8f32eb18e05748e71a442546b7ee4437f506d7bb0a2e9a65923",
+          "runtime_receipt_digest": null
+        }
+      },
+      {
+        "schema_version": "task_observation.v1",
+        "observation_id": "observation_1_19",
+        "content_digest": "sha256:d5c4cac01ba310e44a04afde3c92afe18d66df2af6cf6e9612cb49f5de25e8b8",
+        "lane": "synthetic_policy_test",
+        "candidate": {
+          "candidate_id": "candidate_beta",
+          "candidate_identity": "sha256:5fd1d45a1073321090c7fd14962b5b2a51aea29c93a38340d7e14b86ff096d36"
+        },
+        "task_id": "fixture_task_19",
+        "fixture_digest": "sha256:8b7bca885df01c56d4ea6adb3e5721407b1ed60804a0f9aa0ef3242fefdf4d97",
+        "cohort_id": "fixture_cohort",
+        "role_id": "implementer",
+        "task_class_id": "bounded_backend",
+        "risk": "low",
+        "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "1",
+        "grader_version": "1",
+        "measured_at": "2026-09-09T00:00:00.000Z",
+        "passed": true,
+        "accepted": true,
+        "latency_ms": 100,
+        "attempts": [
+          {
+            "attempt_id": "attempt_1_19",
+            "kind": "worker",
+            "cost_usd": 0.03,
+            "cost_source": "measured",
+            "latency_ms": 100
+          }
+        ],
+        "provenance": {
+          "source": "synthetic_fixture",
+          "source_digest": "sha256:5378bab5d5847a6c93cfb6b5cf331ef55b3c803d6a86aa305ff4970e0659cf77",
+          "artifact_digest": "sha256:a78e77bff9fa3f589ae4149e539fab7261b856f650a43e98a925288e7b3802d5",
+          "runtime_receipt_digest": null
+        }
+      }
+    ],
+    "request": {
+      "role_id": "implementer",
+      "task_class_id": "bounded_backend",
+      "risk": "low",
+      "cohort_id": "fixture_cohort",
+      "constraints_digest": "sha256:d8746ee128cb94bb9078a2026526a314873a251d1db53439dd8511adb9ef379d",
+      "constraints": {
+        "schema_version": "constraint_set.v1",
+        "constraint_id": "fixture_constraints",
+        "version": 1,
+        "allowed_tools": [
+          "terminal"
+        ],
+        "required_tools": [
+          "terminal"
+        ],
+        "forbidden_paths": [],
+        "requires_fresh_context": false,
+        "requires_local_execution": false
+      }
+    },
+    "mode": "simulation",
+    "now": "2026-09-09T00:00:00.000Z",
+    "sources": {
+      "sha256:278168a1f4bb9727b973d8f1fc7fbf9fb6ae8bc748449214fe2ffbd2540ce7d2": "synthetic task 0",
+      "sha256:21192eb838dfcc0c85c80dc284966f41b5e5c5df2a7bbf26ba2bb0286ad0fb50": "synthetic result 0/0",
+      "sha256:a6f8874d7c3121ec6a1e441705fd208d7a5426822c3b52ef33b28b53516fda73": "synthetic artifact 0/0",
+      "sha256:ee42ed7cf3b44f8649bb47c1a9986752ce3a63e781f2010abcf763e44c0be945": "synthetic task 1",
+      "sha256:b574e99cb9dcb2517a91c706ca68f2feff7236805f043420968cedb0236e5772": "synthetic result 0/1",
+      "sha256:93628d16b4ac838166e515469d96cfb035b6f88fbfebaa8aba2d5771c8258a93": "synthetic artifact 0/1",
+      "sha256:bbca37d8862012e419b136f7bd4fdb4438f49c9d9c97967df54985808cdba4f6": "synthetic task 2",
+      "sha256:b2a02fb80494ae43586c530cf38ba4fbfcc6a3ea14e1d9d318dbb9fe43b66b9e": "synthetic result 0/2",
+      "sha256:928ef1bdec0dac27adbeea7cf0bb7827a0a8959659b90a846dc09281a1fbac1d": "synthetic artifact 0/2",
+      "sha256:58f0ac9ecff6acf40ee358b88a29a18134ac7695c7ed0060ae8d112a79cd1570": "synthetic task 3",
+      "sha256:86ec84ab6241f98b5a7187111636daf5c970437965fb63eab5aa42346ef510bf": "synthetic result 0/3",
+      "sha256:b515a0ce489143bcd13addc36fe64bc9e3ad1266dd57c7affc4103afd55c8d4f": "synthetic artifact 0/3",
+      "sha256:4e6a7bc26b6ca4fe4f4ce83c21e3fd3b089f0e1b5257226f638f30a76ecc2600": "synthetic task 4",
+      "sha256:edef56b3fed596a4682bdfe29926093005a0b5ba5b7a73ab97d60c3cf93c3588": "synthetic result 0/4",
+      "sha256:1e4bbaa5f11d22792a8d12d39f53639273179eb05b9d391fe0e5ade4e5325118": "synthetic artifact 0/4",
+      "sha256:3d9fa46642b3356d336f4c985104d9e336711c727b2fc2416fc495c2e7844ac7": "synthetic task 5",
+      "sha256:c089f850f954a5ef7c061284815ecdd833f87ac84b8ccd403c33a76f38358cf2": "synthetic result 0/5",
+      "sha256:349862163caf3a5dea6eb5e7d3b4517aeed25236465071a80617c8e7c030ccf1": "synthetic artifact 0/5",
+      "sha256:2ea1fbdb6283dfea7f8da5ba89ab1e9f8b5280d069e5595bae1f823e465f2f8d": "synthetic task 6",
+      "sha256:aee1849243a99af297af64999ab60e8a99b6c0dbf1d710dacfb4ceb9516c4bdb": "synthetic result 0/6",
+      "sha256:4a78d1a40175fc8f6eb32d60f94f3d6e5bb312dc8bc6b8812d54342b2fdc6980": "synthetic artifact 0/6",
+      "sha256:b2e9d1662803b74d734205325249f4324ea212e6827049ac9fdd8af03a888e02": "synthetic task 7",
+      "sha256:fe84c5c96cdea9e59423ae97b52dcaeaab2c2a10f9f4300dbd538b9a5f36d49e": "synthetic result 0/7",
+      "sha256:f392c4464c7357a3e8d7a16c2e12e8c940140276c6f76490ef20f514c8c31c0f": "synthetic artifact 0/7",
+      "sha256:d643c74f51200b4699a080838e526da29ee831f53307a9b7da88fd2f58d049cc": "synthetic task 8",
+      "sha256:8480c917dabf820b01f1b65d51345ee0670b68d85d34556ab686a63893861b22": "synthetic result 0/8",
+      "sha256:14aa2026901c3f71a7410fcb92e6011c65409e87b9a442814a0bf2181ce73a94": "synthetic artifact 0/8",
+      "sha256:4b03fb8ca0d442f02528243d53bfbb7cd20d9f54c9915233d4c4edc6e4cda725": "synthetic task 9",
+      "sha256:0ac51541f2c4a1f3f0969867354c68b18670736c32f0c68d85410bdadcd91ec2": "synthetic result 0/9",
+      "sha256:7509ef72921c0967bbc38b03fcded609c7be2e8a93795bffee9edd8348da299a": "synthetic artifact 0/9",
+      "sha256:a536540b03125d2833553acafc3d85fb16cfe930ecacce70b09869ceaace6ff8": "synthetic task 10",
+      "sha256:baa02f62de7763c8ddfb10da713b7e52f8ba0ff5bc397ff3cd1394d2849b164c": "synthetic result 0/10",
+      "sha256:0eb235812d1ed06ff2010e7c7eb1ab769c95ceb0aa4ef2f3b251c27f9417d76c": "synthetic artifact 0/10",
+      "sha256:34c37a9d09975cd04c01866e6bd31f2b73b66414f84a5fa45da58cdf02f22057": "synthetic task 11",
+      "sha256:c190ae3e29bb1cdbdb9ade5a7e45a6a104b9a730b3911207a96cf343c60b1cca": "synthetic result 0/11",
+      "sha256:187162dad303f51b4cae30dc49b74aa44f4c66d862dae7548b390e3b4f581f68": "synthetic artifact 0/11",
+      "sha256:855fa109a0ce13b03ab14e5c65d50a1af84ef3f45a2287e1e3820509938e6cb8": "synthetic task 12",
+      "sha256:899d823f9607897b46641855b80220212408c47903d1bf60ff4e315e50656493": "synthetic result 0/12",
+      "sha256:817bc29c39ca276142fdfb48c1370aee499700f242704bc7b50df37e9f673130": "synthetic artifact 0/12",
+      "sha256:74681edd7ccb49e45b883338183a3ff86642350eec44dcf7c02bcd340883ecf5": "synthetic task 13",
+      "sha256:0ba2f5c85b0097c8e6cce325887358038e0229326df3344b186cdcfdf2ce0191": "synthetic result 0/13",
+      "sha256:7144ad0efcb5350f1eb863ce92bf952bb963331f542afd1db5b687b79e3067bf": "synthetic artifact 0/13",
+      "sha256:1d995215e021bd2039f69181c1434df4a3156cb24caad2b1b83ee4bce8c90f6c": "synthetic task 14",
+      "sha256:33cf8f62d526ce366a1b428f1ba1066a53fa6ff13c9299dc5394db7f1b737efb": "synthetic result 0/14",
+      "sha256:1f134e818772ad5aa65bb84248ac0f28267a7da458453bd9f4e12417b2ef7b87": "synthetic artifact 0/14",
+      "sha256:b3f0221cb5b69491abd96870ca48206822e47f5dec2f47f1573e928c9dc58565": "synthetic task 15",
+      "sha256:a3029465c75f1831a3ebf7033b2f8a9df6870d795edde7ff66558434acacbb5a": "synthetic result 0/15",
+      "sha256:743d91047ca5675e13af3d51e5723b6808bfa6f629895096a766c203cb32b6b3": "synthetic artifact 0/15",
+      "sha256:da0a18fb17b084c7693e4eeb42c7c11ce836ae4a3abe34a22ba8fc7818289e48": "synthetic task 16",
+      "sha256:061638712e2ac66f038587b3c5e3e4e9001bd9030f4dcbf1b87d848905db2158": "synthetic result 0/16",
+      "sha256:e28ac098b98bdb120c82060ce0b61136c18df17813ba8305d15db9157d61e42c": "synthetic artifact 0/16",
+      "sha256:45a35d04711add6bdc3475d02e4a92a2a0bd6f2716871d55e1507d85c5ef34e2": "synthetic task 17",
+      "sha256:be89fe6a291afe01ec895746cb39af7ba16b405acf656b4a2154fd083b181c74": "synthetic result 0/17",
+      "sha256:ec595c8591f6471df34e958b90849b633e3aa1fac8d72bd190dadd94236b64f8": "synthetic artifact 0/17",
+      "sha256:b5851b07839a93287b327fd981bb53f64f5a2273cbbac9612028701bd3ab0811": "synthetic task 18",
+      "sha256:8233f7789db95f74b8b1b62431810e5f9400f9736d4f47c808c2212acaab2aab": "synthetic result 0/18",
+      "sha256:2c9a71121dae0d598717bbac41911787e0234e9e4aa39fd974812dc141a7d21c": "synthetic artifact 0/18",
+      "sha256:8b7bca885df01c56d4ea6adb3e5721407b1ed60804a0f9aa0ef3242fefdf4d97": "synthetic task 19",
+      "sha256:1540fe7eddf923e1fbe764757fd8bdd912c86b07089bd3d415e0d4145c8afa16": "synthetic result 0/19",
+      "sha256:dda1447d4c0dc4b552c5763064e16acf760a93b3d7b1554299e3d1589fa71292": "synthetic artifact 0/19",
+      "sha256:ac76a1f89b48cd30fa3d2e911aff199af449a35235cbcd526d5a60d2c9db6742": "synthetic result 1/0",
+      "sha256:7093953b28a748239c57f4e057ba8c2769b3442332dbf37fc50b2afb9f01dc7c": "synthetic artifact 1/0",
+      "sha256:212c0453b7df9fb5c8ab6fe138f53a591e59d09036dfd744e14f5e4a0ebf200a": "synthetic result 1/1",
+      "sha256:60a5a435b0faaf91d77657aed674e55d564aa2e4f6691f61c224593850a388ee": "synthetic artifact 1/1",
+      "sha256:b116b5486c9dec2edf186bd4e4d2ce0e53fdd77e210bf58e7aad3605dcc693fb": "synthetic result 1/2",
+      "sha256:5fbaff2d4a2ff8d480ec6145879191be889624f4f1bf7335b2c07572669966a6": "synthetic artifact 1/2",
+      "sha256:af9dd34dc8d856cdd973faa5da941e2dbae3278ff2a822a236aee6f69d5dc2e4": "synthetic result 1/3",
+      "sha256:82b896d544b8e58a1fe045a9b55a03e7ea7c95218b38e9343915cf101c493ac3": "synthetic artifact 1/3",
+      "sha256:8928f9ef544da8b6eb94ad394c24e75f681d928645404071fc94f1680b42191d": "synthetic result 1/4",
+      "sha256:6c2a801476d5a1e1c9209172f36a7f0eb3840e3d65a5b3dcf91b445530272126": "synthetic artifact 1/4",
+      "sha256:ea58b0c59586eacc5540c23bf4282a10f78ba65f3c91ed33ce4d5f334e1be264": "synthetic result 1/5",
+      "sha256:c5feb3f27f424e20537f5f16b0f39b3d2c27f698c2e9cd537a947105751ad659": "synthetic artifact 1/5",
+      "sha256:13794015bce34a6c1ec6f6be9aae646c0ed9a1713f170cd92909fc06b6b953e3": "synthetic result 1/6",
+      "sha256:07f29d510834a412868c61462ff756bfbf3222086388bf99cb3a9c7f77157557": "synthetic artifact 1/6",
+      "sha256:30257483b561c97f85599d7d208ef0d98e18c4649cbe5572d67efeb30ade16ee": "synthetic result 1/7",
+      "sha256:fd6a5dbda797e69fdfc88604d01a2b6e20c1be975d7cead19d2c1b51fb34e892": "synthetic artifact 1/7",
+      "sha256:ec3446d445c487da08024a7a529c086eb1ea0e6a4d27ecd79e3fc494c42263b0": "synthetic result 1/8",
+      "sha256:30de9b7ef5678c66cfc8e90ccc6efc597696e46d928f603696d0514602917505": "synthetic artifact 1/8",
+      "sha256:87e837fe4838899fe98afb2cbc255fc5d02f7f9136b20e3410a46da234ba9258": "synthetic result 1/9",
+      "sha256:e6599af551fa978ea59c3a40c59f6c99062ed525a03118740fa182927874e43d": "synthetic artifact 1/9",
+      "sha256:22dac7e9d48ad4a83104e4cf83fc86af319e998b6cf6d9e1b0ca5510bfb31f0b": "synthetic result 1/10",
+      "sha256:c5eaa6120b63e703425e23a6aebec34f5bb30b656feb0485fc407b58bcf5153e": "synthetic artifact 1/10",
+      "sha256:cabfb56ebf32f7698979d6be3e381487e3ded9e25d0003434243efba63a0522f": "synthetic result 1/11",
+      "sha256:15b84afedfb6033e0f481283408007b32732ea4d668d0070eda64e46e50b3627": "synthetic artifact 1/11",
+      "sha256:b2d96f8cb181e01281c798694c9cd44d5ebfb68acde728129d3fbf15762497b4": "synthetic result 1/12",
+      "sha256:229c1979b555a7f444c64150ef1c30705750583f0282dec76ff102256e6fb0fd": "synthetic artifact 1/12",
+      "sha256:7ff8d8e0f455836771791b45ebe81ee2e2d9c4d62783c4250a1a5fac7d7582aa": "synthetic result 1/13",
+      "sha256:f2ef7d1cb3d9a1c17fdfedd86cbd6fe8b92be20ce880d4d7e16f2b0c9de6d40b": "synthetic artifact 1/13",
+      "sha256:a3f140bbfdd3c067ff24aa89a157a91912f5ee53a28bd8543b32671ef11a5f7f": "synthetic result 1/14",
+      "sha256:4964d0571f9abd517d07f05921b098ffe1c5e688ebbdefd01c21ff597fbff4a4": "synthetic artifact 1/14",
+      "sha256:4314d786012db7842a89f1966faa1f4e7328d86dd54aa15505fad971acd558fa": "synthetic result 1/15",
+      "sha256:5696b8751474f8cac268bdba2e322f9eb925dedbe6f62f4aecd04140636a14d5": "synthetic artifact 1/15",
+      "sha256:1291c0b75507a6ed85f7550a47222b3ff57111f1f61768aeb55f9eb11bd49ffb": "synthetic result 1/16",
+      "sha256:55b10b8c20117941583001a76a76694704e700a777dbfb450467af3502e20908": "synthetic artifact 1/16",
+      "sha256:3eedffe94e00e663f3e57abe7930c14941cf86b9196eb3606db3c72447eceb5b": "synthetic result 1/17",
+      "sha256:905535c4f53fa1e6a917470ddca466e754976689ae7cda853e41e950d72cd63d": "synthetic artifact 1/17",
+      "sha256:6ce0780173b3745d5b04c5196a62d93dbac01bcbc00e065ba7e820cac3481964": "synthetic result 1/18",
+      "sha256:2cfddf20c6b0c8f32eb18e05748e71a442546b7ee4437f506d7bb0a2e9a65923": "synthetic artifact 1/18",
+      "sha256:5378bab5d5847a6c93cfb6b5cf331ef55b3c803d6a86aa305ff4970e0659cf77": "synthetic result 1/19",
+      "sha256:a78e77bff9fa3f589ae4149e539fab7261b856f650a43e98a925288e7b3802d5": "synthetic artifact 1/19"
+    },
+    "runtimeReports": {}
+  }
+}

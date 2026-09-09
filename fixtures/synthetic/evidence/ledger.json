@@ -1,0 +1,35 @@
+{
+  "schema_version": "evidence_ledger.v1",
+  "ledger_id": "fixture_ledger",
+  "content_digest": "sha256:94e9fe89716559263861c871faf04194df779190a65073361f1a57de1ba09ff0",
+  "created_at": "2026-09-09T00:00:00Z",
+  "records": [
+    {
+      "schema_version": "evidence_record.v1",
+      "evidence_id": "fixture_evidence",
+      "content_digest": "sha256:23e7f35fef89930ffb2a6e8789b78a90a115d3c968db4a8bae9dabc77d1d786d",
+      "evidence_type": "own_eval",
+      "lane": "synthetic_policy_test",
+      "candidate": {
+        "candidate_id": "fixture_candidate",
+        "candidate_identity": "sha256:304bcbf9627ed95a45f9e8e531c2ecf05cccf9c44d585521d7d870066c2e21e7"
+      },
+      "suite_id": "fixture_suite",
+      "suite_version": 1,
+      "dataset_version": "fixture-dataset-v1",
+      "methodology_version": "fixture-method-v1",
+      "harness_version": "fixture-harness-v1",
+      "grader_version": "fixture-grader-v1",
+      "measured_at": "2026-09-09T00:00:00Z",
+      "retrieved_at": "2026-09-09T00:00:00Z",
+      "observation_refs": [
+        "fixture_observation"
+      ],
+      "attempted": 1,
+      "passed": 1,
+      "accepted": 1,
+      "total_cost_usd": 1,
+      "source_digest": "sha256:9689cc771429fad0015fe55bb30e8024c683b7bd6934ae172154e8fbf4d08290"
+    }
+  ]
+}

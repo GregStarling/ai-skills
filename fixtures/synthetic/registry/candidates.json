@@ -1,0 +1,23 @@
+[
+  {
+    "schema_version": "candidate.v1",
+    "candidate_id": "fixture_candidate",
+    "provider": "synthetic",
+    "model_id": "fixture-model-v1",
+    "snapshot_id": "fixture-model-v1",
+    "effort": "medium",
+    "serving": {
+      "fallback": "disabled",
+      "tool_use": "host_tools",
+      "json_schema": false
+    },
+    "material_serving_settings": [
+      "fallback"
+    ],
+    "provenance": {
+      "registry_id": "fixture_registry",
+      "model_record_id": "fixture_model",
+      "registry_content_digest": "sha256:4fb20e43e639901a22556c3538f335224f94f6d1031f868a709544ded1a73ade"
+    }
+  }
+]

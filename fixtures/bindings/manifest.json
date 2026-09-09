@@ -1,0 +1,65 @@
+{
+  "schema_version": "binding_fixture_manifest.v1",
+  "synthetic": true,
+  "valid": [
+    {
+      "file": "fixtures/bindings/valid-initial-backend.json"
+    },
+    {
+      "file": "fixtures/bindings/valid-initial-debugging.json"
+    },
+    {
+      "file": "fixtures/bindings/valid-retained-incumbent.json"
+    }
+  ],
+  "invalid": [
+    {
+      "file": "fixtures/bindings/invalid-policy-digest.json",
+      "expected_rule_id": "binding_policy_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-schema-digest.json",
+      "expected_rule_id": "binding_schema_digest_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-evidence-digest.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-candidate-set-digest.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-false-selected-candidate.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-invented-rules.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-production-simulation.json",
+      "expected_rule_id": "binding_mode_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-hard-expiry.json",
+      "expected_rule_id": "binding_expired"
+    },
+    {
+      "file": "fixtures/bindings/invalid-future.json",
+      "expected_rule_id": "binding_from_future"
+    },
+    {
+      "file": "fixtures/bindings/invalid-wrong-role.json",
+      "expected_rule_id": "binding_request_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-extended-expiry.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    },
+    {
+      "file": "fixtures/bindings/invalid-tampered-observation.json",
+      "expected_rule_id": "binding_recomputation_mismatch"
+    }
+  ]
+}

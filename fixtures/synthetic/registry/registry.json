@@ -1,0 +1,50 @@
+{
+  "schema_version": "model_registry.v1",
+  "registry_id": "fixture_registry",
+  "content_digest": "sha256:4fb20e43e639901a22556c3538f335224f94f6d1031f868a709544ded1a73ade",
+  "retrieved_at": "2026-09-09T00:00:00Z",
+  "records": [
+    {
+      "schema_version": "model_record.v1",
+      "record_id": "fixture_model",
+      "provider": "synthetic",
+      "model_id": "fixture-model-v1",
+      "snapshot_id": "fixture-model-v1",
+      "family": "fixture_family",
+      "capabilities": [
+        "terminal"
+      ],
+      "frontier": null,
+      "lifecycle": "available",
+      "content_digest": "sha256:6d26e833471a1f648c8c5bb08ebfdb4f453994020b6dcbbeed1ee01dc4582347",
+      "aliases": [
+        "latest"
+      ],
+      "supported_efforts": [
+        "medium"
+      ],
+      "supported_serving_settings": {
+        "fallback": [
+          "disabled"
+        ],
+        "tool_use": [
+          "host_tools"
+        ],
+        "json_schema": [
+          false
+        ]
+      },
+      "material_serving_settings": [
+        "fallback"
+      ],
+      "context_window_tokens": 10000,
+      "pinning": {
+        "verified": true,
+        "immutable_snapshot": true,
+        "source": "synthetic_fixture",
+        "retrieved_at": "2026-09-09T00:00:00Z",
+        "evidence_digest": "sha256:9689cc771429fad0015fe55bb30e8024c683b7bd6934ae172154e8fbf4d08290"
+      }
+    }
+  ]
+}

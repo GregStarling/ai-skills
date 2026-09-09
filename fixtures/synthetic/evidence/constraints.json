@@ -1,0 +1,10 @@
+{
+  "schema_version": "constraint_set.v1",
+  "constraint_id": "fixture_constraints",
+  "version": 1,
+  "allowed_tools": [],
+  "required_tools": [],
+  "forbidden_paths": [],
+  "requires_fresh_context": false,
+  "requires_local_execution": false
+}

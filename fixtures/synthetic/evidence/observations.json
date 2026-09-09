@@ -1,0 +1,42 @@
+[
+  {
+    "schema_version": "task_observation.v1",
+    "observation_id": "fixture_observation",
+    "content_digest": "sha256:f5390aea43a1add279479e0e131d05bb7b5a27289347084389def9d3f4adfb6b",
+    "lane": "synthetic_policy_test",
+    "candidate": {
+      "candidate_id": "fixture_candidate",
+      "candidate_identity": "sha256:304bcbf9627ed95a45f9e8e531c2ecf05cccf9c44d585521d7d870066c2e21e7"
+    },
+    "task_id": "fixture_task",
+    "fixture_digest": "sha256:eb9cc3d7eb7a6b77c25d6bad17c2fd0a63ce7b57960c9c1c69df00cb19a48646",
+    "cohort_id": "fixture_cohort",
+    "role_id": "implementer",
+    "task_class_id": "bounded_backend",
+    "risk": "low",
+    "constraints_digest": "sha256:79139269b73116e532b2214a8bc3b13c9b0f61495da9aaf6bbc8202064a78dad",
+    "suite_id": "fixture_suite",
+    "suite_version": 1,
+    "harness_version": "fixture-harness-v1",
+    "grader_version": "fixture-grader-v1",
+    "measured_at": "2026-09-09T00:00:00Z",
+    "passed": true,
+    "accepted": true,
+    "latency_ms": 1,
+    "attempts": [
+      {
+        "attempt_id": "fixture_attempt",
+        "kind": "worker",
+        "cost_usd": 1,
+        "cost_source": "measured",
+        "latency_ms": 1
+      }
+    ],
+    "provenance": {
+      "source": "synthetic_fixture",
+      "source_digest": "sha256:9689cc771429fad0015fe55bb30e8024c683b7bd6934ae172154e8fbf4d08290",
+      "artifact_digest": "sha256:07f9b0f872cb9d80705294aa89878da353731d5e8f5ff7c13b2ec21ed9dc73b7",
+      "runtime_receipt_digest": null
+    }
+  }
+]

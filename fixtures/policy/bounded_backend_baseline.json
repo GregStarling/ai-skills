@@ -1,0 +1,8 @@
+{
+  "schema_version": "policy_fixture.v1",
+  "fixture_id": "bounded_backend_baseline",
+  "suite_id": "bounded_backend",
+  "suite_version": 1,
+  "synthetic": true,
+  "purpose": "Synthetic policy boundary tests only; not a model task or performance observation."
+}

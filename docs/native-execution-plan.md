@@ -1,0 +1,25 @@
+# Model Governor native execution checkpoint
+
+This is a bounded implementation/review plan, not a claim that v1 has passed. The user wants full v1 and specifically requests use of Foreman where useful, recording failures and applying the smallest unblock.
+
+The integrated core now exposes strict contracts, source/content validation, policy qualification, exact paired inference, binding recomputation, atomic ledger and actual CLI commands. Current integrated tests passed53 checks; the governance agent is completing the required valid/invalid fixture regression corpus before adapter implementation begins.
+
+After that foundation passes, implement these cohesive increments using the existing core APIs:
+
+1. Claude compiler first: validate binding in production mode, render local native agent/skill plus immutable manifest, verify exact file set/digests, inspect effective child overrides. An explicit disposable adapter-test mode exercises synthetic compiler fixtures but never authorizes production dispatch. Record installed version/help and existing official source references from docs/runtime-contracts.md. Unsupported required controls fail closed.
+2. Verify Claude compiler, then Codex compiler against the same binding contract. Use current installed flags/config syntax from docs/runtime-contracts.md; keep credentials in their existing runtime, no API keys and no global config edits.
+3. Shared real subprocess runner: bounded argv without shell, timeout process group cleanup, retained raw output/error hashes, explicit observed-model/usage/cost unknowns. No declared model mistaken for served-model attestation. Runtime version/config drift blocks production; each provider gets a bounded live objectively graded smoke in a disposable workspace using existing subscription auth.
+4. Harvest the two calibrated real Foreman tasks in docs/evaluation-source-candidates.json. Reconstruct their pinned buggy parent, hide known solutions, keep grader immutable and run against actual returned artifact. The active taxonomy is deliberately limited to supported coding/debugging classes. Historical known-fix grading calibrates the grader; it is never model evidence.
+5. Connect bounded delegation: validated binding, concrete scope, actual before/after file manifests, post-change risk maximum, independent fresh review of final digest when policy requires, retry limits, immutable receipts including failed/review/rework costs. Review uses a new process in an explicit package workspace and records context sources; impossible context guarantees or unavailable independent reviewers escalate.
+6. Safe shadow replay uses separate isolated workspaces, same task/fixture/harness, incumbent remains usable, challenger artifacts discarded. Irreversible or destructive tasks categorically refused before dispatch. Unknown runtime safety cannot silently authorize replay.
+7. Discovery preserves official source bytes/version/date and unknown metadata. Refresh composes existing capabilities, stages a complete validated/rendered generation, reports human/machine diff, and atomically activates only via explicit apply. HOLD leaves eligible active state unchanged; invalid incumbents cannot dispatch but may be repaired by qualified replacement.
+8. Final proof executes actual checks and raw live invocations, verifies hashed artifacts and required coverage. Offline passes, live execution, unsupported runtime controls, and empirical qualification are separate outcomes.
+
+Review focus: identify concrete missing trust boundaries or contradictions that would prevent these outcomes; cite the affected step and smallest fix. Cosmetic naming, speculative extensibility and unneeded abstractions do not block this build. Do not start/replan the original Foreman task graph or mutate product files during this read-only plan review.
+
+## Checkpoint review resolution
+
+Foreman grill_20260909T234851810Z_b17d4c1b11b47229 correctly requested explicit composition checks. Its assumption that old task packets still limit direct implementation is superseded by AGENTS.md's CTO correction. The root CTO owns the concrete integration files `src/shadow/index.ts`, `src/refresh/index.ts`, and CLI registry wrappers, and may fix their upstream call sites after delegated ownership handoff. No extra wiring task or graph rewrite is needed.
+
+- Shadow integration must invoke the populated governed delegation/runtime path for the incumbent and the constrained evaluation path for an isolated challenger. An integration test observes actual process executions, matched task identities, safety refusal before launch, usable incumbent artifacts and discarded challenger workspace. A pure local shadow calculation is insufficient.
+- Refresh integration must call populated discovery/ingestion/evidence, qualification/paired selection, independent binding validation and provider adapter rendering before proposal activation. A fixture-backed integration check executes proposal→output validation→explicit atomic apply, tamper rejection and repeat-HOLD idempotency. Root owns any necessary cross-module imports and CLI registration. These checks run before final proof.
