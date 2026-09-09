@@ -78,7 +78,7 @@ Support explicit policy-controlled shadow replay of eligible real work with incu
 
 ## REQ-019: Deterministic refresh proposal
 
-Build the refresh command and portable refresh-models skill last among operational capabilities, composing discovery, admissible evidence ingestion, missing-eval identification and authorized isolated evaluation, paired comparison, qualification/promotion, proposed bindings, independent validation, adapter rendering and rendered-output validation. Produce a human-readable and machine-readable diff identifying role/class, incumbent/challenger, investigation trigger, evidence, economics, exact rules and PROMOTE/HOLD/ESCALATION_REQUIRED result. Policy is read-only; unsupported runtimes, missing evidence, stale/unavailable models or invalid output fail closed. Stage complete proposals and apply locally through an explicit recorded action with atomic consistency; a no-change refresh is idempotent and cannot silently alter active assignments.
+Build the refresh command and portable refresh-models skill last among operational capabilities, composing discovery, admissible evidence ingestion, missing-eval identification and authorized isolated evaluation, paired comparison, qualification/promotion, proposed bindings, independent validation, adapter rendering and rendered-output validation. Produce a human-readable and machine-readable diff identifying role/class, incumbent/challenger, investigation trigger, evidence, economics, exact rules and PROMOTE/HOLD/ESCALATION_REQUIRED result. Policy is read-only. Invalid or unavailable incumbents must not be dispatched or retained, but refresh is allowed to replace them with a qualified supported candidate. Unsupported required runtime controls, missing replacement evidence or invalid proposed output prevent activation; they do not prohibit inspection or building a repair proposal. Stage complete proposals and apply locally through an explicit recorded action with atomic consistency; a no-change refresh is idempotent and cannot silently alter active assignments.
 
 ## REQ-020: Reproducible full-v1 proof
 
@@ -298,7 +298,7 @@ Verification: npm run verify:v1
 
 Given: A real registry and comparable local observations contain several candidates, including a cheap unqualified candidate and an eligible incumbent.
 When: Run qualify/compare/status and independently validate the proposed selection.
-Then: Only fully qualified candidates enter economics; initial selection is the cheapest qualified candidate with deterministic ties, while replacement obeys paired promotion requirements. The decision records candidate exclusions, exact evidence references, policy digest, rule IDs and escalation conditions. Vendor-only, synthetic, missing-price and incompatible-stratum observations cannot establish production qualification.
+Then: Only fully qualified candidates enter economics; initial selection is the cheapest qualified candidate with deterministic ties, while replacement obeys paired promotion requirements. The decision records candidate exclusions, exact evidence references, policy digest, rule IDs and escalation conditions. Vendor-only, synthetic, missing-admissible-task-cost and incompatible-stratum observations cannot establish production qualification.
 Verification: npm run verify:v1
 
 ### AC-032: Invalid incumbent cannot be retained (REQ-015)
@@ -324,7 +324,7 @@ Verification: npm run verify:v1
 
 ### AC-035: Bounded worker and fresh review contract (REQ-017)
 
-Given: A task has a valid production binding and a runtime profile capable of enforcing its declared scope and context boundary.
+Given: A task has a valid production binding and a runtime profile capable of enforcing its declared scope and context boundary. For the offline proof, construct explicitly synthetic records in an isolated simulation harness exercising the same implementation and fake process transport. Those records and outputs must never pass the production entry point or count as real performance evidence. Separately test production rejection and verify real qualification only when actual observations support it.
 When: Dispatch a bounded implementation and required reviewer through the native mechanisms or documented CLI bridge.
 Then: The worker receives goal, scope, allowed/forbidden systems/files, acceptance checks, risk constraints, structured return and escalation conditions. The runtime records the requested exact candidate and observed identity where available; unknown served identity is not asserted as observed. A fresh critical reviewer is a new context receiving only the admissible artifact/spec/check package, with no implementation conversation or prior review conclusions. The accepted outcome names the exact reviewed artifact digest and records the verification evidence.
 Verification: npm run verify:v1
@@ -373,7 +373,7 @@ Verification: npm run verify:v1
 
 ### AC-042: Refresh verifies before local activation (REQ-019)
 
-Given: A complete real evidence set authorizes replacement and both adapter profiles support the proposed binding; a separate case has invalid generated output.
+Given: A complete real evidence set authorizes replacement and both adapter profiles support the proposed binding; a separate case has invalid generated output. For the offline proof, construct explicitly synthetic records in an isolated simulation harness exercising the same implementation and fake process transport. Those records and outputs must never pass the production entry point or count as real performance evidence. Separately test production rejection and verify real qualification only when actual observations support it.
 When: Stage the refresh proposal, inspect its machine/human diff, and invoke explicit local apply.
 Then: Successful apply activates a mutually consistent binding/generated set with recorded source digests; no partially applied set is dispatchable after interruption. Invalid binding/output, changed policy/source digests or unsupported adapter prevents activation and leaves the prior usable state intact. No constitution file, global skill directory or user-global provider configuration is modified.
 Verification: npm run verify:v1
@@ -382,7 +382,7 @@ Verification: npm run verify:v1
 
 Given: A clean checkout has declared local dependencies and versioned fixture/source captures.
 When: Run npm run verify:v1.
-Then: The baseline pathological suite and all full-v1 offline acceptance groups execute with a coverage/result report, passing build/typecheck and useful errors. The report identifies which tests are synthetic and which artifacts came from actual harvested work; it does not call offline mocks live proof. Model launches, price changes, methodology updates and runtime syntax changes are exercised without rewriting constitution principles.
+Then: The baseline pathological suite and all full-v1 offline acceptance groups execute with a coverage/result report, passing build/typecheck and useful errors. The report identifies which tests are synthetic and which artifacts came from actual harvested work; it does not call offline mocks live proof. Model launches, price changes, methodology updates and runtime syntax changes are exercised without rewriting constitution principles. Production success-path algorithms may be exercised through explicitly isolated simulation transports and synthetic records in offline tests. Production entry points reject those records; live qualification and actual provider execution are reported separately, never implied by offline passes.
 Verification: npm run verify:v1
 
 ### AC-044: Live CLI subscription smoke and honest limits (REQ-010, REQ-011, REQ-012, REQ-017, REQ-020)
@@ -419,6 +419,8 @@ Verification: npm run verify:v1:live
 - Do not fabricate canonical snapshots, empirical outcomes, source citations, token counts, subscription-derived dollar costs, confidence bounds, sample sufficiency or served-model identity. Unknown cost blocks cost-based production qualification until admissible measurement exists; lack of a production binding does not block implementation and offline/evaluation verification.
 
 - Full v1 is a working local library/CLI and portable skill workflow with honest empirical states, not a guarantee that current installed runtimes expose every control or any candidate already qualifies. Report concrete remaining operational blockers and continue all independent implementation/verification.
+
+- Offline success-path tests may use an explicitly isolated simulation harness with the same implementation and test process transports; no test-only waiver may leak into production entry points. Real qualification is an empirical state, not a prerequisite for implementing and testing all algorithms. Missing public token prices do not invalidate admissible measured task costs. Refresh may repair an invalid incumbent but may never dispatch or retain it.
 
 ## outOfScope
 
