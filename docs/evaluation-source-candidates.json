@@ -1,0 +1,664 @@
+{
+  "schema_version": "model_governor_fixture_candidates.v1",
+  "generated_at": "2026-09-09T21:02:37.088914+00:00",
+  "source_repository": "/Users/gregpro/foreman",
+  "purpose": "Read-only raw historical provenance for potential real-work evaluation fixtures; not qualified fixture packages or model-performance evidence.",
+  "read_only_actions": [
+    "git log/show/diff-tree/rev-parse and source metadata reads only",
+    "Initial provenance selection executed no worktrees, source/target edits, dependency installs, test runs or model invocations.",
+    "Subsequently authorized: two isolated /tmp exports with separate npm caches and dependencies; fail-before/pass-after calibration executed without modifying source or target."
+  ],
+  "preparation_status": "Four candidates selected; two have verified failing-parent/passing-known-fix calibration under isolated /tmp exports, while the other two remain uncalibrated. None are model-performance evidence.",
+  "limitations": [
+    "Only bounded backend/debugging/audit parsing tasks are represented; these four cannot satisfy all eight proposed task classes.",
+    "Original task prompts were not recovered independently; descriptions derive from real commit/test provenance and should retain that qualification.",
+    "Historical tests are objective executable starting graders, not evidence that a model succeeds and not exhaustive task acceptance by themselves.",
+    "Hidden-solution discipline, immutable graders and source-scope enforcement must be added by the fixture packager.",
+    "Reproduction commands for uncalibrated candidates remain unexecuted; two selected candidates have retained actual calibration evidence. Setup failures remain distinct from behavioral failures."
+  ],
+  "candidates": [
+    {
+      "id": "foreman-t897-reconnect-notice",
+      "commit": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+      "task_description": "Treat an uncounted Codex Reconnecting... waiting for network notice as a transient retry rather than a terminal provider failure. Preserve genuine terminal errors and completion behavior.",
+      "allowed": [
+        "src/pty/codex-conversation-session.ts"
+      ],
+      "tests": [
+        "src/pty/codex-conversation-session.test.ts"
+      ],
+      "regressions": [
+        "ignores the uncounted \"waiting for network\" reconnect notice too"
+      ],
+      "risk_facts": [
+        "modifies_provider_event_classification",
+        "no_credential_changes",
+        "no_public_api_change_required"
+      ],
+      "uncertainty": [
+        "The committed test uses a mocked child process and tests protocol handling, not current live Codex network behavior.",
+        "A broader transport replay could add confidence; it is not necessary to establish this narrowly scoped regression."
+      ],
+      "source_repository": "/Users/gregpro/foreman",
+      "parent": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+      "commit_subject": "Revision 57 hotfix: every codex Reconnecting notice is a retry notice, including the uncounted waiting-for-network shape (t897)",
+      "committed_at": "2026-09-01T23:58:17-05:00",
+      "all_changed_paths": [
+        "docs/prd.json",
+        "docs/progress.md",
+        "lessons/codex-retry-notice-terminal-2026-09-02.md",
+        "src/pty/codex-conversation-session.test.ts",
+        "src/pty/codex-conversation-session.ts"
+      ],
+      "suggested_role": "implementer",
+      "suggested_task_class": "bounded_backend",
+      "classification_status": "proposed; use governor policy and actual fixture constraints to classify, not this metadata as authority",
+      "task_description_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+      "grader_files": [
+        {
+          "path": "src/pty/codex-conversation-session.test.ts",
+          "git_blob": "fabc1ea6b03a4f1b4a545b659ffd0dea3736412b",
+          "sha256": "cda2ab0fbb764db1183edabb9f9400d2a5be293f9feafc8512108ee50ed8fb99"
+        }
+      ],
+      "forbidden_changes": [
+        "Any path outside allowed implementation paths",
+        "Held-out grader/test files",
+        "package.json and package-lock.json",
+        "Provider credentials, user-global configuration, source repository or source Git state"
+      ],
+      "known_solution_paths": [
+        "src/pty/codex-conversation-session.ts"
+      ],
+      "isolation_directory": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+      "reproduction_commands": [
+        {
+          "cwd": "/tmp",
+          "command": "mkdir /tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "expected_exit_code": 0,
+          "purpose": "Create a fresh directory; refuse an existing path instead of overwriting it."
+        },
+        {
+          "cwd": "/tmp",
+          "command": "git -C /Users/gregpro/foreman archive d22c79a74141a22114c9dbcd3f63f9defda5364c | tar -x -C /tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "expected_exit_code": 0,
+          "purpose": "Reconstruct the exact parent without modifying source checkout or creating a worktree."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "git -C /Users/gregpro/foreman show 0c99b05f4080b741517dfc3aa05ba42a5a46be94:src/pty/codex-conversation-session.test.ts > /tmp/model-governor-fixture-foreman-t897-reconnect-notice/src/pty/codex-conversation-session.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "npm ci",
+          "expected_exit_code": 0,
+          "purpose": "Install the pinned dependency lock in the isolated directory only; may need network and native build support."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node node_modules/vitest/vitest.mjs run src/pty/codex-conversation-session.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t897-reconnect-notice/grader-result.json",
+          "expected_exit_code": 1,
+          "purpose": "Expected failing-parent run; independently check that a named regression assertion actually failed rather than an import/setup error."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"ignores the uncounted \\\"waiting for network\\\" reconnect notice too\"]; if(!tests.some(t=>t.status==='\"'\"'failed'\"'\"'&&names.some(n=>t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'PARENT_REGRESSION_REPRODUCED'\"'\"');'",
+          "expected_exit_code": 0,
+          "purpose": "Verify a real named failing assertion; nonzero process exit alone is not a reproduced bug."
+        }
+      ],
+      "candidate_acceptance_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node node_modules/vitest/vitest.mjs run src/pty/codex-conversation-session.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t897-reconnect-notice/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"ignores the uncounted \\\"waiting for network\\\" reconnect notice too\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "test \"$(git hash-object src/pty/codex-conversation-session.test.ts)\" = fabc1ea6b03a4f1b4a545b659ffd0dea3736412b",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        }
+      ],
+      "known_fix_calibration_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "git -C /Users/gregpro/foreman show 0c99b05f4080b741517dfc3aa05ba42a5a46be94:src/pty/codex-conversation-session.ts > /tmp/model-governor-fixture-foreman-t897-reconnect-notice/src/pty/codex-conversation-session.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node node_modules/vitest/vitest.mjs run src/pty/codex-conversation-session.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t897-reconnect-notice/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t897-reconnect-notice",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"ignores the uncounted \\\"waiting for network\\\" reconnect notice too\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        }
+      ],
+      "scope_grader_requirement": "Before and after a candidate attempt, hash all tracked source-tree files and reject modifications outside allowed implementation paths; exclude dependency installation and explicitly declared test-output/temp paths. The future fixture packager must implement this manifest check independently of candidate control.",
+      "environment": {
+        "node": ">=22",
+        "test_runner": "Vitest ^4.1.8 as declared at selected commit; exact resolution is in pinned package-lock.json",
+        "network_for_grading": "No live model/provider calls expected; inspected tests use fake sessions or pure parsers. Dependency installation may need package registry access.",
+        "native_dependencies": "The source package declares native dependencies; isolated npm ci may require Node ABI-compatible build tooling."
+      },
+      "verification_status": {
+        "commit_and_parent_resolve": true,
+        "source_and_test_diff_inspected": true,
+        "parent_failure_executed": true,
+        "known_fix_pass_executed": true,
+        "candidate_model_run_executed": false,
+        "model_performance_evidence": false
+      },
+      "calibration_evidence_ref": "/tmp/model-governor-real-fixture-verification.json",
+      "calibration_status": "verified_fail_before_pass_after",
+      "verified_isolation_directory": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree"
+    },
+    {
+      "id": "foreman-t899-planner-prose-fallback",
+      "commit": "8ee894edd4c38039845e09ba9725c38ee0af9f8b",
+      "task_description": "Normalize free-text planner list entries carrying prose under work/item/deliverable or an unfamiliar object key. Recognized prose keys retain precedence; otherwise choose the longest qualifying sentence-length string. Preserve strings and reject objects with no qualifying prose.",
+      "allowed": [
+        "src/engine-loop/adversarial-planner.ts"
+      ],
+      "tests": [
+        "src/engine-loop/adversarial-planner.test.ts"
+      ],
+      "regressions": [
+        "projects labelled scope objects to their prose, by key or by longest sentence"
+      ],
+      "risk_facts": [
+        "modifies_planner_input_normalization",
+        "must_preserve_strict_structured_contracts",
+        "no_storage_schema_change_required"
+      ],
+      "uncertainty": [
+        "The source fix specifies a 20-character whitespace-containing fallback heuristic; this is a historical task criterion, not a proposed Model Governor policy threshold.",
+        "The new test covers named and unfamiliar prose keys but does not independently exhaustively test ties, absent prose and every boundary; supplement held-out checks before using as strong evaluation evidence.",
+        "Tests use fake planning sessions rather than live model calls."
+      ],
+      "source_repository": "/Users/gregpro/foreman",
+      "parent": "cd52bb55228f809f39462c1016051021b77fdb69",
+      "commit_subject": "Revision 57 hotfix: planner free-text lists fall back to the longest sentence when no named key matches (t899)",
+      "committed_at": "2026-09-02T00:50:11-05:00",
+      "all_changed_paths": [
+        "docs/prd.json",
+        "docs/progress.md",
+        "lessons/prompt-contract-field-drift-2026-09-01.md",
+        "src/engine-loop/adversarial-planner.test.ts",
+        "src/engine-loop/adversarial-planner.ts"
+      ],
+      "suggested_role": "implementer",
+      "suggested_task_class": "bounded_backend",
+      "classification_status": "proposed; use governor policy and actual fixture constraints to classify, not this metadata as authority",
+      "task_description_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+      "grader_files": [
+        {
+          "path": "src/engine-loop/adversarial-planner.test.ts",
+          "git_blob": "9c5210db7937c2b13d24811c5748cb014e5e63ff",
+          "sha256": "1c604e1f3be1d853a963909391bd787f1fb89e9d79b5676336b204a7513ff0b0"
+        }
+      ],
+      "forbidden_changes": [
+        "Any path outside allowed implementation paths",
+        "Held-out grader/test files",
+        "package.json and package-lock.json",
+        "Provider credentials, user-global configuration, source repository or source Git state"
+      ],
+      "known_solution_paths": [
+        "src/engine-loop/adversarial-planner.ts"
+      ],
+      "isolation_directory": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+      "reproduction_commands": [
+        {
+          "cwd": "/tmp",
+          "command": "mkdir /tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "expected_exit_code": 0,
+          "purpose": "Create a fresh directory; refuse an existing path instead of overwriting it."
+        },
+        {
+          "cwd": "/tmp",
+          "command": "git -C /Users/gregpro/foreman archive cd52bb55228f809f39462c1016051021b77fdb69 | tar -x -C /tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "expected_exit_code": 0,
+          "purpose": "Reconstruct the exact parent without modifying source checkout or creating a worktree."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "git -C /Users/gregpro/foreman show 8ee894edd4c38039845e09ba9725c38ee0af9f8b:src/engine-loop/adversarial-planner.test.ts > /tmp/model-governor-fixture-foreman-t899-planner-prose-fallback/src/engine-loop/adversarial-planner.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "npm ci",
+          "expected_exit_code": 0,
+          "purpose": "Install the pinned dependency lock in the isolated directory only; may need network and native build support."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node node_modules/vitest/vitest.mjs run src/engine-loop/adversarial-planner.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback/grader-result.json",
+          "expected_exit_code": 1,
+          "purpose": "Expected failing-parent run; independently check that a named regression assertion actually failed rather than an import/setup error."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects labelled scope objects to their prose, by key or by longest sentence\"]; if(!tests.some(t=>t.status==='\"'\"'failed'\"'\"'&&names.some(n=>t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'PARENT_REGRESSION_REPRODUCED'\"'\"');'",
+          "expected_exit_code": 0,
+          "purpose": "Verify a real named failing assertion; nonzero process exit alone is not a reproduced bug."
+        }
+      ],
+      "candidate_acceptance_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node node_modules/vitest/vitest.mjs run src/engine-loop/adversarial-planner.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects labelled scope objects to their prose, by key or by longest sentence\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "test \"$(git hash-object src/engine-loop/adversarial-planner.test.ts)\" = 9c5210db7937c2b13d24811c5748cb014e5e63ff",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        }
+      ],
+      "known_fix_calibration_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "git -C /Users/gregpro/foreman show 8ee894edd4c38039845e09ba9725c38ee0af9f8b:src/engine-loop/adversarial-planner.ts > /tmp/model-governor-fixture-foreman-t899-planner-prose-fallback/src/engine-loop/adversarial-planner.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node node_modules/vitest/vitest.mjs run src/engine-loop/adversarial-planner.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t899-planner-prose-fallback",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects labelled scope objects to their prose, by key or by longest sentence\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        }
+      ],
+      "scope_grader_requirement": "Before and after a candidate attempt, hash all tracked source-tree files and reject modifications outside allowed implementation paths; exclude dependency installation and explicitly declared test-output/temp paths. The future fixture packager must implement this manifest check independently of candidate control.",
+      "environment": {
+        "node": ">=22",
+        "test_runner": "Vitest ^4.1.8 as declared at selected commit; exact resolution is in pinned package-lock.json",
+        "network_for_grading": "No live model/provider calls expected; inspected tests use fake sessions or pure parsers. Dependency installation may need package registry access.",
+        "native_dependencies": "The source package declares native dependencies; isolated npm ci may require Node ABI-compatible build tooling."
+      },
+      "verification_status": {
+        "commit_and_parent_resolve": true,
+        "source_and_test_diff_inspected": true,
+        "parent_failure_executed": false,
+        "known_fix_pass_executed": false,
+        "candidate_model_run_executed": false,
+        "model_performance_evidence": false
+      }
+    },
+    {
+      "id": "foreman-t920-derived-gate-id",
+      "commit": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "task_description": "Derive each acceptance gate ID deterministically from its owning task and exact acceptance criterion instead of requiring the planner to provide the hash. Accept missing or incorrect supplied IDs while continuing to reject a criterion that does not exactly match the declared acceptance criteria.",
+      "allowed": [
+        "src/acceptance/contracts.ts"
+      ],
+      "tests": [
+        "src/acceptance/contracts.test.ts"
+      ],
+      "regressions": [
+        "derives the gate id from the task and criterion, ignoring a supplied or missing id"
+      ],
+      "risk_facts": [
+        "modifies_acceptance_contract_normalization",
+        "criterion_equality_must_remain_enforced",
+        "no_hash_algorithm_change_required"
+      ],
+      "uncertainty": [
+        "This is a governance-boundary change: include negative criterion-mismatch assertions and source-scope checks, not only the positive wrong-ID case.",
+        "The committed tests scan additional source files for pre-existing invariants, so reconstruct the whole pinned parent tree rather than copying only the two touched files."
+      ],
+      "source_repository": "/Users/gregpro/foreman",
+      "parent": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "commit_subject": "Revision 58 follow-up: acceptance-gate ids are derived by the seam, never demanded from the planner (t920, F25)",
+      "committed_at": "2026-09-04T17:47:29-05:00",
+      "all_changed_paths": [
+        "docs/prd.json",
+        "docs/progress.md",
+        "lessons/prompt-contract-field-drift-2026-09-01.md",
+        "src/acceptance/contracts.test.ts",
+        "src/acceptance/contracts.ts"
+      ],
+      "suggested_role": "implementer",
+      "suggested_task_class": "bounded_backend",
+      "classification_status": "proposed; use governor policy and actual fixture constraints to classify, not this metadata as authority",
+      "task_description_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+      "grader_files": [
+        {
+          "path": "src/acceptance/contracts.test.ts",
+          "git_blob": "82af9a9ce0302788a8b5fff8b0f1691d3be01bf5",
+          "sha256": "fc82b830809a7f700960ae9d1baa23580322f727f4644818d2086d19465ec730"
+        }
+      ],
+      "forbidden_changes": [
+        "Any path outside allowed implementation paths",
+        "Held-out grader/test files",
+        "package.json and package-lock.json",
+        "Provider credentials, user-global configuration, source repository or source Git state"
+      ],
+      "known_solution_paths": [
+        "src/acceptance/contracts.ts"
+      ],
+      "isolation_directory": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+      "reproduction_commands": [
+        {
+          "cwd": "/tmp",
+          "command": "mkdir /tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "expected_exit_code": 0,
+          "purpose": "Create a fresh directory; refuse an existing path instead of overwriting it."
+        },
+        {
+          "cwd": "/tmp",
+          "command": "git -C /Users/gregpro/foreman archive e407612b990a43ef1db138a701fdeb3f96aabaa0 | tar -x -C /tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "expected_exit_code": 0,
+          "purpose": "Reconstruct the exact parent without modifying source checkout or creating a worktree."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "git -C /Users/gregpro/foreman show a0de8d3265ea6fbdc54626f3952a50a68093c9f4:src/acceptance/contracts.test.ts > /tmp/model-governor-fixture-foreman-t920-derived-gate-id/src/acceptance/contracts.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "npm ci",
+          "expected_exit_code": 0,
+          "purpose": "Install the pinned dependency lock in the isolated directory only; may need network and native build support."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node node_modules/vitest/vitest.mjs run src/acceptance/contracts.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t920-derived-gate-id/grader-result.json",
+          "expected_exit_code": 1,
+          "purpose": "Expected failing-parent run; independently check that a named regression assertion actually failed rather than an import/setup error."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"derives the gate id from the task and criterion, ignoring a supplied or missing id\"]; if(!tests.some(t=>t.status==='\"'\"'failed'\"'\"'&&names.some(n=>t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'PARENT_REGRESSION_REPRODUCED'\"'\"');'",
+          "expected_exit_code": 0,
+          "purpose": "Verify a real named failing assertion; nonzero process exit alone is not a reproduced bug."
+        }
+      ],
+      "candidate_acceptance_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node node_modules/vitest/vitest.mjs run src/acceptance/contracts.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t920-derived-gate-id/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"derives the gate id from the task and criterion, ignoring a supplied or missing id\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "test \"$(git hash-object src/acceptance/contracts.test.ts)\" = 82af9a9ce0302788a8b5fff8b0f1691d3be01bf5",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        }
+      ],
+      "known_fix_calibration_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "git -C /Users/gregpro/foreman show a0de8d3265ea6fbdc54626f3952a50a68093c9f4:src/acceptance/contracts.ts > /tmp/model-governor-fixture-foreman-t920-derived-gate-id/src/acceptance/contracts.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node node_modules/vitest/vitest.mjs run src/acceptance/contracts.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t920-derived-gate-id/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t920-derived-gate-id",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"derives the gate id from the task and criterion, ignoring a supplied or missing id\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        }
+      ],
+      "scope_grader_requirement": "Before and after a candidate attempt, hash all tracked source-tree files and reject modifications outside allowed implementation paths; exclude dependency installation and explicitly declared test-output/temp paths. The future fixture packager must implement this manifest check independently of candidate control.",
+      "environment": {
+        "node": ">=22",
+        "test_runner": "Vitest ^4.1.8 as declared at selected commit; exact resolution is in pinned package-lock.json",
+        "network_for_grading": "No live model/provider calls expected; inspected tests use fake sessions or pure parsers. Dependency installation may need package registry access.",
+        "native_dependencies": "The source package declares native dependencies; isolated npm ci may require Node ABI-compatible build tooling."
+      },
+      "verification_status": {
+        "commit_and_parent_resolve": true,
+        "source_and_test_diff_inspected": true,
+        "parent_failure_executed": true,
+        "known_fix_pass_executed": true,
+        "candidate_model_run_executed": false,
+        "model_performance_evidence": false
+      },
+      "calibration_evidence_ref": "/tmp/model-governor-real-fixture-verification.json",
+      "calibration_status": "verified_fail_before_pass_after",
+      "verified_isolation_directory": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree"
+    },
+    {
+      "id": "foreman-t910-disclosure-prose-and-echo",
+      "commit": "f78d59f096ae8d353e1f47d5a5e289bf8abdf880",
+      "task_description": "Accept engineering disclosure material alternatives expressed as prose while preserving typed option/rejected_because output and rejecting invalid entries. Treat identical repeated disclosure blocks as one disclosure without a spurious duplicate warning. Update the prompt skeleton to show representative entries for every enforced structured array.",
+      "allowed": [
+        "src/audit-lineage/contracts.ts",
+        "src/audit-lineage/parse-engineering-decision.ts",
+        "src/audit-lineage/policy.ts"
+      ],
+      "tests": [
+        "src/audit-lineage/contracts.test.ts",
+        "src/audit-lineage/parse-engineering-decision.test.ts",
+        "src/audit-lineage/policy.test.ts"
+      ],
+      "regressions": [
+        "projects prose material alternatives into option/rejected_because (soak attempt 19)",
+        "treats identical echoed blocks as one disclosure without a duplicate warning",
+        "records a disclosure whose material alternatives are prose (soak attempt 19 writer block)",
+        "shows a representative entry for every array whose entry shape the contract enforces"
+      ],
+      "risk_facts": [
+        "modifies_audit_disclosure_parsing",
+        "invalid_shapes_must_still_fail",
+        "different_nonidentical_blocks_must_not_be_silently_discarded"
+      ],
+      "uncertainty": [
+        "This fourth candidate is larger than the others: three implementation files and three grader files, with three related acceptance behaviors.",
+        "Some assertions inspect prompt shape rather than exercising a live writer; label their limits explicitly.",
+        "The historical prose fallback copies unsplit text into both fields; whether that is appropriate for a new product is outside this historical evaluation task."
+      ],
+      "source_repository": "/Users/gregpro/foreman",
+      "parent": "a63963aa1ced97d16edd23e2f6a14b83678e4269",
+      "commit_subject": "Revision 57 hotfix: a writer's disclosed engineering decision survives prose material alternatives; the disclosure skeleton teaches every enforced array's entry shape (t910)",
+      "committed_at": "2026-09-02T16:31:23-05:00",
+      "all_changed_paths": [
+        "docs/prd.json",
+        "docs/progress.md",
+        "lessons/prompt-contract-field-drift-2026-09-01.md",
+        "src/audit-lineage/contracts.test.ts",
+        "src/audit-lineage/contracts.ts",
+        "src/audit-lineage/parse-engineering-decision.test.ts",
+        "src/audit-lineage/parse-engineering-decision.ts",
+        "src/audit-lineage/policy.test.ts",
+        "src/audit-lineage/policy.ts"
+      ],
+      "suggested_role": "implementer",
+      "suggested_task_class": "bounded_backend",
+      "classification_status": "proposed; use governor policy and actual fixture constraints to classify, not this metadata as authority",
+      "task_description_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+      "grader_files": [
+        {
+          "path": "src/audit-lineage/contracts.test.ts",
+          "git_blob": "23a96b26f763f63832f7b629a0f41c27efebfb25",
+          "sha256": "0a65f95fc019b7bd47ccfe7ad4fab32bea47913acc5e5bcd02f4f481801ade75"
+        },
+        {
+          "path": "src/audit-lineage/parse-engineering-decision.test.ts",
+          "git_blob": "5afe436eca771b091c70925f9374f8cb19527966",
+          "sha256": "5bad26d375fe8d6370e463aea6a98d7e09748e17856cded14928fee36081b58c"
+        },
+        {
+          "path": "src/audit-lineage/policy.test.ts",
+          "git_blob": "c3fc5da257c5698072b3656538ade22400a04de4",
+          "sha256": "a8574122bfc657ff26c4fb2548812a3ebddcca479360055cd081d512060d444f"
+        }
+      ],
+      "forbidden_changes": [
+        "Any path outside allowed implementation paths",
+        "Held-out grader/test files",
+        "package.json and package-lock.json",
+        "Provider credentials, user-global configuration, source repository or source Git state"
+      ],
+      "known_solution_paths": [
+        "src/audit-lineage/contracts.ts",
+        "src/audit-lineage/parse-engineering-decision.ts",
+        "src/audit-lineage/policy.ts"
+      ],
+      "isolation_directory": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+      "reproduction_commands": [
+        {
+          "cwd": "/tmp",
+          "command": "mkdir /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "expected_exit_code": 0,
+          "purpose": "Create a fresh directory; refuse an existing path instead of overwriting it."
+        },
+        {
+          "cwd": "/tmp",
+          "command": "git -C /Users/gregpro/foreman archive a63963aa1ced97d16edd23e2f6a14b83678e4269 | tar -x -C /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "expected_exit_code": 0,
+          "purpose": "Reconstruct the exact parent without modifying source checkout or creating a worktree."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/contracts.test.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/contracts.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/parse-engineering-decision.test.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/parse-engineering-decision.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/policy.test.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/policy.test.ts",
+          "expected_exit_code": 0,
+          "purpose": "Mount the historical fixed regression grader onto the buggy parent; withhold grader and solution from candidate input if running blind."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "npm ci",
+          "expected_exit_code": 0,
+          "purpose": "Install the pinned dependency lock in the isolated directory only; may need network and native build support."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node node_modules/vitest/vitest.mjs run src/audit-lineage/contracts.test.ts src/audit-lineage/parse-engineering-decision.test.ts src/audit-lineage/policy.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/grader-result.json",
+          "expected_exit_code": 1,
+          "purpose": "Expected failing-parent run; independently check that a named regression assertion actually failed rather than an import/setup error."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects prose material alternatives into option/rejected_because (soak attempt 19)\", \"treats identical echoed blocks as one disclosure without a duplicate warning\", \"records a disclosure whose material alternatives are prose (soak attempt 19 writer block)\", \"shows a representative entry for every array whose entry shape the contract enforces\"]; if(!tests.some(t=>t.status==='\"'\"'failed'\"'\"'&&names.some(n=>t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'PARENT_REGRESSION_REPRODUCED'\"'\"');'",
+          "expected_exit_code": 0,
+          "purpose": "Verify a real named failing assertion; nonzero process exit alone is not a reproduced bug."
+        }
+      ],
+      "candidate_acceptance_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node node_modules/vitest/vitest.mjs run src/audit-lineage/contracts.test.ts src/audit-lineage/parse-engineering-decision.test.ts src/audit-lineage/policy.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects prose material alternatives into option/rejected_because (soak attempt 19)\", \"treats identical echoed blocks as one disclosure without a duplicate warning\", \"records a disclosure whose material alternatives are prose (soak attempt 19 writer block)\", \"shows a representative entry for every array whose entry shape the contract enforces\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "test \"$(git hash-object src/audit-lineage/contracts.test.ts)\" = 23a96b26f763f63832f7b629a0f41c27efebfb25",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "test \"$(git hash-object src/audit-lineage/parse-engineering-decision.test.ts)\" = 5afe436eca771b091c70925f9374f8cb19527966",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "test \"$(git hash-object src/audit-lineage/policy.test.ts)\" = c3fc5da257c5698072b3656538ade22400a04de4",
+          "expected_exit_code": 0,
+          "purpose": "Verify held-out grader bytes were not modified."
+        }
+      ],
+      "known_fix_calibration_commands": [
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/contracts.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/contracts.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/parse-engineering-decision.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/parse-engineering-decision.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "git -C /Users/gregpro/foreman show f78d59f096ae8d353e1f47d5a5e289bf8abdf880:src/audit-lineage/policy.ts > /tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/src/audit-lineage/policy.ts",
+          "expected_exit_code": 0,
+          "purpose": "Evaluator-only calibration: overlay historical fix. Never execute in the source checkout or expose as candidate answer."
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node node_modules/vitest/vitest.mjs run src/audit-lineage/contracts.test.ts src/audit-lineage/parse-engineering-decision.test.ts src/audit-lineage/policy.test.ts --reporter=json --outputFile=/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo/grader-result.json",
+          "expected_exit_code": 0
+        },
+        {
+          "cwd": "/tmp/model-governor-fixture-foreman-t910-disclosure-prose-and-echo",
+          "command": "node -e 'const fs=require('\"'\"'fs'\"'\"'); const r=JSON.parse(fs.readFileSync('\"'\"'grader-result.json'\"'\"','\"'\"'utf8'\"'\"')); const tests=(r.testResults||[]).flatMap(x=>x.assertionResults||[]); const names=[\"projects prose material alternatives into option/rejected_because (soak attempt 19)\", \"treats identical echoed blocks as one disclosure without a duplicate warning\", \"records a disclosure whose material alternatives are prose (soak attempt 19 writer block)\", \"shows a representative entry for every array whose entry shape the contract enforces\"]; if(!r.success || !r.numTotalTests || r.numFailedTests!==0) process.exit(1); for(const n of names) if(!tests.some(t=>t.status==='\"'\"'passed'\"'\"'&&(t.title===n||(t.fullName||'\"'\"''\"'\"').endsWith(n)))) process.exit(1); console.log('\"'\"'REAL_FIXTURE_GRADER_PASS'\"'\"');'",
+          "expected_exit_code": 0
+        }
+      ],
+      "scope_grader_requirement": "Before and after a candidate attempt, hash all tracked source-tree files and reject modifications outside allowed implementation paths; exclude dependency installation and explicitly declared test-output/temp paths. The future fixture packager must implement this manifest check independently of candidate control.",
+      "environment": {
+        "node": ">=22",
+        "test_runner": "Vitest ^4.1.8 as declared at selected commit; exact resolution is in pinned package-lock.json",
+        "network_for_grading": "No live model/provider calls expected; inspected tests use fake sessions or pure parsers. Dependency installation may need package registry access.",
+        "native_dependencies": "The source package declares native dependencies; isolated npm ci may require Node ABI-compatible build tooling."
+      },
+      "verification_status": {
+        "commit_and_parent_resolve": true,
+        "source_and_test_diff_inspected": true,
+        "parent_failure_executed": false,
+        "known_fix_pass_executed": false,
+        "candidate_model_run_executed": false,
+        "model_performance_evidence": false
+      }
+    }
+  ]
+}

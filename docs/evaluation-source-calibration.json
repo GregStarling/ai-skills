@@ -1,0 +1,280 @@
+{
+  "schema_version": "historical_fixture_verification.v1",
+  "completed_at": "2026-09-09T21:04:06.113355+00:00",
+  "source_repository": "/Users/gregpro/foreman",
+  "scope": "Two isolated temporary parent exports, fixed regression tests, known historical implementation overlays; no provider/model calls.",
+  "results": [
+    {
+      "candidate_id": "foreman-t897-reconnect-notice",
+      "status": "verified_fail_before_pass_after",
+      "commit": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+      "parent": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+      "workspace": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree",
+      "evidence_directory": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence",
+      "commands": [
+        {
+          "stage": "archive-parent",
+          "argv": [
+            "git",
+            "-C",
+            "/Users/gregpro/foreman",
+            "archive",
+            "--format=tar",
+            "--output=/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/parent.tar",
+            "d22c79a74141a22114c9dbcd3f63f9defda5364c"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_",
+          "started_at": "2026-09-09T21:03:59.476154+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/archive-parent.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/archive-parent.stderr.log"
+        },
+        {
+          "stage": "extract-parent",
+          "argv": [
+            "tar",
+            "-xf",
+            "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/parent.tar",
+            "-C",
+            "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_",
+          "started_at": "2026-09-09T21:03:59.654182+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/extract-parent.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/extract-parent.stderr.log"
+        },
+        {
+          "stage": "install-isolated-dependencies",
+          "argv": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree",
+          "started_at": "2026-09-09T21:03:59.948896+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/install-isolated-dependencies.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/install-isolated-dependencies.stderr.log"
+        },
+        {
+          "stage": "parent-with-held-out-grader",
+          "argv": [
+            "node",
+            "node_modules/vitest/vitest.mjs",
+            "run",
+            "src/pty/codex-conversation-session.test.ts",
+            "--reporter=json",
+            "--outputFile=/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/parent-with-held-out-grader.json"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree",
+          "started_at": "2026-09-09T21:04:04.553376+00:00",
+          "exit_code": 1,
+          "stdout": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/parent-with-held-out-grader.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/parent-with-held-out-grader.stderr.log"
+        },
+        {
+          "stage": "historical-fix-with-held-out-grader",
+          "argv": [
+            "node",
+            "node_modules/vitest/vitest.mjs",
+            "run",
+            "src/pty/codex-conversation-session.test.ts",
+            "--reporter=json",
+            "--outputFile=/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/historical-fix-with-held-out-grader.json"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree",
+          "started_at": "2026-09-09T21:04:05.660306+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/historical-fix-with-held-out-grader.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/historical-fix-with-held-out-grader.stderr.log"
+        }
+      ],
+      "parent_result": {
+        "exit_code": 1,
+        "report": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/parent-with-held-out-grader.json",
+        "report_sha256": "9b85e30c8f37a29ba915925e4aa79bfc8fab1f68901c2c3c1b34f7d2695af7a6",
+        "total_tests": 21,
+        "passed_tests": 20,
+        "failed_tests": 1,
+        "targeted_results": [
+          {
+            "name": "extractCodexProviderError ignores the uncounted \"waiting for network\" reconnect notice too",
+            "status": "failed",
+            "failure_messages": [
+              "AssertionError: expected false to be true // Object.is equality\n    at /private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/src/pty/codex-conversation-session.test.ts:80:40\n    at file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///private/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+            ]
+          }
+        ]
+      },
+      "known_fix_result": {
+        "exit_code": 0,
+        "report": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/historical-fix-with-held-out-grader.json",
+        "report_sha256": "968079296441af43056181a3f2b63fc23b6863d1859aa3c1d4ca240cd657742f",
+        "total_tests": 21,
+        "passed_tests": 21,
+        "failed_tests": 0,
+        "targeted_results": [
+          {
+            "name": "extractCodexProviderError ignores the uncounted \"waiting for network\" reconnect notice too",
+            "status": "passed",
+            "failure_messages": []
+          }
+        ]
+      },
+      "grader_integrity": [
+        {
+          "path": "src/pty/codex-conversation-session.test.ts",
+          "expected_sha256": "cda2ab0fbb764db1183edabb9f9400d2a5be293f9feafc8512108ee50ed8fb99",
+          "actual_sha256": "cda2ab0fbb764db1183edabb9f9400d2a5be293f9feafc8512108ee50ed8fb99",
+          "unchanged": true
+        }
+      ],
+      "model_calls": 0,
+      "model_performance_evidence": false,
+      "runtime": {
+        "node": "v22.23.2",
+        "npm": "10.9.8",
+        "package_lock_sha256": "b962c1ac4a812fff2152cb3fa6b29353a54221a81e2a59b712831e3147f933eb"
+      },
+      "artifact_hash_manifest": "/tmp/model-governor-verified-foreman-t897-reconnect-notice-5c5xs5x_/evidence/artifact-hashes.json"
+    },
+    {
+      "candidate_id": "foreman-t920-derived-gate-id",
+      "status": "verified_fail_before_pass_after",
+      "commit": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "parent": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "workspace": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree",
+      "evidence_directory": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence",
+      "commands": [
+        {
+          "stage": "archive-parent",
+          "argv": [
+            "git",
+            "-C",
+            "/Users/gregpro/foreman",
+            "archive",
+            "--format=tar",
+            "--output=/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/parent.tar",
+            "e407612b990a43ef1db138a701fdeb3f96aabaa0"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk",
+          "started_at": "2026-09-09T21:03:59.476323+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/archive-parent.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/archive-parent.stderr.log"
+        },
+        {
+          "stage": "extract-parent",
+          "argv": [
+            "tar",
+            "-xf",
+            "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/parent.tar",
+            "-C",
+            "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk",
+          "started_at": "2026-09-09T21:03:59.654239+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/extract-parent.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/extract-parent.stderr.log"
+        },
+        {
+          "stage": "install-isolated-dependencies",
+          "argv": [
+            "npm",
+            "ci",
+            "--no-audit",
+            "--no-fund"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree",
+          "started_at": "2026-09-09T21:03:59.950393+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/install-isolated-dependencies.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/install-isolated-dependencies.stderr.log"
+        },
+        {
+          "stage": "parent-with-held-out-grader",
+          "argv": [
+            "node",
+            "node_modules/vitest/vitest.mjs",
+            "run",
+            "src/acceptance/contracts.test.ts",
+            "--reporter=json",
+            "--outputFile=/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/parent-with-held-out-grader.json"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree",
+          "started_at": "2026-09-09T21:04:04.372105+00:00",
+          "exit_code": 1,
+          "stdout": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/parent-with-held-out-grader.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/parent-with-held-out-grader.stderr.log"
+        },
+        {
+          "stage": "historical-fix-with-held-out-grader",
+          "argv": [
+            "node",
+            "node_modules/vitest/vitest.mjs",
+            "run",
+            "src/acceptance/contracts.test.ts",
+            "--reporter=json",
+            "--outputFile=/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/historical-fix-with-held-out-grader.json"
+          ],
+          "cwd": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree",
+          "started_at": "2026-09-09T21:04:05.377124+00:00",
+          "exit_code": 0,
+          "stdout": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/historical-fix-with-held-out-grader.stdout.log",
+          "stderr": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/historical-fix-with-held-out-grader.stderr.log"
+        }
+      ],
+      "parent_result": {
+        "exit_code": 1,
+        "report": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/parent-with-held-out-grader.json",
+        "report_sha256": "69cd55c7b8ef8b3c9a3f061fe6e06061110406c82244ba0a69529cc55e1a6bbc",
+        "total_tests": 11,
+        "passed_tests": 10,
+        "failed_tests": 1,
+        "targeted_results": [
+          {
+            "name": "acceptance gate contracts derives the gate id from the task and criterion, ignoring a supplied or missing id",
+            "status": "failed",
+            "failure_messages": [
+              "Error: acceptance_gates[0].id must be gate_e465486c8db13a65\n    at acceptanceGateFromUnknown (/private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/src/acceptance/contracts.ts:207:11)\n    at /private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/src/acceptance/contracts.ts:177:5\n    at Array.map (<anonymous>)\n    at acceptanceGatesFromUnknown (/private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/src/acceptance/contracts.ts:176:29)\n    at /private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/src/acceptance/contracts.test.ts:266:23\n    at file:///private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///private/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/tree/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)"
+            ]
+          }
+        ]
+      },
+      "known_fix_result": {
+        "exit_code": 0,
+        "report": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/historical-fix-with-held-out-grader.json",
+        "report_sha256": "7d5ffb48a0a35a5f5663d10eb78faa1def7b5d1c3da670b51b276e57fa755978",
+        "total_tests": 11,
+        "passed_tests": 11,
+        "failed_tests": 0,
+        "targeted_results": [
+          {
+            "name": "acceptance gate contracts derives the gate id from the task and criterion, ignoring a supplied or missing id",
+            "status": "passed",
+            "failure_messages": []
+          }
+        ]
+      },
+      "grader_integrity": [
+        {
+          "path": "src/acceptance/contracts.test.ts",
+          "expected_sha256": "fc82b830809a7f700960ae9d1baa23580322f727f4644818d2086d19465ec730",
+          "actual_sha256": "fc82b830809a7f700960ae9d1baa23580322f727f4644818d2086d19465ec730",
+          "unchanged": true
+        }
+      ],
+      "model_calls": 0,
+      "model_performance_evidence": false,
+      "runtime": {
+        "node": "v22.23.2",
+        "npm": "10.9.8",
+        "package_lock_sha256": "b962c1ac4a812fff2152cb3fa6b29353a54221a81e2a59b712831e3147f933eb"
+      },
+      "artifact_hash_manifest": "/tmp/model-governor-verified-foreman-t920-derived-gate-id-_93tfbxk/evidence/artifact-hashes.json"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "foreman_ingest.v1",
   "specId": "spec-model-governor-v1",
-  "generatedAt": "2026-09-09T20:29:55.631395+00:00",
+  "generatedAt": "2026-09-09T21:05:06.770432+00:00",
   "goal": "Complete a local evidence-governed delegation system whose Claude and Codex skills execute only auditable policy-validated model assignments and whose refresh process justifies every change from reproducible observations.",
   "scaffoldMode": true,
   "requirements": [
@@ -20,13 +20,13 @@
     {
       "id": "REQ-003",
       "title": "Evidence provenance and comparability",
-      "statement": "Load synthetic evidence and registry records with immutable IDs and content digests; resolve all references and reject missing or tampered evidence. Preserve source, benchmark/suite/dataset/methodology and grader versions, measured/retrieved dates, model/effort/tool/serving configuration and observation counts/costs. Enforce evidence admissibility, fallback restrictions, freshness and matching role/task-class/risk/constraints/suite/treatment. Vendor self-report alone cannot qualify. Separate benchmark versions and never overwrite history. Phase 1 reads fixtures only; no ingestion service is needed.",
+      "statement": "Load synthetic evidence and registry records with immutable IDs and content digests; resolve all references and reject missing or tampered evidence. Preserve source, benchmark/suite/dataset/methodology and grader versions, measured/retrieved dates, model/effort/tool/serving configuration and observation counts/costs. Enforce evidence admissibility, fallback restrictions, freshness and matching role/task-class/risk/constraints/suite/treatment. Vendor self-report alone cannot qualify. Separate benchmark versions and never overwrite history. The foundation checkpoint reads fixtures only; no ingestion service is needed.",
       "priority": "must"
     },
     {
       "id": "REQ-004",
       "title": "Auditable risk and review requirements",
-      "statement": "Derive categorical pre-dispatch and post-change risk from declared observable facts and stable policy rule IDs; effective risk is their maximum. Enforce role and constraint eligibility including availability, tool/modalities/context/provider/local/privacy and declared cost/latency ceilings. Critical review requires a qualified independently defined family and fresh context, otherwise ESCALATION_REQUIRED. Review evidence names the reviewed artifact digest and admissible context package. An altered final artifact invalidates review. Phase 1 validates supplied synthetic facts and attestations; do not claim static validation proves a real runtime context boundary.",
+      "statement": "Derive categorical pre-dispatch and post-change risk from declared observable facts and stable policy rule IDs; effective risk is their maximum. Enforce role and constraint eligibility including availability, tool/modalities/context/provider/local/privacy and declared cost/latency ceilings. Critical review requires a qualified independently defined family and fresh context, otherwise ESCALATION_REQUIRED. Review evidence names the reviewed artifact digest and admissible context package. An altered final artifact invalidates review. The foundation checkpoint validates supplied synthetic facts and attestations; do not claim static validation proves a real runtime context boundary.",
       "priority": "must"
     },
     {
@@ -38,7 +38,7 @@
     {
       "id": "REQ-006",
       "title": "Selection and incumbent promotion",
-      "statement": "Separate initial selection from replacement. Initially select the cheapest qualified candidate with a declared deterministic tie break. For replacement, apply explicit superiority requirements and allowed cost increase to a dearer challenger, or non-inferiority plus required savings to a cheaper challenger. Use paired comparable evidence with declared margins and confidence-bound provenance; statistical inference engines are future scope, so Phase 1 uses explicitly synthetic paired comparison observations and validates internal consistency, never inventing a confidence float. Retain an eligible incumbent when evidence is insufficient, but never preserve an unavailable, disqualified or hard-expired incumbent. Define equal-cost and no-qualified-candidate outcomes.",
+      "statement": "Separate initial selection from replacement. Initially select the cheapest qualified candidate with a declared deterministic tie break. For replacement, apply explicit superiority requirements and allowed cost increase to a dearer challenger, or non-inferiority plus required savings to a cheaper challenger. Use paired comparable evidence with declared margins and confidence-bound provenance; statistical inference engines are implemented later in this same build under REQ-014, so The foundation checkpoint uses explicitly synthetic paired comparison observations and validates internal consistency, never inventing a confidence float. Retain an eligible incumbent when evidence is insufficient, but never preserve an unavailable, disqualified or hard-expired incumbent. Define equal-cost and no-qualified-candidate outcomes.",
       "priority": "must"
     },
     {
@@ -1159,6 +1159,7 @@
     "constraints": [
       "Authoritative original user specification: docs/model-governor-spec.md. The latest user instruction explicitly expands the build through full v1; its Phase 1 stopping instruction is superseded while its architectural order and principles remain authoritative.",
       "Before substantial application code, produce docs/plan.md with files, core types, validator stages, test strategy and assumptions. Foreman owns adaptive task decomposition. Stabilize shared schemas before consumers and cap execution concurrency at three.",
+      "Plan one full-v1 execution phase containing all REQ-001 through REQ-020 and AC-001 through AC-044. Preserve the mandated architectural order with task dependencies and an enforced foundation checkpoint before adapter work, rather than dividing the package into separate phase plans. This resolves the observed phase-plan versus full-package grill scope conflict; Foreman still owns task decomposition and worker execution.",
       "First prove REQ-001 through REQ-009 as one coherent validator milestone before REQ-010. The sequence fields on REQ-010 onward then impose the original subsequent milestone order. Do not stop after an internal checkpoint.",
       "Initial numeric thresholds are declared policy proposals with rationale, not empirical universal truths. Runtime processes never silently edit constitution files.",
       "Implementation scope and proof must not be reduced merely because auth, current runtime controls or sufficient empirical evidence are unavailable; finish independent work and report operational blockers honestly.",
@@ -1170,7 +1171,11 @@
       "Runtime and provider facts are unstable: inspect installed CLIs and current official documentation for skill/agent locations, pinning, effort, tool controls, fallback, config precedence and context boundaries. Record sources/versioned capabilities and fail closed on unsupported or unverified required semantics.",
       "Do not fabricate canonical snapshots, empirical outcomes, source citations, token counts, subscription-derived dollar costs, confidence bounds, sample sufficiency or served-model identity. Unknown cost blocks cost-based production qualification until admissible measurement exists; lack of a production binding does not block implementation and offline/evaluation verification.",
       "Full v1 is a working local library/CLI and portable skill workflow with honest empirical states, not a guarantee that current installed runtimes expose every control or any candidate already qualifies. Report concrete remaining operational blockers and continue all independent implementation/verification.",
-      "Offline success-path tests may use an explicitly isolated simulation harness with the same implementation and test process transports; no test-only waiver may leak into production entry points. Real qualification is an empirical state, not a prerequisite for implementing and testing all algorithms. Missing public token prices do not invalidate admissible measured task costs. Refresh may repair an invalid incumbent but may never dispatch or retain it."
+      "Offline success-path tests may use an explicitly isolated simulation harness with the same implementation and test process transports; no test-only waiver may leak into production entry points. Real qualification is an empirical state, not a prerequisite for implementing and testing all algorithms. Missing public token prices do not invalidate admissible measured task costs. Refresh may repair an invalid incumbent but may never dispatch or retain it.",
+      "Read docs/implementation-handoff.md before authoring the task graph. It consolidates concrete supervisor review fixes: complete CLI wiring ownership, integration repair scope, silent npm JSON capture, nonempty executed test evidence, actual local subprocess dispatch, and honest final verification.",
+      "Portable library source belongs under skills/delegate/SKILL.md and skills/refresh-models/SKILL.md, with shared name/description frontmatter supported by Claude and Codex. Do not auto-enable the skills in this development checkout by writing .claude/skills, .codex/skills or .agents/skills. Generated runtime workspaces may receive explicitly compiled configuration as part of bounded tests.",
+      "README.md is required and must include the verified benchmark-methodology anecdote, tested local usage, both skill entry points, and the distinct outcomes of configuration conformance, live CLI execution, and empirical production qualification.",
+      "Final proof must reject empty or fabricated passing reports, unknown status values, missing invocation/grader evidence, missing or tampered artifacts, skipped checks counted as passed, and failed offline scenarios. Coverage must reference actual executed checks and hashed artifacts; recognized blocked states need observed evidence. Available authenticated providers must receive bounded objectively graded qualification-evaluation smoke calls even when production qualification is insufficient."
     ],
     "outOfScope": [
       "Optional reporting UI, universal production model proxy, learned black-box router, weighted scores and permanent preferred-model policy.",
@@ -1239,6 +1244,12 @@
         "status": "locked",
         "decision": "Use verified primary Artificial Analysis sources and docs/benchmark-provenance.md for the README anecdote, preserving measurement configuration and fallback attribution; do not invent the earlier index version.",
         "rationale": "The supervisor verified https://artificialanalysis.ai/articles/claude-fable-5-1 (September 1: 66 at max effort, fallback accounting for 4 percent of output tokens) and https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-3 (September 7: 53 at max effort with fallback). The earlier methodology version was not explicit in the first source."
+      },
+      {
+        "id": "DEC-11",
+        "status": "locked",
+        "decision": "Use a single full-v1 execution phase with internal ordered checkpoints and the supervisor fixes in docs/implementation-handoff.md.",
+        "rationale": "The prior native planner scoped only the first milestone while its grill required full-package coverage, and correction recovery restarted planning. Consolidating scope removes that operational contradiction without reducing any requirement."
       }
     ],
     "openQuestions": [],

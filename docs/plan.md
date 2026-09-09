@@ -1,69 +1,74 @@
-# Model Governor — full v1 build plan
+# Model Governor v1 build plan
 
-The user explicitly expanded ownership to full v1 on 2026-09-09. The milestone-one plan below remains the first checkpoint, not the end of the build. Foreman will continue automatically through the following ordered stages, with reviews and fixes at every stage.
+Deliver the complete local library, CLI and portable skills in one execution
+phase, with ordered internal checkpoints. This replaces the earlier
+foundation-only phase plan. Foreman refines task ownership and verification;
+the supervisor reviews actual diffs and repairs defects.
 
-1. Constitution, schemas, independent validator and synthetic pathological tests.
-2. Claude adapter: validated bindings compile to pinned effective settings; generated drift is detected.
-3. Codex adapter: the same binding contract with verified current native configuration.
-4. Real evaluation fixtures harvested from actual work, with immutable starting state and objective graders.
-5. Append-only evaluation and production ledgers; paired statistics from raw observations; qualification and promotion with measured cost per accepted task.
-6. Official-source discovery and provenance-preserving evidence ingestion; refresh orchestrates existing policy and produces a reviewable binding/config diff.
-7. New portable delegate and refresh-models skills; bounded dispatch, pre/post risk, fresh independent review, escalation and production outcomes.
-8. End-to-end v1 verification and local delivery. Insufficient evidence and unsupported runtime capabilities remain honest explicit states; passing tests do not authorize fabricated production bindings.
+## Full-v1 sequencing
 
-No optional UI or universal routing proxy. Local delivery does not require a remote repository or global skill installation.
+1. Constitution, strict shared schemas, evidence/risk/economics, qualification
+   and independent binding validation. Prove adversarial foundation behavior
+   through the offline CLI before adapters.
+2. Claude compiler, then Codex compiler, using inspected native contracts and
+   generated drift detection.
+3. Real evaluation fixtures with pinned starting states and objective graders.
+4. Append-only ledger, paired inference and evidence-bound qualification.
+5. Official model/configuration discovery with immutable provenance.
+6. Bounded native delegation, actual diff-derived risk, exact final artifact
+   review, and safe challenger shadow replay.
+7. Refresh proposals and atomic local activation after complete validation.
+8. Portable skills, README and offline/live full-v1 proof.
 
----
+## Files and core types
 
-# Model Governor — milestone-one implementation plan
+Keep human-owned YAML under policy/ or constitution/, strict schemas under
+schemas/, pure implementation under src/, real and synthetic fixtures explicitly
+separated, and canonical portable instructions under skills/. Operational state
+and generated runtime workspaces stay local and isolated.
 
-## Goal and scope
-
-Implement the offline policy foundation described in docs/spec.json and the full source in docs/model-governor-spec.md. Completion means invalid synthetic decisions are rejected with auditable rules and valid examples replay deterministically. No adapters, model discovery, refresh skill, live evaluations, global installation or remote publishing.
-
-## Files and contracts
-
-- constitution/: roles, task classes, risk, evidence, qualification, promotion, escalation and expiry YAML; explicit version and declared threshold rationale.
-- schemas/: strict policy, registry/model, candidate, evidence, decision and binding schemas; derived TypeScript types.
-- src/: policy loading, canonical identity, validation, qualification/selection and the small validation CLI. Keep pure functions together until separation improves clarity.
-- tests/ and evals/fixtures/: versioned synthetic policy buckets, adversarial cases, at least three valid bindings and ten invalid bindings.
-- README.md and docs/: usage, architecture, assumptions, test matrix and milestone proof.
-- package.json, lockfile and TypeScript/test configuration: only the tooling needed for the offline library and CLI.
-
-Core types: Role, TaskClass, RiskCategory, ConstraintSet, ModelSnapshot, ServingConfiguration, Candidate, EvidenceRecord, Policy, ClassificationResult, QualificationResult, DecisionRecord, Binding, BindingState and ValidationIssue.
+Core types: Policy, Candidate, ServingConfiguration, EvidenceRecord, RiskCategory,
+ConstraintSet, QualificationResult, DecisionRecord, Binding, ValidationResult,
+WorkOrder, ReviewRecord, ProductionOutcome and RefreshProposal. Use one schema
+source with derived types; avoid parallel handwritten definitions.
 
 ## Validator stages
 
-1. Strict parsing and schema validation.
-2. Constitution version/hash, references and nonempty evaluation-bucket integrity.
-3. Candidate registry identity and evidence provenance, hashes and comparability.
-4. Pre/post risk and effective requirements recomputation.
-5. Evidence admissibility, hard eligibility and absolute qualification.
-6. Review independence and reviewed-artifact checks.
-7. Measured economics, initial selection or incumbent-promotion recomputation.
-8. Decision and binding consistency, structured escalation and expiry state.
+Strict parse; exact policy/version/hash; candidate/evidence identity;
+admissibility/comparability; effective risk and review; hard qualification and
+complete accepted-task economics; initial selection or incumbent promotion;
+independent decision recomputation; expiry/simulation boundary; stable diagnostics.
+Never trust submitted winners, rules or thresholds.
 
-Never trust claimed rules, winner, thresholds or context flags beyond what supplied evidence can establish. Clearly distinguish input-consistency validation from runtime enforcement.
+## Constitution assumptions and declared-threshold provenance
 
-## Lanes and serialization
-
-Foreman will author the executable task graph. Stabilize schemas and constitution contracts before validator consumers. After contracts stabilize, independent test/fixture work and validator/CLI work may proceed with disjoint ownership. Integration and final acceptance remain serialized. Cap concurrent execution workers at three. The supervising agent reviews artifacts and fixes issues only at safe ownership boundaries.
-
-## Policy assumptions
-
-- Initial selection minimizes comparable cost among qualified candidates; incumbent replacement additionally applies promotion rules.
-- Synthetic evaluation buckets exercise mechanics only. Production validation must reject synthetic qualification evidence.
-- Version plus content digest identifies a policy. Evidence and candidate-set identity also bind a decision.
-- Comparison observations are explicit synthetic fixture data in this milestone. Production statistical inference is later work.
-- Initial numeric thresholds are declared proposals, not measured universal truths; document exact inclusive/exclusive boundaries.
-- Equal-cost ties, invalid incumbents, zero acceptances and stale policy behavior need explicit deterministic rules.
+Initial numerical thresholds are explicit proposals with rationale. No model
+IDs, universal quality scalar or weighted routing belong in constitution.
+Runtime cannot rewrite thresholds or treat missing observations as zero.
+Statistical methods and exact-boundary semantics must be reproducible.
 
 ## Test strategy
 
-Use table-driven schema/policy/binding tests and CLI integration tests. Cover the required pathological matrix plus forged rule claims, policy/evidence tampering, candidate/evidence cohort mismatch, unsupported effort, zero acceptances, cost and time boundaries, post-change risk upgrades and changed artifacts after review. Include valid and invalid cases so an always-reject validator cannot pass. Inject time; do not use network services or provider credentials.
+Use table-driven malformed and forged inputs, fixed-clock expiry, false-economy
+and promotion cases, native parser conformance and real imported module/CLI
+calls. Require three complete valid bindings and ten distinct invalid cases.
+Exercise concurrent/interrupted ledger writes, artifact tampering, subprocess
+timeouts, review invalidation, refresh rollback and fabricated verification
+reports. Test names alone are not coverage.
 
-Expected checks once Foreman creates the scripts: npm test; npm run typecheck; npm run build. Exercise the built CLI with valid and invalid fixture files and verify exit codes and unchanged source inputs.
+## Verification commands
 
-## Risks and proof
+Run npm test, npm run typecheck, npm run build, npm run verify:v1 and npm run
+verify:v1:live. JSON capture uses npm silent mode. Record exits, executed checks,
+artifact digests, native runtime facts and objective graders. Final proof maps
+REQ-001 through REQ-020 and AC-001 through AC-044 to actual evidence.
 
-The supplied benchmark anecdote is an unverified user account until sources are independently established. Preserve that distinction in the README. Do not claim synthetic tests establish model quality. At completion, provide the actual tree, constitution assumptions, architecture, test matrix/results, three valid bindings, at least ten invalid examples and the exact enforced invariants.
+## Limits
+
+Synthetic tests cannot qualify production models. A successful live CLI request
+does not itself establish production eligibility or served snapshot identity.
+Missing admissible evidence yields HOLD, INSUFFICIENT_EVIDENCE or escalation;
+it does not excuse unfinished implementation. No global installation, API-key
+setup, remote publication, optional UI or universal proxy.
+
+See implementation-handoff.md for concrete findings the task graph must address.
