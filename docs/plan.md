@@ -1,3 +1,20 @@
+# Model Governor — full v1 build plan
+
+The user explicitly expanded ownership to full v1 on 2026-09-09. The milestone-one plan below remains the first checkpoint, not the end of the build. Foreman will continue automatically through the following ordered stages, with reviews and fixes at every stage.
+
+1. Constitution, schemas, independent validator and synthetic pathological tests.
+2. Claude adapter: validated bindings compile to pinned effective settings; generated drift is detected.
+3. Codex adapter: the same binding contract with verified current native configuration.
+4. Real evaluation fixtures harvested from actual work, with immutable starting state and objective graders.
+5. Append-only evaluation and production ledgers; paired statistics from raw observations; qualification and promotion with measured cost per accepted task.
+6. Official-source discovery and provenance-preserving evidence ingestion; refresh orchestrates existing policy and produces a reviewable binding/config diff.
+7. New portable delegate and refresh-models skills; bounded dispatch, pre/post risk, fresh independent review, escalation and production outcomes.
+8. End-to-end v1 verification and local delivery. Insufficient evidence and unsupported runtime capabilities remain honest explicit states; passing tests do not authorize fabricated production bindings.
+
+No optional UI or universal routing proxy. Local delivery does not require a remote repository or global skill installation.
+
+---
+
 # Model Governor — milestone-one implementation plan
 
 ## Goal and scope

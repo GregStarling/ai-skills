@@ -1,0 +1,15 @@
+{
+  "schema_version": "foreman_project_config.v1",
+  "generated_paths": [
+    "node_modules/**",
+    "coverage/**",
+    ".eslintcache",
+    "dist/**",
+    "**/.vite/**",
+    "**/__pycache__/**",
+    ".pytest_cache/**",
+    ".venv/**"
+  ],
+  "scaffold_mode": true,
+  "github_remote_required": false
+}
