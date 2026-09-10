@@ -1,0 +1,884 @@
+{
+  "record_type": "maintainer_usability_observations",
+  "qualification_authority": false,
+  "tested_skill_source_commit": "8a0ceee",
+  "project_instruction_commit": "4e0d674805e03d2e29c117e909aea943853f0103",
+  "project_merged_commit": "a3975a280e42bcb2a4cc4cbb823e03d33dc9afe0",
+  "origin": "qualification_evaluation",
+  "pack_changed": false,
+  "private_run": "artifacts/delegate-usability/20260910T183203Z",
+  "pilots": [
+    {
+      "host": "claude",
+      "pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+      "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+      "skill_folder_sha256": "6e3f9cd21e3e59693dd27db694c3b1c25df833b8dfe809456da61c4b0223f9d4",
+      "copied_skill_folder_sha256_after": "6e3f9cd21e3e59693dd27db694c3b1c25df833b8dfe809456da61c4b0223f9d4",
+      "instruction_digests": {
+        "AGENTS.md": "6aeda476223fa5db10b6d2cd49ef6a5b574d0efb5a71b54d9fa8e8d4a72f48ea",
+        "CLAUDE.md": "6bf135588d64f8b96fba25a9d4b272c0545367ca4f97f8eeb2d6d237568005c3"
+      },
+      "instruction_digests_after": {
+        "AGENTS.md": "6aeda476223fa5db10b6d2cd49ef6a5b574d0efb5a71b54d9fa8e8d4a72f48ea",
+        "CLAUDE.md": "6bf135588d64f8b96fba25a9d4b272c0545367ca4f97f8eeb2d6d237568005c3"
+      },
+      "instructions_unchanged": true,
+      "fixture_before": {
+        "link.mjs": "e36cc699b5f123e0a7f9b8eb9614925f0d108bb4aeff0b4c090e0a3b16b5ab8b",
+        "slug.mjs": "6bad0469a7f3300c41c3622464bb0414c1a09378ad69374b0d2a18c2d2f5d076"
+      },
+      "behavior_baseline_passed": true,
+      "new_name_baseline_expected_failure": true,
+      "acceptance_passed": true,
+      "behavior_after_passed": true,
+      "frontier_trace_review": "PASS",
+      "actual_worker_writes": [
+        "slug.mjs",
+        "link.mjs"
+      ],
+      "repairs": 0,
+      "execution": {
+        "code": 0,
+        "signal": null,
+        "timed_out": false,
+        "duration_ms": 226716,
+        "stdout_sha256": "72fccde637fd4a7f5ce05e19a77974e69314bfc60a079e4634debe7f60ecf106",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_models": [
+          "claude-opus-5",
+          "claude-haiku-4-5-20251001"
+        ],
+        "observed_effort": null,
+        "usage": {
+          "input_tokens": 322,
+          "cache_creation_input_tokens": 63775,
+          "cache_read_input_tokens": 467865,
+          "output_tokens": 14188,
+          "output_tokens_details": {
+            "thinking_tokens": 4524
+          },
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 63775,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 32,
+              "output_tokens": 740,
+              "cache_read_input_tokens": 60467,
+              "cache_creation_input_tokens": 3308,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3308
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 1.2729709999999999,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 322,
+            "outputTokens": 14188,
+            "cacheReadInputTokens": 467865,
+            "cacheCreationInputTokens": 63775,
+            "webSearchRequests": 0,
+            "costUSD": 1.2279925,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 4524,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 42,
+            "outputTokens": 1431,
+            "cacheReadInputTokens": 87940,
+            "cacheCreationInputTokens": 23190,
+            "webSearchRequests": 0,
+            "costUSD": 0.0449785,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "thinkingTokens": 402,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "qualification_authority": false
+      },
+      "trace": {
+        "private_capture": "pilot-claude/coordinator/stdout.jsonl",
+        "sha256": "sha256:72fccde637fd4a7f5ce05e19a77974e69314bfc60a079e4634debe7f60ecf106"
+      },
+      "receipt_import": {
+        "status": "PENDING_EVIDENCE",
+        "recordId": "receipt_589f62fb63947296bd0141f0db9b83c0f64011e3063350cd47e616d6f70b1010",
+        "inserted": true,
+        "receipt_digest": "sha256:589f62fb63947296bd0141f0db9b83c0f64011e3063350cd47e616d6f70b1010",
+        "qualification_authority": false,
+        "repository_relative_directory": "artifacts/delegate-usability/20260910T183203Z/ledger/mechanical_work"
+      },
+      "typecheck": {
+        "command": "npx tsc --noEmit",
+        "exit_code": 0,
+        "capture": {
+          "private_capture": "claude-project-typecheck-actual.log",
+          "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "host": "codex",
+      "pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+      "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+      "skill_folder_sha256": "6e3f9cd21e3e59693dd27db694c3b1c25df833b8dfe809456da61c4b0223f9d4",
+      "copied_skill_folder_sha256_after": "6e3f9cd21e3e59693dd27db694c3b1c25df833b8dfe809456da61c4b0223f9d4",
+      "instruction_digests": {
+        "AGENTS.md": "6aeda476223fa5db10b6d2cd49ef6a5b574d0efb5a71b54d9fa8e8d4a72f48ea",
+        "CLAUDE.md": "6bf135588d64f8b96fba25a9d4b272c0545367ca4f97f8eeb2d6d237568005c3"
+      },
+      "instruction_digests_after": {
+        "AGENTS.md": "6aeda476223fa5db10b6d2cd49ef6a5b574d0efb5a71b54d9fa8e8d4a72f48ea",
+        "CLAUDE.md": "6bf135588d64f8b96fba25a9d4b272c0545367ca4f97f8eeb2d6d237568005c3"
+      },
+      "instructions_unchanged": true,
+      "fixture_before": {
+        "link.mjs": "e36cc699b5f123e0a7f9b8eb9614925f0d108bb4aeff0b4c090e0a3b16b5ab8b",
+        "slug.mjs": "6bad0469a7f3300c41c3622464bb0414c1a09378ad69374b0d2a18c2d2f5d076"
+      },
+      "behavior_baseline_passed": true,
+      "new_name_baseline_expected_failure": true,
+      "acceptance_passed": true,
+      "behavior_after_passed": true,
+      "frontier_trace_review": "PASS",
+      "actual_worker_writes": [
+        "slug.mjs",
+        "link.mjs"
+      ],
+      "repairs": 0,
+      "execution": {
+        "code": 0,
+        "signal": null,
+        "timed_out": false,
+        "duration_ms": 223414,
+        "stdout_sha256": "295f62da78b9072dd87aa208aadd5dc3d9b6ca0cc94bf83c65d45e10a9f866f9",
+        "stderr_sha256": "06aca3982e330897b84fc8fc07db0a974e6ec47381666d8c10a2c1419c2e23c2",
+        "observed_models": [],
+        "observed_effort": null,
+        "usage": {
+          "input_tokens": 678689,
+          "cached_input_tokens": 620544,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 9266,
+          "reasoning_output_tokens": 3078
+        },
+        "client_estimated_cost_usd": null,
+        "model_usage": null,
+        "qualification_authority": false
+      },
+      "trace": {
+        "private_capture": "pilot-codex/coordinator/stdout.jsonl",
+        "sha256": "sha256:295f62da78b9072dd87aa208aadd5dc3d9b6ca0cc94bf83c65d45e10a9f866f9"
+      },
+      "receipt_import": {
+        "status": "PENDING_EVIDENCE",
+        "recordId": "receipt_5aec8ea43294fb9cad2716dfb2f43983f9f3cebb93854c32a7ab5726b03bf372",
+        "inserted": true,
+        "receipt_digest": "sha256:5aec8ea43294fb9cad2716dfb2f43983f9f3cebb93854c32a7ab5726b03bf372",
+        "qualification_authority": false,
+        "repository_relative_directory": "artifacts/delegate-usability/20260910T183203Z/ledger/mechanical_work"
+      },
+      "typecheck": {
+        "command": "npx tsc --noEmit",
+        "exit_code": 0,
+        "capture": {
+          "private_capture": "codex-project-typecheck-actual.log",
+          "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "native_sources": [
+        {
+          "private_capture": "pilot-codex/native-coordinator.jsonl",
+          "sha256": "sha256:7ceff5306f0df65f66c20c13657bed1dfbe91b97a1f97e77f1b0a4cc510c1180"
+        },
+        {
+          "private_capture": "pilot-codex/native-worker.jsonl",
+          "sha256": "sha256:aa2c76425f839229500f08ca1a119a36fc0cf27ac69f811890d1fe3fbba30dfe"
+        }
+      ]
+    }
+  ],
+  "calibration": [
+    {
+      "host": "codex",
+      "target": {
+        "provider": "openai",
+        "host": "codex",
+        "model_id": "gpt-6-astra",
+        "effort": "high",
+        "source": {
+          "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+          "checked_at": "2026-09-10T04:09:41.250Z",
+          "content_digest": "sha256:c799d5053fa337ca714e75296a6fbee1e33648ea9c872aeb41c5c820663b1b43",
+          "claim": "Provider identifies GPT-6 Astra as its most capable model for demanding end-to-end work."
+        }
+      },
+      "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+      "gate": {
+        "admitted": true,
+        "diagnostics": [],
+        "results": [
+          {
+            "case_id": "positive",
+            "verdict": "ACCEPT",
+            "identity_assurance": "CONFIGURATION_ATTESTED",
+            "stdout_digest": "sha256:944447d70c72e334250359d4e7c1771fdef15b4d035d6c02438d5768c3206508"
+          },
+          {
+            "case_id": "defective",
+            "verdict": "REPAIR",
+            "identity_assurance": "CONFIGURATION_ATTESTED",
+            "stdout_digest": "sha256:05d15994d1c4fd3e575a7bac7dbe2a35799ba035b2cd9c7b4500f306990158f5"
+          },
+          {
+            "case_id": "boundary",
+            "verdict": "ACCEPT",
+            "identity_assurance": "CONFIGURATION_ATTESTED",
+            "stdout_digest": "sha256:be54ccf0309a89fc57564b9a3694084a2bbcdb1356dce6e6c4af074dfcd6e921"
+          }
+        ],
+        "qualification_authority": false
+      },
+      "pack_admission": "WITHHELD_SCOPE",
+      "reason": "The existing observation-to-route builder extrapolates admission into seven classes; these cases support only the declared quantity-default scope.",
+      "report": {
+        "private_capture": "calibration/codex/report.json",
+        "sha256": "sha256:e095e3136e9f8e1297993089284d22d7e09e08a4412b5fead357f7d4dd225b78"
+      },
+      "staged_observations": {
+        "private_capture": "calibration/codex/host-observations-staged.json",
+        "sha256": "sha256:e71d66aa3cea5206f09c039f7a09f6770c20e29ca50fccdaa98a52e75db77773"
+      },
+      "cases": [
+        {
+          "id": "positive",
+          "objective_exit_code": 0,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "worker": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 25854,
+                "stdout_sha256": "9eff7617ca9d2799a5902a5859bac7394bdc83ddcb9b0ea297a20752d4b65145",
+                "stderr_sha256": "2a43c4f32eec9901eefb1e0cf045a54590c0eef9c5fbc7353edecad83a8aaffe",
+                "observed_models": [],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 59543,
+                "cached_input_tokens": 46592,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 894,
+                "reasoning_output_tokens": 12
+              },
+              "model_usage": null,
+              "client_estimated_cost_usd": null,
+              "identity_evidence": {
+                "private_capture": "calibration/codex/positive/worker/identity-evidence.json",
+                "sha256": "sha256:9e95deb8c8b7621244d91c9befe598d8ffa5fc1a01d5ccfb5364638f74966e12"
+              },
+              "native_request_digest": "sha256:63510cf8822a8de95b01110ecf753685b0792a050f292a9ab8977b3326824964",
+              "native_process_digest": "sha256:fa9d2fb884bd6061ed8fd7a50056fb1e9e63c4179da244cbed6d9565a4abbf32"
+            },
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 12192,
+                "stdout_sha256": "944447d70c72e334250359d4e7c1771fdef15b4d035d6c02438d5768c3206508",
+                "stderr_sha256": "a939a5ecbbbd82e6d1b205757a3d6a782fece70d7e3e699564771c687d5693a3",
+                "observed_models": [],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 31714,
+                "cached_input_tokens": 26880,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 171,
+                "reasoning_output_tokens": 0
+              },
+              "model_usage": null,
+              "client_estimated_cost_usd": null,
+              "identity_evidence": {
+                "private_capture": "calibration/codex/positive/reviewer/identity-evidence.json",
+                "sha256": "sha256:7c3033e3640e7142fb4c9456334d30651c98b8c604eb42bf9f8c9b66e91a9d6a"
+              },
+              "native_request_digest": "sha256:39d43333522cf922d6d2c463b040febe38a67a4131b157087536afed9d425eb3",
+              "native_process_digest": "sha256:da249525349d575aceafec8823d9f5021323f9956c999c4aa7a4fd78681ad3d4"
+            }
+          }
+        },
+        {
+          "id": "defective",
+          "objective_exit_code": 1,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:ba510d78f1173c4c532e49ef007583dfa796d9d8ceb5607aa57c0397938a873a",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 15521,
+                "stdout_sha256": "05d15994d1c4fd3e575a7bac7dbe2a35799ba035b2cd9c7b4500f306990158f5",
+                "stderr_sha256": "4ff972f36469299185737e16a99ad09b0fbca8ebbb25a7f4326dce5af895fd57",
+                "observed_models": [],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 47740,
+                "cached_input_tokens": 42368,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 210,
+                "reasoning_output_tokens": 0
+              },
+              "model_usage": null,
+              "client_estimated_cost_usd": null,
+              "identity_evidence": {
+                "private_capture": "calibration/codex/defective/reviewer/identity-evidence.json",
+                "sha256": "sha256:a29613bca1fe8855620fddfa6d3dbc68b0dfabd1457e5b3d314acd49705bbd1f"
+              },
+              "native_request_digest": "sha256:21877c1147a4f2c23de2aabd96c06455ffea8bdef5acff0150952139da0a34f2",
+              "native_process_digest": "sha256:acae51807bec0f10434bdaf64b9e8c6418ba8e0e28a3a15499dc61d1386ba00d"
+            }
+          }
+        },
+        {
+          "id": "boundary",
+          "objective_exit_code": 0,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:122d75224c24c3a6982b6ac730c96ec360e29da9108b60d748b0591b6d4aee17",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 19649,
+                "stdout_sha256": "be54ccf0309a89fc57564b9a3694084a2bbcdb1356dce6e6c4af074dfcd6e921",
+                "stderr_sha256": "0c93ff2281f89ed3d9cd839d4fc7cd25718219d6633da095537deb50c999794b",
+                "observed_models": [],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 66502,
+                "cached_input_tokens": 55808,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 186,
+                "reasoning_output_tokens": 0
+              },
+              "model_usage": null,
+              "client_estimated_cost_usd": null,
+              "identity_evidence": {
+                "private_capture": "calibration/codex/boundary/reviewer/identity-evidence.json",
+                "sha256": "sha256:22130feb7eba81f142d703543553f7f5846e84f974661a6fbe22fd6fe838a8f1"
+              },
+              "native_request_digest": "sha256:ec1de348cd49adf9996335accef5fce085f9e4e0885eae3e6b23f92568be41c3",
+              "native_process_digest": "sha256:003bcff73031a1eb58ca91fd6828fd3e866a8c87ed94328dff77c5780e608b40"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "host": "claude",
+      "target": {
+        "provider": "anthropic",
+        "host": "claude",
+        "model_id": "claude-fable-5-1",
+        "effort": "high",
+        "source": {
+          "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+          "checked_at": "2026-09-10T04:09:41.232Z",
+          "content_digest": "sha256:bdb4c57790486f222f57ffeccddd875626d99bf0620532d28d5d2d1faa12febb",
+          "claim": "Provider identifies Fable5.1 as its latest higher-end model for demanding reasoning and long-horizon work; Opus5 remains the recommended starting point for most workloads."
+        }
+      },
+      "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+      "gate": {
+        "admitted": true,
+        "diagnostics": [],
+        "results": [
+          {
+            "case_id": "positive",
+            "verdict": "ACCEPT",
+            "identity_assurance": "PARTIALLY_RUNTIME_ATTESTED",
+            "stdout_digest": "sha256:a3174402fc3e66b90296dedde55b587a9cf550a50ecbe034a42b04b386e2f10f"
+          },
+          {
+            "case_id": "defective",
+            "verdict": "REPAIR",
+            "identity_assurance": "PARTIALLY_RUNTIME_ATTESTED",
+            "stdout_digest": "sha256:6d5c4810fb55345d98c845020ecbd234889d52940fac28d2047e1850a0a78833"
+          },
+          {
+            "case_id": "boundary",
+            "verdict": "ACCEPT",
+            "identity_assurance": "PARTIALLY_RUNTIME_ATTESTED",
+            "stdout_digest": "sha256:7741d72b92c6e7e7d2b6d4c8cf1191e44f4bef5adef9318c600934517aec1c0a"
+          }
+        ],
+        "qualification_authority": false
+      },
+      "pack_admission": "WITHHELD_SCOPE",
+      "reason": "The existing observation-to-route builder extrapolates admission into seven classes; these cases support only the declared quantity-default scope.",
+      "report": {
+        "private_capture": "calibration/claude/report.json",
+        "sha256": "sha256:7a33e7fb8d25a792fd718465c766e9251a771335dcb0da3d78c4b7c88f1081f0"
+      },
+      "staged_observations": {
+        "private_capture": "calibration/claude/host-observations-staged.json",
+        "sha256": "sha256:66606fa7a4ef4b33721971acb0630362f3e96412507aa84ce7191925f931996a"
+      },
+      "cases": [
+        {
+          "id": "positive",
+          "objective_exit_code": 0,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "worker": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 17268,
+                "stdout_sha256": "7f58c74ca552815c3da030a31e899bf98d97ad8abb828877c5ea0a5edaf8bd84",
+                "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "observed_models": [
+                  "claude-haiku-4-5-20251001"
+                ],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 34,
+                "cache_creation_input_tokens": 7029,
+                "cache_read_input_tokens": 44767,
+                "output_tokens": 1533,
+                "output_tokens_details": {
+                  "thinking_tokens": 778
+                },
+                "server_tool_use": {
+                  "web_search_requests": 0,
+                  "web_fetch_requests": 0
+                },
+                "service_tier": "standard",
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 7029,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "inference_geo": "not_available",
+                "iterations": [
+                  {
+                    "input_tokens": 8,
+                    "output_tokens": 166,
+                    "cache_read_input_tokens": 13563,
+                    "cache_creation_input_tokens": 370,
+                    "cache_creation": {
+                      "ephemeral_5m_input_tokens": 0,
+                      "ephemeral_1h_input_tokens": 370
+                    },
+                    "type": "message"
+                  }
+                ],
+                "speed": "standard"
+              },
+              "model_usage": {
+                "claude-haiku-4-5-20251001": {
+                  "inputTokens": 1002,
+                  "outputTokens": 1546,
+                  "cacheReadInputTokens": 44767,
+                  "cacheCreationInputTokens": 7029,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.0272667,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 778,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                }
+              },
+              "client_estimated_cost_usd": 0.0272667,
+              "identity_evidence": {
+                "private_capture": "calibration/claude/positive/worker/identity-evidence.json",
+                "sha256": "sha256:e193637a5cfb203a3b3dbfedb762d3f5e9aa673d168af9bc8e8506117dba3354"
+              },
+              "native_request_digest": "sha256:8868852833eb3651c3b2941955e8c244500525959e2a178b7ceca2fe303fd232",
+              "native_process_digest": "sha256:9cd7133d47e263c14e298c971b49056aa354a13e1f6355255c178a6b8a27bd7c"
+            },
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 11969,
+                "stdout_sha256": "a3174402fc3e66b90296dedde55b587a9cf550a50ecbe034a42b04b386e2f10f",
+                "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "observed_models": [
+                  "claude-fable-5-1"
+                ],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 66,
+                "cache_creation_input_tokens": 5432,
+                "cache_read_input_tokens": 16619,
+                "output_tokens": 704,
+                "output_tokens_details": {
+                  "thinking_tokens": 0
+                },
+                "server_tool_use": {
+                  "web_search_requests": 0,
+                  "web_fetch_requests": 0
+                },
+                "service_tier": "standard",
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 5432,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "inference_geo": "not_available",
+                "iterations": [
+                  {
+                    "input_tokens": 32,
+                    "output_tokens": 317,
+                    "cache_read_input_tokens": 7452,
+                    "cache_creation_input_tokens": 392,
+                    "cache_creation": {
+                      "ephemeral_5m_input_tokens": 0,
+                      "ephemeral_1h_input_tokens": 392
+                    },
+                    "type": "message"
+                  }
+                ],
+                "speed": "standard"
+              },
+              "model_usage": {
+                "claude-haiku-4-5-20251001": {
+                  "inputTokens": 997,
+                  "outputTokens": 13,
+                  "cacheReadInputTokens": 0,
+                  "cacheCreationInputTokens": 0,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.001062,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "claude-fable-5-1": {
+                  "inputTokens": 66,
+                  "outputTokens": 704,
+                  "cacheReadInputTokens": 16619,
+                  "cacheCreationInputTokens": 5432,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.14865475,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-fable-5-1",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                }
+              },
+              "client_estimated_cost_usd": 0.14971674999999998,
+              "identity_evidence": {
+                "private_capture": "calibration/claude/positive/reviewer/identity-evidence.json",
+                "sha256": "sha256:f79eb75a49f3be7e6e26acbe8ad64dd34b29b660df3867b36f37d6ffe6a62380"
+              },
+              "native_request_digest": "sha256:fd39f1ce8870b8b84e3ac20ccf6bb03e63a607ffa221d89e5045b95af3ff6e78",
+              "native_process_digest": "sha256:44574d3fe17573f4fcb0bd643b13b2ad09bc71245c943c560c79458bc684a798"
+            }
+          }
+        },
+        {
+          "id": "defective",
+          "objective_exit_code": 1,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:ba510d78f1173c4c532e49ef007583dfa796d9d8ceb5607aa57c0397938a873a",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 12794,
+                "stdout_sha256": "6d5c4810fb55345d98c845020ecbd234889d52940fac28d2047e1850a0a78833",
+                "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "observed_models": [
+                  "claude-fable-5-1"
+                ],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 66,
+                "cache_creation_input_tokens": 5814,
+                "cache_read_input_tokens": 16607,
+                "output_tokens": 719,
+                "output_tokens_details": {
+                  "thinking_tokens": 0
+                },
+                "server_tool_use": {
+                  "web_search_requests": 0,
+                  "web_fetch_requests": 0
+                },
+                "service_tier": "standard",
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 5814,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "inference_geo": "not_available",
+                "iterations": [
+                  {
+                    "input_tokens": 32,
+                    "output_tokens": 326,
+                    "cache_read_input_tokens": 7442,
+                    "cache_creation_input_tokens": 784,
+                    "cache_creation": {
+                      "ephemeral_5m_input_tokens": 0,
+                      "ephemeral_1h_input_tokens": 784
+                    },
+                    "type": "message"
+                  }
+                ],
+                "speed": "standard"
+              },
+              "model_usage": {
+                "claude-haiku-4-5-20251001": {
+                  "inputTokens": 997,
+                  "outputTokens": 13,
+                  "cacheReadInputTokens": 0,
+                  "cacheCreationInputTokens": 0,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.001062,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "claude-fable-5-1": {
+                  "inputTokens": 66,
+                  "outputTokens": 719,
+                  "cacheReadInputTokens": 16607,
+                  "cacheCreationInputTokens": 5814,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.15704175000000004,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-fable-5-1",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                }
+              },
+              "client_estimated_cost_usd": 0.15810375000000002,
+              "identity_evidence": {
+                "private_capture": "calibration/claude/defective/reviewer/identity-evidence.json",
+                "sha256": "sha256:551d53e4e45c9b4c5a9ee271635e13e5e3ff7fba47ad0d8000007241d0c8f382"
+              },
+              "native_request_digest": "sha256:b426b70f7ee4a5283378eee7b11f2c5b0df8bd1e9e43fedf6f0aeeea114412e4",
+              "native_process_digest": "sha256:ef027714ba6b66465b5392e35e018f025821fb69fe36744ee3e80ce16e5f855a"
+            }
+          }
+        },
+        {
+          "id": "boundary",
+          "objective_exit_code": 0,
+          "artifact_unchanged": true,
+          "artifact_digests": {
+            "quantity.mjs": "sha256:122d75224c24c3a6982b6ac730c96ec360e29da9108b60d748b0591b6d4aee17",
+            "quantity.test.mjs": "sha256:6a1eead8ffa693410fceb1b6cc355c30274fa761ba04a10c981339093867d3c2"
+          },
+          "executions": {
+            "reviewer": {
+              "summary": {
+                "code": 0,
+                "signal": null,
+                "timed_out": false,
+                "duration_ms": 10490,
+                "stdout_sha256": "7741d72b92c6e7e7d2b6d4c8cf1191e44f4bef5adef9318c600934517aec1c0a",
+                "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "observed_models": [
+                  "claude-fable-5-1"
+                ],
+                "observed_effort": null,
+                "qualification_authority": false
+              },
+              "usage": {
+                "input_tokens": 34,
+                "cache_creation_input_tokens": 5460,
+                "cache_read_input_tokens": 9169,
+                "output_tokens": 654,
+                "output_tokens_details": {
+                  "thinking_tokens": 0
+                },
+                "server_tool_use": {
+                  "web_search_requests": 0,
+                  "web_fetch_requests": 0
+                },
+                "service_tier": "standard",
+                "cache_creation": {
+                  "ephemeral_1h_input_tokens": 5460,
+                  "ephemeral_5m_input_tokens": 0
+                },
+                "inference_geo": "not_available",
+                "iterations": [
+                  {
+                    "input_tokens": 32,
+                    "output_tokens": 258,
+                    "cache_read_input_tokens": 6757,
+                    "cache_creation_input_tokens": 1115,
+                    "cache_creation": {
+                      "ephemeral_5m_input_tokens": 0,
+                      "ephemeral_1h_input_tokens": 1115
+                    },
+                    "type": "message"
+                  }
+                ],
+                "speed": "standard"
+              },
+              "model_usage": {
+                "claude-haiku-4-5-20251001": {
+                  "inputTokens": 997,
+                  "outputTokens": 13,
+                  "cacheReadInputTokens": 0,
+                  "cacheCreationInputTokens": 0,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.001062,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "claude-fable-5-1": {
+                  "inputTokens": 34,
+                  "outputTokens": 654,
+                  "cacheReadInputTokens": 9169,
+                  "cacheCreationInputTokens": 5460,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.14453225,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 0,
+                  "canonicalModel": "claude-fable-5-1",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                }
+              },
+              "client_estimated_cost_usd": 0.14559424999999998,
+              "identity_evidence": {
+                "private_capture": "calibration/claude/boundary/reviewer/identity-evidence.json",
+                "sha256": "sha256:7ddfdb71cc0b2b625c1e67ad1672a88f0dc387e2d75f4285a02ce733b6bb2ac0"
+              },
+              "native_request_digest": "sha256:3c3e4add40ee60b4c5ed15e45c27e6baafa56e1f263dc0555cff88bb78be5a37",
+              "native_process_digest": "sha256:9f036dc622cdbb2936611aeaa6b7519d6eb261a640fa40c1f14ea00b559ce311"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "host_captures": [
+    {
+      "capture": "codex-version.txt",
+      "command": [
+        "codex",
+        "--version"
+      ],
+      "exit_code": 0,
+      "sha256": "5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+    },
+    {
+      "capture": "codex-exec-help.txt",
+      "command": [
+        "codex",
+        "exec",
+        "--help"
+      ],
+      "exit_code": 0,
+      "sha256": "0e82cfde0122715250e93dc65866caa956b2ac5b9d0b20ec4ad4f9e81486509e"
+    },
+    {
+      "capture": "claude-version.txt",
+      "command": [
+        "claude",
+        "--version"
+      ],
+      "exit_code": 0,
+      "sha256": "8af323716e94a684dd2faf7e0720ec75ad20db3791997bd6a6fb7eac59c0a5da"
+    },
+    {
+      "capture": "claude-help.txt",
+      "command": [
+        "claude",
+        "--help"
+      ],
+      "exit_code": 0,
+      "sha256": "ae85d661e9c086f05637ebcd868f5702b477ff6e55e2e65b8ada7807cd51a4b6"
+    }
+  ],
+  "execution_accounting": {
+    "controlled_pilot_executions": 5,
+    "controlled_calibration_executions": 8,
+    "reprobes": 0,
+    "repairs": 0,
+    "total_controlled_executions": 13,
+    "internal_host_invocation_count": null,
+    "limitation": "Claude reports extra Haiku usage in the three Fable reviewer modelUsage entries, without an invocation count. Controlled execution counts do not certify a ceiling over opaque host-internal calls. No more model executions were launched after this was found.",
+    "ledger": {
+      "private_capture": "executions.json",
+      "sha256": "sha256:ede48d0ba074792d62d34176e35a889c996fed136708c5c1761e70413b53d074"
+    }
+  }
+}

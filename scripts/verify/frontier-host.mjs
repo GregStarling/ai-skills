@@ -10,12 +10,12 @@ import {runProcess} from '../../dist/runtime/process.js';
 import {nativeEnvironment} from '../../dist/runtime/native.js';
 
 /** Capture arguments before execution; derive identity solely from these preserved native sources. */
-export async function executeFrontier({target,directory,prompt,destination,timeoutMs=90000}){
+export async function executeFrontier({target,directory,prompt,destination,timeoutMs=90000,write=false}){
   await mkdir(destination,{recursive:true});
   const execution_environment=target.host==='claude'?'claude_code':'codex';
   const args=target.host==='codex'
-    ? ['exec','--ignore-user-config','--ignore-rules','--ephemeral','--skip-git-repo-check','-C',directory,'-s','read-only','-m',target.model_id,'-c',`model_reasoning_effort="${target.effort}"`,'--json','-']
-    : ['-p','--model',target.model_id,'--effort',target.effort,'--output-format','stream-json','--verbose','--no-session-persistence','--setting-sources','','--strict-mcp-config','--mcp-config','{"mcpServers":{}}','--permission-mode','dontAsk','--tools','Read,Bash','--allowedTools','Read,Bash','--max-budget-usd','2'];
+    ? ['exec','--ignore-user-config','--ignore-rules','--ephemeral','--skip-git-repo-check','-C',directory,'-s',write?'workspace-write':'read-only','-m',target.model_id,'-c',`model_reasoning_effort="${target.effort}"`,'--json','-']
+    : ['-p','--model',target.model_id,...(target.effort==='not_applicable'?[]:['--effort',target.effort]),'--output-format','stream-json','--verbose','--no-session-persistence','--setting-sources','','--strict-mcp-config','--mcp-config','{"mcpServers":{}}','--permission-mode','dontAsk','--tools',write?'Read,Edit,Write,Bash':'Read,Bash','--allowedTools',write?'Read,Edit,Write,Bash':'Read,Bash','--max-budget-usd','2'];
   const candidate=parseCandidate({schema_version:'candidate.v1',candidate_id:`frontier_${target.host}_${target.effort}`,provider:target.provider,model_id:target.model_id,snapshot_id:target.model_id,effort:target.effort,serving:{fallback:'disabled',tool_use:'host_tools',json_schema:false},material_serving_settings:['fallback','tool_use','json_schema'],provenance:{registry_id:'frontier_probe_targets',model_record_id:`frontier_${target.host}`,registry_content_digest:digest(target)}});
   const {env,overrideNames}=nativeEnvironment(target.provider,candidate);
   const version=spawnSync(target.host,['--version'],{encoding:'utf8',timeout:15000,env});

@@ -1,0 +1,10 @@
+{
+  "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+  "requirements": "Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero.",
+  "checks_file": "quantity.test.mjs",
+  "cases": [
+    {"id": "positive", "artifact_file": "zero-defect.mjs", "expected_verdict": "ACCEPT"},
+    {"id": "defective", "artifact_file": "zero-defect.mjs", "expected_verdict": "REPAIR"},
+    {"id": "boundary", "artifact_file": "boundary-valid.mjs", "expected_verdict": "ACCEPT"}
+  ]
+}
