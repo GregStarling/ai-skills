@@ -109,7 +109,10 @@ export function deriveIdentityAssurance(input:{candidate:Candidate;report:Runtim
       if(!parsed||Object.keys(parsed).some(key=>!['sandbox','permissions'].includes(key)))fail('configuration_identity_mismatch','Unsupported settings may override model, provider, effort or fallback.');
     }
     if(values(['--agent','--agents','--plugin-dir']).length)fail('configuration_identity_mismatch','Unvalidated agent or plugin configuration cannot attest exact native identity.');
-    if(args.some(v=>['--profile','-p','--oss','--local-provider','--remote','--resume'].includes(v)&&!(environment==='claude_code'&&v==='-p'))||config.some(v=>/^(?:model|model_provider|model_providers|profile|profiles|model_reasoning_effort\.)\s*(?:\.|=)/.test(v)))fail('configuration_identity_mismatch','Unsupported identity or provider override in native invocation.');
+    // Hosts accept both --option=value and attached short-option values. Claude's
+    // -p is print mode; Codex's -p selects an uncaptured profile.
+    const unsupportedOption=args.some(arg=>/^--(?:profile|oss|local-provider|remote|resume)(?:=|$)/.test(arg)||environment==='codex'&&arg.startsWith('-p'));
+    if(unsupportedOption||config.some(v=>/^(?:model|model_provider|model_providers|profile|profiles|model_reasoning_effort\.)\s*(?:\.|=)/.test(v)))fail('configuration_identity_mismatch','Unsupported identity or provider override in native invocation.');
     if(values(['--fallback-model']).length||candidate.serving.fallback!=='disabled')fail('configuration_identity_mismatch','An explicit fallback is incompatible with this exact native treatment.');
     limitations.push('No host fallback was configured; provider-side fallback state is not independently attested.');
     if(candidate.serving.tool_use==='provider_tools')fail('configuration_identity_mismatch','Native host evidence cannot attest provider-tools serving.');

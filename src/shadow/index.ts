@@ -1,4 +1,4 @@
-import {readFile,realpath,rm} from 'node:fs/promises';
+import {readFile,rm} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {isAbsolute,relative,join} from 'node:path';
 import {canonicalJson,digest} from '../core/canonical.js';

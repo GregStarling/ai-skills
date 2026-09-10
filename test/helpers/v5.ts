@@ -1,7 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {candidateIdentity,parseRuntimeReport,type TaskObservation,type RuntimeReport,type RiskCategory} from '../../src/schema/index.js';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
-import {loadPolicy,parseSelectionInput,type SelectionInput} from '../../src/governance/index.js';
+import {loadPolicy,parseSelectionInput} from '../../src/governance/index.js';
 import {captureIdentityEnvironment,nativeExecutionRequestSchema,nativeExecutionProcessSchema} from '../../src/runtime/identity-assurance.js';
 
 // SYNTHETIC TEST DATA. These fixtures exercise actual v5 policy thresholds and

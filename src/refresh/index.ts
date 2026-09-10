@@ -3,7 +3,7 @@ import { dirname, join, resolve, relative } from 'node:path';
 import { homedir } from 'node:os';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { canonicalJson,contentDigest,digest,hashBytes } from '../core/canonical.js';
+import { canonicalJson,contentDigest,digest } from '../core/canonical.js';
 import { parseSelectionInput,select,createBinding,validateBinding,loadPolicy,type SelectionInput } from '../governance/index.js';
 import { renderClaude,renderCodex,writeRendered,verifyRendered,runtimeVersions,type RenderedAdapter } from '../adapters/index.js';
 import { discover,discoveryRequestSchema } from '../discovery/index.js';

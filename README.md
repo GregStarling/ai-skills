@@ -50,6 +50,7 @@ npm test
 npm run typecheck
 npm run build
 node scripts/verify/skills.mjs
+node dist/cli/index.js validate-routing-pack --input skills/delegate/routing-pack.json
 ```
 
 The older `verify:v1`/`verify:v1:live` commands concern the governor engine and retained native evaluation evidence, not consumer installation or qualified routing readiness. Some harvested engine calibration checks require a local Foreman source checkout; that is test provenance, not a delegate runtime dependency.

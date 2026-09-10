@@ -3,7 +3,7 @@ import {describe,it,expect,vi,afterEach} from 'vitest';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
 import {candidateIdentity,parseRuntimeReport} from '../../src/schema/index.js';
 import {provisionalIdentity,type ProvisionalTreatmentInput} from '../../src/routing/provisional.js';
-import {compileRoutingPack,parseRoutingPack,expandRoutingPack,resolveRouting,RoutingError,type RoutingPack} from '../../src/routing/index.js';
+import {compileRoutingPack,parseRoutingPack,expandRoutingPack,resolveRouting,type RoutingPack} from '../../src/routing/index.js';
 
 const fixture=()=>JSON.parse(readFileSync('fixtures/bindings/valid-initial-backend.json','utf8')).selection;
 function reviewer(worker:any){const value=structuredClone(worker);value.request.role_id='reviewer';value.candidates=value.candidates.filter((candidate:any)=>candidate.candidate_id==='candidate_beta');value.observations=value.observations.filter((row:any)=>row.candidate.candidate_id==='candidate_beta');for(const row of value.observations){row.role_id='reviewer';row.content_digest=contentDigest(row);}delete value.incumbentCandidateId;return value;}

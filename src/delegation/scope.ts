@@ -9,7 +9,7 @@ import { classifyRisk, type Policy } from '../governance/index.js';
 const executeFile = promisify(execFile);
 export {parseWorkOrder,workOrderSchema,type WorkOrder} from '../schema/index.js';
 export {safePath} from '../schema/work-order.js';
-import {parseWorkOrder,type WorkOrder} from '../schema/index.js';
+import type {WorkOrder} from '../schema/index.js';
 import {safePath} from '../schema/work-order.js';
 export function matchesPath(path:string, pattern:string):boolean {return pattern.endsWith('/**') ? path.startsWith(pattern.slice(0,-2)) : path===pattern;}
 export interface FileEntry { kind:'file'|'symlink'|'directory'; mode:number; bytes:number; content_digest:string; link_target?:string; }

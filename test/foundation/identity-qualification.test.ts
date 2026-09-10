@@ -80,6 +80,16 @@ describe('v5 subscription qualification derived from preserved host evidence',()
   }
   const result=first(f.input);expect(result.status).not.toBe('QUALIFIED');expect(result.metrics.tasks).toBe(19);
  });
+ it.each([
+  ['--profile','alternate'],['--profile=alternate'],['-p','alternate'],['-p=alternate'],['-palternate'],
+  ['--local-provider','ollama'],['--local-provider=ollama'],
+ ].map(override=>({override})))('rejects unsupported Codex identity options: $override',({override})=>{
+  const f=fixture(),row=f.input.observations[0]!,candidate=f.input.candidates[0]!;
+  f.report(row,{args:['exec','--ignore-user-config','--model',candidate.model_id,'-c','model_reasoning_effort="high"','--json',...override]});
+  const result=first(f.input);
+  expect(result.status).toBe('REJECT');expect(result.metrics.tasks).toBe(19);
+  expect(result.diagnostics).toContainEqual(expect.objectContaining({rule_id:'configuration_identity_mismatch'}));
+ });
  it.each(['model','effort'] as const)('a later contradictory observed %s invalidates previously accepted configuration evidence',field=>{
   const f=fixture(),row=structuredClone(f.input.observations[0]!);row.observation_id='later_contradiction';row.task_id='later_task';row.attempts[0]!.attempt_id='later_attempt';
   expect(first(f.input).status).toBe('QUALIFIED');
