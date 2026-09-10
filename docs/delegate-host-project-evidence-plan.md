@@ -1,3 +1,5 @@
+> This earlier pilot plan is historical for receipt collection. The current local feedback and reminder lifecycle is specified in [local learning](../skills/delegate/local-learning.md); new tasks use helper-generated v2 records. Historical pilot results below retain their original scope and versions.
+
 # Delegate usability and provisional evidence plan
 
 Status: the evidence increment was approved and completed on 2026-09-10; actual results are recorded in [delegate-usability-results.md](delegate-usability-results.md). The consumer contract was subsequently updated on the same date as described below. The recorded pilots and their budgets remain historical evidence, not new validation of the updated contract.

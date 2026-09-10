@@ -313,3 +313,57 @@ it('does not let unmeasured provisional fallback bypass an explicit task dollar 
   provisional.stratum_digest=digest(provisional.stratum);pack.content_digest=contentDigest(pack);
   expect(resolveRouting(pack,{publicTaskClass:'mechanical_work',stratumDigest:provisional.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...provisional.workers,...provisional.reviewers]),host:'codex'}}).worker.evidence_tier).toBe('provisional');
 });
+
+describe('local routing preferences preserve governed boundaries',()=>{
+ function localFixture(){
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));
+  const entry=provisionalRoute();entry.workers=[provisionalCandidate('baseline'),provisionalCandidate('preferred')];
+  const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[entry]}),route=pack.routes[0]!;
+  const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:'2026-09-10T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}};
+  const preference={pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex' as const,preferred_worker_identity:route.workers[1]!.candidate_identity};
+  return {pack,route,input,preference};
+ }
+ it('changes only the worker within an available provisional evidence group',()=>{
+  const {pack,input,preference}=localFixture(),before=structuredClone(pack),baseline=resolveRouting(pack,input),preferred=resolveRouting(pack,{...input,localPreferences:preference});
+  expect(baseline.worker.candidate_id).toBe('baseline');expect(preferred.worker.candidate_id).toBe('preferred');
+  expect(preferred.reviewer).toEqual(baseline.reviewer);expect(preferred.route).toEqual(baseline.route);
+  expect(preferred.ranking_basis.worker).toBe('local_preference_within_task_evidence');expect(pack).toEqual(before);
+ });
+ it.each(['pack','stratum','host','unavailable','failed','effort','identity'] as const)('ignores %s advice and returns the exact baseline result',kind=>{
+  const {pack,input,preference}=localFixture();
+  if(kind==='pack')preference.pack_content_digest=digest('other pack');
+  if(kind==='stratum')preference.stratum_digest=digest('other stratum');
+  if(kind==='host')Object.assign(preference,{host:'claude'});
+  if(kind==='unavailable')input.host.treatments=input.host.treatments.filter(t=>t.model_id!=='preferred');
+  if(kind==='effort')input.host.treatments.find(t=>t.model_id==='preferred')!.effort='high';
+  if(kind==='identity')preference.preferred_worker_identity=digest('invented');
+  const request={...input,...(kind==='failed'?{failedCandidateIds:['preferred']}:{})};
+  expect(resolveRouting(pack,{...request,localPreferences:preference})).toEqual(resolveRouting(pack,request));
+ });
+ it('cannot revive an expired preferred candidate',()=>{
+  const {input}=localFixture(),entry=provisionalRoute();entry.workers=[provisionalCandidate('baseline'),provisionalCandidate('old',false,'2026-08-15T00:00:00Z')];
+  const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[entry]}),route=pack.routes[0]!;
+  const request={...input,stratumDigest:route.stratum_digest,now:'2026-09-18T00:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}};
+  expect(resolveRouting(pack,{...request,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:route.workers[1]!.candidate_identity}})).toEqual(resolveRouting(pack,request));
+ });
+ it('does not replace a qualified incumbent',()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));
+  const pack=compileProduction(),route=pack.routes[0]!,input={publicTaskClass:'bounded_implementation' as const,stratumDigest:route.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}};
+  expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:route.workers[1]!.candidate_identity}})).toEqual(resolveRouting(pack,input));
+ });
+ it('cannot cross installed-acceptance and smoke-extrapolation task evidence',()=>{
+  const pack=parseRoutingPack(JSON.parse(readFileSync('skills/delegate/routing-pack.json','utf8'))),route=pack.routes.find(r=>r.public_task_class==='mechanical_work'&&r.workers.some(w=>w.task_evidence?.host==='codex'))!;
+  const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:pack.generated_at,host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}},baseline=resolveRouting(pack,input);
+  const extrapolated=route.workers.find(w=>w.task_evidence?.basis==='smoke_extrapolation')!;
+  expect(baseline.worker.provisional?.task_evidence?.basis).toBe('installed_acceptance');
+  expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:extrapolated.candidate_identity}})).toEqual(baseline);
+ });
+ it('does not switch reviewers to accommodate a preferred worker',()=>{
+  localFixture();const policy=currentPolicy();policy.review.low.different_model=true;
+  const entry=provisionalRoute();entry.workers=[provisionalCandidate('baseline'),provisionalCandidate('frontier_alias',true)];entry.reviewers=[provisionalCandidate('frontier_alias',true),provisionalCandidate('second_frontier',true)];
+  const pack=compileRoutingPack({mode:'production',policy,strata:[],provisional:[entry]}),route=pack.routes[0]!;
+  const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:pack.generated_at,host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}},baseline=resolveRouting(pack,input);
+  expect(baseline.reviewer.candidate_id).toBe('frontier_alias');
+  expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:route.workers[1]!.candidate_identity}})).toEqual(baseline);
+ });
+});

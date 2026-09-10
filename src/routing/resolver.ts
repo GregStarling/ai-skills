@@ -8,7 +8,8 @@ const hostSchema=z.object({
   treatments:z.array(z.object({provider:providerSchema,model_id:z.string().min(1),snapshot_id:z.string().min(1).nullable(),effort:z.string().min(1),serving:servingConfigurationSchema,observed_model_id:z.string().min(1).optional(),observed_effort:z.string().min(1).optional(),substitution_observed:z.boolean().optional()}).strict()),
   tools:z.array(z.string().min(1)),capabilities:z.array(z.string().min(1)),context_window_tokens:z.number().int().positive(),supports_fresh_context:z.boolean(),
 }).strict();
-const requestSchema=z.object({publicTaskClass:publicTaskClassSchema,stratumDigest:z.string().regex(/^sha256:[a-f0-9]{64}$/),now:z.string().datetime({offset:true}),host:hostSchema,failedCandidateIds:z.array(z.string().min(1)).optional()}).strict();
+const localPreferencesSchema=z.object({pack_content_digest:z.string().regex(/^sha256:[a-f0-9]{64}$/),stratum_digest:z.string().regex(/^sha256:[a-f0-9]{64}$/),host:z.enum(['codex','claude']),preferred_worker_identity:z.string().regex(/^sha256:[a-f0-9]{64}$/)}).strict();
+const requestSchema=z.object({publicTaskClass:publicTaskClassSchema,stratumDigest:z.string().regex(/^sha256:[a-f0-9]{64}$/),now:z.string().datetime({offset:true}),host:hostSchema,failedCandidateIds:z.array(z.string().min(1)).optional(),localPreferences:localPreferencesSchema.optional()}).strict();
 export type ResolveRoutingInput=z.infer<typeof requestSchema>;
 export type ResolvedRouting={worker:RoutingTreatment;reviewer:RoutingTreatment;route:RoutingRoute;stale:boolean;ranking_basis:{worker:string;reviewer:string}};
 
@@ -44,7 +45,16 @@ export function resolveRouting(packValue:unknown,inputValue:ResolveRoutingInput)
   for(const worker of workers){
     if(now>=Date.parse(worker.expires_at)||failed.has(worker.candidate_id)||!capable(worker)||!treatmentAvailable(worker,input.host))continue;sawWorker=true;
     const reviewer=reviewers.find(r=>now<Date.parse(r.expires_at)&&!failed.has(r.candidate_id)&&r.frontier&&capable(r)&&treatmentAvailable(r,input.host)&&independent(worker,r,route,input.host));
-    if(reviewer)return {worker,reviewer,route,stale:now>=Date.parse(pack.refresh_after),ranking_basis:{worker:worker.evidence_tier==='qualified'?route.ranking_basis.workers:provisionalWorkers.basis,reviewer:reviewer.evidence_tier==='qualified'?route.ranking_basis.reviewers:provisionalReviewers.basis}};
+    if(reviewer){
+      // Resolve the baseline pair first. Local preference cannot move a qualified
+      // incumbent, cross task-evidence tiers, or induce a different reviewer.
+      const advice=input.localPreferences;
+      const matchingAdvice=advice&&advice.pack_content_digest===pack.content_digest&&advice.stratum_digest===route.stratum_digest&&advice.host===input.host.host;
+      const evidenceBasis=(candidate:RoutingTreatment)=>candidate.provisional?.task_evidence?.basis??'smoke_extrapolation';
+      const preferred=worker.evidence_tier==='provisional'&&matchingAdvice?workers.find(candidate=>candidate.candidate_identity===advice.preferred_worker_identity&&candidate.evidence_tier==='provisional'&&evidenceBasis(candidate)===evidenceBasis(worker)&&now<Date.parse(candidate.expires_at)&&!failed.has(candidate.candidate_id)&&capable(candidate)&&treatmentAvailable(candidate,input.host)&&independent(candidate,reviewer,route,input.host)):undefined;
+      const selected=preferred??worker;
+      return {worker:selected,reviewer,route,stale:now>=Date.parse(pack.refresh_after),ranking_basis:{worker:selected!==worker?'local_preference_within_task_evidence':worker.evidence_tier==='qualified'?route.ranking_basis.workers:provisionalWorkers.basis,reviewer:reviewer.evidence_tier==='qualified'?route.ranking_basis.reviewers:provisionalReviewers.basis}};
+    }
   }
   throw new RoutingError(sawWorker?'NO_ELIGIBLE_FRONTIER_REVIEWER':'NO_ELIGIBLE_WORKER');
 }

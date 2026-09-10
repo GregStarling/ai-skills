@@ -124,6 +124,8 @@ Start with the task you would normally hand to your coding agent. Delegate first
 
 For Codex, use `$delegate` instead.
 
+Delegate also records outcomes locally through an optional dependency-free Node helper, learns conservative preferences among eligible options, and offers an occasional compact session handoff at a useful milestone. Missing runtime or telemetry does not block ordinary work. Personal state stays outside the skill folder and is never automatically uploaded. Supplied-source research and live web discovery have separate evidence requirements; current packaged research routes do not yet establish live-web acceptance. See [local learning](skills/delegate/local-learning.md) and [research boundaries](skills/delegate/research.md).
+
 Small jobs can be completed directly with appropriate verification. Explicit requests for workers, exact models, strict pack governance or independent review still apply. Larger projects are decomposed into bounded workstreams and can use multiple workers when the work is independent and delegation improves total efficiency.
 
 ---
@@ -302,6 +304,12 @@ delegate/
 ├── SKILL.md
 ├── routing-pack.json
 ├── pack-format.md
+├── context-discipline.md
+├── local-learning.md
+├── research.md
+├── scripts/
+│   ├── local-learning.mjs
+│   └── local-learning.d.mts
 ├── task-classes.md
 ├── delegation-contract.md
 ├── swarm-policy.md
@@ -358,4 +366,4 @@ It should know **what work needs its intelligence**.
 
 Delegate is an attempt to make that distinction explicit, measurable and portable:
 
-> **Let the cheapest capable model do the work. Make the best model prove it worked.**
+> **Achieve the requested quality with the least total effort, preserving relevant verification.**
