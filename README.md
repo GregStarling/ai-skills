@@ -1,24 +1,37 @@
-# Delegate
+# AI skills
 
-A portable skill for completing tasks with efficient use of models, tokens and coordination. The entrypoint is [skills/delegate/SKILL.md](skills/delegate/SKILL.md). It runs in Claude or Codex using the tools available to the calling assistant; it does not require Foreman, Model Governor, a Node build, API keys or a separate service.
+The primary product is the complete [delegate folder](skills/delegate/): a portable skill for **frontier coordination → cheapest qualified available worker → frontier verification → targeted repair**. It handles a small task with a small work order and a large project with bounded workstreams and final integration review. Foreman is not required.
 
-The intended interaction is `/delegate <task>`: fix a bug, build a feature or interface, carry a project through delivery, or produce a research, writing or analysis artifact. The default is **cheapest capable worker → frontier verification → targeted correction**. Large tasks may be split into useful workstreams, but every assignment retains that loop and the combined result is verified. Small tasks use smaller work orders; they do not bypass routing or review.
+The governor is maintainer infrastructure. It compiles current evidence into `routing-pack.json`; consumers read that pack through the skill and use their host's native agent tools. Consumers do not install Node, Promptfoo, a database or a governor service. Existing host authentication is sufficient for routes actually available in that host.
 
-The worker is the least expensive available model with credible capability for the task; the verifier is an available frontier model. Model selection uses actual host capabilities and known economics, with no hardcoded model leaderboard. Coordination, context duplication, failed attempts and review count toward efficiency. Unknown token/cost accounting stays unknown.
+## What ships in the folder
 
-## Current status
+- `SKILL.md`: the orchestration entrypoint.
+- `routing-pack.json`: generated, versioned task routes, model/effort identities, economics, qualification summaries and freshness.
+- `task-classes.md`, `delegation-contract.md`, `swarm-policy.md`, `verification-policy.md`: focused guidance loaded when needed.
+- `hosts/claude.md` and `hosts/codex.md`: thin mappings to native host controls.
 
-The standalone skill source is implemented. It remains intentionally uninstalled while this library is developed; slash-command discovery and invocation in both installed hosts have not been verified. The source can be supplied directly to a calling assistant for testing. Host-specific discovery belongs to installation, not to the skill's runtime dependencies.
+The skill intersects qualified routes with current host availability. It does not invent a model hierarchy each invocation or assume both providers. Frontier verification is mandatory, but review depth scales with the task. Repairs return to the original worker before capability-based escalation.
 
-[Standalone delivery plan](docs/standalone-delegate-plan.md) defines the corrected product scope. [Validation notes](docs/standalone-delegate-validation.md) record the explicit Luna-worker/frontier-verifier trial and its limits. The earlier Model Governor v1 release was an engine release, not proof of a complete standalone delegator. Its native smoke tests demonstrated candidate evaluation, not an accepted end-to-end delegated project.
+## Current readiness
 
-## Optional governance engine
+**The initial compiled pack has no qualified production routes.** Existing observations do not satisfy the governor's current task, identity, effort, cost and review requirements. Empty classes remain explicit; illustrative model names and one-task trials have not been promoted into general qualification. Installing the folder currently gives a clear missing-evidence result, not automatic productive routing.
 
-The repository also contains the separate Model Governor TypeScript library and CLI for policy-driven candidate qualification, provenance, paired evaluation, bindings, native execution and refresh. This engine remains useful when those controls are explicitly required; the standalone skill does not invoke it by default. Its qualified production path currently returns HOLD/escalation for missing evidence and unsupported native guarantees.
+The routing/compiler implementation and copied-folder checks are separate from empirical readiness. Prior native smokes demonstrated candidate evaluation; earlier standalone tests demonstrated source behavior. Neither establishes an installed, fully qualified `/delegate` experience in both hosts. See [current validation](docs/routing-pack-validation.md), [validation history](docs/standalone-delegate-validation.md) and [the routing-pack plan](docs/routing-pack-plan.md).
 
-[Engine CLI guide](docs/usage-cli.md) · [Engine release evidence](docs/v1-release.json) · [Engine acceptance mapping](docs/v1-coverage.json) · [Foreman findings from the build](docs/foreman-scratchpad.md)
+## Copy the complete folder
 
-For engine development:
+Once a suitable production pack is available, copy `skills/delegate/` to a host's skill location. For a project, use `.claude/skills/delegate/` in Claude Code or `.agents/skills/delegate/` in Codex. Personal locations are `~/.claude/skills/delegate/` and `~/.agents/skills/delegate/`. Preserve any existing skill with the same name; this development checkout has not installed or overwritten one.
+
+Claude supports `/delegate <task>`. In Codex, use the installed skill selector or named-skill syntax supported by that host version. Copy every referenced file; updating only `SKILL.md` leaves routing knowledge behind. [Claude discovery](https://code.claude.com/docs/en/skills) · [Codex discovery](https://learn.chatgpt.com/docs/build-skills).
+
+## Maintain routing knowledge
+
+Use [refresh-models](skills/refresh-models/SKILL.md) in the maintainer checkout. Discovery, real evaluations and production results feed the governor; qualification and promotion rules produce the updated pack. Review and publish the pack through Git. That does not require consumers to run the compiler.
+
+[Routing-pack maintenance](docs/routing-pack-maintenance.md) · [Existing engine CLI](docs/usage-cli.md) · [Historical engine release](docs/v1-release.json) · [Foreman findings from development](docs/foreman-scratchpad.md)
+
+Maintainer checks:
 
 ```sh
 npm ci
@@ -28,4 +41,4 @@ npm run build
 node scripts/verify/skills.mjs
 ```
 
-`npm run verify:v1` runs the engine's full offline release proof, including harvested grader calibration against a local Foreman source checkout. `npm run verify:v1:live` verifies retained engine evaluation receipts without new provider calls. Those are engine development checks, not requirements for using the standalone skill.
+The older `verify:v1`/`verify:v1:live` commands concern the governor engine and retained native evaluation evidence, not consumer installation or qualified routing readiness. Some harvested engine calibration checks require a local Foreman source checkout; that is test provenance, not a delegate runtime dependency.

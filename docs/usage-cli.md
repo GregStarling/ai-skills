@@ -81,3 +81,7 @@ Current runtime version and control evidence is in `docs/runtime-capabilities.js
 The bundled seed fixtures do not meet the policy's sample requirements, and no reviewed production winner is asserted. The fixture grader is separate and integrity checked, but this is not a claim that arbitrary hostile test code has OS sandbox isolation. Shadow refuses that unsupported case.
 
 Refresh activation uses an exclusive `.apply.lock`, immutable generations and an atomic active pointer. An interrupted apply preserves either the old or complete new active generation. If a crashed process leaves its lock, inspect the recorded process ID and active pointer before an operator removes that stale lock; the runtime never steals a live lock.
+
+## Portable routing compilation
+
+Maintainers can compile evidence into the dependency-free delegate folder using `compile-routing-pack`, inspect it with `validate-routing-pack`, and check a host intersection with `resolve-routing`. See [routing-pack maintenance](routing-pack-maintenance.md). These commands do not add a runtime dependency to the consumer skill.

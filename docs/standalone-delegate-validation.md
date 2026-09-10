@@ -1,8 +1,8 @@
-# Standalone skill validation
+# Standalone skill validation history
 
-The current product rule is cheapest capable worker followed by frontier verification. Source is `skills/delegate/SKILL.md`; installation and host slash-command discovery remain untested.
+These trials concern the standalone skill before the portable routing-pack refactor. They do not qualify routes in the current pack. See [routing-pack validation](routing-pack-validation.md) for the current implementation; installation and host slash-command discovery remain untested.
 
-## Current routing trial
+## Pre-refactor routing trial
 
 A fresh disposable cart bug was assigned explicitly through the native subagent tool to `gpt-5.6-luna`, low reasoning effort. The host describes this model as fast and affordable; the trial does not establish that its pricing is the absolute minimum among every eligible model.
 

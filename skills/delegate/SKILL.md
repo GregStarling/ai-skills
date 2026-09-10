@@ -1,32 +1,32 @@
 ---
 name: delegate
-description: Route a task to the least expensive available model capable of completing it, then have a frontier model verify the actual result. Use when the user invokes delegate or asks for cost-effective delegated execution of any task.
+description: Use a portable evidence-qualified routing pack to assign any task to the cheapest suitable available worker, then have a frontier model verify completion. Use when the user invokes delegate or asks for cost-effective delegated execution.
 ---
 
-Use this loop: **cheapest capable worker → frontier verification → targeted correction when needed**. The coordinator owns the user's complete outcome. This applies to a bug, interface, project, research, writing or analysis task. Small tasks still use worker execution and frontier verification; their work orders and checks should simply be smaller.
+Run **frontier coordination → qualified worker → integration → frontier verification → targeted repair → acceptance**. The user supplies the task. This entire folder is the consumer product: no Foreman, Node installation, governor service, registry setup or extra API keys are required.
 
-The skill uses the host's available model and agent tools. It requires no Foreman or separate orchestration service. Do not require the user to construct a registry, binding or work-order JSON. Honor explicit user choices, task permissions and any mandatory project governance.
+## Read and route
 
-## Route
+Read [routing-pack.json](routing-pack.json) and the applicable [Claude](hosts/claude.md) or [Codex](hosts/codex.md) host guide. Use [task-classes.md](task-classes.md) to classify the task or its workstreams. Load other references only when their step applies.
 
-Identify the task's acceptance conditions and the capabilities it actually needs: tools, context, reasoning, modality and permissions. From the models available in this session, choose the lowest-cost candidate with credible evidence it can satisfy those needs. Use available pricing/configuration and relevant prior task results; do not assume the smallest model is always sufficient. Optimize cost to a correct accepted result, including retries and review.
+Use the pack's exact task/risk/constraint stratum and evidence scope, not just a matching class label. Select from its compiled ladder intersected with the models, efforts, tools and material controls actually available in this host. Preserve candidate × effort identity and the compiled order, including any incumbent retained by promotion rules. Do not invent a fresh model hierarchy, reinterpret examples as routes or require both providers.
 
-Use an available frontier model as verifier. If the calling coordinator is already a frontier model, it performs that review; otherwise route review to one. Keep worker and verifier roles distinct even when a difficult task needs a frontier worker. Do not silently default execution to the current expensive model or skip verification to save a handoff.
+Before execution, ensure an eligible frontier coordinator/verifier is available. If the current coordinator matches the pack's frontier requirements, it can perform final review. Otherwise use an eligible frontier session. Unknown capability is not proof of eligibility. Inspect effective dispatch settings and record substitutions; a host's silent fallback does not count as the requested route.
 
-Do not invent model availability, prices, capability evidence or savings. If the exact cheapest eligible model is uncertain, choose using the best available cost/capability information and label the uncertainty briefly. Do not launch a benchmark campaign before doing the task. If the host cannot select a worker model or provide frontier verification, state the missing capability and request a supported alternative rather than claim the required routing occurred.
+Compare full timestamps against the actual current clock with time zones; a local calendar date alone does not establish that a UTC timestamp is in the future. Use `refresh_after` to report an update due; never use a future-dated, expired, malformed or simulation pack for real dispatch. Missing qualification, unmatched scope or an empty host intersection produces a specific blocked result. Do not manufacture a route, weaken policy or run maintainer evaluations during the user's task. Request an updated pack or an explicitly authorized alternative and preserve any useful planning already completed. The checked-in pack may honestly have no qualified routes; that does not establish operational readiness.
 
 ## Execute
 
-Give the worker a compact packet: outcome, necessary context and source/artifact paths, owned scope, constraints, acceptance checks and expected return. Send relevant decisions rather than the entire conversation. Ask for actual artifacts, checks and unresolved issues, not a transcript. Reuse the worker's context for repairs.
+Give one worker a compact [delegation contract](delegation-contract.md). Even a tiny task uses a worker followed by frontier verification; the packet and checks scale down. The frontier handles architecture, UI judgment, task boundaries and integration, while the worker implements.
 
-Default to one worker assignment. Split a large task only where independent work makes completion more efficient; route each assignment by the same rule. Establish shared interfaces, keep ownership disjoint or isolate overlapping edits, and integrate dependent work in order. Carry the project through the requested outcome, not just its first milestone.
+For multiple independent workstreams, read [swarm-policy.md](swarm-policy.md). Default to at most three concurrent workers, with a normal ceiling of five further limited by the host/project. Settle interfaces and ownership first; use dependency-ordered waves. A full project remains your responsibility through its requested outcome, not its first milestone.
 
-## Verify and correct
+If a candidate is unavailable, try the next eligible compiled route and explain the fallback briefly. Keep repairable defects with the original worker. If a failure demonstrates insufficient capability or repeats without progress, advance to another eligible route; architectural ambiguity returns to frontier planning. Do not silently turn the frontier into the implementation worker or bypass required independence.
 
-The frontier verifier examines actual output and relevant evidence against the acceptance conditions; a worker's completion claim is insufficient. Check bug behavior, integrated feature flows, rendered UI interactions, source-supported claims or calculations as appropriate. Run required project checks. Review the final combined artifact after integration.
+## Accept
 
-If a material defect remains, return the specific finding and expected correction to the worker. Keep the same worker when the repair is within its capability. If failure demonstrates a capability mismatch or repeats without progress, route the remaining work to the next more capable suitable model; do not loop blindly on the cheapest one. The frontier model verifies the corrected result before accepting it. Frontier execution is an escalation, not the default shortcut.
+Apply [verification-policy.md](verification-policy.md). Frontier verification is always required, with depth proportional to the task. Inspect actual artifacts and relevant tests, rendered UI/interaction evidence, source-supported claims or calculations. Verify the integrated final result and every material correction.
 
-Once acceptance is met and meaningful checks pass, deliver and stop. Do not add review agents, speculative polish or infrastructure cleanup without a concrete need. Preserve permissions: routing does not authorize unrelated publication, messages, destructive actions or spending.
+Deliver once acceptance is met and no material defect remains. Avoid repeated reviews, speculative polish and infrastructure work. Respect the user's scope and permissions throughout.
 
-Report the result, worker/verifier models actually used, verification and material limitations. Include token/cost totals only when observed; otherwise leave them unknown. Distinguish tested source behavior from actual slash-command installation and host invocation.
+Report the models/efforts actually used, meaningful fallback or repair decisions, verification and material limits. Report token/cost totals only when observed. Do not conflate requested settings, measured evidence, source-format validation and installed host invocation.

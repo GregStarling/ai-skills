@@ -14,3 +14,4 @@ export * as delegation from './delegation/index.js';
 export * as discovery from './discovery/index.js';
 export * as refresh from './refresh/index.js';
 export * as shadow from './shadow/index.js';
+export * as routing from './routing/index.js';

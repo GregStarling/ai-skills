@@ -1,0 +1,48 @@
+{
+  "schema_version": "routing_pack.v1",
+  "mode": "production",
+  "generated_at": "2026-09-10T01:36:55.155Z",
+  "refresh_after": "2026-09-11T01:36:55.155Z",
+  "expires_at": "2026-09-13T01:36:55.155Z",
+  "policy_version": 2,
+  "policy_digest": "sha256:73ccf56882191399e049e130d72197c6f0354ef3b266edd5f319dbe508b5ccd5",
+  "registry_content_digests": [],
+  "registry_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "routes": [],
+  "missing_routes": [
+    {
+      "public_task_class": "repo_exploration",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "bounded_implementation",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "ui_implementation",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "hard_debugging",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "research",
+      "reason": "stratum_not_supplied"
+    },
+    {
+      "public_task_class": "full_project",
+      "reason": "stratum_not_supplied"
+    }
+  ],
+  "exclusions": [],
+  "content_digest": "sha256:29d30b72ca517f272b7856d53891faf85231f8a49d9115449dd8a6138e5cdc9f"
+}
