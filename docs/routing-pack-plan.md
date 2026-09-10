@@ -1,5 +1,7 @@
 # Portable routing-pack refactor
 
+Historical implementation plan. Its requirement to dispatch a worker for every task size is superseded by the [current consumer contract](delegate-host-project-evidence-plan.md#current-consumer-contract) and [installed skill source](../skills/delegate/SKILL.md). The earlier implementation scope and acceptance evidence below are preserved as history; they do not override the current direct-versus-delegated choice.
+
 The consumer product is the complete `skills/delegate/` folder. A frontier coordinator classifies/plans work, intersects a compiled evidence-qualified ladder with host availability, dispatches the cheapest suitable worker, integrates output and performs mandatory frontier verification. Repairs return to the same worker; capability failures advance to another qualified treatment. Model and effort stay distinct.
 
 The governor is maintainer tooling: existing discovery/evaluation/qualification → portable pack compilation → explicit file publication. Consumers do not run Node, a database, Foreman or governor services. Keep the public taxonomy at eight classes and load conditional references only when needed.
