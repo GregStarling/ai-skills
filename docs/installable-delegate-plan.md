@@ -1,5 +1,7 @@
 # Installable delegate completion
 
+Historical implementation plan. Its requirement to dispatch a worker for every task size is superseded by the [current consumer contract](delegate-host-project-evidence-plan.md#current-consumer-contract) and [installed skill source](../skills/delegate/SKILL.md). The earlier implementation scope and acceptance evidence below are preserved as history; they do not override the current direct-versus-delegated choice.
+
 Resolve the known product gaps in one integrated release: mandatory frontier review in current policy; separate weekly/monthly pack freshness with per-treatment evidence expiry; structural orchestration modes; explicit provisional worker and reviewer evidence alongside qualified treatments; publication date validation; local execution receipts; populated routing knowledge; and copied-folder native-host acceptance.
 
 Ownership: a routing worker owns policy, routing contracts/compiler/resolver and their tests. A host-evidence worker inspects current native CLIs and records actual smoke outcomes in disposable projects. Root owns the consumer folder, CLI wiring, evidence compilation, broader acceptance, integrated review and publication. Preserve historical engine fixtures and qualification thresholds; no global installs or configuration changes. Current user authorization includes fixing these known issues and disposable project installations for verification.

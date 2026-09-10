@@ -1,12 +1,27 @@
 # Delegate usability and provisional evidence plan
 
-Status: approved for execution and publication on 2026-09-10. Work occurs in isolated branches; the original dirty project checkout stays intact. Actual results are recorded separately.
+Status: the evidence increment was approved and completed on 2026-09-10; actual results are recorded in [delegate-usability-results.md](delegate-usability-results.md). The consumer contract was subsequently updated on the same date as described below. The recorded pilots and their budgets remain historical evidence, not new validation of the updated contract.
+
+## Current consumer contract
+
+The approved [Delegate skill](../skills/delegate/SKILL.md) and [repository guidance](../AGENTS.md) now require:
+
+1. Complete small work directly when a handoff adds more effort.
+2. Delegate substantial bounded work when it improves total efficiency.
+3. Spend stronger reasoning on ambiguity and consequential decisions.
+4. Preserve relevant tests, visual checks and required independent review.
+5. Include coordination, failed attempts and repairs when judging efficiency.
+6. Stop when the requested quality is achieved.
+
+This supersedes mandatory worker dispatch for every task size. Direct execution uses ordinary host/project checks and makes no pack-qualification claim. Explicit requests for workers or strict pack governance still apply. Worker-first repair remains the rule for work already delegated; it does not require a worker for a task selected for direct execution. The v5 qualification thresholds, evidence boundaries, risk floors and delegated review controls are unchanged.
+
+The installed-skill pilots below explicitly require workers because their purpose is to prove worker edit access, frontier review and receipt capture. They are not the default execution contract for ordinary small tasks.
 
 ## Deliver this increment
 
 Improve delegation practices with writable implementation workers, concise context guidance, accurate host facts, scoped provisional reviewer evidence where admissible, and an original receipt preserved for later assessment. This increment proves installed-skill execution on an in-scope JavaScript fixture; it does not establish general everyday TypeScript capability in `ebay-lego`.
 
-Quality and successful completion come first. Measure elapsed time and observable usage across the workflow without making token reduction the goal. Keep v5 architecture, qualification thresholds, economics, risk floors, reviewer independence, and worker-first repair unchanged. Existing authority stays in [identity assurance](v5-identity-assurance.md), [pack lookup](../skills/delegate/pack-format.md), and [receipt assessment](production-receipts.md); this plan does not redefine it.
+Quality and successful completion come first. Measure elapsed time and observable usage across the workflow without making token reduction the goal. Keep v5 architecture, qualification thresholds, economics, risk floors and reviewer independence unchanged. Preserve worker-first repair for delegated work, subject to the current direct-versus-delegated contract above. Existing authority stays in [identity assurance](v5-identity-assurance.md), [pack lookup](../skills/delegate/pack-format.md), and [receipt assessment](production-receipts.md); this plan does not redefine it.
 
 The baseline pack at commit `0d27fde59f9f1bd7634571b5c84e26ac3015d91d` has 15 provisional routes and zero qualified routes. Fable/Astra diagnostic probes are not reviewer qualification. Full qualification and accepted production-evidence assessment are a separately budgeted follow-on, not release gates for this increment.
 
@@ -26,7 +41,7 @@ Limit the new reference to:
 
 - **Boundary handoffs:** start fresh at meaningful delivery boundaries, carrying objectives, decisions, constraints, checkout/change state, evidence locations, and remaining work. Keep coherent investigations together when a restart would cause rediscovery. A full-history fork is not a compact handoff.
 - **Targeted inspection:** prefer bounded reads and text/DOM inspection for structural questions. Use screenshots for visual judgments and avoid redundant captures. Keep full evidence accessible by reference. Saving or deleting an image file does not establish its removal from context.
-- **When exploration earns a worker:** delegate substantial bounded investigations when noise isolation, parallelism, or model economics justify the overhead. Return findings, exact sources, and uncertainties. A single targeted search need not spawn an agent; the underlying user task still follows Delegate's worker-and-verifier contract.
+- **When exploration earns a worker:** delegate substantial bounded investigations when noise isolation, parallelism, or model economics justify the overhead. Return findings, exact sources, and uncertainties. A single targeted search need not spawn an agent; select the underlying task's work shape under the current consumer contract. Apply the worker-and-verifier contract only when delegation is selected or explicitly required.
 
 Use existing admissible routes for exploratory or visual workers. Do not introduce new task classes to support the guidance. A worker summary cannot replace the frontier's inspection of the evidence needed for acceptance.
 
