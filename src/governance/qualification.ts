@@ -22,25 +22,30 @@ export type QualificationInput = {
   sources?: ReadonlyMap<string, string | Uint8Array>; runtimeReports?: ReadonlyMap<string, unknown>;
 };
 export type Qualification = {
-  candidate_id: string; status: 'QUALIFIED' | 'REJECT' | 'HOLD'; diagnostics: Diagnostic[];
+  candidate_id: string; status: 'QUALIFIED' | 'REJECT' | 'HOLD'; diagnostics: (Diagnostic & {effect?: 'ignored_evidence'; observation_id?: string})[];
   observations: TaskObservation[];
   identity_assurance?: IdentityAssurance;
   metrics: { tasks: number; accepted: number; success_rate: number | null; total_cost_usd: number | null;
     cost_per_accepted_task_usd: number | null; p95_latency_ms: number | null };
 };
 export function qualify(input: QualificationInput): Qualification {
-  const diagnostics: Diagnostic[] = [];
+  const diagnostics: Qualification['diagnostics'] = [];
   let rejected = false;
-  const fail = (rule_id: string, message: string, hard = true) => { diagnostics.push({rule_id,message}); rejected ||= hard; };
+  let held = false;
+  const fail = (rule_id: string, message: string, hard = true) => {
+    diagnostics.push({rule_id,message}); rejected ||= hard; held = true;
+  };
+  const ignore = (observation_id: string, rule_id: string, message: string) => diagnostics.push({rule_id,message,observation_id,effect:'ignored_evidence' as const});
   let observations: TaskObservation[] = [];
   let identityAssurance: IdentityAssurance | undefined;
   const empty: Qualification['metrics'] = { tasks: 0, accepted: 0, success_rate: null, total_cost_usd: null, cost_per_accepted_task_usd: null, p95_latency_ms: null };
   const result = (metrics = empty): Qualification => ({candidate_id: input.candidate.candidate_id,
-    status: diagnostics.length ? rejected ? 'REJECT' : 'HOLD' : 'QUALIFIED', diagnostics, observations, metrics,
+    status: rejected ? 'REJECT' : held ? 'HOLD' : 'QUALIFIED', diagnostics, observations, metrics,
     ...(identityAssurance === undefined ? {} : {identity_assurance:identityAssurance})});
   try {
     z.enum(['simulation','production']).parse(input.mode);
     const policy = parsePolicy(input.policy);
+    const v5Production = policy.policy_version>=5 && input.mode==='production';
     const request = requestSchema.parse(input.request);
     const now = Date.parse(z.string().datetime({offset:true}).parse(input.now));
     if (request.constraints_digest !== digest(request.constraints)) { fail('constraints_digest_mismatch', 'Concrete constraints must match the observation stratum digest.'); return result(); }
@@ -77,20 +82,26 @@ export function qualify(input: QualificationInput): Qualification {
       o.harness_version === task.eval_bucket.harness_version && o.grader_version === task.eval_bucket.grader_version);
     const taskIds = new Set<string>();
     const attemptIds = new Set<string>();
-    const sufficientIdentity = new Set<string>();
-    const assuranceEvidence: IdentityAssurance[] = [];
+    const assuranceEvidence = new Map<string,IdentityAssurance>();
+    const matchedObservations = observations;
     for (const observation of observations) {
       if (input.mode === 'production') {
         const receipt = parseRuntimeReport(input.runtimeReports?.get(observation.provenance.runtime_receipt_digest!));
         if(policy.policy_version>=4){
-          if(!receipt.execution_environment||receipt.execution_environment==='unknown')fail('runtime_environment_unverified','Execution environment is not established by runtime evidence.',false);
+          if(!receipt.execution_environment||receipt.execution_environment==='unknown'){
+            if(v5Production)ignore(observation.observation_id,'runtime_environment_unverified','Execution environment is not established by runtime evidence.');
+            else fail('runtime_environment_unverified','Execution environment is not established by runtime evidence.',false);
+          }
           else if(request.execution_environment&&request.execution_environment!=='unknown'&&receipt.execution_environment!==request.execution_environment)fail('runtime_environment_mismatch','API and subscription-host evidence cannot be silently pooled.');
         }
         if(policy.policy_version>=5){
           const {diagnostics:identityDiagnostics,...assurance}=deriveIdentityAssurance({candidate,report:receipt,sources:input.sources??new Map(),...(request.execution_environment===undefined?{}:{executionEnvironment:request.execution_environment})});
-          for(const diagnostic of identityDiagnostics)fail(diagnostic.rule_id,diagnostic.message,diagnostic.hard);
-          if(!identityAssuranceMeetsMinimum(assurance.overall,policy.identity_assurance!.minimum_by_risk[request.risk]))fail('identity_assurance_insufficient','Preserved execution evidence does not establish the minimum treatment identity assurance for this risk.',false);
-          else if(!identityDiagnostics.length){sufficientIdentity.add(observation.observation_id);assuranceEvidence.push(assurance);}
+          for(const diagnostic of identityDiagnostics){
+            if(diagnostic.hard)fail(diagnostic.rule_id,diagnostic.message);
+            else ignore(observation.observation_id,diagnostic.rule_id,diagnostic.message);
+          }
+          if(!identityAssuranceMeetsMinimum(assurance.overall,policy.identity_assurance!.minimum_by_risk[request.risk]))ignore(observation.observation_id,'identity_assurance_insufficient','Preserved execution evidence does not establish the minimum treatment identity assurance for this risk.');
+          else if(!identityDiagnostics.length)assuranceEvidence.set(observation.observation_id,assurance);
         }else{
           const observed = receipt.observed_identity;
           if (observed.source === 'unknown' || observed.model_id === undefined || observed.effort === undefined) fail('runtime_identity_unverified', 'Production qualification requires runtime-attested snapshot and effort.', false);
@@ -105,11 +116,16 @@ export function qualify(input: QualificationInput): Qualification {
       }
       const age = now - Date.parse(observation.measured_at);
       if (age < 0) fail('future_evidence', 'Observation is in the future.');
-      else if (age > policy.qualification.evidence_max_age_days * 86400000) fail('evidence_expired', 'Observation exceeds declared freshness limit.', false);
+      else if (age > policy.qualification.evidence_max_age_days * 86400000) {
+        if(v5Production){
+          ignore(observation.observation_id,'evidence_expired','Observation exceeds declared freshness limit.');
+          assuranceEvidence.delete(observation.observation_id);
+        }else fail('evidence_expired', 'Observation exceeds declared freshness limit.', false);
+      }
     }
-    if(policy.policy_version>=5&&input.mode==='production'){
-      observations=observations.filter(observation=>sufficientIdentity.has(observation.observation_id));
-      if(assuranceEvidence.length)identityAssurance=summarizeIdentityAssurance(assuranceEvidence);
+    if(v5Production){
+      observations=observations.filter(observation=>assuranceEvidence.has(observation.observation_id));
+      if(assuranceEvidence.size)identityAssurance=summarizeIdentityAssurance([...assuranceEvidence.values()]);
     }
     const summary = summarizeObservations(observations);
     const latencies = observations.map(o => o.latency_ms);
@@ -130,7 +146,8 @@ export function qualify(input: QualificationInput): Qualification {
     else if (metrics.p95_latency_ms > Math.min(policy.qualification.maximum_latency_ms, request.max_latency_ms ?? Infinity,request.constraints.max_latency_ms ?? Infinity)) fail('latency_ceiling', 'Observed p95 task latency exceeds the ceiling.');
     for (const [category, maximum] of Object.entries(policy.qualification.maximum_failure_rates)) {
       const count = observations.filter(o => o.failure_categories?.includes(category)).length;
-      if (observations.length && count / observations.length > maximum) fail('failure_category_ceiling', `${category} exceeds its declared failure rate.`);
+      // Ignoring incomplete/old evidence cannot erase an already known prohibited failure.
+      if (maximum===0&&matchedObservations.some(o=>o.failure_categories?.includes(category)) || observations.length && count / observations.length > maximum) fail('failure_category_ceiling', `${category} exceeds its declared failure rate.`);
     }
     return result(metrics);
   } catch (error) { fail('invalid_qualification_input', error instanceof Error ? error.message : 'Invalid input.'); return result(); }

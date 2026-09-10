@@ -1,7 +1,7 @@
 import {describe,expect,it} from 'vitest';
 import {parseRuntimeReport} from '../../src/schema/index.js';
 import {contentDigest,digest} from '../../src/core/canonical.js';
-import {loadPolicy,qualify,evaluateReview,type SelectionInput} from '../../src/governance/index.js';
+import {loadPolicy,qualify,evaluateReview,select,createBinding,validateBinding,type SelectionInput} from '../../src/governance/index.js';
 import {nativeV5 as fixture} from '../helpers/v5.js';
 
 const first=(input:SelectionInput)=>qualify({...input,candidate:input.candidates[0]!});
@@ -18,6 +18,32 @@ describe('v5 subscription qualification derived from preserved host evidence',()
  it('does not count a receipt claim without captured native configuration',()=>{
   const f=fixture(),row=f.input.observations[0]!;f.report(row,{omitNative:true,observed:{source:'runtime_report',model_id:f.input.candidates[0]!.model_id,effort:'high'}});
   const result=first(f.input);expect(result.status).toBe('HOLD');expect(result.metrics.tasks).toBe(19);expect(result.diagnostics.map(d=>d.rule_id)).toContain('identity_assurance_insufficient');
+ });
+ it.each(['missing-capture','missing-environment','expired'] as const)('qualifies from 20 admissible tasks despite an additional %s observation',kind=>{
+  const rule=kind==='expired'?'evidence_expired':kind==='missing-environment'?'runtime_environment_unverified':'identity_assurance_insufficient';
+  const f=fixture(),row=structuredClone(f.input.observations[0]!);row.observation_id='ignored_unverifiable';row.task_id='ignored_task';row.attempts[0]!.attempt_id='ignored_attempt';
+  const baseline=first(f.input);
+  const report=f.report(row,{omitNative:kind==='missing-capture',observed:{source:'runtime_report',model_id:f.input.candidates[0]!.model_id,effort:'high'}});
+  if(kind==='missing-environment'){
+   delete report.execution_environment;row.provenance.runtime_receipt_digest=digest(report);f.runtimeReports.set(digest(report),report);
+  }
+  if(kind==='expired')row.measured_at='2026-08-01T00:00:00.000Z';
+  f.grade(row);f.input.observations=[...f.input.observations,row];
+  const result=first(f.input);expect(result.status).toBe('QUALIFIED');expect(result.metrics).toEqual(baseline.metrics);expect(result.identity_assurance).toEqual(baseline.identity_assurance);
+  expect(result.observations).not.toContainEqual(row);expect(result.diagnostics).toContainEqual(expect.objectContaining({rule_id:rule,effect:'ignored_evidence',observation_id:row.observation_id}));
+  f.input.economics={schema_version:'economic_evidence.v1',pricing:[],tasks:[],maintainer_order:f.input.candidates.map(c=>c.candidate_id)};
+  expect(select(f.input).selected?.candidate_id).toBe(f.input.candidates[0]!.candidate_id);
+  expect(validateBinding(createBinding(f.input),f.input).ok).toBe(true);
+ });
+ it('holds when expired evidence leaves only 19 current admissible tasks',()=>{
+  const f=fixture(),row=f.input.observations[0]!;row.measured_at='2026-08-01T00:00:00.000Z';f.grade(row);
+  const result=first(f.input);expect(result.status).toBe('HOLD');expect(result.metrics.tasks).toBe(19);
+  expect(result.diagnostics).toContainEqual(expect.objectContaining({rule_id:'insufficient_tasks'}));
+ });
+ it('cannot hide a prohibited security failure in otherwise ignored evidence',()=>{
+  const f=fixture(),row=structuredClone(f.input.observations[0]!);row.observation_id='security_observation';row.task_id='security_task';row.attempts[0]!.attempt_id='security_attempt';row.failure_categories=['security_incident'];
+  f.report(row,{omitNative:true});f.input.observations=[...f.input.observations,row];
+  const result=first(f.input);expect(result.status).toBe('REJECT');expect(result.metrics.tasks).toBe(20);expect(result.diagnostics.map(d=>d.rule_id)).toContain('failure_category_ceiling');
  });
  it('matching caller-written observed identity cannot upgrade raw configuration assurance',()=>{
   const f=fixture();for(const row of f.input.observations){const candidate=f.input.candidates.find(c=>c.candidate_id===row.candidate.candidate_id)!;f.report(row,{observed:{source:'provider_receipt',model_id:candidate.snapshot_id,effort:candidate.effort}});}

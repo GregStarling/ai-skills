@@ -74,3 +74,9 @@ Twenty independent tasks, 90% acceptance, latency, freshness, failure ceilings
 and review remain required. More than one version of the same task cannot raise
 the sample count. Synthetic reachability tests demonstrate the code path, not
 real qualification or reviewer competence.
+
+Incomplete identity capture and expired v5 production observations are excluded
+from counts, metrics and assurance summaries. Their diagnostics carry
+`effect: ignored_evidence` and the observation ID; they do not hold a candidate
+with enough remaining admissible tasks. Missing aggregate requirements still
+hold. Contradictions, duplicate identities and prohibited failures still reject.
