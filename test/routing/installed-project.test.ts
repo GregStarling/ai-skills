@@ -1,4 +1,4 @@
-import {mkdtemp,readFile,writeFile,mkdir,rm,realpath} from 'node:fs/promises';
+import {mkdtemp,readFile,writeFile,mkdir,rm,realpath,symlink,readdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -40,5 +40,12 @@ describe('installed Delegate in an existing isolated project',()=>{
   await mkdir(skill,{recursive:true});await writeFile(join(skill,'SKILL.md'),'existing skill');
   await expect(harness.prepareInstalledTrial('claude','mechanical',{projectRoot:directory})).rejects.toThrow('Refusing existing trial path');
   expect(await readFile(join(skill,'SKILL.md'),'utf8')).toBe('existing skill');
+ });
+ it.each(['.agents','.delegate'])('refuses a %s symlink escaping the disposable project',async name=>{
+  const directory=await project(),outside=await project();
+  const before=await readdir(outside);
+  await symlink(outside,join(directory,name),'dir');
+  await expect(harness.prepareInstalledTrial('codex','mechanical',{projectRoot:directory})).rejects.toThrow('escapes isolated project');
+  expect(await readdir(outside)).toEqual(before);
  });
 });

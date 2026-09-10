@@ -31,14 +31,14 @@ export async function prepareInstalledTrial(host,name,{projectRoot=null,fixtureD
  const instructions='Disposable local acceptance project. The coordinator uses the installed project delegate skill. Workers and reviewers execute their bounded packets without recursively invoking delegation. Work only on supplied fixture files and local receipts. Do not install dependencies, alter global settings, access unrelated projects, or read external grader files. Native authenticated subagents or child CLI processes are permitted. Keep work orders compact. Use one worker except for an explicit swarm. The eligible frontier coordinator verifies low-risk work itself; do not duplicate frontier reviews. Preserve requested versus observed identity. Stop when the requested behavior is verified.\n';
  if(!projectRoot){spawnSync('git',['init','-q'],{cwd:directory});await writeFile(join(directory,'AGENTS.md'),instructions);await writeFile(join(directory,'CLAUDE.md'),instructions);}
  const instructionDigests=Object.fromEntries(await Promise.all(['AGENTS.md','CLAUDE.md'].map(async file=>[file,hash(await readFile(join(directory,file)))])));
- if(projectRoot){
-  await absent(fixtureRoot);
+ if(projectRoot)await absent(fixtureRoot);
+ for(const target of [dirname(skillPath),...(projectRoot?[dirname(fixtureRoot)]:[])]){
   // Resolve each existing ancestor before creating children: never follow a project symlink outside its root.
   let parent=directory;
-  for(const part of relative(directory,dirname(fixtureRoot)).split('/').filter(Boolean)){
+  for(const part of relative(directory,target).split('/').filter(Boolean)){
    parent=join(parent,part);await mkdir(parent,{recursive:true});
    const location=relative(directory,await realpath(parent));
-   if(location==='..'||location.startsWith('../')||isAbsolute(location))throw Error('Fixture parent escapes isolated project');
+   if(location==='..'||location.startsWith('../')||isAbsolute(location))throw Error('Trial parent escapes isolated project');
   }
  }
  const task=await createCase(name,fixtureRoot);
