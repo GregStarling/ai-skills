@@ -7,13 +7,17 @@ Achieve the requested quality with the least total effort needed. Token reductio
 
 If already receiving a bounded worker or reviewer packet, execute it and return to the coordinator. Do not recursively invoke this skill. The coordinator owns routing and the final receipt.
 
+## Local task lifecycle
+
+Read [local learning](local-learning.md) and use the optional packaged helper at start and delivery for both direct and delegated tasks, and at useful milestones for session advice. No runtime installation is required; unavailable learning falls back to ordinary work. User history and reminder settings stay local, outside this folder.
+
 ## Choose direct execution or delegation
 
 Complete small work directly when handing it off would add more effort than completing and verifying it. Delegate substantial bounded work when it improves total efficiency. Include exploration, coordination, context transfer, implementation, integration, verification, failed attempts and repairs in that judgment; a cheaper first attempt is not necessarily a cheaper completion. Prefer reusing useful context to duplicating work.
 
 Spend stronger reasoning on ambiguity and consequential decisions, including diagnosis, architecture and product judgment. Match reasoning effort to the uncertainty and consequences; do not use maximum effort by habit or lower an evidence-bound treatment's exact effort to save usage.
 
-A bare `$delegate` invocation permits this choice. Honor explicit requests for a worker, exact models, strict pack governance or independent review. Direct execution uses ordinary host/project checks and is not a qualified pack route. Skip pack lookup and delegation receipts for direct work, but preserve the relevant artifact, regression, rendered UI/interaction, source and calculation checks described in [verification-policy.md](verification-policy.md), including any required independent review.
+A bare `$delegate` invocation permits this choice. Honor explicit requests for a worker, exact models, strict pack governance or independent review. Direct execution uses ordinary host/project checks and is not a qualified pack route. Skip coordinator pack lookup for direct work; collect its lightweight local outcome through the helper and preserve the relevant artifact, regression, rendered UI/interaction, source and calculation checks described in [verification-policy.md](verification-policy.md), including any required independent review.
 
 For delegated work, follow **frontier coordination → worker → integration → frontier verification → targeted repair → acceptance** and the sections below. Stop in either mode when the requested quality and acceptance checks are satisfied and no material defect remains; do not add speculative polish or repeat completed reviews without new evidence.
 
@@ -21,6 +25,7 @@ For delegated work, follow **frontier coordination → worker → integration �
 
 Use [task-classes.md](task-classes.md) and follow `routing_modes` before delegation:
 
+- `research`: read [focused research](research.md); distinguish supplied-source analysis from live source discovery and check actual source-access tools and route scope.
 - `full_project`: frontier planning and decomposition; settle interfaces and route bounded workstreams individually. A full project remains your responsibility through the requested outcome.
 - `ui_implementation`: frontier specifies the interface before delegation.
 - `hard_debugging`: frontier executes a minimal reproduction, captures the failure, diagnoses its cause and defines the precise fix. Resolve or report blocked reproduction before assigning implementation; source reading alone is insufficient.
@@ -52,4 +57,4 @@ Inspect actual artifacts and relevant tests, rendered UI/interaction evidence, s
 
 Deliver when acceptance is met and no material defect remains. Avoid repeated reviews, speculative polish and infrastructure work; respect scope and permissions.
 
-Record every attempt and final acceptance in the local receipt described in [verification-policy.md](verification-policy.md). Report models/efforts, evidence tiers, meaningful fallbacks/repairs, verification and material limits. Report token/cost totals only when observed; distinguish measured economics from advertised-price proxies and unknown economics.
+Record every attempt and final acceptance through the [local helper](local-learning.md), preserving the evidence requirements in [verification-policy.md](verification-policy.md). Report models/efforts, evidence tiers, meaningful fallbacks/repairs, verification and material limits. Report token/cost totals only when observed; distinguish measured economics from advertised-price proxies and unknown economics.

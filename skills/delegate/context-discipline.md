@@ -24,3 +24,5 @@ Judge the whole workflow by accepted quality, completion time, and observable
 usage, including exploration, coordination, failed attempts, repairs and verification. Smaller coordinator context alone
 does not establish lower total usage. Do not infer savings from screenshot counts
 or cumulative transcript size, or introduce arbitrary session-size alarms.
+
+At meaningful milestones, use the [local reminder helper](local-learning.md) for a brief, optional fresh-session suggestion and compact handoff. Reliable host signals or clearly labeled qualitative judgment can support a reminder; neither proves measured savings. Defer during coupled investigations, unsettled worker activity, or costly rediscovery. Default to once per session and never restart automatically.

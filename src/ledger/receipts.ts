@@ -1,4 +1,5 @@
 import {readFile} from 'node:fs/promises';
+import {normalizeReceipt} from '../../skills/delegate/scripts/local-learning.mjs';
 import {join} from 'node:path';
 import {z} from 'zod';
 import {Ledger} from './index.js';
@@ -16,12 +17,11 @@ const captureSchema=z.object({schema_version:z.literal('delegate_receipt_capture
 const reviewSchema=z.object({selection:z.unknown(),reviewerCandidateId:id,packageDigest:sha,implementerSessionId:id,proof:z.object({outcome:z.enum(['accepted','rejected','escalated']),artifact_digest:sha,package_digest:sha,runtime_receipt_digest:sha.nullable(),session_id:id.nullable(),parent_session_id:id.nullable(),context_kind:z.enum(['new','resumed','forked','unknown']),inherited_context_digest:sha.nullable()}).strict()}).strict();
 const evidenceSchema=z.object({selection:z.unknown(),observationId:id,attemptReceipts:z.record(id,sha),review:reviewSchema.optional()}).strict();
 const assessedSchema=z.object({schema_version:z.literal('delegate_receipt_evidence.v1'),capture:captureSchema,evidence:evidenceSchema}).strict();
-const receiptSchema=z.object({schema_version:z.literal('delegate_receipt.v1')}).catchall(z.unknown());
 type Capture=z.infer<typeof captureSchema>;
 
 function receipt(capture:Capture){
  if(hashBytes(capture.receipt_text)!==capture.receipt_digest)throw Error('RECEIPT_DIGEST_MISMATCH');
- const raw=receiptSchema.parse(JSON.parse(capture.receipt_text));
+ const raw=normalizeReceipt(JSON.parse(capture.receipt_text));
  const task=z.object({public_task_class:id.optional(),task_id:id.optional()}).passthrough().safeParse(raw['task']);
  const taskClass=raw['task_class']??(task.success?task.data.public_task_class:undefined),taskId=raw['task_id']??(task.success?task.data.task_id:undefined);
  if(taskClass!==undefined&&taskClass!==capture.context.public_task_class)throw Error('RECEIPT_CLASS_CONFLICT');
@@ -51,6 +51,11 @@ export async function captureReceipt(input:{directory:string;receiptFile:string;
 export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
  const payload=assessedSchema.parse(value),{capture,evidence}=payload,raw=receipt(capture),now=capture.context.observed_at;
  if(Date.parse(now)>Date.now())throw Error('RECEIPT_OBSERVATION_FUTURE');
+ // Local learning records include coordinator activity and mixed-worker repairs.
+ // They are not qualification observations; maintainers must capture independent
+ // worker evidence through the existing governed assessment pipeline.
+ if(raw['mode']==='direct')throw Error('RECEIPT_DIRECT_NOT_QUALIFIABLE');
+ if(raw['schema_version']==='delegate_receipt.v2')throw Error('RECEIPT_V2_LOCAL_ONLY');
  const input=selection(evidence.selection,now),row=input.observations.find(o=>o.observation_id===evidence.observationId);
  if(currentPolicy!==undefined&&policyDigest(input.policy)!==policyDigest(parsePolicy(currentPolicy)))throw Error('RECEIPT_ASSESSMENT_POLICY_CHANGED');
  if(input.policy.policy_version>=4){
