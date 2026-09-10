@@ -1,0 +1,11 @@
+# Acceptance evidence and frontier ownership
+
+Make the four requested changes in one focused update: derive provisional worker/reviewer evidence from matching installed task cases; make hard-debug diagnosis and complex-work planning explicit frontier steps; discover and probe the official current frontier models; publish actual availability/evaluation or blocking reasons. Preserve qualification thresholds, original failed/recovered evidence and source timestamps. Full-project evidence supports decomposition, not a whole-project worker route.
+
+Ownership: routing worker updates orchestration modes and consumer instructions/tests; evidence worker connects acceptance records to scoped provisional compilation; root owns official discovery, native frontier probes, refresh requirements, integration, focused host verification and publication. No global installation or configuration changes. Use existing helpers and schemas where they fit; no new service or generalized framework.
+
+Verification: focused provenance and mode checks, repository tests/typecheck/build, real pack publication/selection, and native trials for changed coordinator responsibilities. Do not rerun unaffected task shapes. Do not label a current model unavailable from catalog omission alone or label an interrupted run accepted.
+
+Completed: all four changes are implemented. The pack joins matching accepted task cases without promoting qualification; hard-debug diagnosis and complex planning stay at the frontier; refresh now requires actual current-frontier probes and reviewed evaluations when available. Both installed CLIs rejected the new frontier targets with explicit version requirements, so evidenced reviewers remain intentionally retained.
+
+Verification finished with 214 passing tests, typecheck/build, publication/selection/fallback and copied-folder checks. Native trials cover both changed workflows on both hosts. One Claude prerequisite failure was fixed and retested; natural bounded classifications and forced complex-mode exercises are distinguished. Exact results and limits are in routing-pack-validation.md and data/routing/frontier-ownership-acceptance.json. Further work is actual usage/evaluation evidence, not another architecture phase.

@@ -170,3 +170,13 @@ it('enforces provider constraints on provisional admission and runtime intersect
   const constrained=pack.routes[0]!;for(const request of [constrained.stratum.worker_request,constrained.stratum.reviewer_request]){request.constraints.requires_provider='anthropic';request.constraints_digest=digest(request.constraints);}constrained.stratum_digest=digest(constrained.stratum);pack.content_digest=contentDigest(pack);
   expect(()=>resolveRouting(pack,{publicTaskClass:'bounded_implementation',stratumDigest:constrained.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...constrained.workers,...constrained.reviewers]),host:'codex'}})).toThrowError(expect.objectContaining({code:'NO_ELIGIBLE_WORKER'}));
 });
+
+it('requires frontier diagnosis and planning modes before hard-debugging and complex workers',()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));
+  const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[]});
+  expect(pack.routing_modes).toMatchObject({hard_debugging:'frontier_diagnose_then_delegate',complex_implementation:'frontier_plan_then_delegate',bounded_implementation:'direct'});
+  for(const [taskClass,oldMode] of [['hard_debugging','coherent_worker'],['complex_implementation','direct']] as const){
+    const obsolete={...pack,routing_modes:{...pack.routing_modes,[taskClass]:oldMode}};obsolete.content_digest=contentDigest(obsolete);
+    expect(()=>parseRoutingPack(obsolete)).toThrowError(expect.objectContaining({code:'PACK_MALFORMED'}));
+  }
+});

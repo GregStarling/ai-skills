@@ -21,6 +21,8 @@ No route has been promoted to full governor qualification. Qualified treatments 
 
 Installed invocation has been exercised across seven local task shapes on both hosts, including fallback, repair and two/three-worker projects. The UI cases required harness recovery and supervising-frontier browser evidence; those limits and the unsuccessful initial attempts remain in the validation record.
 
+The pack now consumes those accepted cases as evidence for the matching class and treatment, while explicitly identifying untested extrapolations. Hard bugs receive frontier diagnosis before worker fixes; complex changes receive frontier architecture and planning before implementation. Both workflows have [native host verification](data/routing/frontier-ownership-acceptance.json), with failed attempts and controlled-test limits retained. Refresh also records probes of each current official frontier model and why an older evidenced reviewer is retained. [Current frontier probes](data/routing/frontier-probes.json).
+
 ## Copy the complete folder
 
 Copy `skills/delegate/` to a host's skill location. For a project, use `.claude/skills/delegate/` in Claude Code or `.agents/skills/delegate/` in Codex. Personal locations are `~/.claude/skills/delegate/` and `~/.agents/skills/delegate/`. Preserve any existing skill with the same name; disposable project installations are used for testing, with no global overwrite.

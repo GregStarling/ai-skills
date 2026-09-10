@@ -99,9 +99,13 @@ export function compileRoutingPack(input:CompileRoutingPackInput):RoutingPack{
   }
   for(const raw of input.provisional??[]){
     const entry=provisionalRouteInputSchema.parse(raw);if(entry.publicTaskClass==='full_project')throw new RoutingError('FULL_PROJECT_REQUIRES_DECOMPOSITION');
+    for(const [role,rows] of [['worker',entry.workers],['reviewer',entry.reviewers]] as const)for(const row of rows){
+      const evidence=row.evidence.task_evidence;
+      if(evidence&&(evidence.public_task_class!==entry.publicTaskClass||evidence.role!==role))throw new RoutingError('TASK_EVIDENCE_SCOPE_MISMATCH');
+    }
     const expiryDays=policy.routing_pack?.provisional_evidence_max_age_days??30;
     const make=(rows:ProvisionalRouteInput['workers']):RoutingTreatment[]=>rows.map(({evidence,...candidate})=>{
-      const times=[evidence.observed_at,evidence.availability.checked_at,evidence.pricing.checked_at].map(Date.parse);
+      const times=[evidence.observed_at,evidence.availability.checked_at,evidence.pricing.checked_at,...(evidence.task_evidence?.records.map(record=>record.observed_at)??[])].map(Date.parse);
       if(times.some(t=>t>Date.parse(generated)))throw new RoutingError('PROVISIONAL_EVIDENCE_FUTURE');
       const expires_at=new Date(Math.min(...times)+expiryDays*86400000).toISOString();if(Date.parse(expires_at)<=Date.parse(generated))throw new RoutingError('PROVISIONAL_EVIDENCE_EXPIRED');
       return {...candidate,candidate_identity:provisionalIdentity(candidate),pinning_source:'host_observation',evidence_tier:'provisional',observed_at:evidence.observed_at,expires_at,qualification:null,provisional:evidence};

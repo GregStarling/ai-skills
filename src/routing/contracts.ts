@@ -8,7 +8,7 @@ export const publicTaskClasses = [
   'repo_exploration', 'mechanical_work', 'bounded_implementation', 'ui_implementation',
   'hard_debugging', 'complex_implementation', 'research', 'full_project',
 ] as const;
-export const routingModes={repo_exploration:'direct',mechanical_work:'direct',bounded_implementation:'direct',ui_implementation:'frontier_specify_then_delegate',hard_debugging:'coherent_worker',complex_implementation:'direct',research:'direct',full_project:'decompose'} as const;
+export const routingModes={repo_exploration:'direct',mechanical_work:'direct',bounded_implementation:'direct',ui_implementation:'frontier_specify_then_delegate',hard_debugging:'frontier_diagnose_then_delegate',complex_implementation:'frontier_plan_then_delegate',research:'direct',full_project:'decompose'} as const;
 export const publicTaskClassSchema = z.enum(publicTaskClasses);
 const hash = z.string().regex(/^sha256:[a-f0-9]{64}$/);
 const iso = z.string().datetime({offset:true});
@@ -42,7 +42,7 @@ const missingRouteSchema = z.object({public_task_class:publicTaskClassSchema,rea
 
 export const routingPackSchema = z.object({
   schema_version:z.literal('routing_pack.v2'),mode:z.enum(['production','simulation_test']),generated_at:iso,refresh_after:iso,expires_at:iso,
-  routing_modes:z.object({repo_exploration:z.literal('direct'),mechanical_work:z.literal('direct'),bounded_implementation:z.literal('direct'),ui_implementation:z.literal('frontier_specify_then_delegate'),hard_debugging:z.literal('coherent_worker'),complex_implementation:z.literal('direct'),research:z.literal('direct'),full_project:z.literal('decompose')}).strict(),
+  routing_modes:z.object({repo_exploration:z.literal('direct'),mechanical_work:z.literal('direct'),bounded_implementation:z.literal('direct'),ui_implementation:z.literal('frontier_specify_then_delegate'),hard_debugging:z.literal('frontier_diagnose_then_delegate'),complex_implementation:z.literal('frontier_plan_then_delegate'),research:z.literal('direct'),full_project:z.literal('decompose')}).strict(),
   policy_version:z.number().int().positive(),policy_digest:hash,registry_content_digests:z.array(hash),registry_digest:hash,routes:z.array(routeSchema),missing_routes:z.array(missingRouteSchema),
   exclusions:z.array(exclusionSchema),content_digest:hash,
 }).strict().superRefine((pack,ctx)=>{

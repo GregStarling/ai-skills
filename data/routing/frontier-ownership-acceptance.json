@@ -1,0 +1,1719 @@
+{
+  "schema_version": "frontier_ownership_acceptance.v1",
+  "validated_at": "2026-09-10T04:32:59.546Z",
+  "pack_content_digest": "sha256:a5f44df2af7a010ea5dcc2ec44d3a8e75de37ae443cbe9ff28845f222cdcdd17",
+  "final_consumer_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+  "folder_digest_method": "canonical JSON SHA256 of files sorted by code-point path, each containing path and byte content_digest",
+  "final_consumer_files": [
+    {
+      "path": "SKILL.md",
+      "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+    },
+    {
+      "path": "delegation-contract.md",
+      "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+    },
+    {
+      "path": "hosts/claude.md",
+      "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+    },
+    {
+      "path": "hosts/codex.md",
+      "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+    },
+    {
+      "path": "routing-pack.json",
+      "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+    },
+    {
+      "path": "swarm-policy.md",
+      "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+    },
+    {
+      "path": "task-classes.md",
+      "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+    },
+    {
+      "path": "verification-policy.md",
+      "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+    }
+  ],
+  "host_versions": {
+    "claude": "2.1.222",
+    "codex": "0.142.5"
+  },
+  "repository_checks": {
+    "tests": 214,
+    "test_files": 24,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "publication_validation": "PASS",
+    "copied_folder_validation": "PASS",
+    "resolver_selection_and_fallback_routes": 14
+  },
+  "evidence_import": {
+    "source": "data/routing/installed-acceptance.json",
+    "content_digest": "sha256:83d9d83d40cfee204769ade02ac760e6ccaff1abcb2265fe6591e162c210337e",
+    "tested_routable_classes_per_host": 5,
+    "qualified_routes": 0
+  },
+  "frontier_probe_record_digest": "sha256:fa7bb84785758026600db950bd7e90cfb38eda9128b5e70b0241552c78451153",
+  "limitations": [
+    "The two frontier-plan exercises explicitly force complex_implementation; natural classification of the same settled fixture correctly chose bounded_implementation.",
+    "The original Claude hardbug attempt failed the reproduction-before-dispatch rule and timed out. It remains recorded separately from its fresh retry.",
+    "The successful Codex hardbug used the initial updated instructions; later trials copied the final prerequisite clarification. Per-case manifests preserve that distinction.",
+    "Model-written receipts are observations checked against native traces and external grading, not standalone proof or qualification.",
+    "No model promotion or measured savings claim is made."
+  ],
+  "cases": [
+    {
+      "case_id": "codex-hardbug-1789014038192",
+      "host": "codex",
+      "case": "hardbug",
+      "exercise": null,
+      "review": {
+        "case_id": "codex-hardbug-1789014038192",
+        "classification": "hard_debugging",
+        "routing_mode": "frontier_diagnose_then_delegate",
+        "verdict": "PASS",
+        "source_review_before_dispatch": [
+          "item_14"
+        ],
+        "reproduction_before_dispatch": {
+          "event_id": "item_19",
+          "observation": "Old request publishes after the newer request; actual Node output recorded."
+        },
+        "causal_diagnosis_and_fix": "item_20",
+        "worker_dispatch": {
+          "event_id": "item_21",
+          "model": "gpt-5.3-codex-spark",
+          "reasoning_effort": "low",
+          "fork_context": false
+        },
+        "worker_configuration": {
+          "model": "gpt-5.3-codex-spark",
+          "effort": "low",
+          "rollout_digest": "sha256:a4c2a96e218561d181aeae54da98d6a2bab17747af14bf9d8c7c3a06905403f4"
+        },
+        "worker_edits": {
+          "files": [
+            "search.mjs"
+          ]
+        },
+        "frontier_artifact_review": [
+          "item_29"
+        ],
+        "frontier_assertions": {
+          "event_id": "item_33",
+          "exit_code": 0
+        },
+        "limitations": [
+          "This successful trial used the initial updated workflow instructions, before the explicit reproduction prerequisite was strengthened after the Claude trial.",
+          "The frontier defines the monotonic-token fix before dispatch in item_20; its worker packet includes the reproduction and causal diagnosis but omits that exact implementation prescription.",
+          "Configured model/effort are confirmed in native rollout; served identity/effort are not attested.",
+          "Receipt identity_source=installed_acceptance describes route evidence; the actual execution configuration comes from the inspected native rollouts."
+        ]
+      },
+      "attempted_at": "2026-09-10T04:20:38.193Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 191362,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:b431ebc89671b48d9551037a8c07fe6b5622499eea3fd21c14a024a1412f0140",
+      "matches_final_folder": false,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:646d453d21dc24d0116fa20348c2aa89d746d6e364c7ce3c77e2f9e6d021bff8"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "search.mjs": "sha256:dcdb0ff697e0393f2e67ccdb06d24afe416a287bdf422edd04c2a2fa97bb451a"
+      },
+      "receipts": [
+        {
+          "file": "create-search-latest-20260910T042303Z.json",
+          "content_digest": "sha256:82f7b788386009f5a83691851eaa7231dc77161a4fc9a5edfff89ddc893c7f91"
+        }
+      ],
+      "trace_digest": "sha256:021c1d56465893ec96d9fd2e4793478e674a2f88be449bafb614efece27c1f55",
+      "stderr_digest": "sha256:c1bdbfaa0f9e18d27a9b30f24eb6f60fde84ae733c2057d0037b61128e1d74e5",
+      "result_digest": "sha256:6e3ad97df5254ec69fbe4d8246f39d470bb85f722bd62214e18d01f485568672",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 686664,
+          "cached_input_tokens": 633856,
+          "output_tokens": 7539,
+          "reasoning_output_tokens": 1321
+        },
+        "client_estimated_cost_usd": null,
+        "model_usage": null
+      }
+    },
+    {
+      "case_id": "codex-multicomponent-1789014229626",
+      "host": "codex",
+      "case": "multicomponent",
+      "exercise": null,
+      "review": {
+        "case_id": "codex-multicomponent-1789014229626",
+        "exercise": null,
+        "classification": "bounded_implementation",
+        "routing_mode": "direct",
+        "verdict": "PASS_BOUNDED_ONLY",
+        "limitations": [
+          "The prompt supplies settled contracts; coordinator reasonably chose bounded_implementation. This trial does not exercise frontier_plan_then_delegate.",
+          "Local configured models/efforts are verified; served model/effort are not attested."
+        ],
+        "source_review_before_dispatch": [
+          "item_10",
+          "item_11",
+          "item_12"
+        ],
+        "contract_packet": "item_17",
+        "worker_dispatch": {
+          "event_id": "item_17",
+          "rollout_file": "rollout-2026-09-09T23-23-50-01a0898e-c427-70c3-8faf-9730c37584fd.jsonl",
+          "rollout_digest": "sha256:3c2bf0a55e07175032ad49a20397b60427876abeb2196523ca2576c7ca84db05",
+          "line": 53,
+          "call_id": "call_zFZAqzrShhFehmV19XuO5VuF",
+          "model": "gpt-5.3-codex-spark",
+          "reasoning_effort": "low",
+          "fork_context": false
+        },
+        "worker_configuration": {
+          "rollout_file": "rollout-2026-09-09T23-24-44-01a0898f-97cb-7ad1-b677-6299d9ece3a7.jsonl",
+          "rollout_digest": "sha256:2f21ef0d8fa748d6e35c1f6b6442fd060f9842a9eb3d4d193096ef523f0ad05c",
+          "line": 5,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "low"
+        },
+        "worker_edits": {
+          "rollout_file": "rollout-2026-09-09T23-24-44-01a0898f-97cb-7ad1-b677-6299d9ece3a7.jsonl",
+          "rollout_digest": "sha256:2f21ef0d8fa748d6e35c1f6b6442fd060f9842a9eb3d4d193096ef523f0ad05c",
+          "lines": [
+            17,
+            22,
+            27
+          ],
+          "files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ]
+        },
+        "frontier_artifact_review": [
+          "item_24",
+          "item_25",
+          "item_26"
+        ],
+        "frontier_assertions": {
+          "event_id": "item_29",
+          "exit_code": 0
+        },
+        "receipt_events": [
+          "item_36",
+          "item_38"
+        ],
+        "execution": {
+          "exit_code": 0,
+          "timed_out": false
+        },
+        "grader": {
+          "before_passed": false,
+          "after_passed": true
+        },
+        "receipt_count": 1,
+        "trace_digest": "sha256:92858cb6e6e9f2eb91ce115757332fd8375791a2dcdaf8a2b59263ae79acc2a5",
+        "result_digest": "sha256:d5acf5ad58bf04156d775d42e25228338ccdf98880b18f07c1c66727fe45d318",
+        "receipt_digest": "sha256:c45bccef45890a533ac794ef06e8e0dcb5e3f999eeb73f371074b19411e0853e",
+        "artifact_digests": {
+          "task.mjs": "sha256:1f1fcc7d3b6158484bfcf17e42667406265718ab397685feb60324ebfc818362",
+          "service.mjs": "sha256:d08f618a7860f3d6e68a93815ccee0d0525478ddc2d5fe4b406c71f279918e87",
+          "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+        }
+      },
+      "attempted_at": "2026-09-10T04:23:49.626Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 176047,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+      "matches_final_folder": true,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "task.mjs": "sha256:1f1fcc7d3b6158484bfcf17e42667406265718ab397685feb60324ebfc818362",
+        "service.mjs": "sha256:d08f618a7860f3d6e68a93815ccee0d0525478ddc2d5fe4b406c71f279918e87",
+        "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+      },
+      "receipts": [
+        {
+          "file": "20260910T042531Z-task-feature.json",
+          "content_digest": "sha256:c45bccef45890a533ac794ef06e8e0dcb5e3f999eeb73f371074b19411e0853e"
+        }
+      ],
+      "trace_digest": "sha256:92858cb6e6e9f2eb91ce115757332fd8375791a2dcdaf8a2b59263ae79acc2a5",
+      "stderr_digest": "sha256:ec652a7405ae4c808e7f77b5d8dd1d97c6f263be01b3fa828dc85343504072ac",
+      "result_digest": "sha256:d5acf5ad58bf04156d775d42e25228338ccdf98880b18f07c1c66727fe45d318",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 528282,
+          "cached_input_tokens": 483584,
+          "output_tokens": 8176,
+          "reasoning_output_tokens": 2116
+        },
+        "client_estimated_cost_usd": null,
+        "model_usage": null
+      }
+    },
+    {
+      "case_id": "codex-multicomponent-1789014439698",
+      "host": "codex",
+      "case": "multicomponent",
+      "exercise": "frontier_plan",
+      "review": {
+        "case_id": "codex-multicomponent-1789014439698",
+        "exercise": "frontier_plan",
+        "classification": "complex_implementation",
+        "routing_mode": "frontier_plan_then_delegate",
+        "verdict": "PASS_FORCED_CLASS_WORKFLOW",
+        "limitations": [
+          "Class selection was explicitly forced for workflow acceptance; this does not prove automatic complex-task classification or general complex-project capability.",
+          "Local configured model/effort are verified; served model/effort are not attested."
+        ],
+        "source_review_before_dispatch": [
+          "item_12",
+          "item_14",
+          "item_15"
+        ],
+        "frontier_plan": {
+          "event_id": "item_16",
+          "content": "task owns validation/canonicalization; service imports normalization and enforces immutable list-level duplicates; view imports normalization before formatting"
+        },
+        "contract_packet": "item_18",
+        "worker_dispatch": {
+          "event_id": "item_18",
+          "rollout_file": "rollout-2026-09-09T23-27-20-01a08991-f901-7650-b8f8-d9e9e410f654.jsonl",
+          "rollout_digest": "sha256:e476d0d07e6ea7c94aeeabbd6e24d90e6a7371aa00dd4d5535bf207d1371faf9",
+          "line": 55,
+          "call_id": "call_Xy7aTe1KksPMTWsZSYPGiJcC",
+          "model": "gpt-5.3-codex-spark",
+          "reasoning_effort": "low",
+          "fork_context": false
+        },
+        "worker_configuration": {
+          "rollout_file": "rollout-2026-09-09T23-28-26-01a08992-fdd5-79c1-bc21-4c509d4332b9.jsonl",
+          "rollout_digest": "sha256:a7c16520ace69346f4414a34d38ad8c220f4cd21107b70f00952ebcdaab5b819",
+          "line": 5,
+          "model": "gpt-5.3-codex-spark",
+          "effort": "low"
+        },
+        "worker_edits": {
+          "rollout_file": "rollout-2026-09-09T23-28-26-01a08992-fdd5-79c1-bc21-4c509d4332b9.jsonl",
+          "rollout_digest": "sha256:a7c16520ace69346f4414a34d38ad8c220f4cd21107b70f00952ebcdaab5b819",
+          "lines": [
+            26,
+            31,
+            35
+          ],
+          "files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ]
+        },
+        "recovered_check_failure": {
+          "rollout_file": "rollout-2026-09-09T23-28-26-01a08992-fdd5-79c1-bc21-4c509d4332b9.jsonl",
+          "rollout_digest": "sha256:a7c16520ace69346f4414a34d38ad8c220f4cd21107b70f00952ebcdaab5b819",
+          "line": 43,
+          "call_id": "call_uAmONdBabUt5VoWp6Jv4HjMs",
+          "exit_code": 1,
+          "reason": "Escaped-newline SyntaxError in check command",
+          "corrected_call_id": "call_asKfQnj0y8XzZXuJXSLfXsC5",
+          "corrected_result_line": 47,
+          "corrected_exit_code": 0
+        },
+        "non_verification_command_issue": {
+          "event_id": "item_39",
+          "issue": "BSD nl multi-file display printed usage; pipeline exit0. Independent artifact reads and assertions had already passed."
+        },
+        "frontier_artifact_review": [
+          "item_26",
+          "item_27",
+          "item_28"
+        ],
+        "frontier_assertions": {
+          "event_id": "item_31",
+          "exit_code": 0
+        },
+        "receipt_events": [
+          "item_35",
+          "item_37"
+        ],
+        "execution": {
+          "exit_code": 0,
+          "timed_out": false
+        },
+        "grader": {
+          "before_passed": false,
+          "after_passed": true
+        },
+        "receipt_count": 1,
+        "trace_digest": "sha256:e5a60ebc60e8fc873a6ecddcbe217487190b876c1235353e51ffd26fe5566b40",
+        "result_digest": "sha256:9b26e23b6c67d81943fe096d880d1079a047da32a5808b7a87a75c1bb14daec2",
+        "receipt_digest": "sha256:9b73802772011424161b307d192071dc59a2f3ac9ad51a6afd10e455d4fa9e52",
+        "artifact_digests": {
+          "task.mjs": "sha256:06e7e01855eab48a6d6a004479515c342b0c6d62d75fe474efff4a7061dc7c0d",
+          "service.mjs": "sha256:56718f23f529b1d028c5f5d3f5eccc318cd0f21fac58969040cee7854fc8502c",
+          "view.mjs": "sha256:9ef00b1776418808da3c5fa166b64cbf6f5761edbec79e6862114a6c02813043"
+        }
+      },
+      "attempted_at": "2026-09-10T04:27:19.699Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 174350,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+      "matches_final_folder": true,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "task.mjs": "sha256:06e7e01855eab48a6d6a004479515c342b0c6d62d75fe474efff4a7061dc7c0d",
+        "service.mjs": "sha256:56718f23f529b1d028c5f5d3f5eccc318cd0f21fac58969040cee7854fc8502c",
+        "view.mjs": "sha256:9ef00b1776418808da3c5fa166b64cbf6f5761edbec79e6862114a6c02813043"
+      },
+      "receipts": [
+        {
+          "file": "task-feature-20260910T042928Z.json",
+          "content_digest": "sha256:9b73802772011424161b307d192071dc59a2f3ac9ad51a6afd10e455d4fa9e52"
+        }
+      ],
+      "trace_digest": "sha256:e5a60ebc60e8fc873a6ecddcbe217487190b876c1235353e51ffd26fe5566b40",
+      "stderr_digest": "sha256:a73893664b86c756ff4e5d17064c825d515abee14228c8963ba7ac7bc84cd9e2",
+      "result_digest": "sha256:9b26e23b6c67d81943fe096d880d1079a047da32a5808b7a87a75c1bb14daec2",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 498846,
+          "cached_input_tokens": 459008,
+          "output_tokens": 7689,
+          "reasoning_output_tokens": 1740
+        },
+        "client_estimated_cost_usd": null,
+        "model_usage": null
+      }
+    },
+    {
+      "case_id": "claude-hardbug-1789014038192",
+      "host": "claude",
+      "case": "hardbug",
+      "exercise": null,
+      "review": {
+        "id": "claude-hardbug-1789014038192",
+        "evaluated_scope": "hard_debugging/frontier_diagnose_then_delegate",
+        "verdict": "FAIL",
+        "prerequisite": {
+          "reproduction_before_dispatch": false,
+          "causal_diagnosis_before_dispatch": true,
+          "precise_fix_before_dispatch": true,
+          "tool_ids": [
+            "toolu_01P1fYyxdMuuDXMurHyvWfYR"
+          ],
+          "diagnosis_text_event_uuid": "62b73a9c-da15-4bc4-adbc-8dfbb8ee6e59"
+        },
+        "notes": [
+          "No frontier reproduction ran before worker dispatch. Original-vs-fixed reproduction occurred only after worker completion.",
+          "Coordinator timed out at 240190ms (exit143); accepted receipt and passing artifact do not establish end-to-end acceptance.",
+          "Receipt started_at 04:20:26Z predates harness request 04:20:38.193Z; harness timestamps are authoritative.",
+          "Worker failed self-checks toolu_019jbMoQ9hQykD2QhGBCn7Az, toolu_017hXkjbjF2TZGX4GpByxYAp and toolu_01MzZgHBdB2hXg2BFvy9HSpF used rejection before supersession; corrected tests passed without another implementation edit.",
+          "Native message models are observable in trace despite receipt conservatively leaving them null; served effort remains unavailable."
+        ],
+        "request_started_at": "2026-09-10T04:20:38.193Z",
+        "coordinator_configuration": {
+          "model": "claude-opus-5",
+          "effort": "high"
+        },
+        "coordinator_observed_models": [
+          "claude-opus-5"
+        ],
+        "served_effort_observed": false,
+        "execution": {
+          "code": 143,
+          "timed_out": true,
+          "duration_ms": 240190
+        },
+        "baseline_grader_passed": false,
+        "final_grader_passed": true,
+        "workers": [
+          {
+            "dispatch_tool_id": "toolu_01R2FrGhBZm7U7NwTTvb11oL",
+            "requested_model": "haiku",
+            "requested_effort": null,
+            "effort_control_omitted": true,
+            "observed_models": [
+              "claude-haiku-4-5-20251001"
+            ],
+            "written_files": [
+              {
+                "path": "search.mjs",
+                "tool_id": "toolu_01Mkciqz3it13Gzk98h4kJdz"
+              }
+            ],
+            "served_effort_observed": false
+          }
+        ],
+        "frontier_artifact_read_tool_ids": [
+          "toolu_019yCdLNXpurVkgNDqwEgkdA"
+        ],
+        "frontier_check_tool_ids": [
+          "toolu_015mTnmC2BDEuXLUaQ6JmQDD"
+        ],
+        "event_references": [
+          {
+            "line": 3,
+            "uuid": "47b5d1d5-9f51-4a1c-bff0-98f08e006b65",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:20ecd6c80101652c2749bdd26d1a445bffc344f4f42d89df7d3a60ec629bd0bb",
+            "tool_id": "toolu_01P1fYyxdMuuDXMurHyvWfYR",
+            "output_digest": "sha256:00419195cbd0466b8361ee5d163da54c3ab9fbdc4ad7e2fba6288fd3fd8b337c",
+            "tool_error": false
+          },
+          {
+            "line": 117,
+            "uuid": "2474de9e-ca01-4755-a5ed-c93bc1ad7819",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:228ea322718b49150de5b79e8fa8b10219cebba765739db98979121c3c344148",
+            "tool_id": "toolu_019yCdLNXpurVkgNDqwEgkdA",
+            "output_digest": "sha256:f66102d0c6646b18685afc6758c322e297aedf32f0790c5afcc78cbed9c96ae4",
+            "tool_error": false
+          },
+          {
+            "line": 119,
+            "uuid": "71299bea-0bdf-439a-b8bb-367380c37b54",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:19596e90f0e3272cb974fdd1e0b809fd9fc666e38db48a12acf0de3c9811540a",
+            "tool_id": "toolu_015mTnmC2BDEuXLUaQ6JmQDD",
+            "command_digest": "sha256:c0cf7ae2672d62481492d9e42bc7fbc07d2306f1475941247a3a429a700bc255",
+            "output_digest": "sha256:b3d0dee444dea395b6a2593c25606a9e53b7fec3b28c7d0935c3346496b285b9",
+            "tool_error": false
+          },
+          {
+            "line": 70,
+            "uuid": "2cadb7f9-3930-4f65-ba5a-bec843c9919e",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Agent",
+            "event_digest": "sha256:aaa90529c3c73af8c4bcd2ed0c28a2870cb92bb6d4a54de5ced44125735031d4",
+            "tool_id": "toolu_01R2FrGhBZm7U7NwTTvb11oL",
+            "output_digest": "sha256:e553b4aeb51427fdc0f7c03ccce740890a632e2bcd4504e2d3093c7a640ea18c",
+            "tool_error": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "hardbug-search-1789014233.json",
+            "digest": "sha256:c3bae8de72f7f40651e012f59625e9dae58abbf709b8372e3b068854dda4567b",
+            "status": "accepted",
+            "task_class": "hard_debugging",
+            "routing_mode": "frontier_diagnose_then_delegate",
+            "started_at": "2026-09-10T04:20:26.000Z",
+            "completed_at": "2026-09-10T04:23:53.597Z",
+            "frontier_verdict": "PASS"
+          }
+        ],
+        "artifact_digests": {
+          "search.mjs": "sha256:82dd7d0b6b898d481c4f0551487d3ccf60482ebeffd5f996cafee770cd3bc0ed"
+        },
+        "copied_skill_files": {
+          "SKILL.md": "sha256:646d453d21dc24d0116fa20348c2aa89d746d6e364c7ce3c77e2f9e6d021bff8",
+          "delegation-contract.md": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a",
+          "hosts/claude.md": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e",
+          "hosts/codex.md": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1",
+          "routing-pack.json": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed",
+          "swarm-policy.md": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1",
+          "task-classes.md": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b",
+          "verification-policy.md": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        },
+        "copied_skill_manifest_digest": "sha256:ece8869790b56d6002e494ee29df4b38fefea4434a45b037bfb622f34ca951fa",
+        "copied_skill_digest_encoding": "sha256 of canonical JSON relative-path-to-file-sha256 map",
+        "trace": {
+          "path": "artifacts/installed-delegate/claude-hardbug-1789014038192/coordinator/stdout.jsonl",
+          "digest": "sha256:dfca2bd0d1965e3f875b743d19c3b278d5480612e8ae729025985bdf273a8bee"
+        },
+        "result": {
+          "path": "artifacts/installed-delegate/claude-hardbug-1789014038192/result.json",
+          "digest": "sha256:3415657fef28e5ad578fc154bf73d89f7297b8813fa605df5e124f10ea75bc19"
+        },
+        "case_id": "claude-hardbug-1789014038192"
+      },
+      "attempted_at": "2026-09-10T04:20:38.193Z",
+      "exit_code": 143,
+      "timed_out": true,
+      "duration_ms": 240190,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:b431ebc89671b48d9551037a8c07fe6b5622499eea3fd21c14a024a1412f0140",
+      "matches_final_folder": false,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:646d453d21dc24d0116fa20348c2aa89d746d6e364c7ce3c77e2f9e6d021bff8"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "search.mjs": "sha256:82dd7d0b6b898d481c4f0551487d3ccf60482ebeffd5f996cafee770cd3bc0ed"
+      },
+      "receipts": [
+        {
+          "file": "hardbug-search-1789014233.json",
+          "content_digest": "sha256:c3bae8de72f7f40651e012f59625e9dae58abbf709b8372e3b068854dda4567b"
+        }
+      ],
+      "trace_digest": "sha256:dfca2bd0d1965e3f875b743d19c3b278d5480612e8ae729025985bdf273a8bee",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result_digest": "sha256:3415657fef28e5ad578fc154bf73d89f7297b8813fa605df5e124f10ea75bc19",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 22,
+          "cache_creation_input_tokens": 41626,
+          "cache_read_input_tokens": 253507,
+          "output_tokens": 10986,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 41626,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 2844,
+              "cache_read_input_tokens": 40839,
+              "cache_creation_input_tokens": 787,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 787
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 0.9013498000000001,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 22,
+            "outputTokens": 10986,
+            "cacheReadInputTokens": 253507,
+            "cacheCreationInputTokens": 41626,
+            "webSearchRequests": 0,
+            "costUSD": 0.8177734999999999,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 66,
+            "outputTokens": 9018,
+            "cacheReadInputTokens": 110328,
+            "cacheCreationInputTokens": 21910,
+            "webSearchRequests": 0,
+            "costUSD": 0.08357629999999999,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claude-multicomponent-1789014278457",
+      "host": "claude",
+      "case": "multicomponent",
+      "exercise": null,
+      "review": {
+        "id": "claude-multicomponent-1789014278457",
+        "evaluated_scope": "bounded_implementation/direct",
+        "verdict": "PASS",
+        "prerequisite": {
+          "settled_contract_in_dispatch_packet": true,
+          "complex_mode_exercised": false,
+          "tool_ids": [
+            "toolu_01TRDLXAdxRisyBv5bJKoFPc"
+          ]
+        },
+        "notes": [
+          "Naturally classified bounded/direct because supplied interfaces were settled. This is successful bounded behavior, not acceptance evidence for the changed complex workflow.",
+          "Frontier packet defined three module boundaries, imports, immutable service behavior, error types and verification checks before worker dispatch.",
+          "Frontier independent suite output pass=25 fail=0; actual artifacts read separately.",
+          "Receipt uses nested task.public_task_class and task.routing_mode. Native message model identities are observable externally; served effort remains unavailable."
+        ],
+        "request_started_at": "2026-09-10T04:24:38.457Z",
+        "coordinator_configuration": {
+          "model": "claude-opus-5",
+          "effort": "high"
+        },
+        "coordinator_observed_models": [
+          "claude-opus-5"
+        ],
+        "served_effort_observed": false,
+        "execution": {
+          "code": 0,
+          "timed_out": false,
+          "duration_ms": 202892
+        },
+        "baseline_grader_passed": false,
+        "final_grader_passed": true,
+        "workers": [
+          {
+            "dispatch_tool_id": "toolu_01S2zcnAHiu59KurnasrojbD",
+            "requested_model": "haiku",
+            "requested_effort": null,
+            "effort_control_omitted": true,
+            "observed_models": [
+              "claude-haiku-4-5-20251001"
+            ],
+            "written_files": [
+              {
+                "path": "task.mjs",
+                "tool_id": "toolu_01DiBWp9R6MdbtgrfxB5ee6J"
+              },
+              {
+                "path": "service.mjs",
+                "tool_id": "toolu_011yTCVu1nf3ZQ9YWZu12vRa"
+              },
+              {
+                "path": "view.mjs",
+                "tool_id": "toolu_01GWzeMdfc8AbDm2Z679oddG"
+              }
+            ],
+            "served_effort_observed": false
+          }
+        ],
+        "frontier_artifact_read_tool_ids": [
+          "toolu_011sMr7VinFbMwuqnMFyKSBN",
+          "toolu_01W8JVYs52ieHmRxm884CemF",
+          "toolu_01TEfag6QA23Sy5e4sQLy9dR"
+        ],
+        "frontier_check_tool_ids": [
+          "toolu_012NKd9QF9L4X87AK9ir5bFB"
+        ],
+        "event_references": [
+          {
+            "line": 7,
+            "uuid": "e005dc3a-548f-4d79-87fd-c67818a0f7a0",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:0b460c591f54593fb0ad964868095fb4e8c21eb313d7423402fa7b92360d34e6",
+            "tool_id": "toolu_01TRDLXAdxRisyBv5bJKoFPc",
+            "command_digest": "sha256:3d417bb2271a1e35ea293c5eb01f91bf3cdc217277b18fb10d44fb91c2ff051f",
+            "output_digest": "sha256:b549ba4b710d52c0d95c31451f96580c0bc9e80c75c9f252b309b7435a15be31",
+            "tool_error": false
+          },
+          {
+            "line": 133,
+            "uuid": "5fa34b62-2903-4c1e-8c73-395f4a2bec90",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:a82d8de186eca51afb750dfb2013b01bd74f857b9c73718e39e62aadd2568572",
+            "tool_id": "toolu_011sMr7VinFbMwuqnMFyKSBN",
+            "output_digest": "sha256:5a0773a49df2014c553cb9d6bec36ee2b0b5b9a0707541061db53496f7090cc4",
+            "tool_error": false
+          },
+          {
+            "line": 135,
+            "uuid": "300c88f4-5481-4864-819a-d7d018cfd42f",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:5167d8db046e7b83442378b547a6291fc4b067984e83e87479cc1414e34642b2",
+            "tool_id": "toolu_01W8JVYs52ieHmRxm884CemF",
+            "output_digest": "sha256:934f23c9f848e714e0eaf2525d705b982264e4eb048dada8a9b321387874b429",
+            "tool_error": false
+          },
+          {
+            "line": 137,
+            "uuid": "9c16ddcc-2db3-4d19-8c41-0a5041b15155",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:d82d3b77f83aa416c63e7bd00248591f10f42000fc9006a763e54e7ea1b70da9",
+            "tool_id": "toolu_01TEfag6QA23Sy5e4sQLy9dR",
+            "output_digest": "sha256:9a80622a61bed106b8c4602744b07dda9ddc406bd8be3d900c19962a30a95b29",
+            "tool_error": false
+          },
+          {
+            "line": 142,
+            "uuid": "89363052-cd20-47cb-a989-fbde423b0708",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:104bd53a63055d085704e1154d12e5fa99fd786446f620b96a2eb1a9a5abea7c",
+            "tool_id": "toolu_012NKd9QF9L4X87AK9ir5bFB",
+            "command_digest": "sha256:c57c55950e8ceb9215d60ba8e1ed21e77292d906779fba25a3b99314366b5365",
+            "output_digest": "sha256:83b5ac9232209a18f7f831836bf3f58acde83358875c9b26067e4730453341fb",
+            "tool_error": false
+          },
+          {
+            "line": 55,
+            "uuid": "0bd69c16-4eb4-4926-8325-c95f1ff9fd33",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Agent",
+            "event_digest": "sha256:86a9a512d96940d33f1945d2c5697d96d7fcde77935ecb9fefe4220439931098",
+            "tool_id": "toolu_01S2zcnAHiu59KurnasrojbD",
+            "output_digest": "sha256:3b6c4a2bc10317e412ffcd22782339d787d8912bfae0a05c4d37b795ae287081",
+            "tool_error": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "20260910T042444Z-task-feature.json",
+            "digest": "sha256:4a0630f36b8a2e2b512c4f1089dfe881d2e604ff002c42ddebf633e6f861b06b",
+            "status": "accepted",
+            "task_class": "bounded_implementation",
+            "routing_mode": "direct",
+            "started_at": "2026-09-10T04:24:44Z",
+            "completed_at": "2026-09-10T04:27:06Z",
+            "frontier_verdict": "PASS"
+          }
+        ],
+        "artifact_digests": {
+          "task.mjs": "sha256:42e4b003776c6158f22aac4d33ef959e93cfff1195b2535e078726a88d04b170",
+          "service.mjs": "sha256:c9cc5063e0cebd949937b62d6e20f26d9af3bdf563a5880ca8abbfc8d165142f",
+          "view.mjs": "sha256:94aaa2329355edffff3a8e962058412dce7480e8ed3ba70fec38f03e947ae96f"
+        },
+        "copied_skill_files": {
+          "SKILL.md": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18",
+          "delegation-contract.md": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a",
+          "hosts/claude.md": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e",
+          "hosts/codex.md": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1",
+          "routing-pack.json": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed",
+          "swarm-policy.md": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1",
+          "task-classes.md": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b",
+          "verification-policy.md": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        },
+        "copied_skill_manifest_digest": "sha256:5e414f1e469a1855c2d33c70709a36c402edeabb7f93f0cde03a8a353b3b8f02",
+        "copied_skill_digest_encoding": "sha256 of canonical JSON relative-path-to-file-sha256 map",
+        "trace": {
+          "path": "artifacts/installed-delegate/claude-multicomponent-1789014278457/coordinator/stdout.jsonl",
+          "digest": "sha256:08a0c6bbbfe11018af0564988c2aa4adfd0d50008f181725de4ccac745642144"
+        },
+        "result": {
+          "path": "artifacts/installed-delegate/claude-multicomponent-1789014278457/result.json",
+          "digest": "sha256:97ca37160ec5ed305833bb41cce8872955b678c2bc24df0ad6d378215ca7f097"
+        },
+        "case_id": "claude-multicomponent-1789014278457"
+      },
+      "attempted_at": "2026-09-10T04:24:38.457Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 202892,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+      "matches_final_folder": true,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "task.mjs": "sha256:42e4b003776c6158f22aac4d33ef959e93cfff1195b2535e078726a88d04b170",
+        "service.mjs": "sha256:c9cc5063e0cebd949937b62d6e20f26d9af3bdf563a5880ca8abbfc8d165142f",
+        "view.mjs": "sha256:94aaa2329355edffff3a8e962058412dce7480e8ed3ba70fec38f03e947ae96f"
+      },
+      "receipts": [
+        {
+          "file": "20260910T042444Z-task-feature.json",
+          "content_digest": "sha256:4a0630f36b8a2e2b512c4f1089dfe881d2e604ff002c42ddebf633e6f861b06b"
+        }
+      ],
+      "trace_digest": "sha256:08a0c6bbbfe11018af0564988c2aa4adfd0d50008f181725de4ccac745642144",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result_digest": "sha256:97ca37160ec5ed305833bb41cce8872955b678c2bc24df0ad6d378215ca7f097",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 24,
+          "cache_creation_input_tokens": 38689,
+          "cache_read_input_tokens": 354631,
+          "output_tokens": 11878,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 38689,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 932,
+              "cache_read_input_tokens": 44561,
+              "cache_creation_input_tokens": 206,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 206
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 0.9320962999999999,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 24,
+            "outputTokens": 11878,
+            "cacheReadInputTokens": 354631,
+            "cacheCreationInputTokens": 38689,
+            "webSearchRequests": 0,
+            "costUSD": 0.8612755,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 114,
+            "outputTokens": 6808,
+            "cacheReadInputTokens": 218468,
+            "cacheCreationInputTokens": 11856,
+            "webSearchRequests": 0,
+            "costUSD": 0.0708208,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claude-hardbug-1789014383856",
+      "host": "claude",
+      "case": "hardbug",
+      "exercise": null,
+      "review": {
+        "id": "claude-hardbug-1789014383856",
+        "evaluated_scope": "hard_debugging/frontier_diagnose_then_delegate",
+        "verdict": "PASS",
+        "prerequisite": {
+          "reproduction_before_dispatch": true,
+          "causal_diagnosis_before_dispatch": true,
+          "precise_fix_before_dispatch": true,
+          "tool_ids": [
+            "toolu_01FeVNgmQJDa2sCDrACknsVo",
+            "toolu_015LmAWoqt6iwhQfNRCtSofW"
+          ],
+          "reproduction_output": "3 failures and exit=1 before Agent dispatch; packet includes observed stale publication/return/rejection failures plus causal diagnosis and exact token fix."
+        },
+        "notes": [
+          "Frontier re-ran the unchanged reproduction against actual final search.mjs: 11 PASS, exit0.",
+          "Independent frontier edge-case check first failed because its /tmp script imported ./search.mjs relative to /tmp; corrected only the test import and reran: 7 PASS, exit0. The failed command remains referenced.",
+          "Worker edited only search.mjs; frontier owned reproduction/verification and receipt. No worker repair or fallback was needed.",
+          "Native message models are observable externally even though the conservative receipt leaves them null; served effort remains unavailable.",
+          "Receipt started_at 04:24:10Z predates actual harness start 04:26:23.856Z. Public timing must use harness request and measured duration, not this model-written value."
+        ],
+        "request_started_at": "2026-09-10T04:26:23.856Z",
+        "coordinator_configuration": {
+          "model": "claude-opus-5",
+          "effort": "high"
+        },
+        "coordinator_observed_models": [
+          "claude-opus-5"
+        ],
+        "served_effort_observed": false,
+        "execution": {
+          "code": 0,
+          "timed_out": false,
+          "duration_ms": 207709
+        },
+        "baseline_grader_passed": false,
+        "final_grader_passed": true,
+        "workers": [
+          {
+            "dispatch_tool_id": "toolu_01RSDLABS9aY8Pdo6oBiMGnw",
+            "requested_model": "haiku",
+            "requested_effort": null,
+            "effort_control_omitted": true,
+            "observed_models": [
+              "claude-haiku-4-5-20251001"
+            ],
+            "written_files": [
+              {
+                "path": "search.mjs",
+                "tool_id": "toolu_01HiqVpTqYWqK2LAKP34rHnt"
+              }
+            ],
+            "served_effort_observed": false
+          }
+        ],
+        "frontier_artifact_read_tool_ids": [
+          "toolu_013HP4KWUgCQMssQv8pFHY3r"
+        ],
+        "frontier_check_tool_ids": [
+          "toolu_011PzGn4RQj8KefJZgbm1Fms",
+          "toolu_014ecZmprVAFA2tZwskhHJDJ",
+          "toolu_01BUe7Ja42vXFcZc2XS2gXkq"
+        ],
+        "event_references": [
+          {
+            "line": 52,
+            "uuid": "64d9b628-1c39-4747-b30e-ccb1e6c92cc0",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Write",
+            "event_digest": "sha256:5b7ced413819bc847c9711a4a62005f7c6e31327775484d618acff917ded38f8",
+            "tool_id": "toolu_01FeVNgmQJDa2sCDrACknsVo",
+            "output_digest": "sha256:d2bdf214f169d67b474f8578b985a08164fb12ee5983d53b3b677c72fef8ba70",
+            "tool_error": false
+          },
+          {
+            "line": 54,
+            "uuid": "959fe8a2-6a68-47ed-8c97-86ccca533610",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:75ee64180f6d93d915b49c036035d924d55bdb93513f8d40e1a8dc57f5b486eb",
+            "tool_id": "toolu_015LmAWoqt6iwhQfNRCtSofW",
+            "command_digest": "sha256:7bdd0564279f294d76d72fcced59d16a37eed9922a4de1e99640daa0bad29b5c",
+            "output_digest": "sha256:5bd2ce1bbcb255e506e18543eccbc54433207863a32b791f6a5c7ce86c613bf0",
+            "tool_error": false
+          },
+          {
+            "line": 103,
+            "uuid": "b4afd3c7-36a1-4304-8e3d-0a098ea29472",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:687ab56c9b4fd2bd5fc48e32bb515ca1a05d6246331e57880b13e4aa4049ca94",
+            "tool_id": "toolu_013HP4KWUgCQMssQv8pFHY3r",
+            "output_digest": "sha256:c0902aac7fd63303f8f845bea8c7772f6b8db035832e56096f83ffda042f22de",
+            "tool_error": false
+          },
+          {
+            "line": 105,
+            "uuid": "4d9fcfa7-2fdd-4806-b314-efa51e8f6898",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:ea67d66841b7d2f8f6c8026d2b44f0b8f1832b1ace39d00fe7501d51dafa364e",
+            "tool_id": "toolu_011PzGn4RQj8KefJZgbm1Fms",
+            "command_digest": "sha256:43b6e868733cde3c55f12245e8938b6c33e2ff9051601a34164e91868da3ecbd",
+            "output_digest": "sha256:2a84ee26e10e8d04efee32fc3417d9f69bcaeb5e3cb2a6b74799fe23eb6a9afc",
+            "tool_error": false
+          },
+          {
+            "line": 113,
+            "uuid": "02ebaa17-d681-4cf9-bd86-802211888f07",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:0a8be65829a197654bb81473fbb3c46ba75b0706aad0b6641be8cec6ba211ad1",
+            "tool_id": "toolu_014ecZmprVAFA2tZwskhHJDJ",
+            "command_digest": "sha256:801dd924a751794e66b0a2b1331e2f210ec6d628e69b12fbfe72322993ed55fd",
+            "output_digest": "sha256:e1f09be836286d523b7f5c5e7e8e705b2e0cc0f0a4d930ff9cb4655cb9979207",
+            "tool_error": false
+          },
+          {
+            "line": 115,
+            "uuid": "80f1c6e7-e234-4603-b81d-874066a0799a",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:21c170a62640edd7cf2c8283cea8f46329486126f9e6cbe1d7218ebd869c0dd6",
+            "tool_id": "toolu_01BUe7Ja42vXFcZc2XS2gXkq",
+            "command_digest": "sha256:b2deb824e3e7347d3eff69b0f433814815afc0be780361bc3ff985d999fe978b",
+            "output_digest": "sha256:620bcb957f1723b8e43d46ad01ae4d8cf3bbc1560f3bb232348abcd17e0564be",
+            "tool_error": false
+          },
+          {
+            "line": 64,
+            "uuid": "f3990716-b338-45a9-87bf-c90243c14877",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Agent",
+            "event_digest": "sha256:5814a1def4a67eb60b809b4f3a5ce5457ed8176b95f411a3580d54b26f464aba",
+            "tool_id": "toolu_01RSDLABS9aY8Pdo6oBiMGnw",
+            "output_digest": "sha256:1c2a2ef23bf95cba1079baed0a6573e122379d65a037725814639c7752c3b44c",
+            "tool_error": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "search-mjs-latest-wins-20260910T042904Z.json",
+            "digest": "sha256:a72d07d5a2035621a4bb9b086148dfb0806515d950f9a719e0af342892eb359c",
+            "status": "accepted",
+            "task_class": "hard_debugging",
+            "routing_mode": "frontier_diagnose_then_delegate",
+            "started_at": "2026-09-10T04:24:10.000Z",
+            "completed_at": "2026-09-10T04:29:04.000Z",
+            "frontier_verdict": {
+              "verdict": "PASS",
+              "material_repairs": 0,
+              "useful_workstreams": 1,
+              "basis": "Original failure re-established before the fix, corrected behavior verified on the same reproduction plus independent frontier edge cases against the actual final artifact."
+            }
+          }
+        ],
+        "artifact_digests": {
+          "search.mjs": "sha256:2e785c48b7614a11f7906b81c7cd695fbf6c24c90e206d8da7c850f580cd7a9e",
+          ".delegate/repro.mjs": "sha256:0159a6615281bae9723d8569fd5cd60e0c0d28e9d787eb234a12fdbf5f40afa0"
+        },
+        "copied_skill_files": {
+          "SKILL.md": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18",
+          "delegation-contract.md": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a",
+          "hosts/claude.md": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e",
+          "hosts/codex.md": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1",
+          "routing-pack.json": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed",
+          "swarm-policy.md": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1",
+          "task-classes.md": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b",
+          "verification-policy.md": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        },
+        "copied_skill_manifest_digest": "sha256:5e414f1e469a1855c2d33c70709a36c402edeabb7f93f0cde03a8a353b3b8f02",
+        "copied_skill_digest_encoding": "sha256 of canonical JSON relative-path-to-file-sha256 map",
+        "trace": {
+          "path": "artifacts/installed-delegate/claude-hardbug-1789014383856/coordinator/stdout.jsonl",
+          "digest": "sha256:b309b2283b1714ad0ab9c6c759ab4cf93a994b68cf10aa73100044769c1112e8"
+        },
+        "result": {
+          "path": "artifacts/installed-delegate/claude-hardbug-1789014383856/result.json",
+          "digest": "sha256:951dba93c44bd402e65aebfc780348da392cf43df7d37c5903ac4849fb17105a"
+        },
+        "case_id": "claude-hardbug-1789014383856"
+      },
+      "attempted_at": "2026-09-10T04:26:23.856Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 207709,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+      "matches_final_folder": true,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "search.mjs": "sha256:2e785c48b7614a11f7906b81c7cd695fbf6c24c90e206d8da7c850f580cd7a9e"
+      },
+      "receipts": [
+        {
+          "file": "search-mjs-latest-wins-20260910T042904Z.json",
+          "content_digest": "sha256:a72d07d5a2035621a4bb9b086148dfb0806515d950f9a719e0af342892eb359c"
+        }
+      ],
+      "trace_digest": "sha256:b309b2283b1714ad0ab9c6c759ab4cf93a994b68cf10aa73100044769c1112e8",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result_digest": "sha256:951dba93c44bd402e65aebfc780348da392cf43df7d37c5903ac4849fb17105a",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 28,
+          "cache_creation_input_tokens": 40422,
+          "cache_read_input_tokens": 452742,
+          "output_tokens": 13685,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 40422,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 873,
+              "cache_read_input_tokens": 46306,
+              "cache_creation_input_tokens": 194,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 194
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 1.0067603500000002,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 28,
+            "outputTokens": 13685,
+            "cacheReadInputTokens": 452742,
+            "cacheCreationInputTokens": 40422,
+            "webSearchRequests": 0,
+            "costUSD": 0.972856,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 50,
+            "outputTokens": 2921,
+            "cacheReadInputTokens": 83956,
+            "cacheCreationInputTokens": 8683,
+            "webSearchRequests": 0,
+            "costUSD": 0.03390435,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "claude-multicomponent-1789014490208",
+      "host": "claude",
+      "case": "multicomponent",
+      "exercise": "frontier_plan",
+      "review": {
+        "id": "claude-multicomponent-1789014490208",
+        "evaluated_scope": "complex_implementation/frontier_plan_then_delegate",
+        "verdict": "PASS",
+        "prerequisite": {
+          "architecture_contracts_plan_before_worker_edits": true,
+          "plan_location": "Frontier-authored Agent packet; no separate planning document required.",
+          "complex_mode_exercised": true,
+          "forced_class_exercise": true,
+          "tool_ids": [
+            "toolu_01SC9B9WTEtvPhNCTzzvXL5s",
+            "toolu_01Qsx2spVZEdghRydBNLATYZ",
+            "toolu_01HBJ55a2f1Z9HjLxZwpgY1B"
+          ],
+          "architecture": "task.mjs owns normalization; service/view import it; explicit signatures, immutability/error contracts, file ownership and integration checks settled in Agent packet before worker execution."
+        },
+        "notes": [
+          "The harness explicitly requested complex_implementation/frontier_plan_then_delegate to exercise the changed workflow. The same fixture naturally routes bounded/direct; no general claim about complex task quality follows.",
+          "Frontier read all three stubs, then supplied a concrete architecture, settled contracts, owned files and integration acceptance plan in the worker packet before any worker edits.",
+          "Frontier inspected all three final module artifacts, re-ran worker verification and independently asserted behavioral integration; output ALL CHECKS PASSED, FRONTIER CHECKS PASSED, exit0.",
+          "No fallback, implementation repair or assisted completion was needed. Native message models are observable in raw trace; served effort remains unavailable."
+        ],
+        "request_started_at": "2026-09-10T04:28:10.208Z",
+        "coordinator_configuration": {
+          "model": "claude-opus-5",
+          "effort": "high"
+        },
+        "coordinator_observed_models": [
+          "claude-opus-5"
+        ],
+        "served_effort_observed": false,
+        "execution": {
+          "code": 0,
+          "timed_out": false,
+          "duration_ms": 226241
+        },
+        "baseline_grader_passed": false,
+        "final_grader_passed": true,
+        "workers": [
+          {
+            "dispatch_tool_id": "toolu_01H8gSEL5xExUqqfC847f8hV",
+            "requested_model": "haiku",
+            "requested_effort": null,
+            "effort_control_omitted": true,
+            "observed_models": [
+              "claude-haiku-4-5-20251001"
+            ],
+            "written_files": [
+              {
+                "path": "task.mjs",
+                "tool_id": "toolu_01LZZeEAXgA4KRmhTNsS8S8L"
+              },
+              {
+                "path": "service.mjs",
+                "tool_id": "toolu_01MGaGdXAUPGN6sc9xHZ4z9Z"
+              },
+              {
+                "path": "view.mjs",
+                "tool_id": "toolu_01J7GTicQUeCdSw6apca1KDd"
+              },
+              {
+                "path": "verify.mjs",
+                "tool_id": "toolu_01XouFB8CkqnHXMxaRZpajcj"
+              }
+            ],
+            "served_effort_observed": false
+          }
+        ],
+        "frontier_artifact_read_tool_ids": [
+          "toolu_018kjK3cZhWCJ3FXTq1d6tyH",
+          "toolu_01BYcAkpD1j6YgPjSNnnk47K",
+          "toolu_01BVQX3BMvqP3GrrroTJxMg4"
+        ],
+        "frontier_check_tool_ids": [
+          "toolu_019dYieZxzoF5kkGq3sbNraC"
+        ],
+        "event_references": [
+          {
+            "line": 5,
+            "uuid": "b270c65b-ac7a-493f-90ec-7f69321510dd",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:5bda27bd9d01c9f088a59f6c14f26997d76c6188d96d798d7f66a505b90c7c34",
+            "tool_id": "toolu_01SC9B9WTEtvPhNCTzzvXL5s",
+            "output_digest": "sha256:03f0a8d19ee253cd0d868d473d0001bbb59dd4722c8f8f22a7b0f12a4e33bd54",
+            "tool_error": false
+          },
+          {
+            "line": 7,
+            "uuid": "ed178bae-39cf-4f2b-b1c6-0bfc12a06b66",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:916ae4c0d26b36d12636fc14b861485afb96d6bab7dabdd977036e479b53c775",
+            "tool_id": "toolu_01Qsx2spVZEdghRydBNLATYZ",
+            "output_digest": "sha256:3b1fa71ff5c65af814f2adc908265cb79fda0598cc546f6941334ac23756dc36",
+            "tool_error": false
+          },
+          {
+            "line": 9,
+            "uuid": "cfa1da46-8c35-48bb-9ca5-0a00a428ac28",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:074ea2ec1fb20a0e29860b0576799dc44f1143c7aa80ea22cfe0d3527cc275e9",
+            "tool_id": "toolu_01HBJ55a2f1Z9HjLxZwpgY1B",
+            "output_digest": "sha256:78a3c3f7af0ebdaa127507be6bef1b7a9b3c5e47d28a457bebf0b4220ba2481c",
+            "tool_error": false
+          },
+          {
+            "line": 124,
+            "uuid": "81eb2486-8e89-4c95-9247-58eef1f8060e",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:408667c366f7e3a4430a942a220c739f37e44df0d180d0bc48caacdd6fc0ef6c",
+            "tool_id": "toolu_018kjK3cZhWCJ3FXTq1d6tyH",
+            "output_digest": "sha256:24ef734feaa486c4c5f1016e30d66d4f4ecd31442089cf64fff1ed6a04d4778e",
+            "tool_error": false
+          },
+          {
+            "line": 126,
+            "uuid": "92b93dc3-cc13-47ea-b302-390069c2cb71",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:80d5bf81c2c46267e5bceb767950b2fffc9a87ee0521018eb7d8bf81c41a58c8",
+            "tool_id": "toolu_01BYcAkpD1j6YgPjSNnnk47K",
+            "output_digest": "sha256:f7b20716f7d08158793860b8300bca9ba197169be05189a6da6cfff5a77009cb",
+            "tool_error": false
+          },
+          {
+            "line": 128,
+            "uuid": "d79ed13c-98c8-418f-86b3-7199581e4832",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Read",
+            "event_digest": "sha256:02d2df313754f843e6eb9cfee6d8a0c8375b834d9616b2f4d2bfd1769b05718e",
+            "tool_id": "toolu_01BVQX3BMvqP3GrrroTJxMg4",
+            "output_digest": "sha256:6bb27ab862242ce7a281352e21a35406a3c0d0410308a03010948cde2d438f5a",
+            "tool_error": false
+          },
+          {
+            "line": 134,
+            "uuid": "abe74605-a1de-475a-88e3-b40f606d59a1",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Bash",
+            "event_digest": "sha256:cd506e021b25ac565a99a820e4b9c9609aee7d68c62c68fec7bb1ba219f56c22",
+            "tool_id": "toolu_019dYieZxzoF5kkGq3sbNraC",
+            "command_digest": "sha256:162b3e4d4a98bb541e27f31309a0fd028175c4385b0c2c161c9a6ea68e2d3fd0",
+            "output_digest": "sha256:ac0f863a27b35937e6df84440b410018028db58fec272481e4821d61ac8716c7",
+            "tool_error": false
+          },
+          {
+            "line": 65,
+            "uuid": "8942e3a8-71a0-425b-8f24-e354445a7115",
+            "model": "claude-opus-5",
+            "parent": null,
+            "tool": "Agent",
+            "event_digest": "sha256:ffacad994af98f654d1757a20c4107cb8d781be3a6db12aecb8e89131c86d773",
+            "tool_id": "toolu_01H8gSEL5xExUqqfC847f8hV",
+            "output_digest": "sha256:c28120e2bdad153afd1c357e9da9a763db82f3388066f482a3cefc36cd26e40b",
+            "tool_error": false
+          }
+        ],
+        "receipts": [
+          {
+            "path": "claude-multicomponent-1789014665.json",
+            "digest": "sha256:8dd5baa47ec1a3d10c3928381566abb9c1802e118b681487fc313a2fdca17d6c",
+            "status": "accepted",
+            "task_class": "complex_implementation",
+            "routing_mode": "frontier_plan_then_delegate",
+            "started_at": "2026-09-10T04:28:21.000Z",
+            "completed_at": "2026-09-10T04:31:05.000Z",
+            "frontier_verdict": "PASS"
+          }
+        ],
+        "artifact_digests": {
+          "task.mjs": "sha256:d55257ad645558241072272d6e237caffa3c50b52d3cba323c949393cd33dfa9",
+          "service.mjs": "sha256:e5af04cb225736dc365623cd01c345ba74f88d7b7cb21eb82023a00081baf599",
+          "view.mjs": "sha256:995c9223ccfc62da2a37219c047177606adc23b96e38551263dc181dff13cdec",
+          "verify.mjs": "sha256:2fdae802176ce7fcd5409d28254ac0e395c2cbb1b6cc684912e01d5d4742bb78"
+        },
+        "copied_skill_files": {
+          "SKILL.md": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18",
+          "delegation-contract.md": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a",
+          "hosts/claude.md": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e",
+          "hosts/codex.md": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1",
+          "routing-pack.json": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed",
+          "swarm-policy.md": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1",
+          "task-classes.md": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b",
+          "verification-policy.md": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        },
+        "copied_skill_manifest_digest": "sha256:5e414f1e469a1855c2d33c70709a36c402edeabb7f93f0cde03a8a353b3b8f02",
+        "copied_skill_digest_encoding": "sha256 of canonical JSON relative-path-to-file-sha256 map",
+        "trace": {
+          "path": "artifacts/installed-delegate/claude-multicomponent-1789014490208/coordinator/stdout.jsonl",
+          "digest": "sha256:1cf5f47d648e6aa23115d8d2b4a3d686e923d3654307dfdcb441897af333c233"
+        },
+        "result": {
+          "path": "artifacts/installed-delegate/claude-multicomponent-1789014490208/result.json",
+          "digest": "sha256:19641a98bdae066f7f5d350fedc96789d2f2525bebe3072a2b234e3565d88e8d"
+        },
+        "case_id": "claude-multicomponent-1789014490208"
+      },
+      "attempted_at": "2026-09-10T04:28:10.208Z",
+      "exit_code": 0,
+      "timed_out": false,
+      "duration_ms": 226241,
+      "external_grader": {
+        "before_passed": false,
+        "after_passed": true
+      },
+      "copied_folder_digest": "sha256:bda5845cfe91ccfb84313b9c5e13f0b66671dc8731316c20599958fa4bd01e76",
+      "matches_final_folder": true,
+      "copied_files": [
+        {
+          "path": "SKILL.md",
+          "content_digest": "sha256:e61dcf7e409372b6097c4277a3f5e1b2e33f0011a803c812f6947a70439d1b18"
+        },
+        {
+          "path": "delegation-contract.md",
+          "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+        },
+        {
+          "path": "hosts/claude.md",
+          "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+        },
+        {
+          "path": "hosts/codex.md",
+          "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+        },
+        {
+          "path": "routing-pack.json",
+          "content_digest": "sha256:5c4905bea52200b5d725eeed9f466d8f9334bb54fdb85dda45b178fcb156b5ed"
+        },
+        {
+          "path": "swarm-policy.md",
+          "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+        },
+        {
+          "path": "task-classes.md",
+          "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+        },
+        {
+          "path": "verification-policy.md",
+          "content_digest": "sha256:ab6edb9aba7668d0717b6068dd1b402c03a5e97c5e4ca77a118b02f265431995"
+        }
+      ],
+      "artifacts": {
+        "task.mjs": "sha256:d55257ad645558241072272d6e237caffa3c50b52d3cba323c949393cd33dfa9",
+        "service.mjs": "sha256:e5af04cb225736dc365623cd01c345ba74f88d7b7cb21eb82023a00081baf599",
+        "view.mjs": "sha256:995c9223ccfc62da2a37219c047177606adc23b96e38551263dc181dff13cdec"
+      },
+      "receipts": [
+        {
+          "file": "claude-multicomponent-1789014665.json",
+          "content_digest": "sha256:8dd5baa47ec1a3d10c3928381566abb9c1802e118b681487fc313a2fdca17d6c"
+        }
+      ],
+      "trace_digest": "sha256:1cf5f47d648e6aa23115d8d2b4a3d686e923d3654307dfdcb441897af333c233",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result_digest": "sha256:19641a98bdae066f7f5d350fedc96789d2f2525bebe3072a2b234e3565d88e8d",
+      "telemetry": {
+        "scope": "Original coordinator CLI final event; may not include child usage. Client estimates are not subscription bills; no cost or token advantage is established.",
+        "usage": {
+          "input_tokens": 24,
+          "cache_creation_input_tokens": 40339,
+          "cache_read_input_tokens": 332916,
+          "output_tokens": 13702,
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 40339,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 2,
+              "output_tokens": 864,
+              "cache_read_input_tokens": 42948,
+              "cache_creation_input_tokens": 3469,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 3469
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 0.9671642500000002,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 24,
+            "outputTokens": 13702,
+            "cacheReadInputTokens": 332916,
+            "cacheCreationInputTokens": 40339,
+            "webSearchRequests": 0,
+            "costUSD": 0.912518,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 66,
+            "outputTokens": 5721,
+            "cacheReadInputTokens": 114115,
+            "cacheCreationInputTokens": 11651,
+            "webSearchRequests": 0,
+            "costUSD": 0.05464625,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty"
+          }
+        }
+      }
+    }
+  ]
+}
