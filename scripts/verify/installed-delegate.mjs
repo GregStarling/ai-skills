@@ -92,7 +92,6 @@ export async function installedTrial(host,name,{exercise=null,projectRoot=null,f
  if(maxModelCalls!==null&&(!Number.isInteger(maxModelCalls)||maxModelCalls<1))throw Error('Model execution ceiling must be a positive integer');
  if(typeof runId!=='string'||! /^[A-Za-z0-9_-]{1,128}$/.test(runId))throw Error('Invalid trial run ID');
  if(timeoutMs!==null&&(!Number.isInteger(timeoutMs)||timeoutMs<1))throw Error('Invalid trial timeout');
- const {execute}=await import('./host-evidence.mjs');
  const prepared=await prepareInstalledTrial(host,name,{projectRoot,fixtureDirectory,mode});
  const {directory,fixtureRoot,skillPath,task,instructionDigests}=prepared;
  const before=await gradeInstalledCase(name,fixtureRoot);
@@ -126,6 +125,7 @@ export async function installedTrial(host,name,{exercise=null,projectRoot=null,f
  const args=host==='codex'
   ? ['exec','--ignore-user-config','--ignore-rules','--skip-git-repo-check','-C',directory,'-s','workspace-write','-m','gpt-5.5','-c','model_reasoning_effort="high"','--json',...(name==='research'?['-c','sandbox_workspace_write.network_access=true']:[]),'-']
   : ['-p','--model','claude-opus-5','--effort','high','--output-format','stream-json','--verbose','--no-session-persistence','--setting-sources','project','--strict-mcp-config','--mcp-config','{"mcpServers":{}}','--permission-mode','dontAsk','--tools','Read,Edit,Write,Bash,Glob,Grep,Agent,Skill','--allowedTools','Read,Edit,Write,Bash,Glob,Grep,Agent,Skill','--max-budget-usd','5','--forward-subagent-text'];
+ const {execute}=await import('./host-evidence.mjs');
  const execution=await execute('env',[`DELEGATE_STATE_HOME=${stateDirectory}`,host,...args],directory,prompt,join(destination,'coordinator'),timeoutMs??(name==='fullproject'?480000:name==='ui'||name==='hardbug'||exercise==='frontier_plan'?360000:240000));
  const after=await gradeInstalledCase(name,fixtureRoot);
  const behaviorAfter=name==='mechanical'?await gradeCase(name,fixtureRoot,{behaviorOnly:true}):null;
