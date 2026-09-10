@@ -29,6 +29,7 @@ export const policySchema = z.object({
   promotion: z.object({ minimum_paired_tasks: z.number().int().positive(), alpha: finite.gt(0).lt(1),
     superiority_margin: ratio, maximum_cost_increase: finite.nonnegative(),
     non_inferiority_margin: ratio, minimum_cost_improvement: ratio }).strict(),
+  shadow: z.object({ enabled:z.boolean(),max_tasks_per_run:z.number().int().positive(),max_fraction:ratio }).strict().optional(),
   binding: z.object({ refresh_after_hours: finite.positive(), hard_expiry_hours: finite.positive() }).strict(),
 }).strict().superRefine((p, ctx) => {
   for (const [name, values] of [['roles', p.roles.map(r => r.role_id)], ['task_classes', p.task_classes.map(c => c.task_class_id)]] as const) {

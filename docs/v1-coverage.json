@@ -1,0 +1,776 @@
+{
+  "schema_version": "v1_coverage_map.v1",
+  "spec_id": "spec-model-governor-v1",
+  "purpose": "Reviewer-authored relevance mapping, verified against actual new test execution reports and hashed artifacts; this file alone is not evidence.",
+  "scenarios": [
+    {
+      "id": "AC-001",
+      "title": "Valid constitution",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/policy.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-002",
+      "title": "Malformed policy",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/policy.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-003",
+      "title": "Candidate identity",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/schemas.test.ts",
+        "test/foundation/evidence.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "shared_schema_strict",
+        "shared_schema_identity"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-004",
+      "title": "Invalid data",
+      "requirement_ids": [
+        "REQ-002"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/schemas.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "shared_schema_strict",
+        "shared_schema_identity"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-005",
+      "title": "Admissible evidence",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/evidence.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-006",
+      "title": "Inadmissible evidence",
+      "requirement_ids": [
+        "REQ-003"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/evidence.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-007",
+      "title": "Risk upgrade",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/policy.test.ts",
+        "test/delegation/scope.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-008",
+      "title": "Review independence",
+      "requirement_ids": [
+        "REQ-004"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts",
+        "test/delegation/execute.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-009",
+      "title": "Absolute qualification",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-010",
+      "title": "False economy",
+      "requirement_ids": [
+        "REQ-005"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts",
+        "test/foundation/evidence.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-011",
+      "title": "Initial minimum",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts",
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-012",
+      "title": "Promotion boundaries",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-013",
+      "title": "Insufficient or absent incumbent",
+      "requirement_ids": [
+        "REQ-006"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts",
+        "test/refresh/refresh.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-014",
+      "title": "Valid bindings",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-015",
+      "title": "Binding forgery",
+      "requirement_ids": [
+        "REQ-007"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-016",
+      "title": "Time states",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/bindings.test.ts",
+        "test/refresh/refresh.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-017",
+      "title": "No synthetic production",
+      "requirement_ids": [
+        "REQ-008"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/evidence.test.ts",
+        "test/delegation/execute.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-018",
+      "title": "Usable offline CLI",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/cli/commands.test.ts",
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli",
+        "portable_skills",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-019",
+      "title": "Proof suite",
+      "requirement_ids": [
+        "REQ-009"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "foundation_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-020",
+      "title": "Claude compiler preserves validated identity",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/adapters/claude.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-021",
+      "title": "Claude unsupported setting and drift fail closed",
+      "requirement_ids": [
+        "REQ-010"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/adapters/claude.test.ts",
+        "test/runtime/telemetry.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-022",
+      "title": "Codex adapter is independent and deterministic",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/adapters/codex.test.ts",
+        "test/proof/acceptance-contracts.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-023",
+      "title": "Codex unsupported version and tampering",
+      "requirement_ids": [
+        "REQ-011"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/proof/acceptance-contracts.test.ts",
+        "test/runtime/telemetry.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-024",
+      "title": "Traceable real harvested fixtures",
+      "requirement_ids": [
+        "REQ-012"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/evaluation/fixtures.test.ts",
+        "test/foundation/policy.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "real_fixture_calibration"
+      ],
+      "source_artifacts": [
+        "docs/evaluation-source-candidates.json",
+        "docs/evaluation-source-calibration.json"
+      ],
+      "evidence_kind": "real_historical_fail_before_pass_after_calibration_no_model_calls"
+    },
+    {
+      "id": "AC-025",
+      "title": "Replay isolation and treatment comparability",
+      "requirement_ids": [
+        "REQ-012",
+        "REQ-013"
+      ],
+      "mode": "composite",
+      "test_files": [
+        "test/evaluation/fixtures.test.ts",
+        "test/foundation/schemas.test.ts",
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "real_fixture_calibration"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes",
+      "note": "Offline component verifies fixture isolation, raw treatment identity and incompatible suite/harness/fixture rejection. The same-fixture two-candidate executeEvaluation replay is separately verified from retained actual live invocation and grader evidence; offline tests do not claim that native replay occurred.",
+      "required_live_supplement": "live_same_fixture_cross_candidate_replay"
+    },
+    {
+      "id": "AC-026",
+      "title": "Ledger immutable and recoverable",
+      "requirement_ids": [
+        "REQ-013"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/ledger/ledger.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-027",
+      "title": "Accepted-task economics includes failures",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-015"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/evidence.test.ts",
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-028",
+      "title": "Paired statistical reference vectors",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/statistics/paired.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-029",
+      "title": "Reject untrusted statistical proof",
+      "requirement_ids": [
+        "REQ-014"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/statistics/paired.test.ts",
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-030",
+      "title": "Promotion margins and economic boundaries",
+      "requirement_ids": [
+        "REQ-014",
+        "REQ-015"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/proof/acceptance-contracts.test.ts",
+        "test/foundation/decisioning.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-031",
+      "title": "Production qualification remains evidence-bound",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/foundation/decisioning.test.ts",
+        "test/foundation/evidence.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-032",
+      "title": "Invalid incumbent cannot be retained",
+      "requirement_ids": [
+        "REQ-015"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/refresh/refresh.test.ts",
+        "test/foundation/bindings.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-033",
+      "title": "Official discovery changes roster only",
+      "requirement_ids": [
+        "REQ-016"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/discovery/discovery.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-034",
+      "title": "Benchmark methodology history preserved",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-016"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/proof/acceptance-contracts.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-035",
+      "title": "Bounded worker and fresh review contract",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/delegation/execute.test.ts",
+        "test/delegation/scope.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "portable_skills"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-036",
+      "title": "Scope and risk escalation prevents acceptance",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/delegation/scope.test.ts",
+        "test/delegation/execute.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-037",
+      "title": "Final artifact invalidates previous review",
+      "requirement_ids": [
+        "REQ-017"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/delegation/execute.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-038",
+      "title": "Dispatch failure remains auditable",
+      "requirement_ids": [
+        "REQ-013",
+        "REQ-017"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/runtime/process.test.ts",
+        "test/delegation/execute.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-039",
+      "title": "Shadow work never substitutes for incumbent",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/shadow/shadow.test.ts"
+      ],
+      "required_checks": [
+        "full_tests"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-040",
+      "title": "Unsafe shadow work refused",
+      "requirement_ids": [
+        "REQ-018"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/shadow/shadow.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-041",
+      "title": "Refresh hold is a truthful result",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/refresh/refresh.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-042",
+      "title": "Refresh verifies before local activation",
+      "requirement_ids": [
+        "REQ-019"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/refresh/refresh.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-043",
+      "title": "Offline end-to-end regression evidence",
+      "requirement_ids": [
+        "REQ-020"
+      ],
+      "mode": "offline",
+      "test_files": [
+        "test/proof/proof.test.ts"
+      ],
+      "required_checks": [
+        "full_tests",
+        "build",
+        "typecheck",
+        "foundation_cli",
+        "shared_schema_strict",
+        "shared_schema_identity",
+        "real_fixture_calibration",
+        "portable_skills",
+        "workflow_cli"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "synthetic_algorithm_tests_and_real_local_processes"
+    },
+    {
+      "id": "AC-044",
+      "title": "Live CLI subscription smoke and honest limits",
+      "requirement_ids": [
+        "REQ-010",
+        "REQ-011",
+        "REQ-012",
+        "REQ-017",
+        "REQ-020"
+      ],
+      "mode": "live",
+      "test_files": [],
+      "required_checks": [
+        "live_provider_evaluations"
+      ],
+      "source_artifacts": [],
+      "evidence_kind": "observed_native_runtime",
+      "note": "Requires separate verify:v1:live invocation receipts and objective grader evidence. Never counted passed by offline tests."
+    }
+  ]
+}

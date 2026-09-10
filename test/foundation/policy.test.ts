@@ -5,7 +5,7 @@ const policy=()=>loadPolicy('policy/constitution.json');
 describe('human policy',()=>{
  it('keeps candidate/model identities out of a bounded versioned taxonomy',()=>{
   const p=policy();expect(p.task_classes.length).toBeLessThanOrEqual(8);expect(p.task_classes).toHaveLength(2);
-  for(const c of p.task_classes){expect(c.eval_bucket.fixture_ids.length).toBeGreaterThan(0);for(const id of c.eval_bucket.fixture_ids)expect(JSON.parse(readFileSync(`fixtures/policy/${id}.json`,'utf8')).synthetic).toBe(true);}
+  for(const c of p.task_classes){expect(c.eval_bucket.fixture_ids.length).toBeGreaterThan(0);for(const id of c.eval_bucket.fixture_ids){const folder=id.replaceAll('_','-');const manifest=JSON.parse(readFileSync(`fixtures/harvested/${folder}/manifest.json`,'utf8'));expect(manifest.task_class_id).toBe(c.task_class_id);expect(manifest.performance_evidence).toBe(false);expect(manifest.harness_version).toBe(c.eval_bucket.harness_version);}}
   expect(JSON.stringify(p)).not.toMatch(/model_id|candidate_id|snapshot_id/);expect(p.provenance.status).toBe('proposed');
   expect(policyDigest(p)).toMatch(/^sha256:/);
  });

@@ -1,4 +1,5 @@
 import { z, type ZodType } from "zod";
+import {workOrderSchema as executableWorkOrderSchema} from './work-order.js';
 import { digest } from "../core/canonical.js";
 
 export const sharedSchemaVersion = "model_governor_shared_schemas.v1" as const;
@@ -544,21 +545,7 @@ export const taskObservationSchema = strictObject({
 export type TaskObservation = z.infer<typeof taskObservationSchema>;
 export function parseTaskObservation(input: unknown): TaskObservation { return parseStrict("task_observation", taskObservationSchema, input); }
 
-export const workOrderSchema = strictObject({
-  schema_version: z.literal("work_order.v1"),
-  work_order_id: identifierSchema,
-  created_at: isoDateTimeSchema,
-  role_id: identifierSchema,
-  task_class_id: identifierSchema,
-  pre_dispatch_risk: riskCategorySchema,
-  constraints: constraintSetSchema,
-  input_digest: digestSchema,
-  allowed_paths: z.array(z.string().min(1)).nonempty(),
-  forbidden_paths: z.array(z.string().min(1)).default([])
-}).superRefine((workOrder, ctx) => {
-  addDuplicateIssues(ctx, workOrder.allowed_paths, ["allowed_paths"], "DUPLICATE_PATH");
-  addDuplicateIssues(ctx, workOrder.forbidden_paths, ["forbidden_paths"], "DUPLICATE_PATH");
-});
+export const workOrderSchema = executableWorkOrderSchema;
 
 export const reviewRecordSchema = strictObject({
   schema_version: z.literal("review_record.v1"),

@@ -5,7 +5,7 @@ import {digest,contentDigest,hashBytes} from '../../dist/core/canonical.js';
 import {parseSelectionInput,createBinding} from '../../dist/governance/index.js';
 const now='2026-09-09T00:00:00.000Z';
 const zero='sha256:'+ '0'.repeat(64);
-const policy=JSON.parse(readFileSync('policy/constitution.json','utf8'));
+const policy=JSON.parse(readFileSync('policy/simulation-v1.json','utf8'));
 const registry=parseModelRegistry({schema_version:'model_registry.v1',registry_id:'fixture_registry',content_digest:zero,retrieved_at:now,records:['alpha','beta'].map((name,i)=>({schema_version:'model_record.v1',record_id:'record_'+name,provider:'synthetic',model_id:'fixture-'+name,snapshot_id:'fixture-'+name,family:'family_'+name,capabilities:['terminal','local_execution'],frontier:i===1,lifecycle:'available',content_digest:zero,aliases:[name],supported_efforts:['low','high'],supported_serving_settings:{fallback:['disabled'],tool_use:['host_tools'],json_schema:[true]},material_serving_settings:['fallback','tool_use','json_schema'],context_window_tokens:100000,pinning:{verified:true,immutable_snapshot:true,source:'synthetic_fixture',retrieved_at:now,evidence_digest:zero}}))});
 for(const r of registry.records)r.content_digest=contentDigest(r);
 registry.content_digest=contentDigest(registry);

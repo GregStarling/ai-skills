@@ -1,7 +1,7 @@
 {
   "name": "model-governor",
-  "version": "0.1.0",
-  "description": "Local evidence-governed model qualification, validation, and delegation scaffold.",
+  "version": "1.0.0",
+  "description": "Local evidence-governed model qualification, native delegation, and portable skills.",
   "type": "module",
   "private": true,
   "bin": {
@@ -21,14 +21,18 @@
   },
   "files": [
     "dist",
-    "docs"
+    "policy",
+    "schemas",
+    "skills",
+    "docs",
+    "fixtures/harvested"
   ],
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\" && tsc -p tsconfig.build.json",
-    "verify:v1": "node scripts/verify/scaffold.mjs --criterion v1",
-    "verify:v1:live": "node scripts/verify/scaffold.mjs --criterion v1-live",
+    "verify:v1": "node scripts/verify/v1.mjs",
+    "verify:v1:live": "node scripts/verify/v1-live.mjs",
     "governor": "npm run --silent build && node dist/cli/index.js"
   },
   "engines": {

@@ -7,3 +7,10 @@ export { canonicalJson, digest, contentDigest, hashBytes } from './core/canonica
 export { comparePaired, type BinaryPair, type PairedComparison } from './statistics/index.js';
 export { Ledger, type LedgerRecord, type LedgerInput } from './ledger/index.js';
 export * as proof from './proof/index.js';
+export * as adapters from './adapters/index.js';
+export * as runtime from './runtime/index.js';
+export * as evaluation from './evaluation/index.js';
+export * as delegation from './delegation/index.js';
+export * as discovery from './discovery/index.js';
+export * as refresh from './refresh/index.js';
+export * as shadow from './shadow/index.js';

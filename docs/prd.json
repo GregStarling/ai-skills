@@ -1,0 +1,1460 @@
+{
+  "goal": "Engine-loop tasks for spec package pkg_302a3df90ddacb6f (PKG_302A3DF90DDACB6F-1)",
+  "fast_checks_default": [],
+  "active_claims": [],
+  "last_completed_task_ids": [
+    "t00_plan_scaffold"
+  ],
+  "iteration": 3,
+  "tasks": [
+    {
+      "id": "t00_plan_scaffold",
+      "title": "Plan and scaffold the strict TypeScript project",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 0,
+      "desc": "Create the phase branch setup instructions, implementation plan, repository-wide Node and TypeScript scaffold, generic CLI router, package scripts, verification entry declarations, and ignore coverage for generated paths before any build or proof gate runs. Declare the minimal strict-schema and mature YAML/TOML parsing dependencies needed by downstream adapters in the initial package scaffold so adapter tasks do not need out-of-scope package edits.",
+      "tier": "standard",
+      "acceptance_criteria": [
+        "docs/plan.md exists before substantial application code and maps files, core types, validator stages, ordered checkpoints, task ownership, repair authority, assumptions, and test strategy to REQ-001 through REQ-020 and AC-001 through AC-044.",
+        "The project scaffold declares strict TypeScript, npm scripts for test, typecheck, build, verify:v1, verify:v1:live and a generic CLI package entry point whose router can dispatch registered command modules without later package.json edits.",
+        "The repository ignores every generated path declared in foreman-project.config.json, including node_modules/, dist/, build/, coverage/, *.tsbuildinfo, .vite/ at every depth, .eslintcache, __pycache__/ at every depth, .pytest_cache/, .venv/, logs, local runtime databases, .foreman/tmp/, and .foreman/proof/ before any build-running gate executes."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_ae5a1ab8e6be4017",
+          "criterion": "docs/plan.md exists before substantial application code and maps files, core types, validator stages, ordered checkpoints, task ownership, repair authority, assumptions, and test strategy to REQ-001 through REQ-020 and AC-001 through AC-044.",
+          "oracle": {
+            "kind": "command",
+            "command": "node scripts/verify/scaffold.mjs --criterion plan && echo T00_PLAN_DOC_PASS",
+            "expected_stdout_line": "T00_PLAN_DOC_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_3dc4e4cc839a2db0",
+          "criterion": "The project scaffold declares strict TypeScript, npm scripts for test, typecheck, build, verify:v1, verify:v1:live and a generic CLI package entry point whose router can dispatch registered command modules without later package.json edits.",
+          "oracle": {
+            "kind": "command",
+            "command": "node scripts/verify/scaffold.mjs --criterion scaffold && echo T00_TYPESCRIPT_SCAFFOLD_PASS",
+            "expected_stdout_line": "T00_TYPESCRIPT_SCAFFOLD_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_f440e5767501def5",
+          "criterion": "The repository ignores every generated path declared in foreman-project.config.json, including node_modules/, dist/, build/, coverage/, *.tsbuildinfo, .vite/ at every depth, .eslintcache, __pycache__/ at every depth, .pytest_cache/, .venv/, logs, local runtime databases, .foreman/tmp/, and .foreman/proof/ before any build-running gate executes.",
+          "oracle": {
+            "kind": "command",
+            "command": "for p in node_modules/x dist/x build/x coverage/x a.tsbuildinfo .vite/x src/.vite/x .eslintcache __pycache__/x src/__pycache__/x .pytest_cache/x .venv/x logs/x local.db .foreman/tmp/x .foreman/proof/x; do git check-ignore -q \"$p\" || exit 1; done && echo T00_IGNORE_COVERAGE_PASS",
+            "expected_stdout_line": "T00_IGNORE_COVERAGE_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        ".gitignore",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "tsconfig.build.json",
+        "vitest.config.ts",
+        "docs/plan.md",
+        "src/index.ts",
+        "src/cli/index.ts",
+        "src/cli/router.ts",
+        "scripts/verify/scaffold.mjs"
+      ],
+      "fast_checks": [
+        "node scripts/verify/scaffold.mjs --all",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [],
+      "priority": 0,
+      "lane": "foundation",
+      "done": true
+    },
+    {
+      "id": "t01_shared_schemas",
+      "title": "Define strict shared schemas and types",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 1,
+      "desc": "Implement schemas as the single source of truth for roles, task classes, risk, constraints, model records, candidate treatments, evidence, decisions, bindings, ledgers, runtime reports, work orders, reviews, refresh proposals and proof reports.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Strict schemas reject unknown fields, invented scalar confidence or quality scores, impossible counts, nonfinite values, duplicate identities, invalid chronology, aliases, unsupported configurations, and pinning not verified against registry metadata.",
+        "Candidate identity includes exact model snapshot, effort, and declared materially relevant serving settings, with valid treatments distinct and aliases rejected."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_7f7504cb71046dca",
+          "criterion": "Strict schemas reject unknown fields, invented scalar confidence or quality scores, impossible counts, nonfinite values, duplicate identities, invalid chronology, aliases, unsupported configurations, and pinning not verified against registry metadata.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/schemas.test.ts && node scripts/verify/shared-schemas.mjs --criterion strict-rejections && echo T01_STRICT_SCHEMAS_PASS",
+            "expected_stdout_line": "T01_STRICT_SCHEMAS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_74a3fd263a14e4d4",
+          "criterion": "Candidate identity includes exact model snapshot, effort, and declared materially relevant serving settings, with valid treatments distinct and aliases rejected.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/schemas.test.ts && node scripts/verify/shared-schemas.mjs --criterion candidate-identity && echo T01_CANDIDATE_IDENTITY_PASS",
+            "expected_stdout_line": "T01_CANDIDATE_IDENTITY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "schemas/**",
+        "src/schema/**",
+        "src/types/**",
+        "test/foundation/schemas.test.ts",
+        "scripts/verify/shared-schemas.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/foundation/schemas.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t00_plan_scaffold"
+      ],
+      "priority": 1,
+      "lane": "foundation",
+      "done": false
+    },
+    {
+      "id": "t02_constitution_policy",
+      "title": "Author the model-governor constitution",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 2,
+      "desc": "Create the versioned human-owned constitution and policy fixtures for roles, task classes, categorical risk, admissibility, qualification, promotion, escalation and expiry, keeping model assignments and invented routing scores out of policy.",
+      "tier": "standard",
+      "acceptance_criteria": [
+        "The constitution contains no model IDs, weighted routing scores, universal quality scores, or confidence scores, declares at most eight task classes, binds every class to an existing nonempty versioned evaluation bucket, and records numeric thresholds as declared proposals with provenance.",
+        "Malformed policies with unknown roles or classes, missing or empty evaluation buckets, undeclared rule references, invalid numeric thresholds, or embedded model assignments are rejected with stable rule IDs and actionable field paths."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_c6c69fa6cf979c62",
+          "criterion": "The constitution contains no model IDs, weighted routing scores, universal quality scores, or confidence scores, declares at most eight task classes, binds every class to an existing nonempty versioned evaluation bucket, and records numeric thresholds as declared proposals with provenance.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/policy.test.ts && node scripts/verify/policy.mjs --criterion valid-constitution && echo T02_VALID_CONSTITUTION_PASS",
+            "expected_stdout_line": "T02_VALID_CONSTITUTION_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_dfc851f49658f58b",
+          "criterion": "Malformed policies with unknown roles or classes, missing or empty evaluation buckets, undeclared rule references, invalid numeric thresholds, or embedded model assignments are rejected with stable rule IDs and actionable field paths.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/policy.test.ts && node scripts/verify/policy.mjs --criterion malformed-policy && echo T02_MALFORMED_POLICY_REJECTED_PASS",
+            "expected_stdout_line": "T02_MALFORMED_POLICY_REJECTED_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "policy/**",
+        "fixtures/policy/**",
+        "test/foundation/policy.test.ts",
+        "scripts/verify/policy.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/foundation/policy.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t01_shared_schemas"
+      ],
+      "priority": 2,
+      "lane": "foundation",
+      "done": false
+    },
+    {
+      "id": "t03_canonical_registry_evidence",
+      "title": "Implement canonical hashing, registry and evidence validation",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 3,
+      "desc": "Implement deterministic serialization, content digests, registry loading, evidence reference resolution, tamper detection, provenance preservation, evidence admissibility and synthetic-versus-production evidence boundaries for the foundation milestone.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Evidence and registry records load with immutable IDs and content digests, resolve all references, preserve provenance and chronology, reject missing or tampered records, and keep benchmark versions separate.",
+        "Evidence admissibility accepts matching synthetic local evidence for policy simulation only and rejects missing provenance, mismatched candidate, effort, suite, role, risk, constraint or task stratum, forbidden fallback, and vendor-only marketing evidence."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_54d99b8bda1a6ab3",
+          "criterion": "Evidence and registry records load with immutable IDs and content digests, resolve all references, preserve provenance and chronology, reject missing or tampered records, and keep benchmark versions separate.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/evidence.test.ts && node scripts/verify/evidence.mjs --criterion provenance-resolution && echo T03_EVIDENCE_PROVENANCE_PASS",
+            "expected_stdout_line": "T03_EVIDENCE_PROVENANCE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_bf54423438ed0304",
+          "criterion": "Evidence admissibility accepts matching synthetic local evidence for policy simulation only and rejects missing provenance, mismatched candidate, effort, suite, role, risk, constraint or task stratum, forbidden fallback, and vendor-only marketing evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/evidence.test.ts && node scripts/verify/evidence.mjs --criterion admissibility && echo T03_EVIDENCE_ADMISSIBILITY_PASS",
+            "expected_stdout_line": "T03_EVIDENCE_ADMISSIBILITY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/core/**",
+        "src/registry/**",
+        "src/evidence/**",
+        "fixtures/synthetic/evidence/**",
+        "fixtures/synthetic/registry/**",
+        "test/foundation/evidence.test.ts",
+        "scripts/verify/evidence.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/foundation/evidence.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t01_shared_schemas"
+      ],
+      "priority": 3,
+      "lane": "foundation",
+      "done": false
+    },
+    {
+      "id": "t04_risk_review_qualification_selection",
+      "title": "Implement risk, review, qualification and selection engines",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 4,
+      "desc": "Implement categorical risk derivation, effective-risk maximum, review independence, hard eligibility, absolute qualification, measured economics, initial cheapest-qualified selection and synthetic paired promotion boundary logic.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Risk classification derives pre-dispatch and post-change categorical risk from observable facts with stable rule IDs, uses the maximum effective risk, and applies stronger review requirements after risk upgrades.",
+        "Critical review validation rejects same-family reviewers, inherited context, missing qualified reviewers and changed reviewed artifacts, while accepting qualified different-family fresh review of the exact artifact.",
+        "Qualification and economics admit only candidates satisfying every hard capability, quality, cost and latency rule; zero accepted tasks, missing cost, failed quality, unavailable candidates and ceiling violations cannot win.",
+        "Initial selection chooses the cheapest qualified candidate with deterministic ties, and replacement distinguishes eligible incumbent retention, insufficient evidence, equal-cost outcomes and invalid-incumbent escalation without trusting supplied rules."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_cf6dc54fee65c930",
+          "criterion": "Risk classification derives pre-dispatch and post-change categorical risk from observable facts with stable rule IDs, uses the maximum effective risk, and applies stronger review requirements after risk upgrades.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/decisioning.test.ts && node scripts/verify/decisioning.mjs --criterion risk && echo T04_RISK_RULES_PASS",
+            "expected_stdout_line": "T04_RISK_RULES_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_4c305fcf46de9a1d",
+          "criterion": "Critical review validation rejects same-family reviewers, inherited context, missing qualified reviewers and changed reviewed artifacts, while accepting qualified different-family fresh review of the exact artifact.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/decisioning.test.ts && node scripts/verify/decisioning.mjs --criterion review && echo T04_REVIEW_INDEPENDENCE_PASS",
+            "expected_stdout_line": "T04_REVIEW_INDEPENDENCE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_70ca5294e62f45cd",
+          "criterion": "Qualification and economics admit only candidates satisfying every hard capability, quality, cost and latency rule; zero accepted tasks, missing cost, failed quality, unavailable candidates and ceiling violations cannot win.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/decisioning.test.ts && node scripts/verify/decisioning.mjs --criterion qualification && echo T04_QUALIFICATION_ECONOMICS_PASS",
+            "expected_stdout_line": "T04_QUALIFICATION_ECONOMICS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_7ae53f172917473b",
+          "criterion": "Initial selection chooses the cheapest qualified candidate with deterministic ties, and replacement distinguishes eligible incumbent retention, insufficient evidence, equal-cost outcomes and invalid-incumbent escalation without trusting supplied rules.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/decisioning.test.ts && node scripts/verify/decisioning.mjs --criterion selection && echo T04_SELECTION_PROMOTION_PASS",
+            "expected_stdout_line": "T04_SELECTION_PROMOTION_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/policy/risk.ts",
+        "src/review/**",
+        "src/qualification/**",
+        "src/selection/**",
+        "fixtures/synthetic/decisions/**",
+        "test/foundation/decisioning.test.ts",
+        "scripts/verify/decisioning.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/foundation/decisioning.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t01_shared_schemas"
+      ],
+      "priority": 4,
+      "lane": "foundation",
+      "done": false
+    },
+    {
+      "id": "t05_foundation_binding_cli",
+      "title": "Prove and repair the foundation validator milestone",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 5,
+      "desc": "Implement independent binding validation, expiry semantics, production synthetic rejection, validation CLI command handlers and registration, valid and invalid binding fixtures, and the AC-001 through AC-019 foundation proof gate with repair authority over the complete foundation artifacts it validates before adapter work is accepted.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "The validator independently recomputes eligibility, risk, economics, selection, expiry, STALE and INVALID states, and fired rules from exact policy hash, candidate set, and resolved evidence, rejecting forged requirements, rationale, rules, digests, selection, and reviewed artifact identity.",
+        "Expiry validation uses an injected clock with exact refresh_due_at and hard_expiry_at boundary semantics, returns VALID, STALE or INVALID as policy requires, and rejects synthetic bindings at production entry points.",
+        "validate-policy, validate-evidence, and validate-binding are registered through the real package CLI router, emit deterministic machine-readable results, return nonzero status for invalid or error inputs, preserve input bytes, and provide useful diagnostics.",
+        "The foundation proof executes nonempty AC-001 through AC-019 assertions over the complete normalized foundation artifacts, includes at least three valid binding examples and ten independently invalid binding examples with expected rule IDs, and passes before adapter acceptance."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_4ae913e121ac6636",
+          "criterion": "The validator independently recomputes eligibility, risk, economics, selection, expiry, STALE and INVALID states, and fired rules from exact policy hash, candidate set, and resolved evidence, rejecting forged requirements, rationale, rules, digests, selection, and reviewed artifact identity.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/bindings-cli.test.ts && node scripts/verify/foundation-cli.mjs --criterion independent-binding && echo T05_INDEPENDENT_BINDING_PASS",
+            "expected_stdout_line": "T05_INDEPENDENT_BINDING_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_025cadf6f9ea879e",
+          "criterion": "Expiry validation uses an injected clock with exact refresh_due_at and hard_expiry_at boundary semantics, returns VALID, STALE or INVALID as policy requires, and rejects synthetic bindings at production entry points.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/bindings-cli.test.ts && node scripts/verify/foundation-cli.mjs --criterion expiry-synthetic && echo T05_EXPIRY_SYNTHETIC_BOUNDARY_PASS",
+            "expected_stdout_line": "T05_EXPIRY_SYNTHETIC_BOUNDARY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_6c41d049936668db",
+          "criterion": "validate-policy, validate-evidence, and validate-binding are registered through the real package CLI router, emit deterministic machine-readable results, return nonzero status for invalid or error inputs, preserve input bytes, and provide useful diagnostics.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation/bindings-cli.test.ts && node scripts/verify/foundation-cli.mjs --criterion cli-validation && npm run --silent governor -- validate-policy --json --fixture valid >/tmp/model-governor-validate-policy.json && npm run --silent governor -- validate-evidence --json --fixture valid >/tmp/model-governor-validate-evidence.json && npm run --silent governor -- validate-binding --json --fixture valid >/tmp/model-governor-validate-binding.json && node scripts/verify/foundation-cli.mjs --criterion cli-router-smoke --inputs /tmp/model-governor-validate-policy.json,/tmp/model-governor-validate-evidence.json,/tmp/model-governor-validate-binding.json && echo T05_VALIDATION_CLI_PASS",
+            "expected_stdout_line": "T05_VALIDATION_CLI_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_0ca755911513d1da",
+          "criterion": "The foundation proof executes nonempty AC-001 through AC-019 assertions over the complete normalized foundation artifacts, includes at least three valid binding examples and ten independently invalid binding examples with expected rule IDs, and passes before adapter acceptance.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/foundation && node scripts/verify/foundation-cli.mjs --criterion foundation-proof && echo T05_FOUNDATION_PROOF_PASS",
+            "expected_stdout_line": "T05_FOUNDATION_PROOF_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "schemas/**",
+        "src/schema/**",
+        "src/types/**",
+        "policy/**",
+        "fixtures/policy/**",
+        "src/core/**",
+        "src/registry/**",
+        "src/evidence/**",
+        "fixtures/synthetic/evidence/**",
+        "fixtures/synthetic/registry/**",
+        "src/policy/risk.ts",
+        "src/review/**",
+        "src/qualification/**",
+        "src/selection/**",
+        "fixtures/synthetic/decisions/**",
+        "src/bindings/**",
+        "src/cli/validation.ts",
+        "src/cli/registry/validation.ts",
+        "fixtures/bindings/**",
+        "test/foundation/**",
+        "scripts/verify/foundation-cli.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/foundation",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t02_constitution_policy",
+        "t03_canonical_registry_evidence",
+        "t04_risk_review_qualification_selection"
+      ],
+      "priority": 5,
+      "lane": "foundation",
+      "done": false
+    },
+    {
+      "id": "t06_claude_runtime_capabilities",
+      "title": "Capture Claude runtime capabilities",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 6,
+      "desc": "Inspect the installed Claude runtime and current official documentation, reconcile fresh observations with checked-in runtime contract documents, record runtime version, source provenance, supported and unsupported controls, precedence and fresh-session semantics, and document unknowns without credential disclosure.",
+      "tier": "standard",
+      "acceptance_criteria": [
+        "Claude capability reports record installed runtime versions, official documentation sources, source retrieval times, supported and unsupported controls, precedence findings, fresh-session observations and unknowns without credential disclosure.",
+        "Claude capability capture treats docs/runtime-contracts.md and docs/runtime-conformance-checklist.md as immutable source inputs, reconciles fresh observations against them, preserves source provenance and retrieval times, and fails closed on conflicts rather than silently overwriting or ignoring prior verified runtime facts.",
+        "Unsupported Claude runtime controls, unverified snapshot pinning, fallback behavior, or higher-precedence invocation and environment conflicts are represented as fail-closed capability findings rather than policy changes."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_9074c1131829ce0e",
+          "criterion": "Claude capability reports record installed runtime versions, official documentation sources, source retrieval times, supported and unsupported controls, precedence findings, fresh-session observations and unknowns without credential disclosure.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-runtime.test.ts && node scripts/verify/claude-runtime.mjs --criterion report && echo T06_CLAUDE_CAPABILITY_REPORT_PASS",
+            "expected_stdout_line": "T06_CLAUDE_CAPABILITY_REPORT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_9f038b1983dc6aa1",
+          "criterion": "Claude capability capture treats docs/runtime-contracts.md and docs/runtime-conformance-checklist.md as immutable source inputs, reconciles fresh observations against them, preserves source provenance and retrieval times, and fails closed on conflicts rather than silently overwriting or ignoring prior verified runtime facts.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-runtime.test.ts && node scripts/verify/claude-runtime.mjs --criterion contract-reconciliation && echo T06_CLAUDE_CONTRACT_RECONCILIATION_PASS",
+            "expected_stdout_line": "T06_CLAUDE_CONTRACT_RECONCILIATION_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_de958b07ea0cb000",
+          "criterion": "Unsupported Claude runtime controls, unverified snapshot pinning, fallback behavior, or higher-precedence invocation and environment conflicts are represented as fail-closed capability findings rather than policy changes.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-runtime.test.ts && node scripts/verify/claude-runtime.mjs --criterion fail-closed && echo T06_CLAUDE_UNSUPPORTED_FAIL_CLOSED_PASS",
+            "expected_stdout_line": "T06_CLAUDE_UNSUPPORTED_FAIL_CLOSED_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "runtime/contracts/claude/**",
+        "runtime/capabilities/claude/**",
+        "src/runtime/claude/**",
+        "test/adapters/claude-runtime.test.ts",
+        "scripts/verify/claude-runtime.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/adapters/claude-runtime.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t05_foundation_binding_cli"
+      ],
+      "priority": 6,
+      "lane": "adapter",
+      "done": false
+    },
+    {
+      "id": "t07_claude_adapter",
+      "title": "Implement the validated Claude compiler",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 7,
+      "desc": "Compile only validated production bindings into deterministic repository-local Claude generated artifacts, support separately labeled adapter-test rendering for synthetic bindings, preserve source policy and binding identity, detect drift and tampering, and validate effective dispatch settings through the adapter registry.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Claude adapter-test rendering is byte-identical for unchanged supported inputs, identifies source policy and binding hashes, marks generated test artifacts nonproduction, and production dispatch rejects them.",
+        "Claude production rendering writes the complete generated/claude file set plus manifest, hashes and drift-checks missing, extra and changed generated files, and never installs into .claude, .codex, .agents or user-global skill directories.",
+        "Claude production rendering and dispatch preflight reject invalid bindings, unsupported controls, manual drift, tampering, aliases, and higher-precedence model, effort, fallback or settings overrides without modifying parent or global configuration.",
+        "Claude YAML agent and skill frontmatter are validated with a real format parser and versioned capability-specific native load/conformance fixtures against exact bound model and effort settings before terminal proof. Conformance covers adversarial escaping, missing and extra artifacts, independently recomputed digests and reload semantics; parser-only/offline evidence is labeled separately from live dispatch, and generated text comparison alone cannot pass."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_4d6514dbdf8b36fb",
+          "criterion": "Claude adapter-test rendering is byte-identical for unchanged supported inputs, identifies source policy and binding hashes, marks generated test artifacts nonproduction, and production dispatch rejects them.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-adapter.test.ts && node scripts/verify/claude-adapter.mjs --criterion deterministic-render && echo T07_CLAUDE_DETERMINISTIC_RENDER_PASS",
+            "expected_stdout_line": "T07_CLAUDE_DETERMINISTIC_RENDER_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_fccda53b647b9d48",
+          "criterion": "Claude production rendering writes the complete generated/claude file set plus manifest, hashes and drift-checks missing, extra and changed generated files, and never installs into .claude, .codex, .agents or user-global skill directories.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-adapter.test.ts && node scripts/verify/claude-adapter.mjs --criterion generated-output-manifest && echo T07_CLAUDE_GENERATED_OUTPUT_PASS",
+            "expected_stdout_line": "T07_CLAUDE_GENERATED_OUTPUT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_30cfc4ba7db97fc9",
+          "criterion": "Claude production rendering and dispatch preflight reject invalid bindings, unsupported controls, manual drift, tampering, aliases, and higher-precedence model, effort, fallback or settings overrides without modifying parent or global configuration.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-adapter.test.ts && node scripts/verify/claude-adapter.mjs --criterion fail-closed-preflight && echo T07_CLAUDE_FAIL_CLOSED_PREFLIGHT_PASS",
+            "expected_stdout_line": "T07_CLAUDE_FAIL_CLOSED_PREFLIGHT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_f541c6e17c1568a0",
+          "criterion": "Claude YAML agent and skill frontmatter are validated with a real format parser and versioned capability-specific native load/conformance fixtures against exact bound model and effort settings before terminal proof. Conformance covers adversarial escaping, missing and extra artifacts, independently recomputed digests and reload semantics; parser-only/offline evidence is labeled separately from live dispatch, and generated text comparison alone cannot pass.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/claude-adapter.test.ts && node scripts/verify/claude-adapter.mjs --criterion native-conformance && echo T07_CLAUDE_NATIVE_CONFORMANCE_PASS",
+            "expected_stdout_line": "T07_CLAUDE_NATIVE_CONFORMANCE_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/adapters/common/**",
+        "src/adapters/claude/**",
+        "templates/claude/**",
+        "generated/claude/**",
+        "test/adapters/claude-adapter.test.ts",
+        "scripts/verify/claude-adapter.mjs",
+        "fixtures/adapters/claude/**"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/adapters/claude-adapter.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t06_claude_runtime_capabilities"
+      ],
+      "priority": 7,
+      "lane": "adapter",
+      "done": false
+    },
+    {
+      "id": "t08_codex_runtime_capabilities",
+      "title": "Capture Codex runtime capabilities",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 8,
+      "desc": "Inspect the installed Codex runtime and current official documentation, reconcile fresh observations with checked-in runtime contract documents, record runtime version, source provenance, supported and unsupported controls, precedence and dispatch semantics, and document unknowns without touching user-global configuration.",
+      "tier": "standard",
+      "acceptance_criteria": [
+        "Codex capability reports record installed runtime versions, official documentation sources, source retrieval times, supported and unsupported controls, precedence findings and unknowns without credential disclosure or user-global configuration changes.",
+        "Codex capability capture treats docs/runtime-contracts.md and docs/runtime-conformance-checklist.md as immutable source inputs, reconciles fresh observations against them, preserves source provenance and retrieval times, and fails closed on conflicts rather than silently overwriting or ignoring prior verified runtime facts.",
+        "Unsupported Codex runtime semantics, unsupported versions, unverified pins, aliases, drift and higher-precedence overrides block before worker execution with stable diagnostics."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_576b5333a61dc5d5",
+          "criterion": "Codex capability reports record installed runtime versions, official documentation sources, source retrieval times, supported and unsupported controls, precedence findings and unknowns without credential disclosure or user-global configuration changes.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-runtime.test.ts && node scripts/verify/codex-runtime.mjs --criterion report && echo T08_CODEX_CAPABILITY_REPORT_PASS",
+            "expected_stdout_line": "T08_CODEX_CAPABILITY_REPORT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_70f4e60118e4028f",
+          "criterion": "Codex capability capture treats docs/runtime-contracts.md and docs/runtime-conformance-checklist.md as immutable source inputs, reconciles fresh observations against them, preserves source provenance and retrieval times, and fails closed on conflicts rather than silently overwriting or ignoring prior verified runtime facts.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-runtime.test.ts && node scripts/verify/codex-runtime.mjs --criterion contract-reconciliation && echo T08_CODEX_CONTRACT_RECONCILIATION_PASS",
+            "expected_stdout_line": "T08_CODEX_CONTRACT_RECONCILIATION_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_d756232c87b3fd24",
+          "criterion": "Unsupported Codex runtime semantics, unsupported versions, unverified pins, aliases, drift and higher-precedence overrides block before worker execution with stable diagnostics.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-runtime.test.ts && node scripts/verify/codex-runtime.mjs --criterion fail-closed && echo T08_CODEX_UNSUPPORTED_FAIL_CLOSED_PASS",
+            "expected_stdout_line": "T08_CODEX_UNSUPPORTED_FAIL_CLOSED_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "runtime/contracts/codex/**",
+        "runtime/capabilities/codex/**",
+        "src/runtime/codex/**",
+        "test/adapters/codex-runtime.test.ts",
+        "scripts/verify/codex-runtime.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/adapters/codex-runtime.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t07_claude_adapter"
+      ],
+      "priority": 8,
+      "lane": "adapter",
+      "done": false
+    },
+    {
+      "id": "t09_codex_adapter",
+      "title": "Implement the validated Codex compiler",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 9,
+      "desc": "Implement an independent Codex adapter against the provider-independent binding contract, rendering deterministic repository-local portable skill and role or subagent configuration artifacts while preserving exact identity, detecting drift and rejecting unsupported effective settings.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Codex adapter rendering is deterministic for unchanged supported bindings, changes predictably when only bound effort or snapshot changes, preserves source digests, and keeps roles and task classes provider-independent.",
+        "Codex production rendering writes the complete generated/codex file set plus manifest, hashes and drift-checks missing, extra and changed generated files, and never installs into .claude, .codex, .agents or user-global skill directories.",
+        "Codex adapter validation and dispatch preflight reject unsupported runtime semantics, tampered generated files, model aliases and higher-precedence model or effort overrides before worker execution.",
+        "Codex standalone TOML agent fields and paths are validated with a real format parser and versioned capability-specific native load/conformance fixtures against exact bound model and effort settings before terminal proof. Conformance covers adversarial escaping, missing and extra artifacts, independently recomputed digests and reload semantics; parser-only/offline evidence is labeled separately from live dispatch, and generated text comparison alone cannot pass."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_882cf6cde16e7e2e",
+          "criterion": "Codex adapter rendering is deterministic for unchanged supported bindings, changes predictably when only bound effort or snapshot changes, preserves source digests, and keeps roles and task classes provider-independent.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-adapter.test.ts && node scripts/verify/codex-adapter.mjs --criterion deterministic-render && echo T09_CODEX_DETERMINISTIC_RENDER_PASS",
+            "expected_stdout_line": "T09_CODEX_DETERMINISTIC_RENDER_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_8f5c926ee378615a",
+          "criterion": "Codex production rendering writes the complete generated/codex file set plus manifest, hashes and drift-checks missing, extra and changed generated files, and never installs into .claude, .codex, .agents or user-global skill directories.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-adapter.test.ts && node scripts/verify/codex-adapter.mjs --criterion generated-output-manifest && echo T09_CODEX_GENERATED_OUTPUT_PASS",
+            "expected_stdout_line": "T09_CODEX_GENERATED_OUTPUT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_e39d6382e50baaec",
+          "criterion": "Codex adapter validation and dispatch preflight reject unsupported runtime semantics, tampered generated files, model aliases and higher-precedence model or effort overrides before worker execution.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-adapter.test.ts && node scripts/verify/codex-adapter.mjs --criterion fail-closed-preflight && echo T09_CODEX_FAIL_CLOSED_PREFLIGHT_PASS",
+            "expected_stdout_line": "T09_CODEX_FAIL_CLOSED_PREFLIGHT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_4976f7dd55c9ed86",
+          "criterion": "Codex standalone TOML agent fields and paths are validated with a real format parser and versioned capability-specific native load/conformance fixtures against exact bound model and effort settings before terminal proof. Conformance covers adversarial escaping, missing and extra artifacts, independently recomputed digests and reload semantics; parser-only/offline evidence is labeled separately from live dispatch, and generated text comparison alone cannot pass.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/adapters/codex-adapter.test.ts && node scripts/verify/codex-adapter.mjs --criterion native-conformance && echo T09_CODEX_NATIVE_CONFORMANCE_PASS",
+            "expected_stdout_line": "T09_CODEX_NATIVE_CONFORMANCE_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/adapters/codex/**",
+        "templates/codex/**",
+        "generated/codex/**",
+        "test/adapters/codex-adapter.test.ts",
+        "scripts/verify/codex-adapter.mjs",
+        "fixtures/adapters/codex/**"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/adapters/codex-adapter.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t08_codex_runtime_capabilities"
+      ],
+      "priority": 9,
+      "lane": "adapter",
+      "done": false
+    },
+    {
+      "id": "t10_real_fixture_harvest",
+      "title": "Harvest traceable real evaluation fixtures",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 10,
+      "desc": "Create versioned reproducible real fixture manifests from authorized delegated work, preserving lineage, starting revisions or content digests, allowed and forbidden scope, objective acceptance checks, expected artifacts, role, class, risk, constraints, grader hashes and incomplete states for missing real classes.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Real harvested fixtures preserve traceable origin, starting revision or content digest, scope, role, class, risk, constraints, objective graders, expected artifacts, and grader hashes; any missing real class bucket is reported incomplete rather than filled with invented work.",
+        "Fixture harvest consumes docs/evaluation-source-candidates.json and docs/evaluation-source-calibration.json as immutable source inputs, preserves their limitations in docs/fixture-lineage.md, and verifies uncovered active task classes are reported incomplete rather than replaced with invented fixtures.",
+        "Fixture calibration records fail-before and pass-after grader evidence without treating fixture existence alone as model performance evidence or production qualification."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_c213cfb3d8137137",
+          "criterion": "Real harvested fixtures preserve traceable origin, starting revision or content digest, scope, role, class, risk, constraints, objective graders, expected artifacts, and grader hashes; any missing real class bucket is reported incomplete rather than filled with invented work.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/fixtures.test.ts && node scripts/verify/real-fixtures.mjs --criterion lineage && echo T10_REAL_FIXTURE_LINEAGE_PASS",
+            "expected_stdout_line": "T10_REAL_FIXTURE_LINEAGE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_cd33e0498e65472f",
+          "criterion": "Fixture harvest consumes docs/evaluation-source-candidates.json and docs/evaluation-source-calibration.json as immutable source inputs, preserves their limitations in docs/fixture-lineage.md, and verifies uncovered active task classes are reported incomplete rather than replaced with invented fixtures.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/fixtures.test.ts && node scripts/verify/real-fixtures.mjs --criterion source-docs && echo T10_REAL_FIXTURE_SOURCE_DOCS_PASS",
+            "expected_stdout_line": "T10_REAL_FIXTURE_SOURCE_DOCS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_65fcea9b50336503",
+          "criterion": "Fixture calibration records fail-before and pass-after grader evidence without treating fixture existence alone as model performance evidence or production qualification.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/fixtures.test.ts && node scripts/verify/real-fixtures.mjs --criterion calibration-boundary && echo T10_FIXTURE_CALIBRATION_BOUNDARY_PASS",
+            "expected_stdout_line": "T10_FIXTURE_CALIBRATION_BOUNDARY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "fixtures/real/**",
+        "fixtures/graders/**",
+        "docs/fixture-lineage.md",
+        "test/evaluation/fixtures.test.ts",
+        "scripts/verify/real-fixtures.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/evaluation/fixtures.test.ts",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t09_codex_adapter"
+      ],
+      "priority": 10,
+      "lane": "evaluation",
+      "done": false
+    },
+    {
+      "id": "t11_evaluation_runner",
+      "title": "Implement isolated evaluation replay",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 11,
+      "desc": "Implement a local isolated evaluation runner that replays candidates on the same fixture revision, preserves prompt, tool, harness, grader, suite and treatment identity, records raw attempts and failures, and prevents incomparable suite or harness revisions from being pooled. Own the initial shared provider registry and subprocess implementation in src/runtime/providers.ts and src/runtime/subprocess.ts, registering/importing the earlier Claude and Codex runtime capability modules for evaluation and later delegation. This is the first real runtime wiring owner; delegation may repair this shared seam after evaluation is complete.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Evaluation runner records raw attempts, failures, artifact digests, treatment identity, command outcomes, available usage and cost basis, and distinct suite or harness versions without pooling incomparable observations.",
+        "Two supported candidates evaluated against the same real fixture revision retain the same pairing key while changed suite or harness versions produce distinct cohorts.",
+        "The populated src/runtime/providers.ts registry imports and registers Claude and Codex capability modules and uses the real local src/runtime/subprocess.ts bridge. An early integration smoke resolves both providers through this registry and exercises the dispatch path or records explicit provider-specific blocked states. Offline fake transports remain labeled nonproduction and do not establish live execution or qualification."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_088b436eb6948bad",
+          "criterion": "Evaluation runner records raw attempts, failures, artifact digests, treatment identity, command outcomes, available usage and cost basis, and distinct suite or harness versions without pooling incomparable observations.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/runner.test.ts && node scripts/verify/evaluation-runner.mjs --criterion raw-recording && echo T11_EVALUATION_RAW_RECORDING_PASS",
+            "expected_stdout_line": "T11_EVALUATION_RAW_RECORDING_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_7c51e590c20fa5c7",
+          "criterion": "Two supported candidates evaluated against the same real fixture revision retain the same pairing key while changed suite or harness versions produce distinct cohorts.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/runner.test.ts && node scripts/verify/evaluation-runner.mjs --criterion treatment-comparability && echo T11_EVALUATION_COMPARABILITY_PASS",
+            "expected_stdout_line": "T11_EVALUATION_COMPARABILITY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_beb4bbd7f9e60af3",
+          "criterion": "The populated src/runtime/providers.ts registry imports and registers Claude and Codex capability modules and uses the real local src/runtime/subprocess.ts bridge. An early integration smoke resolves both providers through this registry and exercises the dispatch path or records explicit provider-specific blocked states. Offline fake transports remain labeled nonproduction and do not establish live execution or qualification.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/evaluation/runner.test.ts && node scripts/verify/evaluation-runner.mjs --criterion provider-registry && echo T11_PROVIDER_REGISTRY_PASS",
+            "expected_stdout_line": "T11_PROVIDER_REGISTRY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/evaluation/**",
+        "test/evaluation/runner.test.ts",
+        "scripts/verify/evaluation-runner.mjs",
+        "src/runtime/providers.ts",
+        "src/runtime/subprocess.ts"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/evaluation/runner.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t10_real_fixture_harvest"
+      ],
+      "priority": 11,
+      "lane": "evaluation",
+      "done": false
+    },
+    {
+      "id": "t12_append_only_ledgers",
+      "title": "Implement append-only ledgers and economics records",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 12,
+      "desc": "Implement local append-only model, evidence, evaluation and production ledgers with immutable IDs, content digests, atomic writes, duplicate and conflict handling, interrupted-write recovery, benchmark and pricing revisions, unknown cost semantics, and accepted-task economics including failures, review and rework.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Ledger tests prove idempotent duplicate handling, conflicting duplicate rejection, concurrent append safety, interrupted-write recovery, immutable digest preservation, and complete history verification.",
+        "Ledger records preserve raw attempts, acceptance, retries, escalation, review rejection, rework, latency, available usage and cost components, typed references, benchmark and pricing revisions, and explicit unknown cost rather than zero or infinity.",
+        "Cost per accepted task includes all attributable attempts, failures, review and rework and returns nonqualifying or insufficient-evidence states when accepted count or required cost data is missing."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_0921b5d11a99bd4e",
+          "criterion": "Ledger tests prove idempotent duplicate handling, conflicting duplicate rejection, concurrent append safety, interrupted-write recovery, immutable digest preservation, and complete history verification.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/ledger && node scripts/verify/ledger.mjs --criterion immutability && echo T12_LEDGER_IMMUTABILITY_PASS",
+            "expected_stdout_line": "T12_LEDGER_IMMUTABILITY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_713fb3c053558ce7",
+          "criterion": "Ledger records preserve raw attempts, acceptance, retries, escalation, review rejection, rework, latency, available usage and cost components, typed references, benchmark and pricing revisions, and explicit unknown cost rather than zero or infinity.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/ledger && node scripts/verify/ledger.mjs --criterion record-shape && echo T12_LEDGER_RECORD_SHAPE_PASS",
+            "expected_stdout_line": "T12_LEDGER_RECORD_SHAPE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_f48432e361d6d389",
+          "criterion": "Cost per accepted task includes all attributable attempts, failures, review and rework and returns nonqualifying or insufficient-evidence states when accepted count or required cost data is missing.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/ledger && node scripts/verify/ledger.mjs --criterion economics && echo T12_LEDGER_ECONOMICS_PASS",
+            "expected_stdout_line": "T12_LEDGER_ECONOMICS_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/ledger/**",
+        "ledgers/**",
+        "test/ledger/**",
+        "scripts/verify/ledger.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/ledger",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t11_evaluation_runner"
+      ],
+      "priority": 12,
+      "lane": "evidence",
+      "done": false
+    },
+    {
+      "id": "t13_paired_inference",
+      "title": "Implement deterministic paired inference",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 13,
+      "desc": "Implement paired statistical inference from raw matched task outcomes only, using documented deterministic exact paired binary and paired quality-delta interval methods with reference vectors, tolerances, margins, stopping rules, direction reversal checks and rejection of supplied statistical claims.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Paired inference matches versioned reference vectors within declared tolerances, reverses direction correctly when candidate order reverses, remains deterministic with the same method and seed, and returns insufficient evidence for tiny, identical, or noisy samples where thresholds are not established.",
+        "Production paired comparison rejects favorable precomputed confidence bounds, duplicate pairs, unmatched outcomes, mixed strata, altered treatment versions, synthetic comparison claims and unpaired leaderboard averages.",
+        "Promotion statistics enforce declared superiority, non-inferiority, savings, threshold equality and 15 percent cost-increase boundaries from recomputed raw paired observations only."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_6a9d7ad8801e7351",
+          "criterion": "Paired inference matches versioned reference vectors within declared tolerances, reverses direction correctly when candidate order reverses, remains deterministic with the same method and seed, and returns insufficient evidence for tiny, identical, or noisy samples where thresholds are not established.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/statistics && node scripts/verify/statistics.mjs --criterion reference-vectors && echo T13_STAT_REFERENCE_VECTORS_PASS",
+            "expected_stdout_line": "T13_STAT_REFERENCE_VECTORS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_67204ec79a8cbfac",
+          "criterion": "Production paired comparison rejects favorable precomputed confidence bounds, duplicate pairs, unmatched outcomes, mixed strata, altered treatment versions, synthetic comparison claims and unpaired leaderboard averages.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/statistics && node scripts/verify/statistics.mjs --criterion untrusted-proof && echo T13_REJECT_UNTRUSTED_STATS_PASS",
+            "expected_stdout_line": "T13_REJECT_UNTRUSTED_STATS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_6e9bb24f608b4c86",
+          "criterion": "Promotion statistics enforce declared superiority, non-inferiority, savings, threshold equality and 15 percent cost-increase boundaries from recomputed raw paired observations only.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/statistics && node scripts/verify/statistics.mjs --criterion promotion-boundaries && echo T13_PROMOTION_STATS_BOUNDARIES_PASS",
+            "expected_stdout_line": "T13_PROMOTION_STATS_BOUNDARIES_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/statistics/**",
+        "fixtures/statistics/**",
+        "docs/statistics.md",
+        "test/statistics/**",
+        "scripts/verify/statistics.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/statistics",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t12_append_only_ledgers"
+      ],
+      "priority": 13,
+      "lane": "statistics",
+      "done": false
+    },
+    {
+      "id": "t14_production_qualification",
+      "title": "Integrate production qualification and status CLI",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 14,
+      "desc": "Integrate real registry records, admissible ledger observations, measured economics, paired inference, independent validation and real CLI classify, qualify, compare, status and selection command registration with exact policy and evidence digests, deterministic ties, explicit expiry states and invalid-incumbent blocking.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Production qualify, compare, classify, status and selection commands are registered through the real package CLI router and expose considered candidates, exclusions, measured economics, evidence references, policy digest, stable rule IDs and escalation conditions.",
+        "Synthetic, vendor-only, missing-admissible-task-cost and incompatible-stratum observations cannot establish production qualification or promotion.",
+        "Unavailable, retired, disqualified, incompatible-policy, hard-expired or otherwise invalid incumbents are never retained or dispatched; HOLD only preserves eligible incumbents and STALE continuation is explicit and policy-bound."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_dd6a80049a02f2ed",
+          "criterion": "Production qualify, compare, classify, status and selection commands are registered through the real package CLI router and expose considered candidates, exclusions, measured economics, evidence references, policy digest, stable rule IDs and escalation conditions.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/production && node scripts/verify/production-selection.mjs --criterion decision-records && npm run --silent governor -- classify --json --fixture production-smoke >/tmp/model-governor-classify.json && npm run --silent governor -- qualify --json --fixture production-smoke >/tmp/model-governor-qualify.json && npm run --silent governor -- compare --json --fixture production-smoke >/tmp/model-governor-compare.json && npm run --silent governor -- status --json --fixture production-smoke >/tmp/model-governor-status.json && npm run --silent governor -- selection --json --fixture production-smoke >/tmp/model-governor-selection.json && node scripts/verify/production-selection.mjs --criterion cli-router-smoke --inputs /tmp/model-governor-classify.json,/tmp/model-governor-qualify.json,/tmp/model-governor-compare.json,/tmp/model-governor-status.json,/tmp/model-governor-selection.json && echo T14_PRODUCTION_DECISION_RECORDS_PASS",
+            "expected_stdout_line": "T14_PRODUCTION_DECISION_RECORDS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_0b6b050cacee08cd",
+          "criterion": "Synthetic, vendor-only, missing-admissible-task-cost and incompatible-stratum observations cannot establish production qualification or promotion.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/production && node scripts/verify/production-selection.mjs --criterion evidence-bound && echo T14_PRODUCTION_EVIDENCE_BOUND_PASS",
+            "expected_stdout_line": "T14_PRODUCTION_EVIDENCE_BOUND_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_30a7e291f4ded374",
+          "criterion": "Unavailable, retired, disqualified, incompatible-policy, hard-expired or otherwise invalid incumbents are never retained or dispatched; HOLD only preserves eligible incumbents and STALE continuation is explicit and policy-bound.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/production && node scripts/verify/production-selection.mjs --criterion invalid-incumbent && echo T14_INVALID_INCUMBENT_BLOCKED_PASS",
+            "expected_stdout_line": "T14_INVALID_INCUMBENT_BLOCKED_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/production/**",
+        "src/cli/commands/production.ts",
+        "src/cli/registry/production.ts",
+        "fixtures/production/**",
+        "test/production/**",
+        "scripts/verify/production-selection.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/production",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t13_paired_inference"
+      ],
+      "priority": 14,
+      "lane": "production",
+      "done": false
+    },
+    {
+      "id": "t15_official_discovery_ingestion",
+      "title": "Implement official discovery and evidence ingestion",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 15,
+      "desc": "Add read-only official-source discovery and evidence ingestion after qualification and statistics, preserving source provenance, canonical snapshots, availability, deprecation, effort, modalities, tools, context, material serving behavior, prices where accessible, benchmark methodology revisions and quarantined incomplete rows. Append official discovery records through the shared append-only ledger and existing registry/evidence modules, with explicit repair authority over those record stores and their implementations after upstream owners complete; never overwrite historical measurements.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Official discovery and ingestion append registry, pricing, deprecation, source and benchmark methodology revisions without changing constitution policy, choosing a winner, overwriting obsolete data, or treating vendor marketing claims alone as qualifying evidence.",
+        "Benchmark methodology revisions remain individually retrievable and are not pooled as comparable measurements; incomplete rows are quarantined or rejected with reasons rather than guessed provenance.",
+        "README source material includes the verified benchmark-methodology anecdote from docs/benchmark-provenance.md without inventing index versions or anecdote scores.",
+        "Official model, pricing, deprecation, source and benchmark-methodology records append through the shared src/ledger store into repository-local ledgers/** and are validated through src/registry and src/evidence. Repeated identical input is idempotent, conflicting same-ID writes are rejected, and prior methodology/source revisions remain individually retrievable. The discovery integration owner can repair these stores and modules without rewriting prior accepted history."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_e86a6aca1603c412",
+          "criterion": "Official discovery and ingestion append registry, pricing, deprecation, source and benchmark methodology revisions without changing constitution policy, choosing a winner, overwriting obsolete data, or treating vendor marketing claims alone as qualifying evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/discovery && node scripts/verify/discovery.mjs --criterion official-roster && echo T15_OFFICIAL_DISCOVERY_PASS",
+            "expected_stdout_line": "T15_OFFICIAL_DISCOVERY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_dc2521d689cdbf12",
+          "criterion": "Benchmark methodology revisions remain individually retrievable and are not pooled as comparable measurements; incomplete rows are quarantined or rejected with reasons rather than guessed provenance.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/discovery && node scripts/verify/discovery.mjs --criterion benchmark-history && echo T15_BENCHMARK_HISTORY_PASS",
+            "expected_stdout_line": "T15_BENCHMARK_HISTORY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_99d24bf5a082602e",
+          "criterion": "README source material includes the verified benchmark-methodology anecdote from docs/benchmark-provenance.md without inventing index versions or anecdote scores.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/discovery && node scripts/verify/discovery.mjs --criterion benchmark-anecdote-source && echo T15_BENCHMARK_ANECDOTE_SOURCE_PASS",
+            "expected_stdout_line": "T15_BENCHMARK_ANECDOTE_SOURCE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_6feba1e9e7b60d83",
+          "criterion": "Official model, pricing, deprecation, source and benchmark-methodology records append through the shared src/ledger store into repository-local ledgers/** and are validated through src/registry and src/evidence. Repeated identical input is idempotent, conflicting same-ID writes are rejected, and prior methodology/source revisions remain individually retrievable. The discovery integration owner can repair these stores and modules without rewriting prior accepted history.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/discovery && node scripts/verify/discovery.mjs --criterion authoritative-append && echo T15_AUTHORITATIVE_APPEND_PASS",
+            "expected_stdout_line": "T15_AUTHORITATIVE_APPEND_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/discovery/**",
+        "fixtures/discovery/**",
+        "docs/benchmark-provenance.md",
+        "test/discovery/**",
+        "scripts/verify/discovery.mjs",
+        "ledgers/**",
+        "src/ledger/**",
+        "src/registry/**",
+        "src/evidence/**"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/discovery",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t14_production_qualification"
+      ],
+      "priority": 15,
+      "lane": "discovery",
+      "done": false
+    },
+    {
+      "id": "t16_delegate_contract_skill",
+      "title": "Implement delegation contract and inert delegate skill",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 16,
+      "desc": "Define the provider-independent delegate contract, bounded work order schema use, classification, constraints, pre-dispatch risk, review package construction and inert portable skills/delegate/SKILL.md entry point that consumes repository-local CLI behavior without duplicating model selection in prompt prose.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "The provider-independent delegate contract creates bounded work orders containing goal, scope, allowed and forbidden systems and files, acceptance checks, risk constraints, structured return fields and escalation conditions.",
+        "skills/delegate/SKILL.md is inert portable source with shared name and description frontmatter, repository-local CLI usage, and no writes to .claude/skills, .codex/skills, .agents/skills, installed skill directories or user-global provider configuration.",
+        "Fresh review package construction sends only admissible artifact, spec, checks and context package information and never implementation conversation or prior review conclusions."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_06a0ed73f37aeb54",
+          "criterion": "The provider-independent delegate contract creates bounded work orders containing goal, scope, allowed and forbidden systems and files, acceptance checks, risk constraints, structured return fields and escalation conditions.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/contract.test.ts && node scripts/verify/delegate-contract.mjs --criterion work-order && echo T16_DELEGATE_WORK_ORDER_PASS",
+            "expected_stdout_line": "T16_DELEGATE_WORK_ORDER_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_e817d2830d0d659d",
+          "criterion": "skills/delegate/SKILL.md is inert portable source with shared name and description frontmatter, repository-local CLI usage, and no writes to .claude/skills, .codex/skills, .agents/skills, installed skill directories or user-global provider configuration.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/contract.test.ts && node scripts/verify/delegate-contract.mjs --criterion inert-skill && echo T16_DELEGATE_SKILL_INERT_PASS",
+            "expected_stdout_line": "T16_DELEGATE_SKILL_INERT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_60a913a513f15eb7",
+          "criterion": "Fresh review package construction sends only admissible artifact, spec, checks and context package information and never implementation conversation or prior review conclusions.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/contract.test.ts && node scripts/verify/delegate-contract.mjs --criterion fresh-review-package && echo T16_FRESH_REVIEW_PACKAGE_PASS",
+            "expected_stdout_line": "T16_FRESH_REVIEW_PACKAGE_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/delegation/contract/**",
+        "src/delegation/classification/**",
+        "src/delegation/review-package.ts",
+        "skills/delegate/SKILL.md",
+        "test/delegation/contract.test.ts",
+        "scripts/verify/delegate-contract.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/delegation/contract.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t15_official_discovery_ingestion"
+      ],
+      "priority": 16,
+      "lane": "delegation",
+      "done": false
+    },
+    {
+      "id": "t17_delegate_runtime",
+      "title": "Implement governed subprocess delegation runtime",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 17,
+      "desc": "Implement real local subprocess dispatch through available subscription-authenticated Claude and Codex CLIs or documented blocked states, preserving OAuth credential locations, recording subprocess evidence, inspecting returned changes, running checks, deriving post-change risk, enforcing fresh independent review, retrying or escalating and recording outcomes without false accepted-task events. Consume and, if integration requires it, repair the provider registry and subprocess bridge established by t11; preserve t06/t08 provider-specific capability ownership.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Delegation uses the populated runtime provider registry and real local subprocess dispatch where supported, preserves OAuth credential locations, avoids HOME and CODEX_HOME replacement, records executable, arguments, cwd, version, exit, signal, timeout, stdout and stderr digests, available usage, requested identity, and observed identity only where actually reported.",
+        "Returned changes are inspected for allowed scope, post-change risk upgrades, authentication or schema-sensitive artifacts and worker escalation requests before acceptance; worker-reported low risk cannot override artifact evidence.",
+        "Final acceptance requires checks and applicable fresh independent-family review of the exact final artifact digest, and any subsequent edit invalidates the prior review.",
+        "Unavailable CLIs, runtime changes, missing attribution, timeouts, repeated check failures, scope violations and missing reviewers produce structured failure or escalation outcomes with retained evidence, retry limits and no false accepted-task event.",
+        "Delegation imports the shared populated src/runtime/providers.ts registry established by evaluation, with Claude and Codex registrations, and an integration smoke dispatches through that registry or records provider-specific blocked states before shadow replay and final proof. Registry and subprocess repair authority belongs to this task after the evaluation owner completes."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_2bf592a80d37f27b",
+          "criterion": "Delegation uses the populated runtime provider registry and real local subprocess dispatch where supported, preserves OAuth credential locations, avoids HOME and CODEX_HOME replacement, records executable, arguments, cwd, version, exit, signal, timeout, stdout and stderr digests, available usage, requested identity, and observed identity only where actually reported.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/runtime.test.ts && node scripts/verify/delegate-runtime.mjs --criterion subprocess-records && echo T17_SUBPROCESS_RECORDS_PASS",
+            "expected_stdout_line": "T17_SUBPROCESS_RECORDS_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_b73391003316d6b2",
+          "criterion": "Returned changes are inspected for allowed scope, post-change risk upgrades, authentication or schema-sensitive artifacts and worker escalation requests before acceptance; worker-reported low risk cannot override artifact evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/runtime.test.ts && node scripts/verify/delegate-runtime.mjs --criterion scope-risk-inspection && echo T17_SCOPE_RISK_INSPECTION_PASS",
+            "expected_stdout_line": "T17_SCOPE_RISK_INSPECTION_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_d7393927d2f5404d",
+          "criterion": "Final acceptance requires checks and applicable fresh independent-family review of the exact final artifact digest, and any subsequent edit invalidates the prior review.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/runtime.test.ts && node scripts/verify/delegate-runtime.mjs --criterion final-review-digest && echo T17_FINAL_REVIEW_DIGEST_PASS",
+            "expected_stdout_line": "T17_FINAL_REVIEW_DIGEST_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_2417c5679ce4786a",
+          "criterion": "Unavailable CLIs, runtime changes, missing attribution, timeouts, repeated check failures, scope violations and missing reviewers produce structured failure or escalation outcomes with retained evidence, retry limits and no false accepted-task event.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/runtime.test.ts && node scripts/verify/delegate-runtime.mjs --criterion failure-audit && echo T17_DISPATCH_FAILURE_AUDIT_PASS",
+            "expected_stdout_line": "T17_DISPATCH_FAILURE_AUDIT_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_2211c84b2507aa89",
+          "criterion": "Delegation imports the shared populated src/runtime/providers.ts registry established by evaluation, with Claude and Codex registrations, and an integration smoke dispatches through that registry or records provider-specific blocked states before shadow replay and final proof. Registry and subprocess repair authority belongs to this task after the evaluation owner completes.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/delegation/runtime.test.ts && node scripts/verify/delegate-runtime.mjs --criterion provider-registry && echo T17_PROVIDER_REGISTRY_PASS",
+            "expected_stdout_line": "T17_PROVIDER_REGISTRY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/runtime/subprocess.ts",
+        "src/delegation/runtime/**",
+        "src/delegation/inspection/**",
+        "test/delegation/runtime.test.ts",
+        "scripts/verify/delegate-runtime.mjs",
+        "src/runtime/providers.ts"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/delegation/runtime.test.ts",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t16_delegate_contract_skill"
+      ],
+      "priority": 17,
+      "lane": "delegation",
+      "done": false
+    },
+    {
+      "id": "t18_shadow_replay",
+      "title": "Implement safe paired challenger shadow replay",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 18,
+      "desc": "Implement policy-controlled shadow replay with sampling limits, isolated worktrees or equivalent local environments, destructive-task refusal, incumbent-result integration only, challenger-output disposal after grading and matched paired ledger treatment identity.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Shadow replay refuses destructive, irreversible, production-mutating or sandbox-escaping tasks before worker dispatch and records the reason rather than presuming worktree isolation is sufficient.",
+        "Eligible shadow replay integrates only the incumbent result, keeps challenger output isolated and discarded after grading, records paired task identity with distinct candidate and treatment identities, attributes retries and failure costs, and enforces configured sampling limits."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_0d9636ea7a2681ff",
+          "criterion": "Shadow replay refuses destructive, irreversible, production-mutating or sandbox-escaping tasks before worker dispatch and records the reason rather than presuming worktree isolation is sufficient.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/shadow && node scripts/verify/shadow-replay.mjs --criterion unsafe-refusal && echo T18_SHADOW_UNSAFE_REFUSAL_PASS",
+            "expected_stdout_line": "T18_SHADOW_UNSAFE_REFUSAL_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_2ebca76fe689aa9c",
+          "criterion": "Eligible shadow replay integrates only the incumbent result, keeps challenger output isolated and discarded after grading, records paired task identity with distinct candidate and treatment identities, attributes retries and failure costs, and enforces configured sampling limits.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/shadow && node scripts/verify/shadow-replay.mjs --criterion eligible-replay && echo T18_SHADOW_ELIGIBLE_REPLAY_PASS",
+            "expected_stdout_line": "T18_SHADOW_ELIGIBLE_REPLAY_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/shadow/**",
+        "test/shadow/**",
+        "scripts/verify/shadow-replay.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/shadow",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t17_delegate_runtime"
+      ],
+      "priority": 18,
+      "lane": "shadow",
+      "done": false
+    },
+    {
+      "id": "t19_refresh_workflow",
+      "title": "Implement deterministic refresh proposals and CLI",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 19,
+      "desc": "Implement refresh-models workflow last among operational capabilities, composing discovery, ingestion, missing-eval identification, authorized evaluation, paired comparison, qualification, proposed bindings, independent validation, adapter rendering, rendered-output validation, human and machine diffs, HOLD, PROMOTE and ESCALATION_REQUIRED results, explicit local apply, atomic activation and idempotent no-change behavior.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Refresh keeps policy read-only and produces human-readable and machine-readable proposal diffs identifying role, class, incumbent, challenger, trigger, eligibility, economics, evidence, missing evidence, exact rules and HOLD, PROMOTE or ESCALATION_REQUIRED result.",
+        "Refresh command is registered through the real package CLI router and stages repository-local proposals, validates proposed bindings and rendered outputs before explicit local apply, applies atomically with recorded action, remains idempotent on no-change runs, and leaves prior usable state intact on invalid generated output, changed source digests, unsupported adapters or interrupted activation.",
+        "skills/refresh-models/SKILL.md is inert portable source with shared name and description frontmatter, repository-local CLI usage, and no writes to .claude/skills, .codex/skills, .agents/skills, installed skill directories or user-global provider configuration."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_5b8504769cfb54f0",
+          "criterion": "Refresh keeps policy read-only and produces human-readable and machine-readable proposal diffs identifying role, class, incumbent, challenger, trigger, eligibility, economics, evidence, missing evidence, exact rules and HOLD, PROMOTE or ESCALATION_REQUIRED result.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/refresh && node scripts/verify/refresh.mjs --criterion proposal-diff && echo T19_REFRESH_PROPOSAL_DIFF_PASS",
+            "expected_stdout_line": "T19_REFRESH_PROPOSAL_DIFF_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_5d99b6bdfad76e9d",
+          "criterion": "Refresh command is registered through the real package CLI router and stages repository-local proposals, validates proposed bindings and rendered outputs before explicit local apply, applies atomically with recorded action, remains idempotent on no-change runs, and leaves prior usable state intact on invalid generated output, changed source digests, unsupported adapters or interrupted activation.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/refresh && node scripts/verify/refresh.mjs --criterion apply-atomicity && npm run --silent governor -- refresh --json --fixture hold >/tmp/model-governor-refresh.json && node scripts/verify/refresh.mjs --criterion cli-router-smoke --input /tmp/model-governor-refresh.json && echo T19_REFRESH_APPLY_ATOMICITY_PASS",
+            "expected_stdout_line": "T19_REFRESH_APPLY_ATOMICITY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_8e0c3a5044accb42",
+          "criterion": "skills/refresh-models/SKILL.md is inert portable source with shared name and description frontmatter, repository-local CLI usage, and no writes to .claude/skills, .codex/skills, .agents/skills, installed skill directories or user-global provider configuration.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/refresh && node scripts/verify/refresh.mjs --criterion inert-skill && echo T19_REFRESH_SKILL_INERT_PASS",
+            "expected_stdout_line": "T19_REFRESH_SKILL_INERT_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "src/refresh/**",
+        "src/cli/commands/refresh.ts",
+        "src/cli/registry/refresh.ts",
+        "skills/refresh-models/SKILL.md",
+        "test/refresh/**",
+        "scripts/verify/refresh.mjs"
+      ],
+      "fast_checks": [
+        "npm run --silent test -- test/refresh",
+        "npm run --silent typecheck",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t18_shadow_replay"
+      ],
+      "priority": 19,
+      "lane": "refresh",
+      "done": false
+    },
+    {
+      "id": "t20_full_v1_proof_docs",
+      "title": "Deliver full-v1 proof and documentation",
+      "phase": "PKG_302A3DF90DDACB6F-1",
+      "wave": 20,
+      "desc": "Implement proof-integrity checks, verify:v1 and verify:v1:live execution reports, README and architecture documentation, then validate the complete artifact with npm test, typecheck, build, offline proof and live proof states over actual executed checks, hashed artifacts and honest blocked or insufficient-evidence outcomes, with repair authority over all implementation artifacts read by the proof except repository-wide manifests owned by the scaffold task. This terminal integration owner also repairs repository-wide package metadata, lockfile, TypeScript and Vitest configuration and upstream implementation documentation as needed to pass final proof, after all implementation surfaces exist. Preserve immutable source-input runtime contract and evaluation-source documents. Terminal repair authority also covers source rendering templates and generated-path ignore configuration read by final verification.",
+      "tier": "complex",
+      "acceptance_criteria": [
+        "Proof integrity checks require npm run --silent COMMAND -- --json where machine JSON is parsed, independently check child exit status, reject zero-test filters, skipped checks counted as passed, unknown statuses, empty reports, missing invocation or grader evidence, missing or tampered artifacts, and mocks presented as live proof.",
+        "npm run verify:v1 produces a machine-readable offline report with passed, failed, blocked and insufficient-evidence results over nonempty AC-001 through AC-043 checks, hashed artifacts, real fixture lineage, synthetic-test labels, capability reports, ledgers, statistical vectors, delegation, shadow and refresh evidence.",
+        "npm run verify:v1:live objectively grades bounded local qualification-evaluation smoke executions for available authenticated Claude and Codex CLIs, labels executions as qualification evaluation unless production qualification genuinely exists, and reports missing auth, runtime support, attribution, cost, fixture or statistical power as blocked or insufficient with observed evidence.",
+        "README.md documents installation-free local usage, both skill entry points, architecture, repository tree, constitution assumptions, exact verification commands and results, runtime and source versions, enforced versus externally attested facts, configuration conformance, live CLI execution, empirical production qualification outcomes and the verified benchmark-methodology anecdote.",
+        "Final verification includes npm test, npm run typecheck, npm run build, npm run verify:v1, npm run verify:v1:live where supported, final artifact hashes, phase branch state, and clean worktree evidence."
+      ],
+      "acceptance_gates": [
+        {
+          "id": "gate_8813561a9ca3d935",
+          "criterion": "Proof integrity checks require npm run --silent COMMAND -- --json where machine JSON is parsed, independently check child exit status, reject zero-test filters, skipped checks counted as passed, unknown statuses, empty reports, missing invocation or grader evidence, missing or tampered artifacts, and mocks presented as live proof.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent test -- test/proof && node scripts/verify/proof-integrity.mjs --criterion integrity && echo T20_PROOF_INTEGRITY_PASS",
+            "expected_stdout_line": "T20_PROOF_INTEGRITY_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_0233c349faee1c95",
+          "criterion": "npm run verify:v1 produces a machine-readable offline report with passed, failed, blocked and insufficient-evidence results over nonempty AC-001 through AC-043 checks, hashed artifacts, real fixture lineage, synthetic-test labels, capability reports, ledgers, statistical vectors, delegation, shadow and refresh evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent verify:v1 -- --json >/tmp/model-governor-verify-v1.json && node scripts/verify/proof-integrity.mjs --criterion offline-report --input /tmp/model-governor-verify-v1.json && echo T20_VERIFY_V1_OFFLINE_PASS",
+            "expected_stdout_line": "T20_VERIFY_V1_OFFLINE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_93233eaa5f8dc2b5",
+          "criterion": "npm run verify:v1:live objectively grades bounded local qualification-evaluation smoke executions for available authenticated Claude and Codex CLIs, labels executions as qualification evaluation unless production qualification genuinely exists, and reports missing auth, runtime support, attribution, cost, fixture or statistical power as blocked or insufficient with observed evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm run --silent verify:v1:live -- --json >/tmp/model-governor-verify-v1-live.json && node scripts/verify/proof-integrity.mjs --criterion live-report --input /tmp/model-governor-verify-v1-live.json && echo T20_VERIFY_V1_LIVE_PASS",
+            "expected_stdout_line": "T20_VERIFY_V1_LIVE_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_5b1cf1c4099c38f5",
+          "criterion": "README.md documents installation-free local usage, both skill entry points, architecture, repository tree, constitution assumptions, exact verification commands and results, runtime and source versions, enforced versus externally attested facts, configuration conformance, live CLI execution, empirical production qualification outcomes and the verified benchmark-methodology anecdote.",
+          "oracle": {
+            "kind": "command",
+            "command": "node scripts/verify/proof-integrity.mjs --criterion readme && echo T20_README_DOCUMENTATION_PASS",
+            "expected_stdout_line": "T20_README_DOCUMENTATION_PASS",
+            "origin": "planner_derived"
+          }
+        },
+        {
+          "id": "gate_c3f826e5ce9314fe",
+          "criterion": "Final verification includes npm test, npm run typecheck, npm run build, npm run verify:v1, npm run verify:v1:live where supported, final artifact hashes, phase branch state, and clean worktree evidence.",
+          "oracle": {
+            "kind": "command",
+            "command": "npm test && npm run --silent typecheck && npm run --silent build && npm run --silent verify:v1 -- --json >/tmp/model-governor-final-verify-v1.json && npm run --silent verify:v1:live -- --json >/tmp/model-governor-final-verify-v1-live.json && node scripts/verify/proof-integrity.mjs --criterion final --offline /tmp/model-governor-final-verify-v1.json --live /tmp/model-governor-final-verify-v1-live.json && echo T20_FINAL_V1_VERIFICATION_PASS",
+            "expected_stdout_line": "T20_FINAL_V1_VERIFICATION_PASS",
+            "origin": "planner_derived"
+          }
+        }
+      ],
+      "certification_profile": "enhanced",
+      "files": [
+        "schemas/**",
+        "policy/**",
+        "fixtures/**",
+        "runtime/**",
+        "generated/**",
+        "skills/**",
+        "ledgers/**",
+        "src/**",
+        "test/**",
+        "scripts/verify-v1.mjs",
+        "scripts/verify-v1-live.mjs",
+        "scripts/verify/**",
+        "docs/architecture.md",
+        "docs/verification.md",
+        "README.md",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "tsconfig.build.json",
+        "vitest.config.ts",
+        "docs/plan.md",
+        "docs/fixture-lineage.md",
+        "docs/statistics.md",
+        "docs/benchmark-provenance.md",
+        "templates/**",
+        ".gitignore"
+      ],
+      "fast_checks": [
+        "npm test",
+        "npm run --silent typecheck",
+        "npm run --silent build",
+        "npm run --silent verify:v1 -- --json",
+        "npm run --silent verify:v1:live -- --json",
+        "foreman verify-server-actions"
+      ],
+      "dependencies": [
+        "t19_refresh_workflow"
+      ],
+      "priority": 20,
+      "lane": "proof",
+      "done": false
+    }
+  ]
+}

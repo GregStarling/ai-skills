@@ -1,0 +1,36 @@
+{
+  "schema_version": "harvested_fixture.v1",
+  "fixture_id": "foreman-t897-reconnect-notice",
+  "task_id": "foreman_t897_reconnect_notice",
+  "task_class_id": "hard_debugging",
+  "parent_revision": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+  "grader_revision": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+  "source_repository_url": "https://github.com/GregStarling/ai-foreman.git",
+  "source_repository_status": "local Git history is authoritative; remote URL is provenance only",
+  "prompt": "Treat an uncounted Codex Reconnecting... waiting for network notice as a transient retry rather than a terminal provider failure. Preserve genuine terminal errors and completion behavior.",
+  "prompt_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+  "allowed_paths": [
+    "src/pty/codex-conversation-session.ts"
+  ],
+  "grader_files": [
+    {
+      "path": "src/pty/codex-conversation-session.test.ts",
+      "bundle_path": "grader/src/pty/codex-conversation-session.test.ts",
+      "digest": "sha256:cda2ab0fbb764db1183edabb9f9400d2a5be293f9feafc8512108ee50ed8fb99"
+    }
+  ],
+  "required_assertions": [
+    "ignores the uncounted \"waiting for network\" reconnect notice too"
+  ],
+  "package_lock_digest": "sha256:b962c1ac4a812fff2152cb3fa6b29353a54221a81e2a59b712831e3147f933eb",
+  "archive_paths": [
+    "src",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "vitest.config.ts"
+  ],
+  "harness_version": "harvested-isolated-v1",
+  "grader_version": "historical-fixed-tests-v1",
+  "performance_evidence": false
+}

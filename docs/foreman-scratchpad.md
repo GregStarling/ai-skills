@@ -67,3 +67,7 @@ Append observed failure, exact run/artifact, root cause if known, smallest unblo
 - Useful finding retained: shadow must actually call governed delegation; refresh must exercise populated upstream modules, not just local endpoint tests.
 - Smallest unblock: name root ownership of those concrete seams and their integration checks in docs/native-execution-plan.md. Continue implementation; no task-graph replan or historical evidence rewriting.
 - Later cleanup: explicit current execution authority must outrank automatically included stale PRD/task packets in checkpoint review context. This run successfully performed read-only review; the failure was stale authority interpretation, not a crashed reviewer.
+
+## V1 handoff
+
+Model Governor v1 completed through direct CTO integration; see [release evidence](v1-release.json). The original task graph was not restarted and its failed/unfinished task statuses were not rewritten. Foreman's five local repair commits and F01–F07 remain the bounded input to the later infrastructure cleanup. No further Foreman code changes were needed after the checkpoint review.

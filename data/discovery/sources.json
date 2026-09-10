@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {"url":"https://developers.openai.com/api/docs/models/gpt-6-astra.md","kind":"openai_model","version":"official_model_page.v1"},
+    {"url":"https://platform.claude.com/docs/en/about-claude/models/overview","kind":"claude_models","version":"official_model_overview.v1"},
+    {"url":"https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions","kind":"official_document","version":"model_versioning.v1"}
+  ],
+  "ledgerDirectory":"artifacts/discovery-ledger"
+}

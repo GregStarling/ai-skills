@@ -1,0 +1,99 @@
+{
+  "schema_version": "local_release.v1",
+  "version": "1.0.0",
+  "verified_at": "2026-09-10T00:31:19.393Z",
+  "publication": "local_only",
+  "tests": {
+    "passed": 176,
+    "total": 176,
+    "failed": 0
+  },
+  "offline_proof": {
+    "path": "artifacts/proof/offline-mdQgdq/proof.json",
+    "digest": "sha256:2ac5e118bd79a74cd88e6f445370f072bff544f5b49a914b60db256dc8656e54",
+    "fully_covered": [
+      "AC-001",
+      "AC-002",
+      "AC-003",
+      "AC-004",
+      "AC-005",
+      "AC-006",
+      "AC-007",
+      "AC-008",
+      "AC-009",
+      "AC-010",
+      "AC-011",
+      "AC-012",
+      "AC-013",
+      "AC-014",
+      "AC-015",
+      "AC-016",
+      "AC-017",
+      "AC-018",
+      "AC-019",
+      "AC-020",
+      "AC-021",
+      "AC-022",
+      "AC-023",
+      "AC-024",
+      "AC-026",
+      "AC-027",
+      "AC-028",
+      "AC-029",
+      "AC-030",
+      "AC-031",
+      "AC-032",
+      "AC-033",
+      "AC-034",
+      "AC-035",
+      "AC-036",
+      "AC-037",
+      "AC-038",
+      "AC-039",
+      "AC-040",
+      "AC-041",
+      "AC-042",
+      "AC-043"
+    ],
+    "component_coverage": [
+      "AC-025"
+    ]
+  },
+  "live_proof": {
+    "path": "artifacts/proof/live-retained.json",
+    "digest": "sha256:8ab9153eeee341dde5379208a69b8871cc52612e1163e65e7aaf57fa9826339e",
+    "coverage": [
+      "AC-025",
+      "AC-044"
+    ],
+    "verification": "retained_actual_evidence",
+    "new_provider_calls": 0,
+    "providers": [
+      {
+        "provider": "anthropic",
+        "model": "claude-opus-5",
+        "tests": 21,
+        "accepted": false,
+        "cost_usd": 0.3228869999999999,
+        "cost_source": "provider_estimate"
+      },
+      {
+        "provider": "openai",
+        "model": "gpt-5.5",
+        "tests": 21,
+        "accepted": false,
+        "cost_usd": null,
+        "cost_source": "unknown"
+      }
+    ]
+  },
+  "qualification": "HOLD",
+  "qualification_authority": false,
+  "foreman_scratchpad": "docs/foreman-scratchpad.md",
+  "limitations": [
+    "Required independent review has not been completed.",
+    "Served effort is unknown; OpenAI served identity and cost are unknown; Anthropic identity is mixed.",
+    "Required native fallback control and shadow grader isolation are unverified.",
+    "The seed sample does not establish policy qualification."
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "harvested_fixture.v1",
+  "fixture_id": "foreman-t920-derived-gate-id",
+  "task_id": "foreman_t920_derived_gate_id",
+  "task_class_id": "bounded_backend",
+  "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+  "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+  "source_repository_url": "https://github.com/GregStarling/ai-foreman.git",
+  "source_repository_status": "local Git history is authoritative; remote URL is provenance only",
+  "prompt": "Derive each acceptance gate ID deterministically from its owning task and exact acceptance criterion instead of requiring the planner to provide the hash. Accept missing or incorrect supplied IDs while continuing to reject a criterion that does not exactly match the declared acceptance criteria.",
+  "prompt_provenance": "Reconstructed from the historical commit message, source diff and committed regression test; the original full user prompt/transcript was not independently retrieved.",
+  "allowed_paths": [
+    "src/acceptance/contracts.ts"
+  ],
+  "grader_files": [
+    {
+      "path": "src/acceptance/contracts.test.ts",
+      "bundle_path": "grader/src/acceptance/contracts.test.ts",
+      "digest": "sha256:fc82b830809a7f700960ae9d1baa23580322f727f4644818d2086d19465ec730"
+    }
+  ],
+  "required_assertions": [
+    "derives the gate id from the task and criterion, ignoring a supplied or missing id"
+  ],
+  "package_lock_digest": "sha256:b962c1ac4a812fff2152cb3fa6b29353a54221a81e2a59b712831e3147f933eb",
+  "archive_paths": [
+    "src",
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "vitest.config.ts"
+  ],
+  "harness_version": "harvested-isolated-v1",
+  "grader_version": "historical-fixed-tests-v1",
+  "performance_evidence": false
+}

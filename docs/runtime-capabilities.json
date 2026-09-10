@@ -1,0 +1,86 @@
+{
+  "schema_version": "runtime_capabilities.v1",
+  "observed_at": "2026-09-10T00:08:12.674Z",
+  "observed": [
+    {
+      "command": "claude",
+      "args": [
+        "--version"
+      ],
+      "stdout_sha256": "sha256:2eb07f17f55f1a9bd42453290147367023fad5f67cd8537140f3beade87ec5a3",
+      "version": "2.1.222 (Claude Code)"
+    },
+    {
+      "command": "claude",
+      "args": [
+        "--help"
+      ],
+      "stdout_sha256": "sha256:59ff6173f822ec7f9c98d700edec11ec383bc1d52faa83811651ebcbac52895d"
+    },
+    {
+      "command": "codex",
+      "args": [
+        "--version"
+      ],
+      "stdout_sha256": "sha256:42a8599802ad6039277e232cba7eadecc3cec1c19d8600bf5dddff85ff30fca9",
+      "version": "codex-cli 0.142.5"
+    },
+    {
+      "command": "codex",
+      "args": [
+        "exec",
+        "--help"
+      ],
+      "stdout_sha256": "sha256:9f86f0115238ddde2514587e5f95b0ab0aa6b89495e5912878d49ad26038aa19"
+    },
+    {
+      "command": "codex",
+      "args": [
+        "features",
+        "list"
+      ],
+      "stdout_sha256": "sha256:a5fc3421f95cfdff7a6a8f1acb8db0c54e143fd0ea9dc868cf883d8728655173"
+    }
+  ],
+  "claude": {
+    "version": "2.1.222",
+    "agent_format": "YAML frontmatter at .claude/agents/*.md",
+    "skill_path": ".claude/skills/<name>/SKILL.md",
+    "bridge": "explicit model/effort/system-prompt CLI arguments from verified generated agent",
+    "auth": "existing OAuth/keychain retained; no --bare",
+    "fresh_process": "--safe-mode --no-session-persistence, no resume/continue/fork",
+    "sandbox": "Bash only for workspace writes; native strict sandbox requested with failIfUnavailable; read-only exposes Read/Glob/Grep",
+    "served_identity": "assistant-message model and result modelUsage; mixed models remain mixed",
+    "cost": "final cumulative provider estimate when present; never billed-cost assertion"
+  },
+  "codex": {
+    "version": "0.142.5",
+    "agent_format": "standalone .codex/agents/*.toml",
+    "skill_path": ".agents/skills/<name>/SKILL.md",
+    "bridge": "explicit -m and model_reasoning_effort/developer_instructions config overrides from parsed TOML",
+    "auth": "HOME/CODEX_HOME retained; --ignore-user-config retains auth",
+    "fresh_process": "exec --ephemeral; no resume; project_doc_max_bytes=0, integrations/hooks/plugins disabled",
+    "context_limit": "User skill context is not proven absent; context instruction scope remains runtime-managed even with an immutable package.",
+    "sandbox": "native read-only/workspace-write; no extra writable roots or network",
+    "served_identity": "CLI requested/config model is not served snapshot attestation; unknown",
+    "cost": "No authoritative CLI dollar field; unknown",
+    "unsupported_control": "tool_use:none rejected: complete native tool suppression is not verified"
+  },
+  "production_limits": [
+    "Required provider fallback-disabled material control remains unverified and blocks production dispatch.",
+    "Unknown or mixed served-model identity cannot produce a successful production runtime report.",
+    "Evaluation mode permits bounded unqualified live execution but cannot mint production authority.",
+    "Adapter-test bundles are rejected by native dispatch.",
+    "Captured source and native parser conformance are separate from a successful live model invocation."
+  ],
+  "live_probe_status": "not_run_by_adapter_lane",
+  "sources": [
+    "docs/runtime-contracts.md",
+    "https://code.claude.com/docs/en/sub-agents",
+    "https://code.claude.com/docs/en/cli-usage",
+    "https://code.claude.com/docs/en/sandboxing",
+    "https://learn.chatgpt.com/docs/agent-configuration/subagents",
+    "https://learn.chatgpt.com/docs/config-file/config-reference",
+    "https://developers.openai.com/codex/noninteractive"
+  ]
+}

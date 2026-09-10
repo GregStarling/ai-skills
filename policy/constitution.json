@@ -1,11 +1,11 @@
 {
   "schema_version": "governance_policy.v1",
-  "policy_version": 1,
+  "policy_version": 2,
   "provenance": {
     "status": "proposed",
     "author": "Model Governor v1 implementation",
     "source": "docs/model-governor-spec.md",
-    "rationale": "Initial explicit operating proposals for review, not empirical performance claims. Qualify from measured versioned task outcomes; no candidate names or inferred universal scores."
+    "rationale": "Initial explicit operating proposals for review, not empirical performance claims. Qualify from measured versioned task outcomes; no candidate names or inferred universal scores. Version 2 activates two actual harvested fixture buckets; version 1 remains an explicit simulation example. Shadow is disabled by default; its one-task/100-percent maximum is an operator proposal that requires explicit enabling."
   },
   "roles": [
     {
@@ -47,10 +47,10 @@
       "eval_bucket": {
         "suite_id": "bounded_backend",
         "suite_version": 1,
-        "harness_version": "1",
-        "grader_version": "1",
+        "harness_version": "harvested-isolated-v1",
+        "grader_version": "historical-fixed-tests-v1",
         "fixture_ids": [
-          "bounded_backend_baseline"
+          "foreman_t920_derived_gate_id"
         ]
       }
     },
@@ -63,10 +63,10 @@
       "eval_bucket": {
         "suite_id": "hard_debugging",
         "suite_version": 1,
-        "harness_version": "1",
-        "grader_version": "1",
+        "harness_version": "harvested-isolated-v1",
+        "grader_version": "historical-fixed-tests-v1",
         "fixture_ids": [
-          "hard_debugging_baseline"
+          "foreman_t897_reconnect_notice"
         ]
       }
     }
@@ -139,5 +139,10 @@
   "binding": {
     "refresh_after_hours": 24,
     "hard_expiry_hours": 72
+  },
+  "shadow": {
+    "enabled": false,
+    "max_tasks_per_run": 1,
+    "max_fraction": 1
   }
 }
