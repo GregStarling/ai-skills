@@ -104,6 +104,22 @@ Your existing Claude Code or Codex authentication is used. Delegate does not req
 
 ---
 
+## Companion: context-budget
+
+`skills/context-budget/` governs the coordinator's own context between delegate's direct-versus-delegated decisions: what enters it, how long it stays, and when it is cut, since everything in a session is re-sent to the model on every turn. It documents rules for reading only what is needed, converting documents and images to text or small copies before they enter context, and thresholds for pushing work to subagents or compacting as context grows. It is optional and separately copyable; nothing in `skills/delegate/` depends on it.
+
+Install it the same way as delegate, into your user skills directory:
+
+```sh
+mkdir -p ~/.claude/skills
+test ! -e ~/.claude/skills/context-budget && test ! -L ~/.claude/skills/context-budget &&
+  cp -R ai-skills/skills/context-budget ~/.claude/skills/context-budget
+```
+
+The skill also ships two optional Claude Code hooks that turn its guidance into observable, non-blocking suggestions. See [skills/context-budget/hooks/README.md](skills/context-budget/hooks/README.md) to install them.
+
+---
+
 ## What can I give it?
 
 Start with the task you would normally hand to your coding agent. Delegate first chooses direct execution or delegation. Before dispatching workers, it checks the current pack's supported scope and your host's available controls.

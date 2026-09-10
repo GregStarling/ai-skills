@@ -23,4 +23,4 @@ using the entrypoint's direct-versus-delegated decision. For delegation, use an 
 Judge the whole workflow by accepted quality, completion time, and observable
 usage, including exploration, coordination, failed attempts, repairs and verification. Smaller coordinator context alone
 does not establish lower total usage. Do not infer savings from screenshot counts
-or cumulative transcript size, or introduce arbitrary session-size alarms.
+or cumulative transcript size, or introduce arbitrary session-size alarms. Measured coordinator-context thresholds, document conversion and optional watcher hooks live in the companion `context-budget` skill.
