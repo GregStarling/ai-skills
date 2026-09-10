@@ -11,13 +11,13 @@ The governor is maintainer infrastructure. It compiles current evidence into `ro
 - `task-classes.md`, `delegation-contract.md`, `swarm-policy.md`, `verification-policy.md`: focused guidance loaded when needed.
 - `hosts/claude.md` and `hosts/codex.md`: thin mappings to native host controls.
 
-The skill intersects routes with current host availability. Eligible qualified treatments take precedence; provisional treatments provide an explicitly limited starting point. Frontier verification is mandatory at every risk level, with depth proportional to the task. Repairs return to the original worker before escalation. Full projects decompose into bounded workstreams, never a whole-project worker route.
+The skill intersects routes with current host availability. Qualified treatments come first, then provisional treatments with matching installed acceptance, then smoke extrapolation. Economics decide within each evidence level. Frontier verification is mandatory at every risk level, with depth proportional to the task. Repairs return to the original worker before escalation. Full projects decompose into bounded workstreams, never a whole-project worker route.
 
 ## Current readiness
 
 **The pack now includes provisional routes for Claude Code and Codex.** Six model/effort treatments come from actual local CLI execution and frontier review, with official metadata and explicit observation limits. The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader task fit is provisional extrapolation; this is not evidence of general performance across languages, high-risk work or web research.
 
-No route has been promoted to full governor qualification. Qualified treatments still require the original task, identity, effort, cost and review evidence. Provisional availability is not a savings guarantee: Claude pricing is an API reference/client estimate, and Codex subscription dollar cost is unknown. See [current validation](docs/routing-pack-validation.md) and [evidence](data/routing/host-observations.json).
+No route has been promoted to full governor qualification. Qualified treatments still require the original task, identity, effort, cost and review evidence. Provisional availability is not a savings guarantee: Claude pricing is an API reference/client estimate, and Codex subscription dollar cost is unknown. See [current validation](docs/production-evidence-validation.md), [installed-host validation](docs/routing-pack-validation.md) and [evidence](data/routing/host-observations.json).
 
 Installed invocation has been exercised across seven local task shapes on both hosts, including fallback, repair and two/three-worker projects. The UI cases required harness recovery and supervising-frontier browser evidence; those limits and the unsuccessful initial attempts remain in the validation record.
 
@@ -34,6 +34,8 @@ Pack refresh is due after seven days, with a thirty-day pack lifetime. Each trea
 ## Maintain routing knowledge
 
 Use [refresh-models](skills/refresh-models/SKILL.md) in the maintainer checkout. Discovery, real evaluations and production results feed the governor; qualification and promotion rules produce the updated pack. Review and publish the pack through Git. That does not require consumers to run the compiler.
+
+The [receipt intake commands](docs/production-receipts.md) archive original runs and validate independently captured evidence before feeding the existing qualifier and paired challenger comparison. Unassessed receipts remain pending; failed attempts and unknown costs are retained. GitHub Actions runs tests, type checking, build, skill packaging and routing-pack publication validation on every PR and `main` push.
 
 [Routing-pack maintenance](docs/routing-pack-maintenance.md) · [Existing engine CLI](docs/usage-cli.md) · [Historical engine release](docs/v1-release.json) · [Foreman findings from development](docs/foreman-scratchpad.md)
 

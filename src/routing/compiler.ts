@@ -3,7 +3,7 @@ import { contentDigest, digest, hashBytes } from '../core/canonical.js';
 import { parsePolicy, policyDigest } from '../governance/policy.js';
 import { parseSelectionInput, select, type SelectionInput, type SelectionResult } from '../governance/selection.js';
 import { candidateIdentity } from '../schema/index.js';
-import {provisionalTreatmentSchema,provisionalIdentity,routeRequirementsSchema} from './provisional.js';
+import {provisionalTreatmentSchema,provisionalIdentity,routeRequirementsSchema,orderProvisionalTreatments} from './provisional.js';
 import { routingModes,publicTaskClasses, publicTaskClassSchema, parseRoutingPack, RoutingError, type PublicTaskClass, type RoutingPack, type RoutingRoute, type RoutingTreatment } from './contracts.js';
 
 export type RoutingStratumInput={publicTaskClass:PublicTaskClass;workerSelection:unknown;reviewerSelection:unknown};
@@ -110,15 +110,10 @@ export function compileRoutingPack(input:CompileRoutingPackInput):RoutingPack{
       const expires_at=new Date(Math.min(...times)+expiryDays*86400000).toISOString();if(Date.parse(expires_at)<=Date.parse(generated))throw new RoutingError('PROVISIONAL_EVIDENCE_EXPIRED');
       return {...candidate,candidate_identity:provisionalIdentity(candidate),pinning_source:'host_observation',evidence_tier:'provisional',observed_at:evidence.observed_at,expires_at,qualification:null,provisional:evidence};
     });
-    const workers=make(entry.workers),reviewers=make(entry.reviewers);if(reviewers.some(r=>!r.frontier))throw new RoutingError('FRONTIER_REVIEWER_REQUIRED');
-    const rank=(rows:RoutingTreatment[])=>{
-      const priced=rows.every(r=>r.provisional!.pricing.input_usd_per_million!==null&&r.provisional!.pricing.output_usd_per_million!==null);
-      // Only price-order when input and output prices agree; crossing prices need a task-specific token mix.
-      const known=priced&&rows.every(a=>rows.every(b=>(a.provisional!.pricing.input_usd_per_million!-b.provisional!.pricing.input_usd_per_million!)*(a.provisional!.pricing.output_usd_per_million!-b.provisional!.pricing.output_usd_per_million!)>=0));
-      if(known)rows.sort((a,b)=>a.provisional!.pricing.input_usd_per_million!-b.provisional!.pricing.input_usd_per_million!||a.provisional!.pricing.output_usd_per_million!-b.provisional!.pricing.output_usd_per_million!||a.candidate_id.localeCompare(b.candidate_id));
-      return known?'advertised_token_prices' as const:'maintainer_order_cost_unknown' as const;
-    };
-    const ranking_basis={workers:rank(workers),reviewers:rank(reviewers)};
+    const workerRanking=orderProvisionalTreatments(make(entry.workers),entry.publicTaskClass,'worker');
+    const reviewerRanking=orderProvisionalTreatments(make(entry.reviewers),entry.publicTaskClass,'reviewer');
+    const workers=workerRanking.treatments,reviewers=reviewerRanking.treatments;if(reviewers.some(r=>!r.frontier))throw new RoutingError('FRONTIER_REVIEWER_REQUIRED');
+    const ranking_basis={workers:workerRanking.basis,reviewers:reviewerRanking.basis};
     if(entry.qualifiedStratumDigest){
       const route=routes.find(r=>r.public_task_class===entry.publicTaskClass&&r.stratum_digest===entry.qualifiedStratumDigest);if(!route)throw new RoutingError('PROVISIONAL_STRATUM_NOT_FOUND');
       if(route.stratum.worker_request.risk!==entry.risk||digest(route.requirements)!==digest(entry.requirements))throw new RoutingError('PROVISIONAL_SCOPE_MISMATCH');
@@ -130,7 +125,12 @@ export function compileRoutingPack(input:CompileRoutingPackInput):RoutingPack{
         const bad=new Set(allExclusions.filter(e=>e.public_task_class===entry.publicTaskClass&&e.stratum_digest===route.stratum_digest&&e.lane===lane&&(e.status==='REJECT'||e.status==='EXCLUDED')).map(e=>e.candidate_identity));
         if(candidates.some(c=>bad.has(c.candidate_identity)))throw new RoutingError('FAILED_QUALIFICATION_CANNOT_BE_RELABELED');
       }
-      route.workers.push(...workers);route.reviewers.push(...reviewers);route.provisional_ranking_basis=ranking_basis;
+      const mergedWorkers=orderProvisionalTreatments([...route.workers.filter(row=>row.evidence_tier==='provisional'),...workers],entry.publicTaskClass,'worker');
+      const mergedReviewers=orderProvisionalTreatments([...route.reviewers.filter(row=>row.evidence_tier==='provisional'),...reviewers],entry.publicTaskClass,'reviewer');
+      route.workers=[...route.workers.filter(row=>row.evidence_tier==='qualified'),...mergedWorkers.treatments];
+      route.reviewers=[...route.reviewers.filter(row=>row.evidence_tier==='qualified'),...mergedReviewers.treatments];
+      route.provisional_ranking_basis={workers:mergedWorkers.basis,reviewers:mergedReviewers.basis};
+      route.ranking_basis={workers:route.workers.some(row=>row.evidence_tier==='qualified')?'governed_cost_per_accepted_task':mergedWorkers.basis,reviewers:route.reviewers.some(row=>row.evidence_tier==='qualified')?'governed_cost_per_accepted_task':mergedReviewers.basis};
       continue;
     }
     const constraints={schema_version:'constraint_set.v1' as const,constraint_id:'provisional_scope',version:1,allowed_tools:entry.requirements.tools,required_tools:entry.requirements.tools,forbidden_paths:[],requires_fresh_context:entry.requirements.fresh_context,requires_local_execution:false};

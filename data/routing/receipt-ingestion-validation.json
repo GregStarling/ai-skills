@@ -1,0 +1,136 @@
+{
+  "schema_version": "receipt_ingestion_validation.v1",
+  "validated_at": "2026-09-10T05:47:03.187Z",
+  "source": {
+    "path": "data/routing/frontier-ownership-acceptance.json",
+    "content_digest": "sha256:5eca953e35c588c7819d52deb04a8983526e5346b02fe9ccee494e2058e919ec"
+  },
+  "command": "built CLI receipt-ingest, repeated once per original receipt; built CLI ledger-status",
+  "scope": "Historical native benchmark receipts, never relabeled production usage. This verifies raw intake and immutable deduplication, not independent evidence assessment or qualification. Raw receipt accepted claims do not override original workflow failures.",
+  "assessed_observations": 0,
+  "qualified_routes": 0,
+  "cases": [
+    {
+      "case_id": "codex-hardbug-1789014038192",
+      "host": "codex",
+      "public_task_class": "hard_debugging",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:82f7b788386009f5a83691851eaa7231dc77161a4fc9a5edfff89ddc893c7f91",
+      "record_id": "receipt_82f7b788386009f5a83691851eaa7231dc77161a4fc9a5edfff89ddc893c7f91",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    },
+    {
+      "case_id": "codex-multicomponent-1789014229626",
+      "host": "codex",
+      "public_task_class": "bounded_implementation",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:c45bccef45890a533ac794ef06e8e0dcb5e3f999eeb73f371074b19411e0853e",
+      "record_id": "receipt_c45bccef45890a533ac794ef06e8e0dcb5e3f999eeb73f371074b19411e0853e",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS_BOUNDED_ONLY",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    },
+    {
+      "case_id": "codex-multicomponent-1789014439698",
+      "host": "codex",
+      "public_task_class": "complex_implementation",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:9b73802772011424161b307d192071dc59a2f3ac9ad51a6afd10e455d4fa9e52",
+      "record_id": "receipt_9b73802772011424161b307d192071dc59a2f3ac9ad51a6afd10e455d4fa9e52",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS_FORCED_CLASS_WORKFLOW",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    },
+    {
+      "case_id": "claude-hardbug-1789014038192",
+      "host": "claude",
+      "public_task_class": "hard_debugging",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:c3bae8de72f7f40651e012f59625e9dae58abbf709b8372e3b068854dda4567b",
+      "record_id": "receipt_c3bae8de72f7f40651e012f59625e9dae58abbf709b8372e3b068854dda4567b",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "FAIL",
+      "original_exit_code": 143,
+      "original_timed_out": true
+    },
+    {
+      "case_id": "claude-multicomponent-1789014278457",
+      "host": "claude",
+      "public_task_class": "bounded_implementation",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:4a0630f36b8a2e2b512c4f1089dfe881d2e604ff002c42ddebf633e6f861b06b",
+      "record_id": "receipt_4a0630f36b8a2e2b512c4f1089dfe881d2e604ff002c42ddebf633e6f861b06b",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    },
+    {
+      "case_id": "claude-hardbug-1789014383856",
+      "host": "claude",
+      "public_task_class": "hard_debugging",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:a72d07d5a2035621a4bb9b086148dfb0806515d950f9a719e0af342892eb359c",
+      "record_id": "receipt_a72d07d5a2035621a4bb9b086148dfb0806515d950f9a719e0af342892eb359c",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    },
+    {
+      "case_id": "claude-multicomponent-1789014490208",
+      "host": "claude",
+      "public_task_class": "complex_implementation",
+      "origin": "qualification_evaluation",
+      "receipt_digest": "sha256:8dd5baa47ec1a3d10c3928381566abb9c1802e118b681487fc313a2fdca17d6c",
+      "record_id": "receipt_8dd5baa47ec1a3d10c3928381566abb9c1802e118b681487fc313a2fdca17d6c",
+      "first_inserted": true,
+      "duplicate_inserted": false,
+      "status": "PENDING_EVIDENCE",
+      "qualification_authority": false,
+      "original_workflow_verdict": "PASS",
+      "original_exit_code": 0,
+      "original_timed_out": false
+    }
+  ],
+  "ledgers": [
+    {
+      "public_task_class": "hard_debugging",
+      "status": "VALID",
+      "records": 3
+    },
+    {
+      "public_task_class": "bounded_implementation",
+      "status": "VALID",
+      "records": 2
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "status": "VALID",
+      "records": 2
+    }
+  ]
+}

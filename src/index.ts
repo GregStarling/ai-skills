@@ -6,6 +6,7 @@ export * as registry from './registry/index.js';
 export { canonicalJson, digest, contentDigest, hashBytes } from './core/canonical.js';
 export { comparePaired, type BinaryPair, type PairedComparison } from './statistics/index.js';
 export { Ledger, type LedgerRecord, type LedgerInput } from './ledger/index.js';
+export * as receipts from './ledger/receipts.js';
 export * as proof from './proof/index.js';
 export * as adapters from './adapters/index.js';
 export * as runtime from './runtime/index.js';

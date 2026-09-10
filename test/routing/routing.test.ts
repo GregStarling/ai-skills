@@ -2,6 +2,7 @@ import {readFileSync} from 'node:fs';
 import {describe,it,expect,vi,afterEach} from 'vitest';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
 import {candidateIdentity,parseRuntimeReport} from '../../src/schema/index.js';
+import {provisionalIdentity,type ProvisionalTreatmentInput} from '../../src/routing/provisional.js';
 import {compileRoutingPack,parseRoutingPack,resolveRouting,RoutingError,type RoutingPack} from '../../src/routing/index.js';
 
 const fixture=()=>JSON.parse(readFileSync('fixtures/bindings/valid-initial-backend.json','utf8')).selection;
@@ -88,7 +89,7 @@ describe('installable routing authority',()=>{
   it('dispatches admitted provisional host aliases with unknown costs and mandatory frontier review',()=>{
     vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));const pack=provisionalPack(),route=pack.routes[0]!;
     expect(pack.routing_modes.full_project).toBe('decompose');expect(pack.missing_routes.some(r=>r.public_task_class==='full_project')).toBe(false);
-    expect(route.ranking_basis.workers).toBe('maintainer_order_cost_unknown');expect(route.worker_decision.outcome).toBe('HOLD');
+    expect(route.ranking_basis.workers).toBe('task_evidence_then_prices_or_maintainer_order');expect(route.worker_decision.outcome).toBe('HOLD');
     const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:'2026-09-10T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}};
     expect(resolveRouting(pack,input)).toMatchObject({worker:{evidence_tier:'provisional',effort:'not_applicable'},reviewer:{frontier:true,evidence_tier:'provisional'}});
     expect(()=>resolveRouting(pack,{...input,host:{...input.host,host:'claude'}})).toThrowError(expect.objectContaining({code:'NO_ELIGIBLE_WORKER'}));
@@ -179,4 +180,55 @@ it('requires frontier diagnosis and planning modes before hard-debugging and com
     const obsolete={...pack,routing_modes:{...pack.routing_modes,[taskClass]:oldMode}};obsolete.content_digest=contentDigest(obsolete);
     expect(()=>parseRoutingPack(obsolete)).toThrowError(expect.objectContaining({code:'PACK_MALFORMED'}));
   }
+});
+
+
+function rankedCandidate(id:string,role:'worker'|'reviewer',accepted:boolean,inputPrice:number|null,outputPrice:number|null,taskClass:'mechanical_work'|'bounded_implementation'='mechanical_work'):ProvisionalTreatmentInput{
+  const candidate:ProvisionalTreatmentInput=provisionalCandidate(id,role==='reviewer');
+  candidate.provider='anthropic';candidate.evidence.host='claude';
+  candidate.evidence.availability.url='https://platform.claude.com/docs/en/models/overview';
+  Object.assign(candidate.evidence.pricing,{url:'https://platform.claude.com/docs/en/about-claude/pricing',input_usd_per_million:inputPrice,output_usd_per_million:outputPrice,unknown_reason:inputPrice===null||outputPrice===null?'Unknown test fixture cost':null});
+  candidate.evidence.task_evidence={public_task_class:taskClass,role,basis:accepted?'installed_acceptance':'smoke_extrapolation',host:'claude',candidate_identity:provisionalIdentity(candidate),source:{path:'data/routing/installed-acceptance.json',content_digest:digest('test acceptance source'),digest_encoding:'canonical_json_sha256'},records:accepted?[{case_id:`case_${id}`,case:taskClass==='mechanical_work'?'mechanical':'backend',record_digest:digest(id),observed_at:candidate.evidence.observed_at,host_version:'test-only',acceptance:'PASS',artifact_digests:{'fixture.mjs':digest('artifact')},trace_digests:[digest('trace')],receipt_digests:[digest('receipt')],recovery:null,browser:null}]:[],limitations:['Algorithm fixture only; not real model evaluation or qualification.']};
+  return candidate;
+}
+function rankedPack(){
+  return compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[{...provisionalRoute(),workers:[rankedCandidate('haiku_smoke','worker',false,1,5),rankedCandidate('sonnet_accepted','worker',true,2,10)],reviewers:[rankedCandidate('frontier_smoke','reviewer',false,1,5),rankedCandidate('frontier_accepted','reviewer',true,5,25)]}]});
+}
+describe('provisional evidence before economics',()=>{
+  it('places accepted Sonnet ahead of cheaper smoke Haiku and applies the same preference to reviewers and old packs',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));const pack=rankedPack(),route=pack.routes[0]!;
+    expect(route.workers.map(r=>r.candidate_id)).toEqual(['sonnet_accepted','haiku_smoke']);
+    expect(route.reviewers.map(r=>r.candidate_id)).toEqual(['frontier_accepted','frontier_smoke']);
+    expect(route.provisional_ranking_basis).toEqual({workers:'task_evidence_then_advertised_token_prices',reviewers:'task_evidence_then_advertised_token_prices'});
+    // A formerly valid pack may still carry price-first order and old metadata.
+    route.workers.reverse();route.reviewers.reverse();route.ranking_basis={workers:'advertised_token_prices',reviewers:'advertised_token_prices'};route.provisional_ranking_basis={workers:'advertised_token_prices',reviewers:'advertised_token_prices'};pack.content_digest=contentDigest(pack);
+    const request={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:'2026-09-10T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'claude' as const}};
+    expect(resolveRouting(pack,request)).toMatchObject({worker:{candidate_id:'sonnet_accepted'},reviewer:{candidate_id:'frontier_accepted'},ranking_basis:{worker:'task_evidence_then_advertised_token_prices'}});
+    expect(resolveRouting(pack,{...request,failedCandidateIds:['sonnet_accepted','frontier_accepted']})).toMatchObject({worker:{candidate_id:'haiku_smoke'},reviewer:{candidate_id:'frontier_smoke'}});
+    const available=[...route.workers,...route.reviewers].filter(r=>r.candidate_id.endsWith('_smoke'));
+    expect(resolveRouting(pack,{...request,host:{...host(pack,available),host:'claude'}})).toMatchObject({worker:{candidate_id:'haiku_smoke'},reviewer:{candidate_id:'frontier_smoke'}});
+    for(const candidate of [...route.workers,...route.reviewers].filter(r=>r.candidate_id.endsWith('_accepted')))candidate.expires_at='2026-09-10T00:30:00Z';pack.content_digest=contentDigest(pack);
+    expect(resolveRouting(pack,request)).toMatchObject({worker:{candidate_id:'haiku_smoke'},reviewer:{candidate_id:'frontier_smoke'}});
+  });
+  it.each(['unknown','crossing'] as const)('preserves maintainer order within each evidence level for %s prices',kind=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));
+    const rows=(role:'worker'|'reviewer')=>[rankedCandidate(`${role}_smoke_z`,role,false,kind==='unknown'?null:10,1),rankedCandidate(`${role}_accepted_z`,role,true,kind==='unknown'?null:20,2),rankedCandidate(`${role}_smoke_a`,role,false,1,10),rankedCandidate(`${role}_accepted_a`,role,true,2,20)];
+    const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[{...provisionalRoute(),workers:rows('worker'),reviewers:rows('reviewer')}]}),route=pack.routes[0]!;
+    for(const [role,candidates] of [['worker',route.workers],['reviewer',route.reviewers]] as const)expect(candidates.map(c=>c.candidate_id)).toEqual([`${role}_accepted_z`,`${role}_accepted_a`,`${role}_smoke_z`,`${role}_smoke_a`]);
+    expect(route.provisional_ranking_basis).toEqual({workers:'task_evidence_then_prices_or_maintainer_order',reviewers:'task_evidence_then_prices_or_maintainer_order'});
+  });
+  it('uses comparable prices within each evidence level only',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));
+    const rows=(role:'worker'|'reviewer')=>[rankedCandidate(`${role}_smoke_z`,role,false,10,50),rankedCandidate(`${role}_accepted_z`,role,true,20,100),rankedCandidate(`${role}_smoke_a`,role,false,1,5),rankedCandidate(`${role}_accepted_a`,role,true,2,10)];
+    const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[{...provisionalRoute(),workers:rows('worker'),reviewers:rows('reviewer')}]}),route=pack.routes[0]!;
+    for(const [role,candidates] of [['worker',route.workers],['reviewer',route.reviewers]] as const)expect(candidates.map(c=>c.candidate_id)).toEqual([`${role}_accepted_a`,`${role}_accepted_z`,`${role}_smoke_a`,`${role}_smoke_z`]);
+  });
+  it('retains qualified incumbents ahead of accepted provisional fallbacks',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));const worker=production();worker.incumbentCandidateId='candidate_beta';const base=compileProduction(worker),governed=base.routes[0]!;
+    const extra={...provisionalRoute(),publicTaskClass:'bounded_implementation' as const,requirements:governed.requirements,qualifiedStratumDigest:governed.stratum_digest,workers:[rankedCandidate('accepted_worker','worker',true,0,0,'bounded_implementation')],reviewers:[rankedCandidate('accepted_reviewer','reviewer',true,0,0,'bounded_implementation')]};
+    const pack=compileRoutingPack({mode:'production',policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection:reviewer(worker)}],provisional:[extra]}),route=pack.routes[0]!;
+    expect(route.worker_decision.outcome).toBe('RETAIN');expect(route.workers.map(c=>c.candidate_id)).toEqual(['candidate_beta','candidate_alpha','accepted_worker']);
+    const request={publicTaskClass:'bounded_implementation' as const,stratumDigest:route.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'claude' as const}};
+    expect(resolveRouting(pack,request)).toMatchObject({worker:{candidate_id:'candidate_beta',evidence_tier:'qualified'},reviewer:{candidate_id:'candidate_beta',evidence_tier:'qualified'}});
+  });
 });

@@ -13,21 +13,13 @@ import {executeEvaluation,prepareFixture,type EvaluationResult} from '../evaluat
 import {candidateIdentity,parseRuntimeReport} from '../schema/index.js';
 import {validateObservation} from '../evidence/index.js';
 import {bindCandidate} from '../registry/index.js';
+import {sourcesSchema,encodeSources,decodeSources} from '../evidence/sources.js';
+import {validateReceiptEvidence} from '../ledger/receipts.js';
 
 const sha=z.string().regex(/^sha256:[a-f0-9]{64}$/);
-const encodedSourceSchema=z.union([z.string(),z.object({encoding:z.literal('base64'),data:z.string()}).strict()]);
-const sourcesSchema=z.record(sha,encodedSourceSchema);
 const evaluationRequestSchema=z.object({evaluationId:z.string().regex(/^[a-zA-Z0-9_-]{1,96}$/),candidateId:z.string().min(1),fixtureId:z.string().regex(/^[a-z0-9-]+$/),sourceRepository:z.string().min(1),workspaceRoot:z.string().min(1),timeoutMs:z.number().int().positive().max(3600000),dependencyDirectory:z.string().optional(),bundleRoot:z.string().optional()}).strict();
 export const refreshRequestSchema=z.object({selection:z.unknown(),mode:z.enum(['production','adapter-test']),directory:z.string().min(1),policyFile:z.string().optional(),incumbent:z.object({binding:z.unknown(),selection:z.unknown()}).strict().optional(),discovery:discoveryRequestSchema.optional(),evaluationLedgers:z.array(z.object({directory:z.string().min(1),recordIds:z.array(z.string().min(1)).nonempty()}).strict()).optional(),evaluations:z.array(evaluationRequestSchema).optional(),trigger:z.string().min(1)}).strict().superRefine((request,ctx)=>{if(new Set(request.evaluations?.map(item=>item.evaluationId)).size!==(request.evaluations?.length??0))ctx.addIssue({code:'custom',path:['evaluations'],message:'Duplicate explicit evaluation ID'});});
-const evaluationEnvelopeSchema=z.object({schema_version:z.literal('evaluation_ledger_entry.v1'),purpose:z.literal('qualification_evaluation'),observation:z.unknown(),sources:sourcesSchema,runtimeReports:z.record(sha,z.unknown()),operationalLimits:z.array(z.string()),request_digest:sha.optional()}).strict();
-function encodeSources(sources:ReadonlyMap<string,string|Uint8Array>){return Object.fromEntries([...sources].map(([key,value])=>[key,typeof value==='string'?value:{encoding:'base64' as const,data:Buffer.from(value).toString('base64')}]));}
-function decodeSources(value:unknown):Map<string,string|Uint8Array>{
- const entries=sourcesSchema.parse(value);return new Map(Object.entries(entries).map(([key,value])=>{
-  const bytes=typeof value==='string'?value:Buffer.from(value.data,'base64');
-  if(typeof value!=='string'&&Buffer.from(bytes).toString('base64')!==value.data)throw new Error('EVALUATION_SOURCE_ENCODING_INVALID');
-  if(hashBytes(bytes)!==key)throw new Error('EVALUATION_SOURCE_DIGEST_MISMATCH');return [key,bytes];
- }));
-}
+const evaluationEnvelopeSchema=z.object({schema_version:z.literal('evaluation_ledger_entry.v1'),purpose:z.enum(['qualification_evaluation','production_usage']),observation:z.unknown(),sources:sourcesSchema,runtimeReports:z.record(sha,z.unknown()),operationalLimits:z.array(z.string()),request_digest:sha.optional()}).strict();
 /** Lossless raw envelope for the append-only Ledger; it grants no qualification. */
 export function evaluationLedgerEnvelope(result:EvaluationResult){return evaluationEnvelopeSchema.parse({schema_version:'evaluation_ledger_entry.v1',purpose:result.purpose,observation:result.observation,sources:encodeSources(result.sourceMap),runtimeReports:Object.fromEntries(result.runtimeReports),operationalLimits:result.operationalLimits});}
 function selectionJson(input:SelectionInput){return {...input,sources:encodeSources(input.sources??new Map()),runtimeReports:Object.fromEntries(input.runtimeReports??new Map())};}
@@ -36,7 +28,9 @@ function parseRefreshSelection(value:unknown,overrides:Parameters<typeof parseSe
  const parsed=parseSelectionInput({...raw,sources:Object.fromEntries([...sources].filter((entry):entry is [string,string]=>typeof entry[1]==='string'))},overrides);return {...parsed,sources};
 }
 function ingestEnvelope(raw:unknown,selection:SelectionInput){
- const envelope=evaluationEnvelopeSchema.parse(raw),sources=decodeSources(envelope.sources),runtimeReports=new Map(Object.entries(envelope.runtimeReports));
+ const isReceipt=z.object({schema_version:z.literal('delegate_receipt_evidence.v1')}).passthrough().safeParse(raw).success;
+ const envelope=evaluationEnvelopeSchema.parse(isReceipt?validateReceiptEvidence(raw,selection.policy).envelope:raw),sources=decodeSources(envelope.sources),runtimeReports=new Map(Object.entries(envelope.runtimeReports));
+ if(envelope.purpose==='production_usage'&&!isReceipt)throw Error('PRODUCTION_USAGE_REQUIRES_VALIDATED_RECEIPT');
  for(const [key,value]of runtimeReports){parseRuntimeReport(value);if(digest(value)!==key)throw new Error('EVALUATION_RECEIPT_DIGEST_MISMATCH');}
  const observation=validateObservation(envelope.observation,{sources,runtimeReports});
  const candidate=selection.candidates.find(item=>item.candidate_id===observation.candidate.candidate_id);

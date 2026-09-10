@@ -1,0 +1,9 @@
+# Evidence ordering, production ingestion and CI
+
+Prefer qualified routes, then provisional treatments with matching installed acceptance, then smoke extrapolation. Apply economics within each evidence level and preserve unknown costs. Connect local delegate receipts to the existing immutable ledger and qualification/paired-selection flow through validated, independently evidenced observations; do not add a second qualification engine or promote a model-written receipt by itself. Add deterministic GitHub checks for tests, types, build, portable skills and published-pack integrity/freshness.
+
+Ownership: routing worker handles provisional ordering and focused regressions; CI worker adds the workflow; supervising agent owns receipt ingestion, existing-ledger integration, documentation, verification and publication. Keep scope and source dates intact. Client upgrades are a separate manual maintainer operation, not part of these repository changes.
+
+Verify ordering adversarially, ingest genuine preserved receipt evidence without relabeling benchmark data as live production usage, reject tampering/duplicates/mismatched identity or review, and exercise the path into existing qualification and paired comparison. Unknown runtime identity or cost must retain HOLD. Run repository checks once the code is integrated, validate the exact pack, then push and chase the new GitHub checks to completion.
+
+Implementation and local validation complete: 251 tests across 25 files, typecheck, build, copied skill closure and exact-pack publication validation pass. The built CLI captured seven preserved native benchmark receipts across three classes and verified idempotent imports. Those captures remain pending evidence; controlled tests exercise assessment through qualification and paired selection. See [validation](production-evidence-validation.md) for artifact identities, scope and remaining operational work. GitHub runs the new checks on the published commit.

@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {digest} from '../core/canonical.js';
 import {servingConfigurationSchema} from '../schema/index.js';
+import type {PublicTaskClass,RoutingTreatment} from './contracts.js';
 
 const id=z.string().min(1),hash=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.string().datetime({offset:true});
 const officialUrl=z.string().url().refine(value=>{const url=new URL(value);return url.protocol==='https:'&&['openai.com','anthropic.com','claude.com','chatgpt.com'].some(domain=>url.hostname===domain||url.hostname.endsWith(`.${domain}`));},'official HTTPS source required');
@@ -53,3 +54,28 @@ export const provisionalTreatmentSchema=z.object({
 export const routeRequirementsSchema=z.object({tools:z.array(id),capabilities:z.array(id),context_window_tokens:z.number().int().nonnegative(),fresh_context:z.boolean()}).strict();
 export type ProvisionalTreatmentInput=z.infer<typeof provisionalTreatmentSchema>;
 export function provisionalIdentity(t:Pick<ProvisionalTreatmentInput,'model_id'|'snapshot_id'|'effort'|'serving'|'material_serving_settings'>&{provider:string}){return digest({provider:t.provider,snapshot_id:t.snapshot_id??t.model_id,effort:t.effort,serving:Object.fromEntries([...t.material_serving_settings].sort().map(key=>[key,t.serving[key]]))});}
+
+
+export const provisionalRankingBasisSchema=z.enum([
+  'advertised_token_prices','maintainer_order_cost_unknown',
+  'task_evidence_then_advertised_token_prices','task_evidence_then_prices_or_maintainer_order',
+]);
+
+/** Accepted task evidence precedes extrapolation; neither is measured qualification. */
+export function orderProvisionalTreatments(rows:readonly RoutingTreatment[],taskClass:PublicTaskClass,role:'worker'|'reviewer'){
+  const installed=(candidate:RoutingTreatment)=>{
+    const evidence=candidate.provisional?.task_evidence;
+    return evidence?.basis==='installed_acceptance'&&evidence.records.length>0&&evidence.public_task_class===taskClass&&evidence.role===role&&evidence.host===candidate.provisional?.host&&evidence.candidate_identity===candidate.candidate_identity;
+  };
+  const levels=[rows.filter(installed),rows.filter(row=>!installed(row))];
+  let allComparable=true;
+  for(const group of levels){
+    const priced=group.every(row=>row.provisional!==null&&row.provisional.pricing.input_usd_per_million!==null&&row.provisional.pricing.output_usd_per_million!==null);
+    // No trustworthy provisional task-cost measurement exists. Only use advertised
+    // token prices when both input/output order agree; otherwise retain maintainer order.
+    const comparable=priced&&group.every(a=>group.every(b=>(a.provisional!.pricing.input_usd_per_million!-b.provisional!.pricing.input_usd_per_million!)*(a.provisional!.pricing.output_usd_per_million!-b.provisional!.pricing.output_usd_per_million!)>=0));
+    if(comparable)group.sort((a,b)=>a.provisional!.pricing.input_usd_per_million!-b.provisional!.pricing.input_usd_per_million!||a.provisional!.pricing.output_usd_per_million!-b.provisional!.pricing.output_usd_per_million!);
+    else allComparable=false;
+  }
+  return {treatments:levels.flat(),basis:allComparable?'task_evidence_then_advertised_token_prices' as const:'task_evidence_then_prices_or_maintainer_order' as const};
+}

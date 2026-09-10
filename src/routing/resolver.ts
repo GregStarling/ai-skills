@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { providerSchema, servingConfigurationSchema } from '../schema/index.js';
+import {orderProvisionalTreatments} from './provisional.js';
 import { parseRoutingPack, publicTaskClassSchema, RoutingError, type RoutingPack, type RoutingTreatment } from './contracts.js';
 
 const hostSchema=z.object({
@@ -34,11 +35,14 @@ export function resolveRouting(packValue:unknown,inputValue:ResolveRoutingInput)
   const failed=new Set(input.failedCandidateIds??[]);let sawWorker=false;
   const requiredProvider=route.stratum.worker_request.constraints.requires_provider;
   const capable=(candidate:RoutingTreatment)=>(requiredProvider===undefined||candidate.provider===requiredProvider)&&route.requirements.capabilities.every(c=>candidate.capabilities.includes(c))&&(route.requirements.context_window_tokens===0||(candidate.context_window_tokens!==null&&candidate.context_window_tokens>=route.requirements.context_window_tokens));
-  const preferred=(rows:RoutingTreatment[])=>[...rows.filter(c=>c.evidence_tier==='qualified'),...rows.filter(c=>c.evidence_tier==='provisional')];
-  for(const worker of preferred(route.workers)){
+  const provisionalWorkers=orderProvisionalTreatments(route.workers.filter(row=>row.evidence_tier==='provisional'),route.public_task_class,'worker');
+  const provisionalReviewers=orderProvisionalTreatments(route.reviewers.filter(row=>row.evidence_tier==='provisional'),route.public_task_class,'reviewer');
+  const workers=[...route.workers.filter(row=>row.evidence_tier==='qualified'),...provisionalWorkers.treatments];
+  const reviewers=[...route.reviewers.filter(row=>row.evidence_tier==='qualified'),...provisionalReviewers.treatments];
+  for(const worker of workers){
     if(now>=Date.parse(worker.expires_at)||failed.has(worker.candidate_id)||!capable(worker)||!treatmentAvailable(worker,input.host))continue;sawWorker=true;
-    const reviewer=preferred(route.reviewers).find(r=>now<Date.parse(r.expires_at)&&!failed.has(r.candidate_id)&&r.frontier&&capable(r)&&treatmentAvailable(r,input.host)&&independent(worker,r,route,input.host));
-    if(reviewer)return {worker,reviewer,route,stale:now>=Date.parse(pack.refresh_after),ranking_basis:{worker:worker.evidence_tier==='qualified'?'governed_cost_per_accepted_task':(route.provisional_ranking_basis??route.ranking_basis).workers,reviewer:reviewer.evidence_tier==='qualified'?'governed_cost_per_accepted_task':(route.provisional_ranking_basis??route.ranking_basis).reviewers}};
+    const reviewer=reviewers.find(r=>now<Date.parse(r.expires_at)&&!failed.has(r.candidate_id)&&r.frontier&&capable(r)&&treatmentAvailable(r,input.host)&&independent(worker,r,route,input.host));
+    if(reviewer)return {worker,reviewer,route,stale:now>=Date.parse(pack.refresh_after),ranking_basis:{worker:worker.evidence_tier==='qualified'?'governed_cost_per_accepted_task':provisionalWorkers.basis,reviewer:reviewer.evidence_tier==='qualified'?'governed_cost_per_accepted_task':provisionalReviewers.basis}};
   }
   throw new RoutingError(sawWorker?'NO_ELIGIBLE_FRONTIER_REVIEWER':'NO_ELIGIBLE_WORKER');
 }

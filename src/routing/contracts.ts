@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { requestSchema } from '../governance/qualification.js';
 import { contentDigest, digest } from '../core/canonical.js';
 import { providerSchema, servingConfigurationSchema } from '../schema/index.js';
-import {provisionalEvidenceSchema,provisionalIdentity,routeRequirementsSchema} from './provisional.js';
+import {provisionalEvidenceSchema,provisionalIdentity,routeRequirementsSchema,provisionalRankingBasisSchema} from './provisional.js';
 
 export const publicTaskClasses = [
   'repo_exploration', 'mechanical_work', 'bounded_implementation', 'ui_implementation',
@@ -34,8 +34,8 @@ const routeSchema = z.object({
   requirements:routeRequirementsSchema,
   review_rule:reviewRuleSchema,workers:z.array(treatmentSchema),reviewers:z.array(treatmentSchema),
   worker_decision:decisionSummarySchema,reviewer_decision:decisionSummarySchema,
-  provisional_ranking_basis:z.object({workers:z.enum(['advertised_token_prices','maintainer_order_cost_unknown']),reviewers:z.enum(['advertised_token_prices','maintainer_order_cost_unknown'])}).strict().nullable(),
-  ranking_basis:z.object({workers:z.enum(['governed_cost_per_accepted_task','advertised_token_prices','maintainer_order_cost_unknown']),reviewers:z.enum(['governed_cost_per_accepted_task','advertised_token_prices','maintainer_order_cost_unknown'])}).strict(),
+  provisional_ranking_basis:z.object({workers:provisionalRankingBasisSchema,reviewers:provisionalRankingBasisSchema}).strict().nullable(),
+  ranking_basis:z.object({workers:z.union([z.literal('governed_cost_per_accepted_task'),provisionalRankingBasisSchema]),reviewers:z.union([z.literal('governed_cost_per_accepted_task'),provisionalRankingBasisSchema])}).strict(),
 }).strict();
 const exclusionSchema = z.object({public_task_class:publicTaskClassSchema,stratum_digest:hash,lane:z.enum(['worker','reviewer']),candidate_id:id,candidate_identity:hash,status:z.enum(['REJECT','HOLD','EXCLUDED']),rule_ids:z.array(id).nonempty()}).strict();
 const missingRouteSchema = z.object({public_task_class:publicTaskClassSchema,reason:z.enum(['stratum_not_supplied','no_qualified_worker','no_qualified_frontier_reviewer'])}).strict();
