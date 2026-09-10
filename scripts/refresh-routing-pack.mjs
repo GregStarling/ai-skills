@@ -13,6 +13,7 @@ requireFrontierRefresh(
   JSON.parse(readFileSync('data/routing/frontier-targets.json','utf8')),
   JSON.parse(readFileSync('data/routing/frontier-probes.json','utf8')),
   new Date().toISOString(),policy.routing_pack.refresh_after_days,
+  JSON.parse(readFileSync('data/routing/frontier-identity-evidence.json','utf8')),
 );
 const pack=validateRoutingPackPublication(compileRoutingPack({mode:'production',policy,strata:[],provisional}));
 // One treatment and route per line supports selective native file search.

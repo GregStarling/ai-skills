@@ -1,0 +1,227 @@
+{
+  "schema_version": "v5_validation.v1",
+  "generated_at": "2026-09-10T07:25:16.735Z",
+  "status": "passed",
+  "policy_v4_digest": "sha256:2f2ba7be3d18392f1dc3f97015d8e8c21ed24bd242e1bbe03e614cb5eebaa051",
+  "non_identity_policy_fields_unchanged": true,
+  "pack_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
+  "pack_bytes": 123721,
+  "delegate_folder_digest": "sha256:1ea6ffa22cb623804258bb2b57d3aad96dbf5f613ea7c2424fad823de0d1ebde",
+  "delegate_files": [
+    {
+      "path": "SKILL.md",
+      "content_digest": "sha256:228586054f067cf04e3dc6a472025ac6118251a66bccac281ff552b125545862"
+    },
+    {
+      "path": "delegation-contract.md",
+      "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+    },
+    {
+      "path": "hosts/claude.md",
+      "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+    },
+    {
+      "path": "hosts/codex.md",
+      "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+    },
+    {
+      "path": "pack-format.md",
+      "content_digest": "sha256:94d7dce21024c47b1d407889f79cf4a094a5defed9c7fdc8708cb41785ae1473"
+    },
+    {
+      "path": "routing-pack.json",
+      "content_digest": "sha256:71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0"
+    },
+    {
+      "path": "swarm-policy.md",
+      "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+    },
+    {
+      "path": "task-classes.md",
+      "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+    },
+    {
+      "path": "verification-policy.md",
+      "content_digest": "sha256:4ebca6901df6246578cda2f68c884e2afa24c4830adab2a46d2eb01b0197918d"
+    }
+  ],
+  "route_count": 15,
+  "qualified_routes": 0,
+  "provisional_routes": 15,
+  "frontiers": [
+    {
+      "host": "codex",
+      "host_version": "codex-cli 0.154.0",
+      "model": "gpt-6-astra",
+      "effort": "high",
+      "identity_assurance": {
+        "overall": "CONFIGURATION_ATTESTED",
+        "model": {
+          "value": "gpt-6-astra",
+          "assurance": "host_configuration"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "codex",
+        "evidence_digest": "sha256:f1db18079dbb0dae4c7bbb0ae3743bd15593546ec3d80b9cc5367c995ea985b4",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served model is not independently exposed by this host trace.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "evaluation": {
+        "status": "passed",
+        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
+        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
+      }
+    },
+    {
+      "host": "claude",
+      "host_version": "2.1.267 (Claude Code)",
+      "model": "claude-fable-5-1",
+      "effort": "high",
+      "identity_assurance": {
+        "overall": "PARTIALLY_RUNTIME_ATTESTED",
+        "model": {
+          "value": "claude-fable-5-1",
+          "assurance": "runtime_attested"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "claude_code",
+        "evidence_digest": "sha256:2f9ac3e9abfe6788ca31ad8b208e858245fcc87be7ada021010fdeccf844e96e",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "evaluation": {
+        "status": "passed",
+        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
+        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
+      }
+    }
+  ],
+  "routes": [
+    {
+      "task_class": "repo_exploration",
+      "stratum_digest": "sha256:0e6d32f8459eaf85907734ffe1d31c5c8d7fab540eca5518427538860916cd91",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "repo_exploration",
+      "stratum_digest": "sha256:29d37c0a9b03015fed2dcce2e8ba8b9e4aa5e2b905a3641ccd134ab410464a63",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "mechanical_work",
+      "stratum_digest": "sha256:48b9d795ed730d1118f66ea4645b59b280cf3a4e90eaac43539f3c38be8263c0",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "mechanical_work",
+      "stratum_digest": "sha256:5469e65ce448a20635f444ec7a92c16c1e5b39ae0bdce3f5b3a7d3fc5c9cfacd",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "mechanical_work",
+      "stratum_digest": "sha256:64292ba573ddadbfd5c6168d14abdd35070e80e34aaf887f2cfc35a646747c55",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "bounded_implementation",
+      "stratum_digest": "sha256:41afd694f10dc25be96d010b6e024e58d7497107218cb9c17858d3513c41587a",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "bounded_implementation",
+      "stratum_digest": "sha256:f6730c419d3a23a0b8a6a0d2e850bd23ca5901235a7cb52eab5fa97a8ec23efe",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "ui_implementation",
+      "stratum_digest": "sha256:78ff745045325accb326be4b7f3cf9ac0f833601b3ca52cff8331deec37e5f41",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "ui_implementation",
+      "stratum_digest": "sha256:fb0c2a7e57fd9c74c636b3f5bb9b8648e4c6d10a1985c405899820a7d3d3b0ce",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "hard_debugging",
+      "stratum_digest": "sha256:5282a78990bbbbb1004c496b3ff19b1569375b747170564c041d2c008617f51b",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "hard_debugging",
+      "stratum_digest": "sha256:6f7f9d13cb50ccb853f42ff2b9de0088232497d498ec9863df61ff471933b12f",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "complex_implementation",
+      "stratum_digest": "sha256:588fa76ac7b417a1a99ea90284c42bcd9a35111571e9e8397c7d354ab27b03a4",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "complex_implementation",
+      "stratum_digest": "sha256:a3e3c19b8f7e66165a99325d87437aad4ee9b302e2690b3711e03a4575e3243c",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    },
+    {
+      "task_class": "research",
+      "stratum_digest": "sha256:0e0fcdbf7468e375f6247ac0d62aeb8bcdbc0c62358dc225d1de82e03de47277",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback": "claude-claude-sonnet-5-low"
+    },
+    {
+      "task_class": "research",
+      "stratum_digest": "sha256:fab94469cebfd58d01e0e00c10ca949a85dd3c7d77ecf7f9f2808cf1d131e025",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback": "codex-gpt-5.5-low"
+    }
+  ],
+  "checks": [
+    "built_cli_publication",
+    "all_route_resolution",
+    "failed_worker_fallback",
+    "medium_fresh_context_denial",
+    "old_pack_refusal",
+    "frontier_identity_rederivation",
+    "policy_threshold_preservation"
+  ],
+  "scope": "CLI/structural proof. Native host identity and diagnostic review have separate authentic capture records; this does not claim real task qualification or new installed-folder acceptance."
+}

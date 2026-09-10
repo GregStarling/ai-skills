@@ -8,7 +8,15 @@ import { parseBinding, type Binding } from "../schema/index.js";
 import { validateBinding, type SelectionInput } from "../governance/index.js";
 
 export type NativeProvider = "anthropic" | "openai";
-export const runtimeVersions = { anthropic: "2.1.222", openai: "0.142.5" } as const;
+export const runtimeVersions = { anthropic: "2.1.267", openai: "0.154.0" } as const;
+// Explicit adapter contracts; a newer version is not assumed compatible merely
+// because its semantic version sorts later. Historical bundles remain readable.
+export const supportedRuntimeVersions: Record<NativeProvider, readonly string[]> = {
+  anthropic: ["2.1.222", runtimeVersions.anthropic], openai: ["0.142.5", runtimeVersions.openai]
+};
+export function supportsRuntimeVersion(provider: NativeProvider, version: string): boolean {
+  return supportedRuntimeVersions[provider].includes(version);
+}
 export type RenderInput = { binding: unknown; selection: SelectionInput; mode: "production" | "adapter-test"; runtimeVersion: string; outputSchema?: Record<string, unknown> };
 export type AdapterManifest = {
   schema_version: "adapter_manifest.v1"; provider: NativeProvider; adapter_version: "1";
@@ -18,7 +26,7 @@ export type AdapterManifest = {
 };
 export type RenderedAdapter = { manifest: AdapterManifest; files: Record<string, string> };
 export function validatedRenderBinding(input: RenderInput, provider: NativeProvider): Binding {
-  if (input.runtimeVersion !== runtimeVersions[provider]) throw new Error("RUNTIME_VERSION_MISMATCH");
+  if (!supportsRuntimeVersion(provider, input.runtimeVersion)) throw new Error("RUNTIME_VERSION_MISMATCH");
   if (input.mode !== "production" && input.mode !== "adapter-test") throw new Error("INVALID_ADAPTER_MODE");
   if (input.selection.mode !== (input.mode === "production" ? "production" : "simulation")) throw new Error("ADAPTER_MODE_MISMATCH");
   if (input.mode === "production" && input.selection.policy.policy_version >= 4 && input.selection.request.execution_environment !== (provider === "anthropic" ? "claude_code" : "codex")) throw new Error("HOST_EXECUTION_EVIDENCE_REQUIRED: API or other-host capability cannot authorize this native adapter.");
@@ -94,10 +102,10 @@ export function readNativeConfiguration(directory: string, artifact: RenderedAda
     const match = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(source);
     if (!match) throw new Error("INVALID_CLAUDE_AGENT");
     const header = parseYaml(match[1]!) as Record<string, unknown>;
-    if (typeof header["name"] !== "string" || typeof header["description"] !== "string" || typeof header["model"] !== "string" || typeof header["effort"] !== "string" || !Array.isArray(header["tools"]) || header["tools"].some((tool) => typeof tool !== "string")) throw new Error("INVALID_CLAUDE_AGENT");
-    return { model: header["model"], effort: header["effort"], instructions: match[2]!, tools: header["tools"] as string[] };
+    if (typeof header["name"] !== "string" || typeof header["description"] !== "string" || typeof header["model"] !== "string" || (header["effort"] !== undefined && typeof header["effort"] !== "string") || !Array.isArray(header["tools"]) || header["tools"].some((tool) => typeof tool !== "string")) throw new Error("INVALID_CLAUDE_AGENT");
+    return { model: header["model"], effort: typeof header["effort"] === "string" ? header["effort"] : "not_applicable", instructions: match[2]!, tools: header["tools"] as string[] };
   }
   const value = TOML.parse(source);
-  if (typeof value["name"] !== "string" || typeof value["description"] !== "string" || typeof value["model"] !== "string" || typeof value["model_reasoning_effort"] !== "string" || typeof value["developer_instructions"] !== "string") throw new Error("INVALID_CODEX_AGENT");
-  return { model: value["model"], effort: value["model_reasoning_effort"], instructions: value["developer_instructions"], tools: [] };
+  if (typeof value["name"] !== "string" || typeof value["description"] !== "string" || typeof value["model"] !== "string" || (value["model_reasoning_effort"] !== undefined && typeof value["model_reasoning_effort"] !== "string") || typeof value["developer_instructions"] !== "string") throw new Error("INVALID_CODEX_AGENT");
+  return { model: value["model"], effort: typeof value["model_reasoning_effort"] === "string" ? value["model_reasoning_effort"] : "not_applicable", instructions: value["developer_instructions"], tools: [] };
 }

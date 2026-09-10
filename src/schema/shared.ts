@@ -50,6 +50,19 @@ const nonNegativeNumberSchema = z.number().min(0).finite();
 export const riskCategorySchema = z.enum(["low", "medium", "high", "critical"]);
 export const providerSchema = z.enum(["anthropic", "openai", "local", "synthetic"]);
 export const executionEnvironmentSchema = z.enum(["claude_code", "codex", "api", "unknown"]);
+export const identityAssuranceLevelSchema = z.enum(["UNVERIFIED", "CONFIGURATION_ATTESTED", "PARTIALLY_RUNTIME_ATTESTED", "RUNTIME_ATTESTED"]);
+const identityFieldSchema = strictObject({value:z.string().min(1).nullable(),assurance:z.enum(["unverified","host_configuration","runtime_attested","not_applicable"])});
+// Output only: validators derive this from source bytes. Observations and runtime
+// reports deliberately have no writable assurance label.
+export const identityAssuranceSchema = strictObject({
+  overall:identityAssuranceLevelSchema,model:identityFieldSchema,effort:identityFieldSchema,
+  execution_environment:executionEnvironmentSchema,evidence_digest:digestSchema,limitations:z.array(z.string().min(1)),
+}).superRefine((value,ctx)=>{
+  const fields=[value.model,value.effort];
+  const expected=fields.some(f=>f.assurance==='unverified'||f.value===null)?'UNVERIFIED':fields.every(f=>['runtime_attested','not_applicable'].includes(f.assurance))?'RUNTIME_ATTESTED':fields.some(f=>f.assurance==='runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
+  if(value.overall!==expected||value.model.assurance==='not_applicable'||(value.effort.assurance==='not_applicable')!==(value.effort.value==='not_applicable'))ctx.addIssue({code:'custom',message:'IDENTITY_ASSURANCE_INCOHERENT'});
+});
+export type IdentityAssurance = z.infer<typeof identityAssuranceSchema>;
 export const lifecycleSchema = z.enum(["available", "deprecated", "retired", "unavailable", "unknown"]);
 export const fallbackModeSchema = z.enum(["disabled", "enabled"]);
 export const toolUseModeSchema = z.enum(["none", "host_tools", "provider_tools"]);
@@ -422,7 +435,8 @@ export const bindingSchema = strictObject({
   evidence_refs: z.array(identifierSchema).nonempty(),
   candidate_set_digest: digestSchema,
   evidence_digest: digestSchema,
-  production_synthetic_evidence: z.literal(false)
+  production_synthetic_evidence: z.literal(false),
+  identity_assurance: identityAssuranceSchema.optional()
 }).superRefine((binding, ctx) => {
   issueIfAfter(ctx, binding.generated_at, binding.refresh_due_at, ["refresh_due_at"], "INVALID_CHRONOLOGY");
   if (Date.parse(binding.refresh_due_at) >= Date.parse(binding.hard_expiry_at)) {
@@ -469,6 +483,7 @@ export const runtimeReportSchema = strictObject({
   timeout_ms: positiveIntegerSchema,
   stdout_digest: digestSchema.optional(),
   stderr_digest: digestSchema.optional(),
+  native_evidence: strictObject({request_digest:digestSchema,process_digest:digestSchema,version_digest:digestSchema}).optional(),
   observed_identity: strictObject({
     model_id: modelIdSchema.optional(),
     effort: z.string().min(1).optional(),
@@ -691,7 +706,7 @@ export function candidateIdentity(candidate: Candidate): string {
   return digest({ provider: candidate.provider, snapshot_id: candidate.snapshot_id, effort: candidate.effort, serving });
 }
 
-export function validateCandidateAgainstRegistry(candidateInput: unknown, registryInput: unknown): Candidate {
+export function validateCandidateAgainstRegistry(candidateInput: unknown, registryInput: unknown, options:{allowConfigurationPinning?:boolean}={}): Candidate {
   const registry = parseModelRegistry(registryInput);
   const candidate = parseCandidate(candidateInput);
   const record = registry.records.find((entry) => entry.record_id === candidate.provenance.model_record_id);
@@ -739,7 +754,8 @@ export function validateCandidateAgainstRegistry(candidateInput: unknown, regist
         message: "Candidate registry record is not available."
       });
     }
-    if (record.pinning === null || !record.pinning.verified || record.pinning.immutable_snapshot !== true) {
+    const exactHostIdentifier=options.allowConfigurationPinning===true&&record.model_id===record.snapshot_id&&candidate.model_id===record.model_id&&/^(?:gpt-\d|o\d|claude-.*\d)/.test(record.model_id)&&!/(?:^|[-_.])(latest|default)(?:$|[-_.])/.test(record.model_id);
+    if (record.pinning === null || !record.pinning.verified || record.pinning.immutable_snapshot !== true&&!exactHostIdentifier) {
       issues.push({
         path: ["provenance", "model_record_id"],
         code: "PINNING_NOT_VERIFIED",

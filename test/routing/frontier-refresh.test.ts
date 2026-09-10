@@ -1,4 +1,5 @@
 import {describe,it,expect} from 'vitest';
+import {readFileSync} from 'node:fs';
 import {digest} from '../../src/core/canonical.js';
 import {requireFrontierRefresh} from '../../src/routing/frontier-refresh.js';
 
@@ -21,5 +22,45 @@ describe('frontier refresh publication preflight',()=>{
     expect(()=>requireFrontierRefresh(targets,probes,now)).toThrow('FRONTIER_EVALUATION_REQUIRED');
     p.evaluation.status='passed';p.evaluation.review_digest=sha;expect(()=>requireFrontierRefresh(targets,probes,now)).not.toThrow();
     p.availability='unavailable';expect(()=>requireFrontierRefresh(targets,probes,now)).toThrow('FRONTIER_UNAVAILABLE_EVALUATION_CONFLICT');
+  });
+});
+
+
+// Checked-in real captures exercise publication proof without any provider calls.
+function nativeFixture(){
+  const read=(path:string)=>JSON.parse(readFileSync(path,'utf8'));
+  const targets=read('data/routing/frontier-targets.json'),probes=read('data/routing/frontier-probes.json'),evidence=read('data/routing/frontier-identity-evidence.json');
+  const now=new Date(Math.max(...probes.probes.map((p:any)=>Date.parse(p.attempted_at)))+1000).toISOString();
+  for(const probe of probes.probes){probe.evaluation.status='passed';probe.evaluation.review_digest=sha;}
+  return {targets,probes,evidence,now};
+}
+describe('native frontier identity publication proof',()=>{
+  it('rederives different Claude and Codex assurance from actual source bytes',()=>{
+    const {targets,probes,evidence,now}=nativeFixture();
+    expect(()=>requireFrontierRefresh(targets,probes,now,7,evidence)).not.toThrow();
+    expect(probes.probes.find((p:any)=>p.host==='claude').identity_assurance.overall).toBe('PARTIALLY_RUNTIME_ATTESTED');
+    expect(probes.probes.find((p:any)=>p.host==='codex').identity_assurance.overall).toBe('CONFIGURATION_ATTESTED');
+  });
+  it('refuses a writable assurance label, unavailable proof and mutated native sources',()=>{
+    const {targets,probes,evidence,now}=nativeFixture();
+    const codex=probes.probes.find((p:any)=>p.host==='codex');
+    codex.identity_assurance.model.assurance='runtime_attested';
+    codex.identity_assurance.overall='PARTIALLY_RUNTIME_ATTESTED';
+    expect(()=>requireFrontierRefresh(targets,probes,now,7,evidence)).toThrow('FRONTIER_IDENTITY_ASSURANCE_NOT_DERIVED');
+    const fresh=nativeFixture();
+    expect(()=>requireFrontierRefresh(fresh.targets,fresh.probes,fresh.now)).toThrow('FRONTIER_IDENTITY_EVIDENCE_MISSING_OR_CHANGED');
+    const entry=fresh.evidence[fresh.probes.probes[0].identity_evidence_digest];
+    entry.report.command.args.push('--model','different');
+    expect(()=>requireFrontierRefresh(fresh.targets,fresh.probes,fresh.now,7,fresh.evidence)).toThrow('FRONTIER_IDENTITY_EVIDENCE_MISSING_OR_CHANGED');
+  });
+  it('keeps configured values separate from observed telemetry and requires raw host version',()=>{
+    const {targets,probes,evidence,now}=nativeFixture();
+    const codex=probes.probes.find((p:any)=>p.host==='codex');
+    codex.observed_models=[codex.configured_model];
+    expect(()=>requireFrontierRefresh(targets,probes,now,7,evidence)).toThrow('FRONTIER_OBSERVED_IDENTITY_MISMATCH');
+    codex.observed_models=[];const actualVersion=codex.host_version;codex.host_version='codex-cli 999.0.0';
+    expect(()=>requireFrontierRefresh(targets,probes,now,7,evidence)).toThrow('FRONTIER_HOST_VERSION_MISMATCH');
+    codex.host_version=actualVersion;delete codex.identity_assurance;
+    expect(()=>requireFrontierRefresh(targets,probes,now,7,evidence)).toThrow('FRONTIER_IDENTITY_EVIDENCE_REQUIRED');
   });
 });

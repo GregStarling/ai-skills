@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { requestSchema } from '../governance/qualification.js';
 import { contentDigest, digest } from '../core/canonical.js';
-import { providerSchema, servingConfigurationSchema } from '../schema/index.js';
+import { providerSchema, servingConfigurationSchema, identityAssuranceSchema } from '../schema/index.js';
 import {provisionalEvidenceSchema,provisionalIdentity,routeRequirementsSchema,provisionalRankingBasisSchema,taskEvidenceSchema} from './provisional.js';
 
 export const publicTaskClasses = [
@@ -28,7 +28,7 @@ const treatmentSchema = z.object({
   family:id.nullable(),frontier:z.boolean(),capabilities:z.array(id),context_window_tokens:z.number().int().positive().nullable(),
   pinning_source:z.enum(['official_metadata','registry_metadata','synthetic_fixture','host_observation']),
   evidence_tier:z.enum(['qualified','provisional']),observed_at:iso,expires_at:iso,
-  qualification:z.object({metrics:metricsSchema,evidence_digest:hash,qualification_digest:hash}).strict().nullable(),
+  qualification:z.object({metrics:metricsSchema,evidence_digest:hash,qualification_digest:hash,identity_assurance:identityAssuranceSchema.optional()}).strict().nullable(),
   provisional:provisionalEvidenceSchema.nullable(),economics:economicSummarySchema.nullable(),
 }).strict();
 const decisionSummarySchema = z.object({outcome:z.enum(['SELECT','PROMOTE','RETAIN','HOLD','ESCALATION_REQUIRED','REJECT']),selected_candidate_id:id.optional(),rule_ids:z.array(id),decision_digest:hash}).strict();
@@ -76,7 +76,11 @@ const expandedPackSchema=expandedPackObject.superRefine((pack,ctx)=>{
       if(candidate.evidence_tier==='qualified'){
         if(pack.policy_version>=4&&candidate.economics===null)ctx.addIssue({code:'custom',message:'qualified v4 economics must be explicit'});
         if(candidate.qualification===null||candidate.provisional!==null||candidate.snapshot_id===null||candidate.pinning_source==='host_observation')ctx.addIssue({code:'custom',message:'invalid qualified evidence'});
-        else {const expected=digest({candidate_identity:candidate.candidate_identity,metrics:candidate.qualification.metrics,evidence_digest:candidate.qualification.evidence_digest});if(candidate.qualification.qualification_digest!==expected)ctx.addIssue({code:'custom',message:'qualification digest mismatch'});}
+        else {
+          const assurance=candidate.qualification.identity_assurance;
+          if(pack.policy_version>=5&&pack.mode==='production'&&(!assurance||assurance.overall==='UNVERIFIED'||assurance.execution_environment!==worker.execution_environment||assurance.model.value!==candidate.snapshot_id||assurance.effort.value!==candidate.effort||['high','critical'].includes(worker.risk)&&assurance.overall!=='RUNTIME_ATTESTED'))ctx.addIssue({code:'custom',message:'qualified v5 identity assurance insufficient or mismatched'});
+          const expected=digest({candidate_identity:candidate.candidate_identity,metrics:candidate.qualification.metrics,evidence_digest:candidate.qualification.evidence_digest,...(assurance?{identity_assurance:assurance}:{})});if(candidate.qualification.qualification_digest!==expected)ctx.addIssue({code:'custom',message:'qualification digest mismatch'});
+        }
       }else {
         const price=candidate.provisional?.pricing,rates=price&&price.input_usd_per_million!==null&&price.output_usd_per_million!==null?{input:price.input_usd_per_million,output:price.output_usd_per_million}:null;
         if(digest(candidate.economics)!==digest({evidence_level:rates?'API_PRICE_PROXY':'UNKNOWN',metric:'api_equivalent_cost_per_accepted_task_usd',value_usd:null,pricing_source_digests:[],rates}))ctx.addIssue({code:'custom',message:'provisional economics must match advertised prices or remain unknown'});

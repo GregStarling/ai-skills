@@ -34,7 +34,7 @@ export async function executeEvaluation(input:EvaluationInput):Promise<Evaluatio
   grade.result=parseGraderResult({...grade.result,checks,passed:checks.every(check=>check.passed),accepted:false});
   const graderBytes=canonicalJson(grade.result), graderDigest=hashBytes(graderBytes);
   grade.sourceMap.set(graderDigest,graderBytes);
-  for (const path of [execution.stdout_path,execution.stderr_path]) {const bytes=await readFile(path);grade.sourceMap.set(hashBytes(bytes),bytes);}
+  for (const path of execution.evidence_paths) {const bytes=await readFile(path);grade.sourceMap.set(hashBytes(bytes),bytes);}
   const {manifest}=input.prepared;
   const failures=['review_not_performed',...(nativePassed?[]:['native_execution_failed']),...(grade.result.passed?[]:['objective_checks_failed'])];
   const observation:TaskObservation={

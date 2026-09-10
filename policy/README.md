@@ -1,6 +1,6 @@
 # Human governance policy
 
-`constitution.json` is policy v4. It separates capability qualification from economic selection for subscription-first execution. `constitution-v3.json` preserves the exact previous policy bytes; `simulation-v1.json` preserves the policy used by synthetic binding examples. Old versions retain their original cost qualification rules. Model IDs remain registry data, never constitution constants.
+`constitution.json` is policy v5. It adds validator-derived native identity assurance; see [v5 identity assurance](../docs/v5-identity-assurance.md). `constitution-v4.json` preserves the exact v4 bytes. It separates capability qualification from economic selection for subscription-first execution. `constitution-v3.json` preserves the exact previous policy bytes; `simulation-v1.json` preserves the policy used by synthetic binding examples. Old versions retain their original cost qualification rules. Model IDs remain registry data, never constitution constants.
 
 Capability qualification uses exact task, role, risk, constraint, cohort and versioned evaluation evidence, minimum sample size, accepted-task rate, failure ceilings, latency, freshness, tools and runtime treatment identity. Missing dollars do not prevent v4 capability qualification. Production requests must identify `claude_code`, `codex` or `api`; missing runtime environment yields HOLD and a different environment rejects. API capability evidence does not silently establish subscription-host capability. Frontier verification requirements are unchanged.
 

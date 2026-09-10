@@ -1,5 +1,5 @@
 {
-  "schema_version": "frontier_probes.v1",
+  "schema_version": "frontier_probes.v2",
   "targets_digest": "sha256:edac851c2db3bbeb9b05f66542e11712486f754c3d5b413649631601632b4942",
   "probes": [
     {
@@ -7,23 +7,44 @@
       "host": "codex",
       "model_id": "gpt-6-astra",
       "effort": "high",
-      "host_version": "codex-cli 0.142.5",
+      "host_version": "codex-cli 0.154.0",
       "attempted": true,
-      "attempted_at": "2026-09-10T04:09:48.804Z",
-      "availability": "unavailable",
-      "reason": "The 'gpt-6-astra' model requires a newer version of Codex. Please upgrade to the latest app or CLI and try again.",
+      "attempted_at": "2026-09-10T07:19:54.238Z",
+      "availability": "available",
+      "reason": "Native CLI completed; bounded diagnostic evaluation passed independent artifact review.",
       "invocation": "native_cli",
       "native_agent_status": "not_probed",
+      "configured_model": "gpt-6-astra",
+      "configured_effort": "high",
       "observed_models": [],
       "observed_effort": null,
-      "exit_code": 1,
+      "identity_assurance": {
+        "overall": "CONFIGURATION_ATTESTED",
+        "model": {
+          "value": "gpt-6-astra",
+          "assurance": "host_configuration"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "codex",
+        "evidence_digest": "sha256:f1db18079dbb0dae4c7bbb0ae3743bd15593546ec3d80b9cc5367c995ea985b4",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served model is not independently exposed by this host trace.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "identity_evidence_digest": "sha256:e374eff4416370d7aa4f520b539c8ef3beaa757fed65d5e18b344c949270ec10",
+      "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:6f4be4222be982ef7a69cd6bb8c62a6e7be910ac146cdde98dbee163b660a7ce",
-      "stderr_digest": "sha256:848cd8beb6a28cb7ca6b4f3c89c5da2b424d8b2fe3006c92243700c55e217fc1",
+      "stdout_digest": "sha256:6ec05fc9e66920e4991f8220a51b16b91eb9e4ae418e98734aa616b3edaebb7a",
+      "stderr_digest": "sha256:696aef3f55c230191fe02632d5874ef0057390441739cb1afc3b7da83d9d54a7",
       "evaluation": {
-        "status": "not_run",
-        "review_digest": null,
-        "note": "Current frontier could not be evaluated through this CLI invocation; retain eligible evidenced reviewers and report this reason."
+        "status": "passed",
+        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
+        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
       }
     },
     {
@@ -31,25 +52,45 @@
       "host": "claude",
       "model_id": "claude-fable-5-1",
       "effort": "high",
-      "host_version": "2.1.222 (Claude Code)",
+      "host_version": "2.1.267 (Claude Code)",
       "attempted": true,
-      "attempted_at": "2026-09-10T04:09:48.804Z",
-      "availability": "unavailable",
-      "reason": "API Error: 400 Claude Code 2.1.222 does not support this model; version 2.1.251 or newer is required. Run 'claude update', or update the Claude desktop app, then try again.",
+      "attempted_at": "2026-09-10T07:19:54.235Z",
+      "availability": "available",
+      "reason": "Native CLI completed; bounded diagnostic evaluation passed independent artifact review.",
       "invocation": "native_cli",
       "native_agent_status": "not_probed",
+      "configured_model": "claude-fable-5-1",
+      "configured_effort": "high",
       "observed_models": [
-        "<synthetic>"
+        "claude-fable-5-1"
       ],
       "observed_effort": null,
-      "exit_code": 1,
+      "identity_assurance": {
+        "overall": "PARTIALLY_RUNTIME_ATTESTED",
+        "model": {
+          "value": "claude-fable-5-1",
+          "assurance": "runtime_attested"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "claude_code",
+        "evidence_digest": "sha256:2f9ac3e9abfe6788ca31ad8b208e858245fcc87be7ada021010fdeccf844e96e",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "identity_evidence_digest": "sha256:31ac85664d54478ba5880ea418a8fdc0e7838803ee993178cecf0154830cbacd",
+      "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:ef5ac46d3d76c491493602712f8fa236cb010a60fd2332bce5af594fdc93643d",
+      "stdout_digest": "sha256:2edf2c59cbfae8698868ab032a61cec997ca63889f3ec7ceef52669a707d2ed5",
       "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "evaluation": {
-        "status": "not_run",
-        "review_digest": null,
-        "note": "Current frontier could not be evaluated through this CLI invocation; retain eligible evidenced reviewers and report this reason."
+        "status": "passed",
+        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
+        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
       }
     }
   ]

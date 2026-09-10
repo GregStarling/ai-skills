@@ -284,6 +284,109 @@
         "production_synthetic_evidence": {
           "type": "boolean",
           "const": false
+        },
+        "identity_assurance": {
+          "type": "object",
+          "properties": {
+            "overall": {
+              "type": "string",
+              "enum": [
+                "UNVERIFIED",
+                "CONFIGURATION_ATTESTED",
+                "PARTIALLY_RUNTIME_ATTESTED",
+                "RUNTIME_ATTESTED"
+              ]
+            },
+            "model": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "assurance": {
+                  "type": "string",
+                  "enum": [
+                    "unverified",
+                    "host_configuration",
+                    "runtime_attested",
+                    "not_applicable"
+                  ]
+                }
+              },
+              "required": [
+                "value",
+                "assurance"
+              ],
+              "additionalProperties": false
+            },
+            "effort": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "assurance": {
+                  "type": "string",
+                  "enum": [
+                    "unverified",
+                    "host_configuration",
+                    "runtime_attested",
+                    "not_applicable"
+                  ]
+                }
+              },
+              "required": [
+                "value",
+                "assurance"
+              ],
+              "additionalProperties": false
+            },
+            "execution_environment": {
+              "type": "string",
+              "enum": [
+                "claude_code",
+                "codex",
+                "api",
+                "unknown"
+              ]
+            },
+            "evidence_digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "limitations": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "required": [
+            "overall",
+            "model",
+            "effort",
+            "execution_environment",
+            "evidence_digest",
+            "limitations"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -2314,6 +2417,109 @@
             "production_synthetic_evidence": {
               "type": "boolean",
               "const": false
+            },
+            "identity_assurance": {
+              "type": "object",
+              "properties": {
+                "overall": {
+                  "type": "string",
+                  "enum": [
+                    "UNVERIFIED",
+                    "CONFIGURATION_ATTESTED",
+                    "PARTIALLY_RUNTIME_ATTESTED",
+                    "RUNTIME_ATTESTED"
+                  ]
+                },
+                "model": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "assurance": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "host_configuration",
+                        "runtime_attested",
+                        "not_applicable"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "assurance"
+                  ],
+                  "additionalProperties": false
+                },
+                "effort": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "assurance": {
+                      "type": "string",
+                      "enum": [
+                        "unverified",
+                        "host_configuration",
+                        "runtime_attested",
+                        "not_applicable"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "assurance"
+                  ],
+                  "additionalProperties": false
+                },
+                "execution_environment": {
+                  "type": "string",
+                  "enum": [
+                    "claude_code",
+                    "codex",
+                    "api",
+                    "unknown"
+                  ]
+                },
+                "evidence_digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "limitations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "overall",
+                "model",
+                "effort",
+                "execution_environment",
+                "evidence_digest",
+                "limitations"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -2643,6 +2849,29 @@
         "stderr_digest": {
           "type": "string",
           "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "native_evidence": {
+          "type": "object",
+          "properties": {
+            "request_digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "process_digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "version_digest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "request_digest",
+            "process_digest",
+            "version_digest"
+          ],
+          "additionalProperties": false
         },
         "observed_identity": {
           "type": "object",

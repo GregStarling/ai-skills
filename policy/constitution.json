@@ -1,11 +1,11 @@
 {
   "schema_version": "governance_policy.v1",
-  "policy_version": 4,
+  "policy_version": 5,
   "provenance": {
     "status": "proposed",
     "author": "Model Governor v1 implementation",
     "source": "docs/model-governor-spec.md",
-    "rationale": "Version 4 separates capability qualification from economic ordering for subscription-first execution. Missing host dollar billing no longer prevents capability qualification. Routing uses official API-equivalent economics as a normalized proxy, preferring measured task-specific API token economics. Exact execution environments remain distinct."
+    "rationale": "Version 5 admits policy-sufficient treatment identity assurance derived from preserved native execution evidence. Exact accepted host configuration can establish low/medium subscription identity where served telemetry is absent; contradictory runtime evidence always rejects. Version 4 capability/economic separation and all empirical thresholds remain unchanged."
   },
   "roles": [
     {
@@ -156,5 +156,13 @@
     "maximum_cost_per_accepted_task_usd": 5,
     "pricing_max_age_days": 30,
     "promotion_requires_measured": true
+  },
+  "identity_assurance": {
+    "minimum_by_risk": {
+      "low": "CONFIGURATION_ATTESTED",
+      "medium": "CONFIGURATION_ATTESTED",
+      "high": "RUNTIME_ATTESTED",
+      "critical": "RUNTIME_ATTESTED"
+    }
   }
 }

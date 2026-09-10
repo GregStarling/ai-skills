@@ -14,6 +14,7 @@ const bucket = z.object({
 }).strict();
 const reviewRule = z.object({ required: z.boolean(), different_model: z.boolean(),
   different_family: z.boolean(), fresh_context: z.boolean(), frontier: z.boolean() }).strict();
+const minimumIdentityAssurance = z.enum(['CONFIGURATION_ATTESTED', 'PARTIALLY_RUNTIME_ATTESTED', 'RUNTIME_ATTESTED']);
 export const policySchema = z.object({
   schema_version: z.literal('governance_policy.v1'), policy_version: z.number().int().positive(),
   provenance: z.object({ status: z.literal('proposed'), author: z.string().min(1),
@@ -23,6 +24,7 @@ export const policySchema = z.object({
     required_capabilities: z.array(id), eval_bucket: bucket }).strict()).min(1).max(8),
   risk_signals: z.record(id, riskCategorySchema),
   review: z.object({ low: reviewRule, medium: reviewRule, high: reviewRule, critical: reviewRule }).strict(),
+  identity_assurance: z.object({minimum_by_risk:z.object({low:minimumIdentityAssurance,medium:minimumIdentityAssurance,high:minimumIdentityAssurance,critical:minimumIdentityAssurance}).strict()}).strict().optional(),
   qualification: z.object({ minimum_tasks: z.number().int().positive(), minimum_success_rate: ratio,
     maximum_cost_per_accepted_task_usd: finite.nonnegative().optional(), maximum_latency_ms: finite.positive(),
     evidence_max_age_days: finite.positive(), maximum_failure_rates: z.record(id, ratio) }).strict(),
@@ -38,6 +40,8 @@ export const policySchema = z.object({
     if (new Set(values).size !== values.length) ctx.addIssue({ code: 'custom', path: [name], message: 'duplicate policy identity' });
   }
   if(p.policy_version>=4 ? !p.economics || p.qualification.maximum_cost_per_accepted_task_usd!==undefined : p.economics!==undefined || p.qualification.maximum_cost_per_accepted_task_usd===undefined)ctx.addIssue({code:'custom',path:['economics'],message:'v4 separates economics from capability; v1-v3 require their original qualification cost ceiling'});
+  if(p.policy_version>=5 ? !p.identity_assurance : p.identity_assurance!==undefined)ctx.addIssue({code:'custom',path:['identity_assurance'],message:'v5 requires explicit minimum identity assurance; historical policies retain their original identity semantics'});
+  if(p.policy_version>=5 && p.identity_assurance && (p.identity_assurance.minimum_by_risk.high!=='RUNTIME_ATTESTED'||p.identity_assurance.minimum_by_risk.critical!=='RUNTIME_ATTESTED'))ctx.addIssue({code:'custom',path:['identity_assurance'],message:'v5 preserves runtime attestation for high and critical risk'});
   const classes = new Set(p.task_classes.map(c => c.task_class_id));
   if (p.roles.some(r => r.task_class_ids.some(c => !classes.has(c)))) ctx.addIssue({code:'custom',path:['roles'],message:'role references unknown task class'});
   if (p.binding.refresh_after_hours >= p.binding.hard_expiry_hours) ctx.addIssue({code:'custom',path:['binding'],message:'hard expiry must follow refresh'});

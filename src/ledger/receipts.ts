@@ -8,6 +8,7 @@ import {parseSelectionInput,evaluateReview,qualify,policyDigest,parsePolicy,type
 import {candidateIdentity,parseRuntimeReport,executionEnvironmentSchema} from '../schema/index.js';
 import {validateObservations} from '../evidence/index.js';
 import {decodeSources,encodeSources} from '../evidence/sources.js';
+import {deriveIdentityAssurance,identityAssuranceMeetsMinimum} from '../runtime/identity-assurance.js';
 
 const id=z.string().min(1),sha=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.string().datetime({offset:true});
 const contextSchema=z.object({source:id,observed_at:iso,origin:z.enum(['production_usage','qualification_evaluation']),public_task_class:publicTaskClassSchema,task_id:id,baseline_digest:sha.optional(),execution_environment:executionEnvironmentSchema.optional()}).strict();
@@ -58,8 +59,9 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
   if(raw['execution_environment']!==undefined&&raw['execution_environment']!==environment)throw Error('RECEIPT_EXECUTION_ENVIRONMENT_CONFLICT');
  }
  if(!row)throw Error('RECEIPT_OBSERVATION_MISSING');
- const [observation]=validateObservations([row],{registry:input.registry,candidates:input.candidates,mode:'production',sources:input.sources!,runtimeReports:input.runtimeReports??new Map()});
+ const [observation]=validateObservations([row],{registry:input.registry,candidates:input.candidates,mode:'production',allowConfigurationPinning:input.policy.policy_version>=5&&['low','medium'].includes(input.request.risk)&&['claude_code','codex'].includes(input.request.execution_environment??''),sources:input.sources!,runtimeReports:input.runtimeReports??new Map()});
  if(!observation)throw Error('RECEIPT_OBSERVATION_MISSING');
+ if(observation.accepted&&!evidence.review)throw Error('RECEIPT_INDEPENDENT_REVIEW_REQUIRED');
  const candidate=input.candidates.find(c=>c.candidate_id===observation.candidate.candidate_id)!;
  const baseline=capture.context.baseline_digest??raw['starting_artifact_digest'];
  if(baseline!==observation.fixture_digest||(raw['starting_artifact_digest']!==undefined&&raw['starting_artifact_digest']!==baseline))throw Error('RECEIPT_BASELINE_UNRESOLVED');
@@ -83,6 +85,7 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
   for(const [key,bytes] of reviewInput.sources!)sources.set(key,bytes);
   for(const [key,report] of reviewInput.runtimeReports!)runtimeReports.set(key,report);
  }
+ const identityAssurances:Record<string,ReturnType<typeof deriveIdentityAssurance>>={};
  const capturedCounts=new Map<string,number>();let first=Infinity,last=-Infinity;
  for(const attempt of observation.attempts){
   const reportDigest=evidence.attemptReceipts[attempt.attempt_id]!,reportValue=runtimeReports.get(reportDigest);
@@ -90,7 +93,16 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
   const report=parseRuntimeReport(reportValue);requireSources(report,sources);
   if(input.policy.policy_version>=4&&report.execution_environment!==capture.context.execution_environment)throw Error('RECEIPT_ATTEMPT_ENVIRONMENT_MISMATCH');
   if(report.provider==='synthetic'||Date.parse(report.completed_at)>Date.parse(now))throw Error('RECEIPT_ATTEMPT_INVALID');
-  if(attempt.kind!=='review'&&(report.candidate_id!==candidate.candidate_id||report.provider!==candidate.provider||report.observed_identity.model_id!==undefined&&report.observed_identity.model_id!==candidate.snapshot_id||report.observed_identity.effort!==undefined&&report.observed_identity.effort!==candidate.effort))throw Error('RECEIPT_ATTEMPT_IDENTITY_MISMATCH');
+  if(attempt.kind!=='review'&&(report.candidate_id!==candidate.candidate_id||report.provider!==candidate.provider))throw Error('RECEIPT_ATTEMPT_IDENTITY_MISMATCH');
+  if(input.policy.policy_version>=5){
+   const actualCandidate=attempt.kind==='review'?(reviewInput?.candidates??input.candidates).find(c=>c.candidate_id===report.candidate_id):candidate;
+   if(!actualCandidate)throw Error('RECEIPT_ATTEMPT_IDENTITY_UNRESOLVED');
+   const assurance=deriveIdentityAssurance({candidate:actualCandidate,report,sources,executionEnvironment:capture.context.execution_environment!});
+   identityAssurances[attempt.attempt_id]=assurance;
+   // Contradictions cannot be downgraded to missing telemetry. Unknown failed
+   // attempts remain observable, but never create qualification authority.
+   if(assurance.diagnostics.some(item=>item.hard))throw Error(`RECEIPT_ATTEMPT_IDENTITY_MISMATCH: ${assurance.diagnostics.filter(item=>item.hard).map(item=>item.rule_id).join(',')}`);
+  }else if(attempt.kind!=='review'&&(report.observed_identity.model_id!==undefined&&report.observed_identity.model_id!==candidate.snapshot_id||report.observed_identity.effort!==undefined&&report.observed_identity.effort!==candidate.effort))throw Error('RECEIPT_ATTEMPT_IDENTITY_MISMATCH');
   if(attempt.cost_usd!==(report.usage?.cost_usd??null))throw Error('RECEIPT_ATTEMPT_COST_MISMATCH');
   const start=Date.parse(report.started_at),end=Date.parse(report.completed_at);first=Math.min(first,start);last=Math.max(last,end);
   if(attempt.latency_ms!==null&&attempt.latency_ms<end-start)throw Error('RECEIPT_ATTEMPT_LATENCY_UNDERSTATED');
@@ -104,15 +116,19 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
   if(!review||!reviewInput)throw Error('RECEIPT_INDEPENDENT_REVIEW_REQUIRED');
   const reviewer=reviewInput.candidates.find(c=>c.candidate_id===review.reviewerCandidateId);
   const reviewReportValue=runtimeReports.get(review.proof.runtime_receipt_digest??''),reviewReport=reviewReportValue?parseRuntimeReport(reviewReportValue):null;
-  if(!reviewer||!reviewReport||digest(reviewReportValue)!==review.proof.runtime_receipt_digest||reviewReport.status!=='completed'||reviewReport.exit_code!==0||reviewReport.signal!==null||reviewReport.candidate_id!==reviewer.candidate_id||reviewReport.provider!==reviewer.provider||reviewReport.observed_identity.source==='unknown'||reviewReport.observed_identity.model_id!==reviewer.snapshot_id||reviewReport.observed_identity.effort!==reviewer.effort)throw Error('RECEIPT_REVIEW_RUNTIME_INVALID');
+  if(!reviewer||!reviewReport||digest(reviewReportValue)!==review.proof.runtime_receipt_digest||reviewReport.status!=='completed'||reviewReport.exit_code!==0||reviewReport.signal!==null||reviewReport.candidate_id!==reviewer.candidate_id||reviewReport.provider!==reviewer.provider)throw Error('RECEIPT_REVIEW_RUNTIME_INVALID');
   requireSources(reviewReport,sources);
+  if(input.policy.policy_version>=5){
+   const assurance=deriveIdentityAssurance({candidate:reviewer,report:reviewReport,sources,executionEnvironment:capture.context.execution_environment!});
+   if(assurance.diagnostics.some(item=>item.hard)||!identityAssuranceMeetsMinimum(assurance.overall,input.policy.identity_assurance!.minimum_by_risk[observation.risk]))throw Error('RECEIPT_REVIEW_IDENTITY_ASSURANCE_INSUFFICIENT');
+  }else if(reviewReport.observed_identity.source==='unknown'||reviewReport.observed_identity.model_id!==reviewer.snapshot_id||reviewReport.observed_identity.effort!==reviewer.effort)throw Error('RECEIPT_REVIEW_RUNTIME_INVALID');
   if(!observation.attempts.some(a=>a.kind==='review'&&evidence.attemptReceipts[a.attempt_id]===review.proof.runtime_receipt_digest))throw Error('RECEIPT_REVIEW_COST_OMITTED');
   if(!sources.has(review.packageDigest)||hashBytes(sources.get(review.packageDigest)!)!==review.packageDigest)throw Error('RECEIPT_REVIEW_PACKAGE_UNRESOLVED');
   const verdict=evaluateReview({policy:input.policy,registry:input.registry,implementer:candidate,reviewer,risk:observation.risk,artifactDigest:observation.provenance.artifact_digest,packageDigest:review.packageDigest,implementerSessionId:review.implementerSessionId,proof:review.proof as ReviewProof,reviewerQualification:{...reviewInput,candidate:reviewer}});
   if(!verdict.ok)throw Error(`RECEIPT_REVIEW_REJECTED: ${verdict.diagnostics.map(d=>d.rule_id).join(',')}`);
  }
  const qualification=qualify({...input,observations:[observation],candidate});
- return {payload,qualification, envelope:{schema_version:'evaluation_ledger_entry.v1' as const,purpose:capture.context.origin,observation,sources:encodeSources(sources),runtimeReports:Object.fromEntries(runtimeReports),operationalLimits:['Imported receipt evidence is not automatic qualification.',...qualification.diagnostics.map(d=>d.rule_id)]}};
+ return {payload,qualification,identity_assurances:identityAssurances, envelope:{schema_version:'evaluation_ledger_entry.v1' as const,purpose:capture.context.origin,observation,sources:encodeSources(sources),runtimeReports:Object.fromEntries(runtimeReports),operationalLimits:['Imported receipt evidence is not automatic qualification.',...qualification.diagnostics.map(d=>d.rule_id)]}};
 }
 
 export async function assessReceipt(input:{directory:string;recordId:string;evidence:unknown}){
@@ -121,5 +137,5 @@ export async function assessReceipt(input:{directory:string;recordId:string;evid
  const result=validateReceiptEvidence({schema_version:'delegate_receipt_evidence.v1',capture:captureSchema.parse(record.payload),evidence:input.evidence});
  const recordId=`evidence_${digest(result.payload).slice(7)}`;
  const appended=await ledger.append({id:recordId,provenance:{...record.provenance,methodology:'delegate_receipt_evidence.v1',receipt_record_id:record.id},payload:result.payload});
- return {status:'VALIDATED_OBSERVATION',recordId,directory:input.directory,inserted:appended.inserted,qualification:result.qualification.status,diagnostics:result.qualification.diagnostics,refresh_input:{evaluationLedgers:[{directory:input.directory,recordIds:[recordId]}]}};
+ return {status:'VALIDATED_OBSERVATION',recordId,directory:input.directory,inserted:appended.inserted,qualification:result.qualification.status,diagnostics:result.qualification.diagnostics,identity_assurances:result.identity_assurances,refresh_input:{evaluationLedgers:[{directory:input.directory,recordIds:[recordId]}]}};
 }

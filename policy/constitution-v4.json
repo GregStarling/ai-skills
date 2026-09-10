@@ -1,0 +1,160 @@
+{
+  "schema_version": "governance_policy.v1",
+  "policy_version": 4,
+  "provenance": {
+    "status": "proposed",
+    "author": "Model Governor v1 implementation",
+    "source": "docs/model-governor-spec.md",
+    "rationale": "Version 4 separates capability qualification from economic ordering for subscription-first execution. Missing host dollar billing no longer prevents capability qualification. Routing uses official API-equivalent economics as a normalized proxy, preferring measured task-specific API token economics. Exact execution environments remain distinct."
+  },
+  "roles": [
+    {
+      "role_id": "planner",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "implementer",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "reviewer",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    },
+    {
+      "role_id": "researcher",
+      "task_class_ids": [
+        "bounded_backend",
+        "hard_debugging"
+      ]
+    }
+  ],
+  "task_classes": [
+    {
+      "task_class_id": "bounded_backend",
+      "risk_floor": "low",
+      "required_capabilities": [
+        "terminal"
+      ],
+      "eval_bucket": {
+        "suite_id": "bounded_backend",
+        "suite_version": 1,
+        "harness_version": "harvested-isolated-v1",
+        "grader_version": "historical-fixed-tests-v1",
+        "fixture_ids": [
+          "foreman_t920_derived_gate_id"
+        ]
+      }
+    },
+    {
+      "task_class_id": "hard_debugging",
+      "risk_floor": "low",
+      "required_capabilities": [
+        "terminal"
+      ],
+      "eval_bucket": {
+        "suite_id": "hard_debugging",
+        "suite_version": 1,
+        "harness_version": "harvested-isolated-v1",
+        "grader_version": "historical-fixed-tests-v1",
+        "fixture_ids": [
+          "foreman_t897_reconnect_notice"
+        ]
+      }
+    }
+  ],
+  "risk_signals": {
+    "authentication": "high",
+    "authorization": "high",
+    "permissions": "high",
+    "secrets": "critical",
+    "cryptography": "critical",
+    "payments": "high",
+    "billing": "high",
+    "database_schema": "high",
+    "data_migration": "high",
+    "destructive_operation": "critical",
+    "irreversible_operation": "critical",
+    "production_infrastructure": "critical",
+    "public_api": "high",
+    "user_data": "high",
+    "dependency_boundary": "high"
+  },
+  "review": {
+    "low": {
+      "required": true,
+      "different_model": false,
+      "different_family": false,
+      "fresh_context": false,
+      "frontier": true
+    },
+    "medium": {
+      "required": true,
+      "different_model": true,
+      "different_family": false,
+      "fresh_context": true,
+      "frontier": true
+    },
+    "high": {
+      "required": true,
+      "different_model": true,
+      "different_family": true,
+      "fresh_context": true,
+      "frontier": true
+    },
+    "critical": {
+      "required": true,
+      "different_model": true,
+      "different_family": true,
+      "fresh_context": true,
+      "frontier": true
+    }
+  },
+  "qualification": {
+    "minimum_tasks": 20,
+    "minimum_success_rate": 0.9,
+    "maximum_latency_ms": 300000,
+    "evidence_max_age_days": 30,
+    "maximum_failure_rates": {
+      "security_incident": 0
+    }
+  },
+  "promotion": {
+    "minimum_paired_tasks": 30,
+    "alpha": 0.05,
+    "superiority_margin": 0.03,
+    "maximum_cost_increase": 0.15,
+    "non_inferiority_margin": 0.01,
+    "minimum_cost_improvement": 0.2
+  },
+  "binding": {
+    "refresh_after_hours": 24,
+    "hard_expiry_hours": 72
+  },
+  "shadow": {
+    "enabled": false,
+    "max_tasks_per_run": 1,
+    "max_fraction": 1
+  },
+  "routing_pack": {
+    "refresh_after_days": 7,
+    "hard_expiry_days": 30,
+    "provisional_evidence_max_age_days": 30
+  },
+  "economics": {
+    "primary_metric": "api_equivalent_cost_per_accepted_task_usd",
+    "proxy_currency": "official_api_pricing",
+    "selection_rule": "cheapest_capability_qualified",
+    "maximum_cost_per_accepted_task_usd": 5,
+    "pricing_max_age_days": 30,
+    "promotion_requires_measured": true
+  }
+}

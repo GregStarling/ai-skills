@@ -1,0 +1,73 @@
+{
+  "schema_version": "frontier_historical_preservation.v1",
+  "recorded_at": "2026-09-10T07:08:23.794Z",
+  "starting_versions": {
+    "claude": "2.1.267 (Claude Code)",
+    "codex": "codex-cli 0.154.0"
+  },
+  "original_report_digest": "sha256:d6d2f59f092f4b71885b3599b202b52c2c1f6bdf37ad5bf2a3c967927bd61bd2",
+  "archived_report": "data/routing/frontier-probes-pre-v5.json",
+  "directory": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/v5-frontier-review-ZVEhhl",
+  "files": [
+    {
+      "path": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-jkN9i9/quantity.mjs",
+      "review_copy": "codex-quantity.mjs",
+      "content_digest": "sha256:e1bb9b566c1d4f9a1b30435f9ad11053c2de577808582bee111c86b4a7aedf54"
+    },
+    {
+      "path": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-jkN9i9/quantity.test.mjs",
+      "review_copy": "codex-quantity.test.mjs",
+      "content_digest": "sha256:d736860837b4d064436d469a7d2477475788fb27b68e7a4a73f5594852e9fa86"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/codex/request.json",
+      "review_copy": "codex-request.json",
+      "content_digest": "sha256:e3e7f0c0793a5767de3c95915708748aa3ec292b47ef8a44503b55c6152e5a55"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/codex/stdout.jsonl",
+      "review_copy": "codex-stdout.jsonl",
+      "content_digest": "sha256:c8bc07898a6670b05088945aaa64d577a0439d7f98a17b14f7a37718237b9f74"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/codex/stderr.log",
+      "review_copy": "codex-stderr.log",
+      "content_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/codex/summary.json",
+      "review_copy": "codex-summary.json",
+      "content_digest": "sha256:8d02c9a30fc3898539fb75a655fc0f23d16bbd66b394aec53837408ecf7c6989"
+    },
+    {
+      "path": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-I4hJk4/quantity.mjs",
+      "review_copy": "claude-quantity.mjs",
+      "content_digest": "sha256:e1bb9b566c1d4f9a1b30435f9ad11053c2de577808582bee111c86b4a7aedf54"
+    },
+    {
+      "path": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-I4hJk4/quantity.test.mjs",
+      "review_copy": "claude-quantity.test.mjs",
+      "content_digest": "sha256:d736860837b4d064436d469a7d2477475788fb27b68e7a4a73f5594852e9fa86"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/claude/request.json",
+      "review_copy": "claude-request.json",
+      "content_digest": "sha256:012ac06dadcb9ddebed336e79bcf1c0d246523679ee954ef674812267c1dde2c"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/claude/stdout.jsonl",
+      "review_copy": "claude-stdout.jsonl",
+      "content_digest": "sha256:5bd0da1caca30ee8f0aace2677883ac650bd6175b1b0ec830f95354a424874ea"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/claude/stderr.log",
+      "review_copy": "claude-stderr.log",
+      "content_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/frontier-probes/1789023432180/claude/summary.json",
+      "review_copy": "claude-summary.json",
+      "content_digest": "sha256:08829b44fb7d3f3f83fff87a5a974a85e515eedbbdf8d047c49c2da364173a9f"
+    }
+  ]
+}

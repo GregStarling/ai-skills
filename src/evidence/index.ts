@@ -61,12 +61,13 @@ export type EvidenceValidationOptions = ObservationValidationOptions & {
   readonly candidates: readonly Candidate[];
   readonly mode: "simulation" | "production";
   readonly sources: ReadonlyMap<string, string | Uint8Array>;
+  readonly allowConfigurationPinning?: boolean;
 };
 
 export function validateObservations(inputs: readonly unknown[], options: EvidenceValidationOptions): TaskObservation[] {
   const registry = validateRegistry(options.registry);
   const candidates = new Map(options.candidates.map((candidate) => {
-    const bound = bindCandidate(candidate, registry);
+    const bound = bindCandidate(candidate, registry, options);
     return [bound.candidate_id, bound] as const;
   }));
   if (candidates.size !== options.candidates.length) reject("DUPLICATE_CANDIDATE", ["candidates"], "Candidate IDs must be unique.");

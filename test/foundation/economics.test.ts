@@ -50,7 +50,7 @@ const first=(input:SelectionInput)=>qualify({...input,candidate:input.candidates
 
 describe('v4 subscription capability and normalized API economics',()=>{
  it('preserves v3 policy history and moves the same ceiling into explicit v4 economics',()=>{
-  const old=loadPolicy('policy/constitution-v3.json'),current=loadPolicy('policy/constitution.json');expect(old.policy_version).toBe(3);expect(current.policy_version).toBe(4);
+  const old=loadPolicy('policy/constitution-v3.json'),current=loadPolicy('policy/constitution-v4.json');expect(old.policy_version).toBe(3);expect(current.policy_version).toBe(4);
   expect(current.qualification).toEqual(Object.fromEntries(Object.entries(old.qualification).filter(([key])=>key!=='maximum_cost_per_accepted_task_usd')));
   expect(current.economics!.maximum_cost_per_accepted_task_usd).toBe(old.qualification.maximum_cost_per_accepted_task_usd);expect(current.review).toEqual(old.review);
  });

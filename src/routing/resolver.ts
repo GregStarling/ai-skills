@@ -5,14 +5,14 @@ import { expandRoutingPack, publicTaskClassSchema, RoutingError, type RoutingRou
 
 const hostSchema=z.object({
   host:z.enum(['codex','claude']).optional(),
-  treatments:z.array(z.object({provider:providerSchema,model_id:z.string().min(1),snapshot_id:z.string().min(1).nullable(),effort:z.string().min(1),serving:servingConfigurationSchema}).strict()),
+  treatments:z.array(z.object({provider:providerSchema,model_id:z.string().min(1),snapshot_id:z.string().min(1).nullable(),effort:z.string().min(1),serving:servingConfigurationSchema,observed_model_id:z.string().min(1).optional(),observed_effort:z.string().min(1).optional(),substitution_observed:z.boolean().optional()}).strict()),
   tools:z.array(z.string().min(1)),capabilities:z.array(z.string().min(1)),context_window_tokens:z.number().int().positive(),supports_fresh_context:z.boolean(),
 }).strict();
 const requestSchema=z.object({publicTaskClass:publicTaskClassSchema,stratumDigest:z.string().regex(/^sha256:[a-f0-9]{64}$/),now:z.string().datetime({offset:true}),host:hostSchema,failedCandidateIds:z.array(z.string().min(1)).optional()}).strict();
 export type ResolveRoutingInput=z.infer<typeof requestSchema>;
 export type ResolvedRouting={worker:RoutingTreatment;reviewer:RoutingTreatment;route:RoutingRoute;stale:boolean;ranking_basis:{worker:string;reviewer:string}};
 
-const treatmentAvailable=(candidate:RoutingTreatment,host:z.infer<typeof hostSchema>)=>(candidate.evidence_tier==='qualified'||candidate.provisional?.host===host.host)&&host.treatments.some(t=>t.serving.fallback==='disabled'&&t.provider===candidate.provider&&t.model_id===candidate.model_id&&t.snapshot_id===candidate.snapshot_id&&t.effort===candidate.effort&&candidate.material_serving_settings.every(key=>t.serving[key]===candidate.serving[key]));
+const treatmentAvailable=(candidate:RoutingTreatment,host:z.infer<typeof hostSchema>)=>(candidate.evidence_tier==='qualified'||candidate.provisional?.host===host.host)&&host.treatments.some(t=>t.serving.fallback==='disabled'&&t.provider===candidate.provider&&t.model_id===candidate.model_id&&t.snapshot_id===candidate.snapshot_id&&t.effort===candidate.effort&&t.substitution_observed!==true&&(t.observed_model_id===undefined||t.observed_model_id===(candidate.snapshot_id??candidate.model_id))&&(t.observed_effort===undefined||t.observed_effort===candidate.effort)&&candidate.material_serving_settings.every(key=>t.serving[key]===candidate.serving[key]));
 function hostMeets(route:RoutingRoute,host:z.infer<typeof hostSchema>){
   const required=route.requirements;
   return required.capabilities.every(x=>host.capabilities.includes(x))&&required.tools.every(x=>host.tools.includes(x))&&host.context_window_tokens>=required.context_window_tokens&&(!required.fresh_context||host.supports_fresh_context);

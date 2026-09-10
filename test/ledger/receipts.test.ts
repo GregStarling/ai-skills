@@ -9,6 +9,7 @@ import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
 import {candidateIdentity,parseRuntimeReport,type TaskObservation} from '../../src/schema/index.js';
 import {evaluateReview,parseSelectionInput,qualify,createBinding} from '../../src/governance/index.js';
 import {renderCodex,runtimeVersions} from '../../src/adapters/index.js';
+import {captureIdentityEnvironment} from '../../src/runtime/identity-assurance.js';
 import {proposeRefresh} from '../../src/refresh/index.js';
 
 // SYNTHETIC TEST DATA: native-shaped boundary fixtures, never model-performance
@@ -17,17 +18,18 @@ const directories:string[]=[];
 const observedAt=new Date(Date.now()-1000).toISOString();
 async function temp(){const directory=await mkdtemp(join(tmpdir(),'governor-receipt-test-'));directories.push(directory);return directory;}
 afterEach(async()=>{await Promise.all(directories.splice(0).map(directory=>rm(directory,{recursive:true,force:true})));});
-function fixture(candidateIndex=0,taskIndex=0,accepted=true,v4=false){
+function fixture(candidateIndex=0,taskIndex=0,accepted=true,v4=false,v5=false,v5Risk:'low'|'medium'='low'){
  const input=JSON.parse(readFileSync('fixtures/bindings/valid-initial-backend.json','utf8')).selection;
  const template:TaskObservation=structuredClone(input.observations[0]);
  input.now=observedAt;input.mode='production';input.request.risk='critical';
  // Deliberately permissive test-only sample/interval thresholds exercise plumbing
  // with two tasks. These are NOT proposed operational qualification thresholds.
- if(v4){
-  const active=JSON.parse(readFileSync('policy/constitution.json','utf8'));
+ if(v4||v5){
+  const active=JSON.parse(readFileSync(v5?'policy/constitution.json':'policy/constitution-v4.json','utf8'));
   // Real v4 thresholds with isolated test suite identities; never live evidence.
   input.policy={...active,roles:input.policy.roles,task_classes:input.policy.task_classes};input.request.execution_environment='codex';
  }else{input.policy.qualification.minimum_tasks=2;input.policy.promotion.minimum_paired_tasks=2;input.policy.promotion.non_inferiority_margin=.9;}
+ if(v5){input.request.risk=v5Risk;for(const [index,record] of input.registry.records.entries()){record.model_id=index===0?'gpt-6-astra':'gpt-5.6-terra';record.snapshot_id=record.model_id;record.aliases=[];}for(const [index,candidate] of input.candidates.entries()){candidate.model_id=input.registry.records[index].model_id;candidate.snapshot_id=candidate.model_id;}}
  for(const record of input.registry.records){record.provider='openai';record.frontier=true;record.pinning.source='registry_metadata';record.content_digest=contentDigest(record);}
  input.registry.content_digest=contentDigest(input.registry);
  for(const candidate of input.candidates){candidate.provider='openai';candidate.provenance.registry_content_digest=input.registry.content_digest;}
@@ -35,25 +37,33 @@ function fixture(candidateIndex=0,taskIndex=0,accepted=true,v4=false){
  const add=(text:string)=>{const key=hashBytes(text);input.sources[key]=text;return key;};
  const worker=input.candidates[candidateIndex],reviewer=input.candidates[1-candidateIndex];
  const report=(candidate:typeof worker,id:string,cost:number|null,passed=true,known=true)=>{
-  const value=parseRuntimeReport({schema_version:'runtime_report.v1',report_id:`test_${id}`,provider:'openai',...(v4?{execution_environment:'codex'}:{}),candidate_id:candidate.candidate_id,started_at:input.now,completed_at:input.now,command:{executable:'SYNTHETIC_TEST_DATA_NOT_EXECUTED',args:[],cwd:'/tmp'},status:passed?'completed':'failed',exit_code:passed?0:1,signal:null,timeout_ms:1000,stdout_digest:add(`SYNTHETIC TEST stdout ${id}`),stderr_digest:add(`SYNTHETIC TEST stderr ${id}`),observed_identity:known?{source:'provider_receipt',model_id:candidate.snapshot_id,effort:candidate.effort}:{source:'unknown'},usage:{cost_usd:v4?null:cost}});
+  const value=parseRuntimeReport({schema_version:'runtime_report.v1',report_id:`test_${id}`,provider:'openai',...(v4||v5?{execution_environment:'codex'}:{}),candidate_id:candidate.candidate_id,started_at:input.now,completed_at:input.now,command:{executable:'SYNTHETIC_TEST_DATA_NOT_EXECUTED',args:[],cwd:'/tmp'},status:passed?'completed':'failed',exit_code:passed?0:1,signal:null,timeout_ms:1000,stdout_digest:add(`SYNTHETIC TEST stdout ${id}`),stderr_digest:add(`SYNTHETIC TEST stderr ${id}`),observed_identity:known?{source:'provider_receipt',model_id:candidate.snapshot_id,effort:candidate.effort}:{source:'unknown'},usage:{cost_usd:v4||v5?null:cost}});
+  if(v5){
+   const schemaPath='/tmp/SYNTHETIC_TEST_ONLY.schema.json',command={executable:'codex',args:['exec','--json','--ephemeral','--ignore-user-config','--ignore-rules','--strict-config','-m',candidate.model_id,'-c',`model_reasoning_effort="${candidate.effort}"`,'--sandbox','workspace-write','--output-schema',schemaPath,'-'],cwd:'/tmp'};
+   value.command=command;value.observed_identity={source:'unknown'};
+   value.stdout_digest=add([JSON.stringify({type:'thread.started',thread_id:`SYNTHETIC_TEST_${id}`}),JSON.stringify({type:'item.completed',item:{id:`item_${id}`,type:'agent_message',text:'SYNTHETIC TEST DATA; no model performance claim'}}),JSON.stringify({type:passed?'turn.completed':'turn.failed',...(passed?{usage:{input_tokens:10,output_tokens:10}}:{error:{message:'SYNTHETIC TEST failure'}})})].join('\n')+'\n');
+   const request=add(JSON.stringify({schema_version:'native_execution_request.v1',execution_environment:'codex',candidate_identity:candidateIdentity(candidate),command,environment:captureIdentityEnvironment({}),prompt_digest:hashBytes(`SYNTHETIC TEST prompt ${id}`),configuration_files:[{path:schemaPath,content_digest:add('{"type":"object"}') }]}));
+   const process=add(JSON.stringify({schema_version:'native_execution_process.v1',request_digest:request,started_at:value.started_at,completed_at:value.completed_at,exit_code:value.exit_code,signal:value.signal,timed_out:false,spawn_error:null,stdout_digest:value.stdout_digest,stderr_digest:value.stderr_digest}));
+   value.native_evidence={request_digest:request,process_digest:process,version_digest:add('codex-cli 0.154.0\n')};
+  }
   const key=digest(value);input.runtimeReports[key]=value;return key;
  };
  const grade=(row:TaskObservation)=>{row.provenance.source_digest=add(JSON.stringify({schema_version:'grader_result.v1',task_id:row.task_id,fixture_digest:row.fixture_digest,candidate_identity:row.candidate.candidate_identity,artifact_digest:row.provenance.artifact_digest,passed:row.passed,accepted:row.accepted,checks:[{check_id:'synthetic_boundary_check',passed:row.passed,evidence_digest:add(`SYNTHETIC TEST check ${row.observation_id}: ${row.passed}`)}]}));row.content_digest=contentDigest(row);};
  const observation=(candidate:typeof worker,id:string,task:string,role='implementer',passed=true)=>{
-  const row:TaskObservation={...structuredClone(template),observation_id:id,lane:'production',candidate:{candidate_id:candidate.candidate_id,candidate_identity:candidateIdentity(candidate)},task_id:task,fixture_digest:add(`SYNTHETIC TEST same-task fixture ${task}`),role_id:role,risk:'critical',measured_at:input.now,passed,accepted:passed,attempts:[{attempt_id:`worker_${id}`,kind:'worker',cost_usd:candidate===input.candidates[0]?.01:.02,cost_source:'provider_estimate',latency_ms:100}],provenance:{source:'native_runtime',source_digest:hashBytes('placeholder'),artifact_digest:add(`SYNTHETIC TEST artifact ${id}`),runtime_receipt_digest:null}};
-  if(v4){row.attempts[0]!.cost_usd=null;row.attempts[0]!.cost_source='unknown';}
+  const row:TaskObservation={...structuredClone(template),observation_id:id,lane:'production',candidate:{candidate_id:candidate.candidate_id,candidate_identity:candidateIdentity(candidate)},task_id:task,fixture_digest:add(`SYNTHETIC TEST same-task fixture ${task}`),role_id:role,risk:v5?v5Risk:'critical',measured_at:input.now,passed,accepted:passed,attempts:[{attempt_id:`worker_${id}`,kind:'worker',cost_usd:candidate===input.candidates[0]?.01:.02,cost_source:'provider_estimate',latency_ms:100}],provenance:{source:'native_runtime',source_digest:hashBytes('placeholder'),artifact_digest:add(`SYNTHETIC TEST artifact ${id}`),runtime_receipt_digest:null}};
+  if(v4||v5){row.attempts[0]!.cost_usd=null;row.attempts[0]!.cost_source='unknown';}
   row.provenance.runtime_receipt_digest=report(candidate,id,row.attempts[0]!.cost_usd,passed);grade(row);return row;
  };
  const row=observation(worker,`worker_${candidateIndex}_${taskIndex}`,`paired_task_${taskIndex}`,'implementer',accepted);
- const reviewRows=Array.from({length:v4?input.policy.qualification.minimum_tasks:2},(_,i)=>observation(reviewer,`reviewer_history_${candidateIndex}_${i}`,`reviewer_task_${i}`,'reviewer'));
+ const reviewRows=Array.from({length:v4||v5?input.policy.qualification.minimum_tasks:2},(_,i)=>observation(reviewer,`reviewer_history_${candidateIndex}_${i}`,`reviewer_task_${i}`,'reviewer'));
  const packageDigest=add(`SYNTHETIC TEST independent review package ${row.observation_id}`);
  const reviewReport=report(reviewer,`current_review_${row.observation_id}`,.001);
- if(accepted)row.attempts.push({attempt_id:`review_${row.observation_id}`,kind:'review',cost_usd:v4?null:.001,cost_source:v4?'unknown':'provider_estimate',latency_ms:100});
+ if(accepted)row.attempts.push({attempt_id:`review_${row.observation_id}`,kind:'review',cost_usd:v4||v5?null:.001,cost_source:v4||v5?'unknown':'provider_estimate',latency_ms:100});
  grade(row);
  const reviewSelection={...structuredClone(input),request:{...input.request,role_id:'reviewer'},observations:reviewRows};
  input.observations=[row];
  const raw={schema_version:'delegate_receipt.v1',task_class:'bounded_implementation',task_id:row.task_id,starting_artifact_digest:row.fixture_digest,status:accepted?'completed':'failed',notes:'SYNTHETIC TEST DATA — résumé',attempts:[{candidate_id:worker.candidate_id,candidate_identity:candidateIdentity(worker),role:'worker'},...(accepted?[{candidate_id:reviewer.candidate_id,role:'reviewer'}]:[])]};
- const capture={schema_version:'delegate_receipt_capture.v1' as const,context:{source:'SYNTHETIC TEST DATA; no native invocation',observed_at:input.now,origin:'production_usage' as const,public_task_class:'bounded_implementation',task_id:row.task_id,baseline_digest:row.fixture_digest,...(v4?{execution_environment:'codex' as const}:{})},receipt_text:'',receipt_digest:''};
+ const capture={schema_version:'delegate_receipt_capture.v1' as const,context:{source:'SYNTHETIC TEST DATA; no native invocation',observed_at:input.now,origin:'production_usage' as const,public_task_class:'bounded_implementation',task_id:row.task_id,baseline_digest:row.fixture_digest,...(v4||v5?{execution_environment:'codex' as const}:{})},receipt_text:'',receipt_digest:''};
  const review={selection:reviewSelection,reviewerCandidateId:reviewer.candidate_id,packageDigest,implementerSessionId:'test-worker-session',proof:{outcome:'accepted' as const,artifact_digest:row.provenance.artifact_digest,package_digest:packageDigest,runtime_receipt_digest:reviewReport,session_id:'test-fresh-review-session',parent_session_id:null,context_kind:'new' as const,inherited_context_digest:null}};
  const evidence={selection:input,observationId:row.observation_id,attemptReceipts:Object.fromEntries(row.attempts.map(a=>[a.attempt_id,a.kind==='review'?reviewReport:row.provenance.runtime_receipt_digest!])),...(accepted?{review}:{})};
  const payload={schema_version:'delegate_receipt_evidence.v1' as const,capture,evidence};
@@ -209,4 +219,54 @@ describe('v4 subscription receipt capability boundary',()=>{
   else f.replaceReport(f.row.attempts[part==='worker'?0:1]!.attempt_id,{execution_environment:'api'});
   expect(()=>validateReceiptEvidence(f.payload)).toThrow(/ENVIRONMENT/);
  });
+});
+
+
+describe('v5 receipt configuration assurance is independently rederived',()=>{
+ it('assesses preserved native configuration for workers and independent reviewers without writing assurance into observations',()=>{
+  const f=fixture(0,0,true,false,true),result=validateReceiptEvidence(f.payload);
+  expect(result.qualification.status).toBe('HOLD');
+  expect(Object.values(result.identity_assurances)).toHaveLength(2);
+  expect(Object.values(result.identity_assurances).every(value=>value.overall==='CONFIGURATION_ATTESTED')).toBe(true);
+  expect(result.envelope.observation).not.toHaveProperty('identity_assurance');
+  expect(result.envelope.runtimeReports[f.row.provenance.runtime_receipt_digest!]).toHaveProperty('observed_identity.source','unknown');
+ });
+ it('archives agent assurance claims without authority and refuses them as a substitute for native review configuration',async()=>{
+  const f=fixture(0,0,true,false,true),directory=await temp();
+  Object.assign(f.raw,{identity_assurance:{overall:'CONFIGURATION_ATTESTED'},model:f.worker.model_id,effort:f.worker.effort});f.sealRaw();
+  const captured=await capture(directory,f);expect(captured).toMatchObject({status:'PENDING_EVIDENCE',qualification_authority:false});
+  for(const value of Object.values(f.input.runtimeReports) as ReturnType<typeof parseRuntimeReport>[]){delete f.input.sources[value.native_evidence!.request_digest];delete f.review.selection.sources[value.native_evidence!.request_digest];}
+  // Runtime report hashes remain intact; the independently captured request is absent.
+  expect(()=>validateReceiptEvidence(f.payload)).toThrow('RECEIPT_REVIEW_IDENTITY_ASSURANCE_INSUFFICIENT');
+ });
+ it('refuses tampered request source and a later contradictory worker identity',()=>{
+  for(const mutation of ['configuration','runtime'] as const){
+   const f=fixture(0,0,true,false,true),report=f.input.runtimeReports[f.row.provenance.runtime_receipt_digest!];
+   if(mutation==='configuration')f.input.sources[report.native_evidence.request_digest]='{"model":"trust-me"}';
+   else f.replaceReport(f.row.attempts[0]!.attempt_id,{observed_identity:{source:'provider_receipt',model_id:'gpt-different',effort:f.worker.effort}});
+   expect(()=>validateReceiptEvidence(f.payload)).toThrow(/IDENTITY|CONFIGURATION|EVIDENCE|RUNTIME|DIGEST/);
+  }
+ });
+ it('requires policy-sufficient independent review on the current artifact even when historical review tasks qualify',()=>{
+  const f=fixture(0,0,true,false,true),report=f.input.runtimeReports[f.review.proof.runtime_receipt_digest];
+  delete f.input.sources[report.native_evidence.request_digest];delete f.review.selection.sources[report.native_evidence.request_digest];
+  expect(()=>validateReceiptEvidence(f.payload)).toThrow(/IDENTITY|CONFIGURATION|EVIDENCE/);
+ });
+});
+
+
+it('v5 medium receipt assessment retains accepted configuration evidence only after a fresh different frontier review',()=>{
+ const f=fixture(0,0,true,false,true,'medium');
+ expect(f.worker.model_id).not.toBe(f.reviewer.model_id);
+ const result=validateReceiptEvidence(f.payload);
+ expect(result.qualification.status).toBe('HOLD'); // One task still cannot meet the unchanged 20-task floor.
+ expect(result.envelope.observation.accepted).toBe(true);
+ expect(Object.values(result.identity_assurances).every(value=>value.overall==='CONFIGURATION_ATTESTED')).toBe(true);
+ for(const kind of ['missing','resumed','same-session'] as const){
+  const invalid=fixture(0,0,true,false,true,'medium');
+  if(kind==='missing')delete invalid.evidence.review;
+  if(kind==='resumed')invalid.review.proof.context_kind='resumed' as 'new';
+  if(kind==='same-session')invalid.review.proof.session_id=invalid.review.implementerSessionId;
+  expect(()=>validateReceiptEvidence(invalid.payload)).toThrow(kind==='missing'?'RECEIPT_INDEPENDENT_REVIEW_REQUIRED':'fresh_review_context_required');
+ }
 });

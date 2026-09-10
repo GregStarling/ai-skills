@@ -13,6 +13,6 @@ export function validateRegistry(input: unknown): ModelRegistry {
   return registry;
 }
 
-export function bindCandidate(input: unknown, registry: ModelRegistry): Candidate {
-  return validateCandidateAgainstRegistry(input, validateRegistry(registry));
+export function bindCandidate(input: unknown, registry: ModelRegistry, options: {allowConfigurationPinning?: boolean} = {}): Candidate {
+  return validateCandidateAgainstRegistry(input, validateRegistry(registry), options);
 }

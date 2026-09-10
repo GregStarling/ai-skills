@@ -28,6 +28,8 @@ Before dispatch, ensure an eligible frontier reviewer exists and satisfies the r
 
 A failed or unavailable treatment falls back to the next eligible entry at the correct evidence level. Keep evidence tier separate for each lane; failure does not grant eligibility to a treatment that failed capability requirements.
 
+V5 qualified entries include compiler-derived `qualification.identity_assurance`: model and effort evidence, overall assurance, execution environment, evidence digest and limitations. Use this summary without re-deriving raw qualification. Configuration attestation establishes exact accepted host settings; it does not claim hidden served telemetry or provider-side fallback control. If current host evidence contradicts model/effort or reports substitution, reject that treatment and record the contradiction for refresh. Never write an assurance label into an observation to make it eligible.
+
 ## Time and integrity
 
 Use the host clock and date comparison tools for `refresh_after`, pack `expires_at` and each entry's `expires_at`. Report refresh due and continue until hard pack expiry using only unexpired evidence. One expired treatment does not disable valid alternatives. Publication validation owns the future-`generated_at` check; do not infer publication validity from the session calendar date.

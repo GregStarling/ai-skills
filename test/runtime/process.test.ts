@@ -1,7 +1,8 @@
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { afterEach, expect, it } from "vitest";
+import { afterEach, expect, it, vi } from "vitest";
+import { runInNewContext } from 'node:vm';
 import { runProcess } from "../../src/runtime/process.js";
 import { hashBytes } from "../../src/core/canonical.js";
 const directories: string[] = [];
@@ -27,4 +28,13 @@ it("retains failure evidence and caps output rather than hanging or allocating i
   expect(failed.spawn_error).toContain("ENOENT");
   const bounded = await runProcess({ executable: process.execPath, args: ["-e", "setInterval(()=>process.stdout.write('x'.repeat(4096)),1)"], cwd: process.cwd(), timeoutMs: 2000, outputDirectory: directory(), maxOutputBytes: 100 });
   expect(bounded.output_limited).toBe(true); expect(readFileSync(bounded.stdout_path).length).toBe(100);
+});
+it('recognizes already-reaped process groups across JavaScript contexts',async()=>{
+  const error=runInNewContext('Object.assign(new Error("group is gone"),{code:"ESRCH"})');
+  expect(error instanceof Error).toBe(false);
+  const kill=vi.spyOn(process,'kill').mockImplementation(()=>{throw error;});
+  try{
+    const output=await runProcess({executable:process.execPath,args:['-e','process.stdout.write("done")'],cwd:process.cwd(),timeoutMs:2000,outputDirectory:directory()});
+    expect(output).toMatchObject({exit_code:0,cleanup:'complete'});
+  }finally{kill.mockRestore();}
 });

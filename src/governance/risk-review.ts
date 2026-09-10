@@ -46,8 +46,9 @@ export function evaluateReview(input: { policy: Policy; registry: ModelRegistry;
         qualify({...evidence,policy,registry:input.registry,candidate:input.reviewer}).status !== 'QUALIFIED') fail('reviewer_not_qualified', 'Reviewer requires current matching qualification evidence.');
       try {
         const registry = validateRegistry(input.registry);
-        const implementer = bindCandidate(input.implementer, registry);
-        const reviewer = bindCandidate(input.reviewer, registry);
+        const allowConfigurationPinning=policy.policy_version>=5&&['low','medium'].includes(input.risk)&&['claude_code','codex'].includes(evidence?.request.execution_environment??'');
+        const implementer = bindCandidate(input.implementer, registry, {allowConfigurationPinning});
+        const reviewer = bindCandidate(input.reviewer, registry, {allowConfigurationPinning});
         const a = registry.records.find(r => r.record_id === implementer.provenance.model_record_id)!;
         const b = registry.records.find(r => r.record_id === reviewer.provenance.model_record_id)!;
         if (rule.different_model && implementer.provider === reviewer.provider && implementer.snapshot_id === reviewer.snapshot_id) fail('review_model_not_independent', 'Different effort is not a different model.');

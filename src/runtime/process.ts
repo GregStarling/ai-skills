@@ -25,7 +25,7 @@ export async function runProcess(input: ProcessInput): Promise<ProcessResult> {
   const kill = (signal: NodeJS.Signals) => {
     if (child.pid === undefined) return;
     try { if (process.platform === "win32") child.kill(signal); else process.kill(-child.pid, signal); }
-    catch (error) { if (!(error instanceof Error && "code" in error && error.code === "ESRCH")) cleanup = "failed"; }
+    catch (error) { if (!(typeof error === 'object' && error !== null && "code" in error && error.code === "ESRCH")) cleanup = "failed"; }
   };
   const stop = () => { kill("SIGTERM"); killTimer ??= setTimeout(() => kill("SIGKILL"), 250); };
   const timer = setTimeout(() => { timedOut = true; stop(); }, input.timeoutMs);

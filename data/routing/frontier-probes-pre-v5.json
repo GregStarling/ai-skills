@@ -1,0 +1,56 @@
+{
+  "schema_version": "frontier_probes.v1",
+  "targets_digest": "sha256:edac851c2db3bbeb9b05f66542e11712486f754c3d5b413649631601632b4942",
+  "probes": [
+    {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6-astra",
+      "effort": "high",
+      "host_version": "codex-cli 0.154.0",
+      "attempted": true,
+      "attempted_at": "2026-09-10T06:57:12.205Z",
+      "availability": "available",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
+      "invocation": "native_cli",
+      "native_agent_status": "not_probed",
+      "observed_models": [],
+      "observed_effort": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_digest": "sha256:c8bc07898a6670b05088945aaa64d577a0439d7f98a17b14f7a37718237b9f74",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "status": "pending_review",
+        "review_digest": null,
+        "note": "Review actual source/test execution and diagnosis; record passed/failed with review digest. This alone never qualifies a route."
+      }
+    },
+    {
+      "provider": "anthropic",
+      "host": "claude",
+      "model_id": "claude-fable-5-1",
+      "effort": "high",
+      "host_version": "2.1.267 (Claude Code)",
+      "attempted": true,
+      "attempted_at": "2026-09-10T06:57:12.205Z",
+      "availability": "available",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
+      "invocation": "native_cli",
+      "native_agent_status": "not_probed",
+      "observed_models": [
+        "claude-fable-5-1"
+      ],
+      "observed_effort": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_digest": "sha256:5bd0da1caca30ee8f0aace2677883ac650bd6175b1b0ec830f95354a424874ea",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "status": "pending_review",
+        "review_digest": null,
+        "note": "Review actual source/test execution and diagnosis; record passed/failed with review digest. This alone never qualifies a route."
+      }
+    }
+  ]
+}

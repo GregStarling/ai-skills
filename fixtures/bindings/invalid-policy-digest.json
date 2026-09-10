@@ -5,7 +5,7 @@
     "mode": "simulation",
     "policy_version": 1,
     "policy_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
-    "schema_digest": "sha256:bb782badd870ed782578e2ae6b113ce3ca6ea88de756e922fadc687a6eb50b79",
+    "schema_digest": "sha256:c2e15a2bbf481de6174bae2201d55df72682e04ba33425d3371ffd02db98c8cb",
     "generated_at": "2026-09-09T00:00:00.000Z",
     "refresh_due_at": "2026-09-10T00:00:00.000Z",
     "hard_expiry_at": "2026-09-12T00:00:00.000Z",

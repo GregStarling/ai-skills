@@ -1,10 +1,11 @@
 import { z } from 'zod';
-import { riskCategorySchema, constraintSetSchema, parseRuntimeReport, candidateIdentity, type Candidate, type ModelRegistry, type TaskObservation } from '../schema/index.js';
+import { riskCategorySchema, constraintSetSchema, parseRuntimeReport, candidateIdentity, type Candidate, type ModelRegistry, type TaskObservation, type IdentityAssurance } from '../schema/index.js';
 import { digest } from '../core/canonical.js';
 import { bindCandidate, validateRegistry } from '../registry/index.js';
 import { validateObservations, summarizeObservations } from '../evidence/index.js';
 import { parsePolicy, type Policy } from './policy.js';
 import type { Diagnostic } from './risk-review.js';
+import { deriveIdentityAssurance, identityAssuranceMeetsMinimum } from '../runtime/identity-assurance.js';
 
 export const requestSchema = z.object({
   role_id: z.string().min(1), task_class_id: z.string().min(1), risk: riskCategorySchema,
@@ -23,6 +24,7 @@ export type QualificationInput = {
 export type Qualification = {
   candidate_id: string; status: 'QUALIFIED' | 'REJECT' | 'HOLD'; diagnostics: Diagnostic[];
   observations: TaskObservation[];
+  identity_assurance?: IdentityAssurance;
   metrics: { tasks: number; accepted: number; success_rate: number | null; total_cost_usd: number | null;
     cost_per_accepted_task_usd: number | null; p95_latency_ms: number | null };
 };
@@ -31,9 +33,11 @@ export function qualify(input: QualificationInput): Qualification {
   let rejected = false;
   const fail = (rule_id: string, message: string, hard = true) => { diagnostics.push({rule_id,message}); rejected ||= hard; };
   let observations: TaskObservation[] = [];
+  let identityAssurance: IdentityAssurance | undefined;
   const empty: Qualification['metrics'] = { tasks: 0, accepted: 0, success_rate: null, total_cost_usd: null, cost_per_accepted_task_usd: null, p95_latency_ms: null };
   const result = (metrics = empty): Qualification => ({candidate_id: input.candidate.candidate_id,
-    status: diagnostics.length ? rejected ? 'REJECT' : 'HOLD' : 'QUALIFIED', diagnostics, observations, metrics});
+    status: diagnostics.length ? rejected ? 'REJECT' : 'HOLD' : 'QUALIFIED', diagnostics, observations, metrics,
+    ...(identityAssurance === undefined ? {} : {identity_assurance:identityAssurance})});
   try {
     z.enum(['simulation','production']).parse(input.mode);
     const policy = parsePolicy(input.policy);
@@ -47,7 +51,8 @@ export function qualify(input: QualificationInput): Qualification {
     const order = ['low','medium','high','critical'];
     if (order.indexOf(request.risk) < order.indexOf(task.risk_floor)) fail('risk_below_class_floor', 'Risk cannot be lower than the task class floor.');
     const registry = validateRegistry(input.registry);
-    const candidate = bindCandidate(input.candidate, registry);
+    const allowConfigurationPinning = policy.policy_version>=5 && ['low','medium'].includes(request.risk) && ['claude_code','codex'].includes(request.execution_environment??'');
+    const candidate = bindCandidate(input.candidate, registry, {allowConfigurationPinning});
     const model = registry.records.find(r => r.record_id === candidate.provenance.model_record_id)!;
     if (input.mode === 'production' && (candidate.provider === 'synthetic' || model.pinning?.source === 'synthetic_fixture')) fail('synthetic_candidate_in_production', 'Synthetic identity cannot qualify production.');
     const required = new Set([...task.required_capabilities, ...(request.required_capabilities ?? [])]);
@@ -63,7 +68,7 @@ export function qualify(input: QualificationInput): Qualification {
     const requiredContext = Math.max(request.context_window_tokens ?? 0, request.constraints.context_window_requirement ?? 0);
     if (requiredContext > 0 && (model.context_window_tokens === null || model.context_window_tokens < requiredContext)) fail('context_window_insufficient', 'Required context capacity is unavailable.');
     const candidateRows = input.observations.filter(o => o.candidate.candidate_id === candidate.candidate_id);
-    const validated = validateObservations(candidateRows, { registry, candidates:[candidate], mode: input.mode,
+    const validated = validateObservations(candidateRows, { registry, candidates:[candidate], mode: input.mode, allowConfigurationPinning,
       sources: input.sources ?? new Map(), ...(input.runtimeReports === undefined ? {} : {runtimeReports:input.runtimeReports}) });
     observations = validated.filter(o => o.candidate.candidate_identity === candidateIdentity(candidate) &&
       o.role_id === request.role_id && o.task_class_id === request.task_class_id && o.risk === request.risk &&
@@ -72,6 +77,8 @@ export function qualify(input: QualificationInput): Qualification {
       o.harness_version === task.eval_bucket.harness_version && o.grader_version === task.eval_bucket.grader_version);
     const taskIds = new Set<string>();
     const attemptIds = new Set<string>();
+    const sufficientIdentity = new Set<string>();
+    const assuranceEvidence: IdentityAssurance[] = [];
     for (const observation of observations) {
       if (input.mode === 'production') {
         const receipt = parseRuntimeReport(input.runtimeReports?.get(observation.provenance.runtime_receipt_digest!));
@@ -79,9 +86,16 @@ export function qualify(input: QualificationInput): Qualification {
           if(!receipt.execution_environment||receipt.execution_environment==='unknown')fail('runtime_environment_unverified','Execution environment is not established by runtime evidence.',false);
           else if(request.execution_environment&&request.execution_environment!=='unknown'&&receipt.execution_environment!==request.execution_environment)fail('runtime_environment_mismatch','API and subscription-host evidence cannot be silently pooled.');
         }
-        const observed = receipt.observed_identity;
-        if (observed.source === 'unknown' || observed.model_id === undefined || observed.effort === undefined) fail('runtime_identity_unverified', 'Production qualification requires runtime-attested snapshot and effort.', false);
-        if (receipt.provider !== candidate.provider || (observed.source !== 'unknown' && ((observed.model_id !== undefined && observed.model_id !== candidate.snapshot_id) || (observed.effort !== undefined && observed.effort !== candidate.effort)))) fail('runtime_identity_mismatch', 'Observed provider, snapshot or effort differs from the exact candidate treatment.');
+        if(policy.policy_version>=5){
+          const {diagnostics:identityDiagnostics,...assurance}=deriveIdentityAssurance({candidate,report:receipt,sources:input.sources??new Map(),...(request.execution_environment===undefined?{}:{executionEnvironment:request.execution_environment})});
+          for(const diagnostic of identityDiagnostics)fail(diagnostic.rule_id,diagnostic.message,diagnostic.hard);
+          if(!identityAssuranceMeetsMinimum(assurance.overall,policy.identity_assurance!.minimum_by_risk[request.risk]))fail('identity_assurance_insufficient','Preserved execution evidence does not establish the minimum treatment identity assurance for this risk.',false);
+          else if(!identityDiagnostics.length){sufficientIdentity.add(observation.observation_id);assuranceEvidence.push(assurance);}
+        }else{
+          const observed = receipt.observed_identity;
+          if (observed.source === 'unknown' || observed.model_id === undefined || observed.effort === undefined) fail('runtime_identity_unverified', 'Production qualification requires runtime-attested snapshot and effort.', false);
+          if (receipt.provider !== candidate.provider || (observed.source !== 'unknown' && ((observed.model_id !== undefined && observed.model_id !== candidate.snapshot_id) || (observed.effort !== undefined && observed.effort !== candidate.effort)))) fail('runtime_identity_mismatch', 'Observed provider, snapshot or effort differs from the exact candidate treatment.');
+        }
       }
       if (taskIds.has(observation.task_id)) fail('duplicate_task_observation', 'Repeated task identities cannot inflate sample size.');
       taskIds.add(observation.task_id);
@@ -92,6 +106,10 @@ export function qualify(input: QualificationInput): Qualification {
       const age = now - Date.parse(observation.measured_at);
       if (age < 0) fail('future_evidence', 'Observation is in the future.');
       else if (age > policy.qualification.evidence_max_age_days * 86400000) fail('evidence_expired', 'Observation exceeds declared freshness limit.', false);
+    }
+    if(policy.policy_version>=5&&input.mode==='production'){
+      observations=observations.filter(observation=>sufficientIdentity.has(observation.observation_id));
+      if(assuranceEvidence.length)identityAssurance=summarizeIdentityAssurance(assuranceEvidence);
     }
     const summary = summarizeObservations(observations);
     const latencies = observations.map(o => o.latency_ms);
@@ -116,4 +134,15 @@ export function qualify(input: QualificationInput): Qualification {
     }
     return result(metrics);
   } catch (error) { fail('invalid_qualification_input', error instanceof Error ? error.message : 'Invalid input.'); return result(); }
+}
+
+/** Conservative authority summary: one stronger task cannot relabel weaker evidence. */
+function summarizeIdentityAssurance(evidence: IdentityAssurance[]): IdentityAssurance {
+  const first=evidence[0]!;
+  const fieldRank={unverified:0,host_configuration:1,runtime_attested:2,not_applicable:2};
+  const weakest=(field:'model'|'effort')=>evidence.reduce((current,item)=>fieldRank[item[field].assurance]<fieldRank[current.assurance]?item[field]:current,first[field]);
+  const model=weakest('model'),effort=weakest('effort');
+  const fields=[model.assurance,effort.assurance];
+  const overall=fields.includes('unverified')?'UNVERIFIED':fields.every(field=>field==='runtime_attested'||field==='not_applicable')?'RUNTIME_ATTESTED':fields.includes('runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
+  return {...first,overall,model,effort,evidence_digest:digest(evidence.map(item=>digest(item)).sort()),limitations:[...new Set(evidence.flatMap(item=>item.limitations))].sort()};
 }

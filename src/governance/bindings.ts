@@ -13,13 +13,14 @@ export function createBinding(input: SelectionInput): Binding {
   if (!result.selected) throw new Error(`binding_not_available: ${result.decision.outcome}`);
   const policy=parsePolicy(input.policy);
   const generated=Date.parse(input.now);
+  const assurance=result.qualifications.find(q=>q.candidate_id===result.selected!.candidate_id)?.identity_assurance;
   return parseBinding({schema_version:'binding.v1',binding_id:`binding_${digest(result.decision).slice(7,31)}`,
     mode:input.mode,policy_version:policy.policy_version,policy_digest:policyDigest(policy),schema_digest:bindingSchemaDigest(),
     generated_at:input.now,refresh_due_at:new Date(generated+policy.binding.refresh_after_hours*3600000).toISOString(),
     hard_expiry_at:new Date(generated+policy.binding.hard_expiry_hours*3600000).toISOString(),role_id:input.request.role_id,
     task_class_id:input.request.task_class_id,risk:input.request.risk,candidate:result.selected,decision:result.decision,
     evidence_refs:result.decision.evidence_refs,candidate_set_digest:result.decision.candidate_set_digest,
-    evidence_digest:result.decision.evidence_digest,production_synthetic_evidence:false});
+    evidence_digest:result.decision.evidence_digest,production_synthetic_evidence:false,...(policy.policy_version>=5&&assurance?{identity_assurance:assurance}:{})});
 }
 export function validateBinding(value:unknown,input:SelectionInput) {
   const diagnostics:Diagnostic[]=[];

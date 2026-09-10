@@ -1,6 +1,7 @@
 import {readFileSync} from 'node:fs';
 import {describe,it,expect} from 'vitest';
 import {parsePolicy,loadPolicy,classifyRisk,policyDigest} from '../../src/governance/index.js';
+import {hashBytes} from '../../src/core/canonical.js';
 const policy=()=>loadPolicy('policy/constitution.json');
 describe('human policy',()=>{
  it('keeps candidate/model identities out of a bounded versioned taxonomy',()=>{
@@ -22,5 +23,21 @@ describe('human policy',()=>{
   expect(classifyRisk({policy:policy(),taskClassId:'bounded_backend',preSignals:[],postSignals:['authentication']}).risk).toBe('high');
   expect(classifyRisk({policy:policy(),taskClassId:'bounded_backend',preSignals:['secrets'],postSignals:[]}).risk).toBe('critical');
   expect(()=>classifyRisk({policy:policy(),taskClassId:'bounded_backend',preSignals:['looks_safe'],postSignals:[]})).toThrow('unknown_risk_signal');
+ });
+ it('preserves exact v4 bytes and every empirical, review and economic threshold under v5',()=>{
+  expect(hashBytes(readFileSync('policy/constitution-v4.json'))).toBe('sha256:2f2ba7be3d18392f1dc3f97015d8e8c21ed24bd242e1bbe03e614cb5eebaa051');
+  const old=loadPolicy('policy/constitution-v4.json'),current=policy();
+  expect(old.policy_version).toBe(4);expect(current.policy_version).toBe(5);
+  for(const key of ['roles','task_classes','risk_signals','review','qualification','economics','promotion','shadow','binding','routing_pack'] as const)expect(current[key]).toEqual(old[key]);
+  expect(current.identity_assurance!.minimum_by_risk).toEqual({low:'CONFIGURATION_ATTESTED',medium:'CONFIGURATION_ATTESTED',high:'RUNTIME_ATTESTED',critical:'RUNTIME_ATTESTED'});
+ });
+ it.each(['missing-v5-assurance','historical-relabel','unverified-floor','high-weakened','critical-weakened'])('rejects invalid identity risk policy: %s',kind=>{
+  const p=structuredClone(policy());
+  if(kind==='missing-v5-assurance')delete p.identity_assurance;
+  if(kind==='historical-relabel')p.policy_version=4;
+  if(kind==='unverified-floor')Object.assign(p.identity_assurance!.minimum_by_risk,{low:'UNVERIFIED'});
+  if(kind==='high-weakened')p.identity_assurance!.minimum_by_risk.high='CONFIGURATION_ATTESTED';
+  if(kind==='critical-weakened')p.identity_assurance!.minimum_by_risk.critical='PARTIALLY_RUNTIME_ATTESTED';
+  expect(()=>parsePolicy(p)).toThrow();
  });
 });

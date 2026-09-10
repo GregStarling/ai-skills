@@ -55,7 +55,7 @@ async function collectEvaluations(request:z.infer<typeof refreshRequestSchema>,i
  }
  if(request.evaluations?.length&&request.mode!=='production')throw new Error('LIVE_EVALUATION_REQUIRES_EXPLICIT_PRODUCTION_REQUEST');
  // Validate the complete explicit request set before any native invocation.
- for(const item of request.evaluations??[]){const candidate=selection.candidates.find(value=>value.candidate_id===item.candidateId);if(!candidate)throw new Error('EVALUATION_CANDIDATE_MISSING');bindCandidate(candidate,selection.registry);if(candidate.provider==='synthetic')throw new Error('REAL_EVALUATION_REQUIRES_NATIVE_PROVIDER');}
+ for(const item of request.evaluations??[]){const candidate=selection.candidates.find(value=>value.candidate_id===item.candidateId);if(!candidate)throw new Error('EVALUATION_CANDIDATE_MISSING');bindCandidate(candidate,selection.registry,{allowConfigurationPinning:selection.policy.policy_version>=5&&['low','medium'].includes(selection.request.risk)&&['claude_code','codex'].includes(selection.request.execution_environment??'')});if(candidate.provider==='synthetic')throw new Error('REAL_EVALUATION_REQUIRES_NATIVE_PROVIDER');}
  for(const item of request.evaluations??[]){
   const candidate=selection.candidates.find(value=>value.candidate_id===item.candidateId)!;
   const directory=join(root,'evaluations'),ledger=new Ledger(directory),id=`evaluation_${item.evaluationId}`;

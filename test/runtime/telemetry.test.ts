@@ -7,7 +7,8 @@ it("uses observed Claude identities, deduplicates messages and keeps final cumul
   const message = { type: "assistant", session_id: "session-one", message: { id: "message-one", model: "release-one", usage: { input_tokens: 10, output_tokens: 2 } } };
   const result = parseNativeTelemetry("anthropic", lines(message, message, { type: "result", total_cost_usd: 0.3 }, { type: "result", subtype: "success", result: "done", total_cost_usd: 0.5, modelUsage: { "release-one": {} } }), "release-one");
   expect(result).toMatchObject({ session_id: "session-one", identity_status: "matched", input_tokens: 10, output_tokens: 2, cost_usd: 0.5, cost_source: "provider_estimate", result_text: "done" });
-  expect(parseNativeTelemetry("anthropic", lines(message, { type: "result", modelUsage: { "other-release": {} } }), "release-one").identity_status).toBe("mixed");
+  expect(parseNativeTelemetry("anthropic", lines(message, { type: "result", modelUsage: { "other-release": {} } }), "release-one").identity_status).toBe("matched");
+  expect(parseNativeTelemetry("anthropic", lines(message, {...message,message:{model:'other-release'}}), "release-one").identity_status).toBe("mixed");
 });
 it("never treats Codex requested model/config or absent cost as observed identity/free work", () => {
   const result = parseNativeTelemetry("openai", lines({ type: "thread.started", thread_id: "thread-one", model: "release-one" }, { type: "turn.completed", usage: { input_tokens: 3, output_tokens: 2 } }, { type: "item.completed", item: { type: "agent_message", text: "done" } }), "release-one");

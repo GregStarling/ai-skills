@@ -1,9 +1,9 @@
 {
   "schema_version": "routing_pack.v3",
   "mode": "production",
-  "generated_at": "2026-09-10T06:31:27.211Z",
-  "refresh_after": "2026-09-17T06:31:27.211Z",
-  "expires_at": "2026-10-10T06:31:27.211Z",
+  "generated_at": "2026-09-10T07:25:11.453Z",
+  "refresh_after": "2026-09-17T07:25:11.453Z",
+  "expires_at": "2026-10-10T07:25:11.453Z",
   "routing_modes": {
     "repo_exploration": "direct",
     "mechanical_work": "direct",
@@ -14,13 +14,13 @@
     "research": "direct",
     "full_project": "decompose"
   },
-  "policy_version": 4,
-  "policy_digest": "sha256:d75cd02ca2a4ba222a7993e8cea74df1310b188bced073fe716bfaa9ce6a418e",
+  "policy_version": 5,
+  "policy_digest": "sha256:a612eb91df952de9dfbeba985267567304e539ef465128e2ab47b74f0c0bc5cc",
   "registry_content_digests": [],
   "registry_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
   "missing_routes": [],
   "exclusions": [],
-  "content_digest": "sha256:3cdadd605a8315a7dddfdff7c2503b0b9e77f307d8596f16229da363c9332d69",
+  "content_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
   "treatments": {
     "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e": {"provider":"openai","model_id":"gpt-5.5","snapshot_id":null,"effort":"low","serving":{"fallback":"disabled","tool_use":"host_tools","json_schema":false},"material_serving_settings":["fallback","tool_use"],"family":"gpt-5.5","frontier":false,"capabilities":["terminal"],"context_window_tokens":272000,"provisional":{"observed_at":"2026-09-10T02:23:13.043Z","host":"codex","host_version":"0.142.5","observed_model_id":"gpt-5.5","observed_effort":null,"configured_effort":"low","effort_source":"requested_configuration","identity_source":"host_configuration","control_limitations":["Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.","CLI effort was configured, but served effort is not attested in the event stream.","No explicit fallback was requested; provider-side rerouting is not independently attested.","Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.","CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the refreshed account catalog."],"availability":{"url":"https://learn.chatgpt.com/docs/models","checked_at":"2026-09-10T02:19:56.560Z"},"pricing":{"url":"https://learn.chatgpt.com/docs/pricing","checked_at":"2026-09-10T02:19:56.560Z","input_usd_per_million":null,"output_usd_per_million":null,"unknown_reason":"Codex subscription JSONL exposes tokens but no authoritative per-run USD cost or applicable subscription per-token price; Spark API pricing is not inferred."},"smoke":{"task":"tinybug: preserve zero and default only null/undefined quantities","artifact_digest":"sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58","execution_digest":"sha256:4bb7b43a437d4645466d90b83f3d70eb7f8abee0cd5681d084d7b0551c088255","review_digest":"sha256:667f46c9be43866d752f58cec32b9ec769c7768bf8834c6f73dfd35a763e18bd","accepted":true,"frontier_reviewed":true},"qualification_failure":null}},
     "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651": {"provider":"openai","model_id":"gpt-5.5","snapshot_id":null,"effort":"high","serving":{"fallback":"disabled","tool_use":"host_tools","json_schema":false},"material_serving_settings":["fallback","tool_use"],"family":"gpt-5.5","frontier":true,"capabilities":["terminal"],"context_window_tokens":272000,"provisional":{"observed_at":"2026-09-10T02:07:33.037Z","host":"codex","host_version":"0.142.5","observed_model_id":"gpt-5.5","observed_effort":null,"configured_effort":"high","effort_source":"requested_configuration","identity_source":"host_configuration","control_limitations":["Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.","CLI effort was configured, but served effort is not attested in the event stream.","No explicit fallback was requested; provider-side rerouting is not independently attested.","Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.","CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the refreshed account catalog."],"availability":{"url":"https://learn.chatgpt.com/docs/models","checked_at":"2026-09-10T02:19:56.560Z"},"pricing":{"url":"https://learn.chatgpt.com/docs/pricing","checked_at":"2026-09-10T02:19:56.560Z","input_usd_per_million":null,"output_usd_per_million":null,"unknown_reason":"Codex subscription JSONL exposes tokens but no authoritative per-run USD cost or applicable subscription per-token price; Spark API pricing is not inferred."},"smoke":{"task":"independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR","artifact_digest":"sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58","execution_digest":"sha256:146f0baba46b73026d1348ce4dc9ae6464b875b1808093f323e3fe698423a74d","review_digest":"sha256:146f0baba46b73026d1348ce4dc9ae6464b875b1808093f323e3fe698423a74d","accepted":true,"frontier_reviewed":true},"qualification_failure":null}},
