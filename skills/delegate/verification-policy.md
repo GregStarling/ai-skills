@@ -1,6 +1,8 @@
 # Frontier acceptance
 
-Frontier verification is mandatory at every risk level; its depth is proportional to the task. The verifier must be eligible in the pack for the actual scope and host. It may have qualified or explicitly provisional evidence. For low risk, the eligible frontier coordinator reviews the worker's actual result itself. A separate frontier process is only necessary for required model/family/context independence or an ineligible coordinator; do not duplicate frontier review by default.
+The artifact checks and stopping condition below apply to both direct and delegated work. Direct execution follows ordinary host/project review requirements, including required independence; it does not use pack qualification or delegation receipts. The remaining worker, routing and receipt rules govern delegated work.
+
+Frontier verification is mandatory for delegated work at every risk level; its depth is proportional to the task. The verifier must be eligible in the pack for the actual scope and host. It may have qualified or explicitly provisional evidence. For low risk, the eligible frontier coordinator reviews the worker's actual result itself. A separate frontier process is only necessary for required model/family/context independence or an ineligible coordinator; do not duplicate frontier review by default.
 
 For a small edit, inspect the actual diff and relevant test evidence. For a bug, establish the original failure and verify the corrected behavior. For UI, inspect the rendered result and exercise relevant interactions and narrow layouts; a successful build is insufficient. For research and analysis, check sources, reasoning and calculations. For a project, test integrated critical flows and missing requirements, not just individual worker reports.
 

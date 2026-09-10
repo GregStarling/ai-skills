@@ -16,11 +16,11 @@ of the evidence needed for acceptance.
 Give substantial file, log, or documentation investigations to a focused worker
 when noise isolation, independent parallel work, or model economics justify the
 coordination. Return findings, exact sources, and uncertainties. A single
-targeted search need not spawn an agent; the user's underlying task still follows
-the worker-and-verifier contract. Use an eligible route and the
+targeted search need not spawn an agent. Choose the underlying task's work shape
+using the entrypoint's direct-versus-delegated decision. For delegation, use an eligible route and the
 [existing packet](delegation-contract.md), rather than copying the entire chat.
 
 Judge the whole workflow by accepted quality, completion time, and observable
-usage, including exploration and verification. Smaller coordinator context alone
+usage, including exploration, coordination, failed attempts, repairs and verification. Smaller coordinator context alone
 does not establish lower total usage. Do not infer savings from screenshot counts
 or cumulative transcript size, or introduce arbitrary session-size alarms.

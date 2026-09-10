@@ -1,12 +1,12 @@
 # Delegate
 
-**Use the cheapest model that can do the job. Make a frontier model check the work.**
+**Achieve the requested quality with the least total effort needed.**
 
-Most AI coding workflows use the same expensive model for everything: understanding the problem, writing boilerplate, fixing tiny bugs, running tests, reviewing the result.
-
-That works. It is also wasteful.
+Complete small work directly when a handoff adds more effort. Delegate substantial bounded work when it improves total efficiency, and spend stronger reasoning on ambiguity and consequential decisions.
 
 **Delegate** is a portable skill for Claude Code and Codex that separates **judgment from execution**.
+
+For delegated work:
 
 ```text
 You
@@ -26,7 +26,7 @@ or targeted repair / escalation
 
 The goal is simple:
 
-> **Use the least expensive model that can reliably do the work, while keeping frontier intelligence responsible for the decisions that matter.**
+> **Preserve high-quality output and relevant verification, then minimize the total effort through acceptance—including coordination, failed attempts and repairs.**
 
 No daemon. No database. No routing service. No extra API keys. No Node installation for the skill. Foreman is not required.
 
@@ -106,7 +106,7 @@ Your existing Claude Code or Codex authentication is used. Delegate does not req
 
 ## What can I give it?
 
-Start with the task you would normally hand to your coding agent. Delegate checks the current pack's supported scope and your host's available controls before dispatching work.
+Start with the task you would normally hand to your coding agent. Delegate first chooses direct execution or delegation. Before dispatching workers, it checks the current pack's supported scope and your host's available controls.
 
 ```text
 /delegate find out why sync hangs after reconnect and fix it
@@ -124,7 +124,7 @@ Start with the task you would normally hand to your coding agent. Delegate check
 
 For Codex, use `$delegate` instead.
 
-Small jobs stay small. Larger projects are decomposed into bounded workstreams and can use multiple workers when the work is genuinely independent.
+Small jobs can be completed directly with appropriate verification. Explicit requests for workers, exact models, strict pack governance or independent review still apply. Larger projects are decomposed into bounded workstreams and can use multiple workers when the work is independent and delegation improves total efficiency.
 
 ---
 
@@ -132,7 +132,7 @@ Small jobs stay small. Larger projects are decomposed into bounded workstreams a
 
 Delegate does **not** ask an LLM to look at a list of models and guess which one feels appropriate.
 
-It uses a versioned routing pack built from model availability, task evidence, host controls, economics, qualification results and explicit limitations.
+For delegated work, it uses a versioned routing pack built from model availability, task evidence, host controls, economics, qualification results and explicit limitations. Direct execution is ordinary host work and does not claim pack qualification.
 
 The routing rule is:
 
@@ -163,7 +163,7 @@ Where measured data exists, the system can account for the actual token mix, fai
 
 That makes the question:
 
-> **What is the cheapest model per successful task?**
+> **Which workflow achieves the requested quality with the least total effort?**
 
 not merely:
 
@@ -199,7 +199,7 @@ Then cheaper models do the bounded work they have evidence to handle.
 
 Delegation is only half of the loop.
 
-Frontier verification is mandatory.
+Frontier verification is mandatory for delegated work. Direct work retains the relevant tests, visual checks and any required independent review under the host and project rules.
 
 The verifier inspects the actual artifact, tests, behavior, rendered interface, source-backed claims or other evidence appropriate to the task.
 
@@ -208,6 +208,8 @@ If the result is wrong, Delegate normally sends a targeted repair back to the sa
 If the worker demonstrates that it cannot handle the task, Delegate escalates to the next eligible treatment.
 
 It does not silently turn the frontier coordinator into the implementation worker just because the first attempt failed.
+
+In either work shape, stop when the requested quality and acceptance checks are satisfied and no material defect remains. Avoid speculative polish and repeated reviews without new evidence.
 
 ---
 

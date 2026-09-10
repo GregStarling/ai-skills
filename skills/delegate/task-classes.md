@@ -1,6 +1,6 @@
 # Classify the work
 
-Use these eight labels and the pack's `routing_modes` to choose the work shape. A label is not permission to extend a route beyond its scope, risk, tools or evidence. Classify each workstream separately.
+After choosing delegation in the entrypoint, use these eight labels and the pack's `routing_modes` to choose the delegated work shape. A label is not permission to extend a route beyond its scope, risk, tools or evidence. Classify each workstream separately. The pack value `direct` means one worker followed by frontier verification; it is distinct from ordinary coordinator execution selected before pack lookup.
 
 | Class | Work shape | Typical acceptance evidence |
 | --- | --- | --- |
