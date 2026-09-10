@@ -1,6 +1,10 @@
 # Model Governor
 
-## Active scope
+## Current product scope — standalone delegate
+
+The latest user clarification makes `skills/delegate/SKILL.md` the primary product: a standalone skill for any task, optimizing total token/coordination effort through completion. Foreman and Model Governor are not prerequisites. The required default is cheapest capable available worker followed by frontier-model verification, including for small tasks. Native host tools perform routing; task splitting is optional and does not replace this loop. Existing governor rules still apply when that engine is explicitly invoked or project policy requires it. Do not globally install skills or alter provider settings without authorization. The older engine release and its checks are not evidence of end-to-end standalone skill acceptance. See docs/standalone-delegate-plan.md.
+
+## Earlier engine scope
 
 The user's latest instruction is to own the complete v1 build. docs/model-governor-spec.md is the original source; its final instruction to stop after Phase 1 is superseded by that explicit follow-up. See lessons/2026-09-09-v1-scope.md. Prove the validator milestone first, then continue through Claude adapter, Codex adapter, real evaluation fixtures, evidence/production ledgers, paired statistics, qualification, discovery, refresh and delegation. Optional UI is excluded.
 

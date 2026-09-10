@@ -1,5 +1,7 @@
 # Local CLI workflow
 
+This guide describes the optional Model Governor engine. The standalone `skills/delegate/SKILL.md` skill does not require these commands, a binding, or an engine checkout.
+
 Run commands from the Model Governor checkout after `npm ci` and `npm run build`. The checkout and the workspace to be edited are separate paths. Commands use JSON/YAML request files and print JSON. No global installation, provider API keys or user configuration changes are needed.
 
 ## A reproducible offline example
