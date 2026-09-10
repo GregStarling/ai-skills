@@ -28,22 +28,32 @@ After `npm run build`, `node dist/cli/index.js compile-routing-pack --input requ
 }
 ```
 
-Selection envelopes are actual versioned policy/registry/candidates/observations/request data, plus source bytes and runtime reports. Shortlist frontier candidates for the reviewer selection: a governed decision selecting a non-frontier reviewer cannot authorize a frontier substitute. Refresh's text or base64 source encoding is retained losslessly. Do not invent IDs or use an adapter-test envelope in production.
+Selection envelopes are actual versioned policy/registry/candidates/observations/request data, plus source bytes and runtime reports. The compiler applies frontier eligibility before governed reviewer selection, retaining eligible incumbent decisions; a non-frontier incumbent requires explicit escalation. Refresh's text or base64 source encoding is retained losslessly. Do not invent IDs or use an adapter-test envelope in production.
 
 The CLI loads current policy and compiles in production mode using the current clock. It does not invoke models. If `output` is supplied, the destination must be a new staging file; existing files and global skill/config locations are refused. Otherwise the result includes the complete pack on stdout. `COMPILED` means compilation succeeded, not that every class has an eligible route.
 
-`data/routing/compile-request.json` intentionally has no admitted strata. It regenerates an empty production pack with all eight classes recorded as missing. The existing one-task trials and native smokes do not meet the qualification requirements; no hardcoded fallback ladder is hidden behind those gaps.
+`data/routing/compile-request.json` remains the empty governed-envelope example. Empty v2 packs report seven missing worker classes; `full_project` is a decomposition mode. Real bootstrap inputs are in `data/routing/host-observations.json`. After a build, `node scripts/refresh-routing-pack.mjs` compiles the scoped provisional pilot from those actual observations and source dates. It replaces the local skill pack for review; publishing remains the normal authorized Git workflow.
 
 Library `compileRoutingPack` also has an explicit `simulation_test` mode for deterministic algorithm tests. Those packs cannot resolve production routes and must never be published as consumer authority.
 
 ## Inspect and resolve
 
-`validate-routing-pack --input pack.json` validates the versioned shape, internal identities and content digest. A digest detects corruption; it is not a signature or independent proof of model performance. Production authority depends on trusted compiler inputs and the maintainer's reviewed publication.
+`validate-routing-pack --input pack.json` validates shape, identities, content digest, production mode and publication timestamps against the current clock. A digest detects corruption; it is not a signature or independent proof of model performance. Authority depends on trusted compiler inputs and reviewed publication. A production pack may contain explicitly provisional treatments; `simulation_test` cannot be published or dispatched.
 
 The maintainer `resolve-routing` command accepts `{pack,request}`. The request identifies a public class, exact `stratumDigest`, current `now`, optional `failedCandidateIds` and an explicit host inventory. It performs the same intersection described in the skill without invoking a model. The host inventory contains exact model/snapshot/effort/serving treatments, effective tools and capabilities, context capacity and fresh-context support. Unknown requirements cannot be treated as supported.
 
-The exact host fields are `treatments: [{provider, model_id, snapshot_id, effort, serving}]`, `tools`, `capabilities`, `context_window_tokens` and `supports_fresh_context`. Capture these from the active host; this input is an inventory, not a model discovery mechanism. The consumer follows the same rules from the copied folder without running this command.
+The exact host fields are `host: "claude" | "codex"`, `treatments: [{provider, model_id, snapshot_id, effort, serving}]`, `tools`, `capabilities`, `context_window_tokens` and `supports_fresh_context`. Capture these from the active host. Provisional snapshots may be null, with explicit configured-versus-observed identity limits. The consumer follows these rules without running the command.
 
-`refresh_after` requests an update; it is not a license to extend `expires_at`. Hard expiry is bounded by policy and qualification evidence freshness. A host may skip an unavailable candidate or a previously failed treatment only within an eligible compiled ladder. A retained incumbent's position reflects promotion rules, not a fresh price-only ranking.
+`routing_pack` policy controls seven-day refresh and thirty-day pack expiry separately from `binding`. Every treatment also has an expiry bounded by its evidence/source dates; one old treatment does not disable newer entries. Republishing cannot renew evidence. A host may skip unavailable or failed treatments within eligible compiled ladders. Qualified treatments precede provisional ones; retained qualified incumbents still respect promotion rules. Token-price ordering is only used when input and output price order agree; otherwise ordering is explicitly maintainer judgment with unknown total cost.
 
 The portable skill's eight labels do not broaden the governor's current two evaluation classes. A `bounded_backend` stratum can be labeled `bounded_implementation`, but remains valid only for its compiled backend scope. Other domains need their own human policy and real task evidence.
+
+## Provisional admission and receipts
+
+`compile-routing-pack` also accepts `provisional`, an array validated by the exported `provisionalRouteInputSchema`. Each entry supplies class, explicit scope, low/medium risk, tools/capabilities/context requirements, worker treatments and frontier reviewer treatments. An optional `qualifiedStratumDigest` attaches provisional alternatives to a governed stratum with matching risk/requirements and provider constraints.
+
+Each treatment requires official availability/pricing citations with dates, an actual accepted host-smoke artifact and execution/review digests, host/version, requested configuration, observed identity/effort or explicit limitations, and no known disqualifying failure. Unknown subscription cost remains unknown. Unsupported effort uses `not_applicable`; unobserved served effort is null alongside its reproducible configured value/source. A successful smoke is deliberately weaker evidence than full qualification. Scope extrapolation remains explicit and must be challenged by installed-host acceptance.
+
+Missing full evidence (`HOLD`) can bootstrap; an actual rejection in the same scope and lane cannot be relabeled provisional. Existing qualified thresholds and production identity/cost checks are unchanged. Provisional records are never silently counted as qualified.
+
+Consumers write `delegate_receipt.v1` files using native file tools. Maintainers can preserve them through the existing `ledger-append` command with original source/time/methodology. Validate artifacts, checks, identity observations, failures and costs before constructing governor observations. Receipt count alone grants no promotion. No central service or automatic upload is required.

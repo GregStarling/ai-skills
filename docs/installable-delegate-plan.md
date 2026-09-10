@@ -1,0 +1,9 @@
+# Installable delegate completion
+
+Resolve the known product gaps in one integrated release: mandatory frontier review in current policy; separate weekly/monthly pack freshness with per-treatment evidence expiry; structural orchestration modes; explicit provisional worker and reviewer evidence alongside qualified treatments; publication date validation; local execution receipts; populated routing knowledge; and copied-folder native-host acceptance.
+
+Ownership: a routing worker owns policy, routing contracts/compiler/resolver and their tests. A host-evidence worker inspects current native CLIs and records actual smoke outcomes in disposable projects. Root owns the consumer folder, CLI wiring, evidence compilation, broader acceptance, integrated review and publication. Preserve historical engine fixtures and qualification thresholds; no global installs or configuration changes. Current user authorization includes fixing these known issues and disposable project installations for verification.
+
+Acceptance requires real observed dispatch and frontier review, honest model/effort observability, no simulation promoted to authority, qualified preference among available treatments, bounded provisional scope, independent expiries, and full-project decomposition. Start with a tiny bug in each host and expand to the seven requested task shapes. Record genuine external blockers without treating them as successful execution; fix local causes and continue useful work. Keep consumer use independent of the governor and Foreman.
+
+Completed 2026-09-10: 195 tests passed; all 14 host/case combinations accepted (12 direct, two UI harness recoveries). Final copied-folder smokes match the released source. See routing-pack-validation.md and data/routing/installed-acceptance.json for evidence and remaining qualification/measurement limits.

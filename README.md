@@ -1,6 +1,6 @@
 # AI skills
 
-The primary product is the complete [delegate folder](skills/delegate/): a portable skill for **frontier coordination → cheapest qualified available worker → frontier verification → targeted repair**. It handles a small task with a small work order and a large project with bounded workstreams and final integration review. Foreman is not required.
+The primary product is the complete [delegate folder](skills/delegate/): a portable skill for **frontier coordination → inexpensive capable worker → frontier verification → targeted repair**. It handles a small task with a small work order and a project with bounded workstreams and integration review. Foreman is not required.
 
 The governor is maintainer infrastructure. It compiles current evidence into `routing-pack.json`; consumers read that pack through the skill and use their host's native agent tools. Consumers do not install Node, Promptfoo, a database or a governor service. Existing host authentication is sufficient for routes actually available in that host.
 
@@ -11,19 +11,23 @@ The governor is maintainer infrastructure. It compiles current evidence into `ro
 - `task-classes.md`, `delegation-contract.md`, `swarm-policy.md`, `verification-policy.md`: focused guidance loaded when needed.
 - `hosts/claude.md` and `hosts/codex.md`: thin mappings to native host controls.
 
-The skill intersects qualified routes with current host availability. It does not invent a model hierarchy each invocation or assume both providers. Frontier verification is mandatory, but review depth scales with the task. Repairs return to the original worker before capability-based escalation.
+The skill intersects routes with current host availability. Eligible qualified treatments take precedence; provisional treatments provide an explicitly limited starting point. Frontier verification is mandatory at every risk level, with depth proportional to the task. Repairs return to the original worker before escalation. Full projects decompose into bounded workstreams, never a whole-project worker route.
 
 ## Current readiness
 
-**The initial compiled pack has no qualified production routes.** Existing observations do not satisfy the governor's current task, identity, effort, cost and review requirements. Empty classes remain explicit; illustrative model names and one-task trials have not been promoted into general qualification. Installing the folder currently gives a clear missing-evidence result, not automatic productive routing.
+**The pack now includes provisional routes for Claude Code and Codex.** Six model/effort treatments come from actual local CLI execution and frontier review, with official metadata and explicit observation limits. The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader task fit is provisional extrapolation; this is not evidence of general performance across languages, high-risk work or web research.
 
-The routing/compiler implementation and copied-folder checks are separate from empirical readiness. Prior native smokes demonstrated candidate evaluation; earlier standalone tests demonstrated source behavior. Neither establishes an installed, fully qualified `/delegate` experience in both hosts. See [current validation](docs/routing-pack-validation.md), [validation history](docs/standalone-delegate-validation.md) and [the routing-pack plan](docs/routing-pack-plan.md).
+No route has been promoted to full governor qualification. Qualified treatments still require the original task, identity, effort, cost and review evidence. Provisional availability is not a savings guarantee: Claude pricing is an API reference/client estimate, and Codex subscription dollar cost is unknown. See [current validation](docs/routing-pack-validation.md) and [evidence](data/routing/host-observations.json).
+
+Installed invocation has been exercised across seven local task shapes on both hosts, including fallback, repair and two/three-worker projects. The UI cases required harness recovery and supervising-frontier browser evidence; those limits and the unsuccessful initial attempts remain in the validation record.
 
 ## Copy the complete folder
 
-Once a suitable production pack is available, copy `skills/delegate/` to a host's skill location. For a project, use `.claude/skills/delegate/` in Claude Code or `.agents/skills/delegate/` in Codex. Personal locations are `~/.claude/skills/delegate/` and `~/.agents/skills/delegate/`. Preserve any existing skill with the same name; this development checkout has not installed or overwritten one.
+Copy `skills/delegate/` to a host's skill location. For a project, use `.claude/skills/delegate/` in Claude Code or `.agents/skills/delegate/` in Codex. Personal locations are `~/.claude/skills/delegate/` and `~/.agents/skills/delegate/`. Preserve any existing skill with the same name; disposable project installations are used for testing, with no global overwrite.
 
-Claude supports `/delegate <task>`. In Codex, use the installed skill selector or named-skill syntax supported by that host version. Copy every referenced file; updating only `SKILL.md` leaves routing knowledge behind. [Claude discovery](https://code.claude.com/docs/en/skills) · [Codex discovery](https://learn.chatgpt.com/docs/build-skills).
+Claude: `/delegate <task>`. Codex CLI/IDE: `$delegate <task>` or `/skills`; desktop: the skill selector. Copy every referenced file; updating only `SKILL.md` leaves routing knowledge behind. Native subagent controls are preferred; an already-installed authenticated host CLI can execute a selected treatment when the native tool cannot express its controls. [Claude discovery](https://code.claude.com/docs/en/skills) · [Codex discovery](https://learn.chatgpt.com/docs/build-skills).
+
+Pack refresh is due after seven days, with a thirty-day pack lifetime. Each treatment expires independently with its underlying evidence; republishing does not renew evidence. Each task writes a small local execution receipt, including provisional labels, failures, repairs and unknown costs.
 
 ## Maintain routing knowledge
 

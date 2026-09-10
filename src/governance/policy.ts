@@ -31,6 +31,7 @@ export const policySchema = z.object({
     non_inferiority_margin: ratio, minimum_cost_improvement: ratio }).strict(),
   shadow: z.object({ enabled:z.boolean(),max_tasks_per_run:z.number().int().positive(),max_fraction:ratio }).strict().optional(),
   binding: z.object({ refresh_after_hours: finite.positive(), hard_expiry_hours: finite.positive() }).strict(),
+  routing_pack: z.object({ refresh_after_days: finite.positive(), hard_expiry_days: finite.positive(), provisional_evidence_max_age_days: finite.positive() }).strict().optional(),
 }).strict().superRefine((p, ctx) => {
   for (const [name, values] of [['roles', p.roles.map(r => r.role_id)], ['task_classes', p.task_classes.map(c => c.task_class_id)]] as const) {
     if (new Set(values).size !== values.length) ctx.addIssue({ code: 'custom', path: [name], message: 'duplicate policy identity' });
@@ -38,6 +39,8 @@ export const policySchema = z.object({
   const classes = new Set(p.task_classes.map(c => c.task_class_id));
   if (p.roles.some(r => r.task_class_ids.some(c => !classes.has(c)))) ctx.addIssue({code:'custom',path:['roles'],message:'role references unknown task class'});
   if (p.binding.refresh_after_hours >= p.binding.hard_expiry_hours) ctx.addIssue({code:'custom',path:['binding'],message:'hard expiry must follow refresh'});
+  if (p.routing_pack && p.routing_pack.refresh_after_days >= p.routing_pack.hard_expiry_days) ctx.addIssue({code:'custom',path:['routing_pack'],message:'pack expiry must follow refresh'});
+  if (p.policy_version >= 3 && Object.values(p.review).some(rule => !rule.required || !rule.frontier)) ctx.addIssue({code:'custom',path:['review'],message:'delegate requires frontier verification at every risk level'});
   if (!p.review.critical.required || !p.review.critical.different_family || !p.review.critical.fresh_context || !p.review.critical.frontier) ctx.addIssue({code:'custom',path:['review','critical'],message:'critical review requires fresh independent frontier reviewer'});
 });
 export type Policy = z.infer<typeof policySchema>;

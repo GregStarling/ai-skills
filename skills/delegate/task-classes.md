@@ -1,6 +1,6 @@
 # Classify the work
 
-Use these eight labels to look up routing knowledge. A label is not permission to extend a route beyond its compiled task, risk, tools or evidence scope. Classify each workstream separately; unfamiliar work has a missing route, not an invented qualification.
+Use these eight labels and the pack's `routing_modes` to choose the work shape. A label is not permission to extend a route beyond its scope, risk, tools or evidence. Classify each workstream separately.
 
 | Class | Work shape | Typical acceptance evidence |
 | --- | --- | --- |
@@ -13,6 +13,6 @@ Use these eight labels to look up routing knowledge. A label is not permission t
 | `research` | Source-based investigation, analysis or writing. | Verifiable sources, calculations and the requested artifact. |
 | `full_project` | Plan and integrate a multi-component outcome. | Requirement coverage and complete critical user flows. |
 
-The frontier coordinator owns full-project planning, interfaces and acceptance. Workers receive bounded workstreams classified by their actual work. For UI, frontier judgment establishes layout, hierarchy, interaction and responsive requirements; a suitable worker implements them, and frontier review inspects the result.
+`full_project` uses `decompose`: the frontier coordinator owns planning, interfaces and acceptance. Its capability comes from eligible routes for the required workstreams, not a full-project worker entry. For UI, `frontier_specify_then_delegate` establishes layout, hierarchy, interaction and responsive requirements; a worker implements them, and frontier review inspects the result. `coherent_worker` keeps a hard diagnosis in one worker context. `direct` means one worker followed by frontier verification.
 
 The current governor's `bounded_backend` evidence is not general evidence for every bounded implementation. Its `hard_debugging` evidence is also tied to a particular bucket and constraints. Do not translate a familiar-sounding label into broader capability.
