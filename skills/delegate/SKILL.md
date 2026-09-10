@@ -1,11 +1,21 @@
 ---
 name: delegate
-description: Route a user's task to an inexpensive capable worker, then have a frontier model verify completion. Use when the user invokes delegate or asks for cost-effective delegation. Receiving a bounded worker or reviewer packet does not activate this workflow again.
+description: Complete small work directly or delegate bounded work when that improves total efficiency, while preserving high-quality output and relevant verification. Use when the user invokes delegate or asks for efficient delegation. Receiving a bounded worker or reviewer packet does not activate this workflow again.
 ---
 
-Run **frontier coordination → worker → integration → frontier verification → targeted repair → acceptance**. This folder is the complete consumer: no Foreman, Node installation, governor service, registry setup or extra API keys are required.
+Achieve the requested quality with the least total effort needed. Token reductions matter only when quality is preserved. This folder is the complete consumer: no Foreman, Node installation, governor service, registry setup or extra API keys are required.
 
 If already receiving a bounded worker or reviewer packet, execute it and return to the coordinator. Do not recursively invoke this skill. The coordinator owns routing and the final receipt.
+
+## Choose direct execution or delegation
+
+Complete small work directly when handing it off would add more effort than completing and verifying it. Delegate substantial bounded work when it improves total efficiency. Include exploration, coordination, context transfer, implementation, integration, verification, failed attempts and repairs in that judgment; a cheaper first attempt is not necessarily a cheaper completion. Prefer reusing useful context to duplicating work.
+
+Spend stronger reasoning on ambiguity and consequential decisions, including diagnosis, architecture and product judgment. Match reasoning effort to the uncertainty and consequences; do not use maximum effort by habit or lower an evidence-bound treatment's exact effort to save usage.
+
+A bare `$delegate` invocation permits this choice. Honor explicit requests for a worker, exact models, strict pack governance or independent review. Direct execution uses ordinary host/project checks and is not a qualified pack route. Skip pack lookup and delegation receipts for direct work, but preserve the relevant artifact, regression, rendered UI/interaction, source and calculation checks described in [verification-policy.md](verification-policy.md), including any required independent review.
+
+For delegated work, follow **frontier coordination → worker → integration → frontier verification → targeted repair → acceptance** and the sections below. Stop in either mode when the requested quality and acceptance checks are satisfied and no material defect remains; do not add speculative polish or repeat completed reviews without new evidence.
 
 ## Classify and route
 
@@ -26,7 +36,7 @@ Intersect every treatment with actual host models, efforts, tools and controls. 
 
 For substantial exploration, visual inspection, or a task-boundary handoff, read [context discipline](context-discipline.md).
 
-Give one worker a compact [delegation contract](delegation-contract.md), including settled decisions and acceptance checks. Even a tiny task uses a worker followed by frontier verification; scale the packet and checks down. The frontier owns architecture, UI judgment, boundaries and integration; workers implement.
+Give one worker a compact [delegation contract](delegation-contract.md), including settled decisions and acceptance checks. Scale the packet and checks to the work. The frontier owns architecture, UI judgment, boundaries and integration; workers implement.
 
 For independent workstreams, read [swarm-policy.md](swarm-policy.md). Default to at most three concurrent workers, with a normal ceiling of five further limited by the host/project. Settle interfaces and ownership first and use dependency-ordered waves.
 
