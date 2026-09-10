@@ -1,11 +1,11 @@
 {
   "schema_version": "governance_policy.v1",
-  "policy_version": 4,
+  "policy_version": 3,
   "provenance": {
     "status": "proposed",
     "author": "Model Governor v1 implementation",
     "source": "docs/model-governor-spec.md",
-    "rationale": "Version 4 separates capability qualification from economic ordering for subscription-first execution. Missing host dollar billing no longer prevents capability qualification. Routing uses official API-equivalent economics as a normalized proxy, preferring measured task-specific API token economics. Exact execution environments remain distinct."
+    "rationale": "Initial explicit operating proposals for review, not empirical performance claims. Qualify from measured versioned task outcomes; no candidate names or inferred universal scores. Version 2 activates two actual harvested fixture buckets; version 1 remains an explicit simulation example. Shadow is disabled by default; its one-task/100-percent maximum is an operator proposal that requires explicit enabling. Version 3 requires frontier verification at every risk level and separates portable pack freshness from execution bindings. Provisional evidence never satisfies full qualification."
   },
   "roles": [
     {
@@ -121,6 +121,7 @@
   "qualification": {
     "minimum_tasks": 20,
     "minimum_success_rate": 0.9,
+    "maximum_cost_per_accepted_task_usd": 5,
     "maximum_latency_ms": 300000,
     "evidence_max_age_days": 30,
     "maximum_failure_rates": {
@@ -148,13 +149,5 @@
     "refresh_after_days": 7,
     "hard_expiry_days": 30,
     "provisional_evidence_max_age_days": 30
-  },
-  "economics": {
-    "primary_metric": "api_equivalent_cost_per_accepted_task_usd",
-    "proxy_currency": "official_api_pricing",
-    "selection_rule": "cheapest_capability_qualified",
-    "maximum_cost_per_accepted_task_usd": 5,
-    "pricing_max_age_days": 30,
-    "promotion_requires_measured": true
   }
 }

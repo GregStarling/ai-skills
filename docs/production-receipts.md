@@ -14,6 +14,7 @@ After building, run `node dist/cli/index.js receipt-ingest --input capture.json`
     "source": "native host trace and maintainer run record",
     "observed_at": "2026-09-10T05:00:00.000Z",
     "origin": "production_usage",
+    "execution_environment": "codex",
     "public_task_class": "bounded_implementation",
     "task_id": "task-123"
   }
@@ -21,6 +22,8 @@ After building, run `node dist/cli/index.js receipt-ingest --input capture.json`
 ```
 
 Use independent native/harness timing. Receipt timestamps have proved unreliable; original values are preserved, not rewritten. Supply `context.baseline_digest` when the immutable starting fixture is available, or preserve the receipt's `starting_artifact_digest`. Assessment requires that captured digest to match the observation's starting fixture; a missing baseline leaves capture pending. Declare `qualification_evaluation` for a benchmark or deliberate acceptance trial. Do not reclassify those runs as production usage.
+
+Under policy v4, capture the actual `execution_environment` (`claude_code`, `codex`, or `api`). It must match the governed request and every native worker, retry and reviewer report. Missing environment remains unknown; API records cannot be relabeled subscription execution. Old captures and policy-v3 assessments remain historical evidence and must be explicitly reassessed, never silently upgraded.
 
 The command writes to a class subdirectory and returns `PENDING_EVIDENCE`, its actual `directory` and `recordId`. It retains exact UTF-8 receipt bytes and their digest. Identical imports are idempotent; conflicting context for the same receipt version is rejected. A later version has a different content identity and does not overwrite earlier attempts. Preserve the same task identity and immutable starting baseline across repairs and intentional challenger replays.
 
@@ -47,14 +50,14 @@ This is an evidence assessment, not a request to fill unknown fields with guesse
 
 Ingestion calls `validateObservations`, validates per-attempt streams/identity/cost, and binds the review to the final artifact. It rejects contradictory or tampered evidence and omitted attempts. Single-treatment failures are eligible observations too; do not export only successes. A run repaired by another worker cannot be attributed as success of the original treatment. Mixed-worker/project receipts remain archived until separately attributable evaluations are available.
 
-Successful assessment appends `delegate_receipt_evidence.v1` without changing the capture, and returns `VALIDATED_OBSERVATION` plus an `evaluationLedgers` reference for refresh. That status does **not** mean qualified. Missing traces or required review prevent assessment; unknown worker identity/effort or cost can remain in an otherwise valid failed observation and cause the existing qualification result to HOLD. Never reduce missing cost to zero.
+Successful assessment appends `delegate_receipt_evidence.v1` without changing the capture, and returns `VALIDATED_OBSERVATION` plus an `evaluationLedgers` reference for refresh. That status does **not** mean qualified. Missing traces or required review prevent assessment; unknown worker identity/effort can remain in an otherwise valid failed observation and cause qualification to HOLD. In v4, unknown dollars alone do not prevent capability qualification. Costs stay null rather than becoming zero.
 
 ## Qualify and compare using the existing pipeline
 
 Pass the returned `evaluationLedgers` reference with the intended selection envelope to `refresh`. It revalidates receipt evidence and rejects an assessment under a different policy, rather than importing older, weaker review authority. Reassess under the new policy while retaining the original capture. Source observations and timestamps are unchanged.
 
-The existing `qualify` function applies task count, runtime snapshot/effort, freshness, failure, cost and latency requirements. The existing `select` function compares challengers on matching task IDs and starting fixture digests within the same class, role, risk, constraints, cohort, suite, harness and grader. Repeated versions of one task cannot increase sample size: duplicate task/attempt checks reject such selection inputs. Choose one complete assessed observation per treatment/task; keep its preceding failures and repair costs inside that observation.
+The v4 `qualify` function applies task count, execution environment, runtime snapshot/effort, freshness, failure and latency requirements. Economic evidence is attached separately as `selection.economics` when calling `refresh` or `select`; API token/pricing records retain their API origin and grant no host capability authority. The existing `select` function compares challengers on matching task IDs and starting fixture digests within the same class, role, risk, constraints, cohort, suite, harness and grader. Automatic replacement requires measured paired API-equivalent economics; list-price proxies alone cannot establish measured improvement. Repeated versions of one task cannot increase sample size: duplicate task/attempt checks reject such selection inputs. Choose one complete assessed observation per treatment/task; keep its preceding failures and repair costs inside that observation.
 
 Once actual data clears those rules, feed the returned worker/reviewer selection envelopes to `compile-routing-pack`. The result may add qualified routes alongside provisional ones. No separate promotion algorithm, receipt-count shortcut or automatic replacement of an incumbent exists.
 
-Today, configured effort is often observable while served effort or subscription dollar cost is not. More receipts alone cannot remove those qualification gaps. Many public skill classes also lack declared governor evaluation buckets; those require explicit policy and scoped evaluation evidence. Archive useful runs now, and keep these limitations visible.
+Today, configured effort is often observable while served effort is not. More receipts alone cannot remove that qualification gap; missing subscription dollar cost is no longer such a gap. Many public skill classes also lack declared governor evaluation buckets; those require explicit policy and scoped evaluation evidence. Archive useful runs now, and keep these limitations visible. See [v4 economics](v4-economics.md) for the separate normalized pricing contract.

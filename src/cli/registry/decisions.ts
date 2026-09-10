@@ -10,7 +10,7 @@ const resultExit = (result: unknown): number => {
 };
 export const commands = [
   jsonCommand('select', 'Choose a qualified candidate or report HOLD/escalation.', input => select(parseSelectionInput(input))),
-  jsonCommand('qualify', 'Recompute candidate qualification and all-attempt economics.', input => {
+  jsonCommand('qualify', 'Recompute capability qualification; v4 economic ordering belongs to select.', input => {
     const request = qualificationInput.parse(input);
     const selection = parseSelectionInput(request.selection);
     const candidate = selection.candidates.find(c => c.candidate_id === request.candidate_id);

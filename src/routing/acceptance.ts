@@ -1,10 +1,11 @@
 import {z} from 'zod';
 import {digest} from '../core/canonical.js';
-import {acceptanceTaskClasses,provisionalIdentity,provisionalTreatmentSchema,taskEvidenceSchema,type ProvisionalTreatmentInput} from './provisional.js';
+import {mediumSmokeReviewSchema,acceptanceTaskClasses,provisionalIdentity,provisionalTreatmentSchema,taskEvidenceSchema,type ProvisionalTreatmentInput} from './provisional.js';
 import type {ProvisionalRouteInput} from './compiler.js';
 
 const id=z.string().min(1),hash=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.string().datetime({offset:true});
 const host=z.enum(['codex','claude']);
+const mediumAuditSchema=z.object({schema_version:z.literal('medium_smoke_audit.v1'),source_digest:hash,scope:z.literal('Zero/nullish quantity-default fixes in local plain JavaScript only.'),reviews:z.array(mediumSmokeReviewSchema).nonempty()}).strict();
 const controls=z.object({model:id,effort:id}).passthrough();
 const workerSchema=z.object({requested_model:id.nullable(),requested_effort:id.nullable(),configured_model_effort:z.array(controls).nullable(),observed_message_models:z.array(id),observed_written_files:z.array(id)}).passthrough();
 const recoverySchema=z.object({kind:id,external_grader_passed:z.boolean(),receipt_count:z.number().int().nonnegative(),limitations:z.array(id),trace_digests:z.array(hash)}).passthrough();
@@ -65,7 +66,7 @@ function roleMatches(t:ProvisionalTreatmentInput,record:AcceptedCase,role:Role):
 }
 
 /** Join audited installed cases to exact existing treatments; this grants no governor qualification. */
-export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceInput:unknown):ProvisionalRouteInput[]{
+export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceInput:unknown,mediumAuditInput?:unknown):ProvisionalRouteInput[]{
   const observations=observationsSchema.parse(observationInput),acceptance=acceptanceSchema.parse(acceptanceInput);
   if(new Set(acceptance.cases.map(c=>c.id)).size!==acceptance.cases.length)throw new Error('Duplicate installed acceptance case id');
   const rawCases=(acceptanceInput as {cases:unknown[]}).cases;
@@ -89,6 +90,25 @@ export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceI
       if(!workers.length||!reviewers.length)continue;
       routes.push({publicTaskClass,scope:`${currentHost} pilot: ${scope} Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification.`,risk:'low',requirements:{tools:['terminal'],capabilities:['terminal'],context_window_tokens:0,fresh_context:false},workers,reviewers});
     }
+  }
+  if(mediumAuditInput!==undefined){
+    const audit=mediumAuditSchema.parse(mediumAuditInput);
+    if(audit.source_digest!==digest(observationInput))throw Error('MEDIUM_SMOKE_SOURCE_MISMATCH');
+    if(new Set(audit.reviews.map(r=>r.run_id)).size!==audit.reviews.length)throw Error('MEDIUM_SMOKE_DUPLICATE_RUN');
+    const originalRuns=(observationInput as {runs:Record<string,unknown>[]}).runs;
+    for(const proof of audit.reviews){
+      const raw=originalRuns.find(r=>r['id']===proof.run_id),run=observations.runs.find(r=>r['id']===proof.run_id);
+      const worker=admittedWorkers.find(t=>provisionalIdentity(t)===proof.worker_identity),reviewer=admittedReviewers.find(t=>provisionalIdentity(t)===proof.reviewer_identity);
+      if(!raw||!run||digest(raw)!==proof.run_digest||run.host!=='claude'||!run.objective_passed||run.reviewer.verdict!=='ACCEPT'||raw['scope']!=='tinybug: zero/nullish quantity default only'||raw['artifact_digest']!==proof.artifact_digest||run.reviewer_stdout_digest!==proof.reviewer_execution_digest)throw Error('MEDIUM_SMOKE_RUN_MISMATCH');
+      if(!worker||!reviewer||worker.provider!=='anthropic'||reviewer.provider!=='anthropic'||worker.evidence.host!=='claude'||reviewer.evidence.host!=='claude'||(worker.snapshot_id??worker.model_id)===(reviewer.snapshot_id??reviewer.model_id)||worker.evidence.identity_source!=='runtime'||reviewer.evidence.identity_source!=='runtime'||run.worker.model!==worker.model_id||run.worker.configured_effort!==worker.effort||run.reviewer.model!==reviewer.model_id||run.reviewer.configured_effort!==reviewer.effort||run.worker_stdout_digest!==worker.evidence.smoke.execution_digest||worker.evidence.smoke.artifact_digest!==proof.artifact_digest)throw Error('MEDIUM_SMOKE_TREATMENT_MISMATCH');
+    }
+    const enrich=(t:ProvisionalTreatmentInput,role:Role):ProvisionalTreatmentInput=>{
+      const identity=provisionalIdentity(t),reviews=audit.reviews.filter(p=>(role==='worker'?p.worker_identity:p.reviewer_identity)===identity);
+      return {...t,evidence:{...t.evidence,task_evidence:taskEvidenceSchema.parse({public_task_class:'mechanical_work',role,basis:'smoke_extrapolation',host:'claude',candidate_identity:identity,source,records:[],limitations:['Limited to the audited zero/nullish quantity-default fixes in local plain JavaScript; no broader medium-risk acceptance or capability qualification.','The reviewer ran separately in a fresh artifact-only process; served effort was not exposed. Configured effort is not runtime attestation.'],control_evidence:{source:'data/routing/medium-smoke-audit.json',audit_digest:digest(mediumAuditInput),host_observations_digest:audit.source_digest,reviews}})}};
+    };
+    const workers=admittedWorkers.filter(t=>audit.reviews.some(p=>p.worker_identity===provisionalIdentity(t))).map(t=>enrich(t,'worker'));
+    const reviewers=admittedReviewers.filter(t=>audit.reviews.some(p=>p.reviewer_identity===provisionalIdentity(t))).map(t=>enrich(t,'reviewer'));
+    routes.push({publicTaskClass:'mechanical_work',scope:`claude medium pilot: ${audit.scope} Separate fresh artifact-only frontier verification is mandatory. Existing native smoke only; no medium installed task acceptance or governor qualification.`,risk:'medium',requirements:{tools:['terminal'],capabilities:['terminal'],context_window_tokens:0,fresh_context:true},workers,reviewers});
   }
   return routes;
 }

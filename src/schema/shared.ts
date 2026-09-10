@@ -49,6 +49,7 @@ const nonNegativeNumberSchema = z.number().min(0).finite();
 
 export const riskCategorySchema = z.enum(["low", "medium", "high", "critical"]);
 export const providerSchema = z.enum(["anthropic", "openai", "local", "synthetic"]);
+export const executionEnvironmentSchema = z.enum(["claude_code", "codex", "api", "unknown"]);
 export const lifecycleSchema = z.enum(["available", "deprecated", "retired", "unavailable", "unknown"]);
 export const fallbackModeSchema = z.enum(["disabled", "enabled"]);
 export const toolUseModeSchema = z.enum(["none", "host_tools", "provider_tools"]);
@@ -452,6 +453,8 @@ export const runtimeReportSchema = strictObject({
   schema_version: z.literal("runtime_report.v1"),
   report_id: identifierSchema,
   provider: providerSchema,
+  // Missing on historical receipts means unknown, never an inferred API/host match.
+  execution_environment: executionEnvironmentSchema.optional(),
   candidate_id: identifierSchema,
   started_at: isoDateTimeSchema,
   completed_at: isoDateTimeSchema,
@@ -478,6 +481,7 @@ export const runtimeReportSchema = strictObject({
   }).optional()
 }).superRefine((report, ctx) => {
   issueIfAfter(ctx, report.started_at, report.completed_at, ["completed_at"], "INVALID_CHRONOLOGY");
+  if ((report.execution_environment === "claude_code" && report.provider !== "anthropic") || (report.execution_environment === "codex" && report.provider !== "openai")) ctx.addIssue({code:"custom",path:["execution_environment"],message:"EXECUTION_ENVIRONMENT_PROVIDER_MISMATCH"});
 });
 
 export const graderResultSchema = strictObject({

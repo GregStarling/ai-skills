@@ -21,6 +21,7 @@ export function validatedRenderBinding(input: RenderInput, provider: NativeProvi
   if (input.runtimeVersion !== runtimeVersions[provider]) throw new Error("RUNTIME_VERSION_MISMATCH");
   if (input.mode !== "production" && input.mode !== "adapter-test") throw new Error("INVALID_ADAPTER_MODE");
   if (input.selection.mode !== (input.mode === "production" ? "production" : "simulation")) throw new Error("ADAPTER_MODE_MISMATCH");
+  if (input.mode === "production" && input.selection.policy.policy_version >= 4 && input.selection.request.execution_environment !== (provider === "anthropic" ? "claude_code" : "codex")) throw new Error("HOST_EXECUTION_EVIDENCE_REQUIRED: API or other-host capability cannot authorize this native adapter.");
   const validation = validateBinding(input.binding, input.selection);
   if (!validation.ok || validation.status !== "VALID") throw new Error(`BINDING_INVALID: ${validation.diagnostics.map((item) => item.rule_id).join(",") || validation.status}`);
   const binding = parseBinding(input.binding);

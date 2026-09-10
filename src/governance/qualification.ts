@@ -10,6 +10,7 @@ export const requestSchema = z.object({
   role_id: z.string().min(1), task_class_id: z.string().min(1), risk: riskCategorySchema,
   cohort_id: z.string().min(1), constraints_digest: z.string().regex(/^sha256:[a-f0-9]{64}$/),
   constraints: constraintSetSchema,
+  execution_environment:z.enum(['claude_code','codex','api','unknown']).optional(),
   required_capabilities: z.array(z.string()).optional(), max_cost_usd: z.number().finite().nonnegative().optional(),
   max_latency_ms: z.number().finite().positive().optional(), context_window_tokens: z.number().int().positive().optional(),
 }).strict();
@@ -39,6 +40,7 @@ export function qualify(input: QualificationInput): Qualification {
     const request = requestSchema.parse(input.request);
     const now = Date.parse(z.string().datetime({offset:true}).parse(input.now));
     if (request.constraints_digest !== digest(request.constraints)) { fail('constraints_digest_mismatch', 'Concrete constraints must match the observation stratum digest.'); return result(); }
+    if(policy.policy_version>=4&&input.mode==='production'&&(!request.execution_environment||request.execution_environment==='unknown'))fail('execution_environment_unknown','Production capability qualification requires an explicit execution environment.',false);
     const role = policy.roles.find(r => r.role_id === request.role_id);
     const task = policy.task_classes.find(t => t.task_class_id === request.task_class_id);
     if (!role || !task || !role.task_class_ids.includes(request.task_class_id)) { fail('unknown_role_or_task_class', 'Role/task class is absent or incompatible.'); return result(); }
@@ -73,6 +75,10 @@ export function qualify(input: QualificationInput): Qualification {
     for (const observation of observations) {
       if (input.mode === 'production') {
         const receipt = parseRuntimeReport(input.runtimeReports?.get(observation.provenance.runtime_receipt_digest!));
+        if(policy.policy_version>=4){
+          if(!receipt.execution_environment||receipt.execution_environment==='unknown')fail('runtime_environment_unverified','Execution environment is not established by runtime evidence.',false);
+          else if(request.execution_environment&&request.execution_environment!=='unknown'&&receipt.execution_environment!==request.execution_environment)fail('runtime_environment_mismatch','API and subscription-host evidence cannot be silently pooled.');
+        }
         const observed = receipt.observed_identity;
         if (observed.source === 'unknown' || observed.model_id === undefined || observed.effort === undefined) fail('runtime_identity_unverified', 'Production qualification requires runtime-attested snapshot and effort.', false);
         if (receipt.provider !== candidate.provider || (observed.source !== 'unknown' && ((observed.model_id !== undefined && observed.model_id !== candidate.snapshot_id) || (observed.effort !== undefined && observed.effort !== candidate.effort)))) fail('runtime_identity_mismatch', 'Observed provider, snapshot or effort differs from the exact candidate treatment.');
@@ -98,8 +104,10 @@ export function qualify(input: QualificationInput): Qualification {
     };
     if (observations.length < policy.qualification.minimum_tasks) fail('insufficient_tasks', 'Not enough matched independent task observations.', false);
     if (metrics.success_rate !== null && metrics.success_rate < policy.qualification.minimum_success_rate) fail('absolute_success_floor', 'Observed accepted-task fraction is below the declared floor.');
+    if(policy.policy_version<4){
     if (metrics.cost_per_accepted_task_usd === null) fail('cost_unknown', 'All attempts and accepted task counts are required for economics.', false);
-    else if (metrics.cost_per_accepted_task_usd > Math.min(policy.qualification.maximum_cost_per_accepted_task_usd, request.max_cost_usd ?? Infinity,request.constraints.max_cost_usd ?? Infinity)) fail('absolute_cost_ceiling', 'Cost including failures/review/rework exceeds the ceiling.');
+    else if (metrics.cost_per_accepted_task_usd > Math.min(policy.qualification.maximum_cost_per_accepted_task_usd!, request.max_cost_usd ?? Infinity,request.constraints.max_cost_usd ?? Infinity)) fail('absolute_cost_ceiling', 'Cost including failures/review/rework exceeds the ceiling.');
+    }
     if (metrics.p95_latency_ms === null) fail('latency_unknown', 'Task wall-clock latency is missing.', false);
     else if (metrics.p95_latency_ms > Math.min(policy.qualification.maximum_latency_ms, request.max_latency_ms ?? Infinity,request.constraints.max_latency_ms ?? Infinity)) fail('latency_ceiling', 'Observed p95 task latency exceeds the ceiling.');
     for (const [category, maximum] of Object.entries(policy.qualification.maximum_failure_rates)) {

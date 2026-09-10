@@ -1,0 +1,245 @@
+{
+  "schema_version": "v4_validation.v1",
+  "validated_at": "2026-09-10T06:36:52.128Z",
+  "scope": "Built CLI publication, resolution/fallback and migration checks using compiled treatment inventory. No native model task, API evaluation or measured savings is claimed.",
+  "base_commit": "47d6e3e66b0e4c24506fef28ad1b20d29d0891d9",
+  "policy_version": 4,
+  "policy_v3_bytes_preserved": true,
+  "pack": {
+    "schema_version": "routing_pack.v3",
+    "content_digest": "sha256:3cdadd605a8315a7dddfdff7c2503b0b9e77f307d8596f16229da363c9332d69",
+    "generated_at": "2026-09-10T06:31:27.211Z",
+    "refresh_after": "2026-09-17T06:31:27.211Z",
+    "expires_at": "2026-10-10T06:31:27.211Z",
+    "bytes_before": 182456,
+    "bytes_after": 123721,
+    "shared_treatments": 6,
+    "routes": 15,
+    "qualified_routes": 0,
+    "provisional_routes": 15,
+    "old_version_refused": true
+  },
+  "skill": {
+    "bytes_before": 6947,
+    "bytes_after": 4882,
+    "words_before": 914,
+    "words_after": 613,
+    "folder_digest": "sha256:efed8290ff36d23616cb2d29e9723ff43c128285978c48bab453e33338c13f56",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "content_digest": "sha256:228586054f067cf04e3dc6a472025ac6118251a66bccac281ff552b125545862"
+      },
+      {
+        "path": "delegation-contract.md",
+        "content_digest": "sha256:73d5d47bd7bf2cd9dc4c6e9c831eba52211219eb01034f01f208a927043fdf2a"
+      },
+      {
+        "path": "hosts/claude.md",
+        "content_digest": "sha256:4e668708d82ae5ed51d0cbcd599772324f4a425610cb9f848094278899e6456e"
+      },
+      {
+        "path": "hosts/codex.md",
+        "content_digest": "sha256:fb007264fd3b8819241bb761351747a9453cdcdd83d11a32a11f9917832469f1"
+      },
+      {
+        "path": "pack-format.md",
+        "content_digest": "sha256:c1467c9f4242f20c43b43f4cda06bf62f4c9592cd3d283b3cada5d427a7c8ed6"
+      },
+      {
+        "path": "routing-pack.json",
+        "content_digest": "sha256:d03b62fce2892e507645c8b6052817dcfaab40afbd083859175b7eca398947ae"
+      },
+      {
+        "path": "swarm-policy.md",
+        "content_digest": "sha256:3e2a89d7f8c6cc0ebef5c3c024df6eb7929ad8a849d9ead0b261c72c41ff16a1"
+      },
+      {
+        "path": "task-classes.md",
+        "content_digest": "sha256:7376839f5dba98f12c6897198614c76d7250329cca779d8f46cbc72505c10d3b"
+      },
+      {
+        "path": "verification-policy.md",
+        "content_digest": "sha256:cf777bbf6c34dfdbc264015f5e58c5a39c3960952abae88456d5f4bd138d43f7"
+      }
+    ]
+  },
+  "preserved_evidence": [
+    {
+      "path": "data/routing/host-observations.json",
+      "content_digest": "sha256:6bb0bdcb3f2582d8f2840cb2d9321f86508918b163e6273e18ab84ec40bb63ef"
+    },
+    {
+      "path": "data/routing/installed-acceptance.json",
+      "content_digest": "sha256:d3b7b497fc47f804c0d513dc3061bfc3499453c6185387ab6db81e92ee72da74"
+    },
+    {
+      "path": "data/routing/frontier-ownership-acceptance.json",
+      "content_digest": "sha256:5eca953e35c588c7819d52deb04a8983526e5346b02fe9ccee494e2058e919ec"
+    },
+    {
+      "path": "data/routing/frontier-targets.json",
+      "content_digest": "sha256:122cacd1e305a96405897a9a86e6f8f1c74d2f7c227b4e93ed1c2ea87bb69b26"
+    },
+    {
+      "path": "data/routing/frontier-probes.json",
+      "content_digest": "sha256:fe018e5d8b1dbbdb09e7e34980d20343bbefcfae615baeea9cd0319f14f90805"
+    },
+    {
+      "path": "data/routing/receipt-ingestion-validation.json",
+      "content_digest": "sha256:e2ad5f5e982442775fa9b727c8f95bd588ba4d1efe6884f9297308853f0dba2b"
+    }
+  ],
+  "resolutions": [
+    {
+      "task_class": "repo_exploration",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "repo_exploration",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "mechanical_work",
+      "host": "claude",
+      "risk": "medium",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": true
+    },
+    {
+      "task_class": "mechanical_work",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "mechanical_work",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "bounded_implementation",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "bounded_implementation",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "ui_implementation",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "ui_implementation",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "hard_debugging",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "hard_debugging",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "complex_implementation",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "complex_implementation",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "research",
+      "host": "claude",
+      "risk": "low",
+      "worker": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "reviewer": "claude-claude-opus-5-high",
+      "fallback_worker": "claude-claude-sonnet-5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    },
+    {
+      "task_class": "research",
+      "host": "codex",
+      "risk": "low",
+      "worker": "codex-gpt-5.3-codex-spark-low",
+      "reviewer": "codex-gpt-5.5-high",
+      "fallback_worker": "codex-gpt-5.5-low",
+      "evidence_tier": "provisional",
+      "fresh_context_enforced": false
+    }
+  ]
+}

@@ -3,3 +3,5 @@ export { classifyRisk,maxRisk,evaluateReview,type Diagnostic,type ReviewProof } 
 export { qualify,requestSchema,type QualificationRequest,type QualificationInput,type Qualification } from './qualification.js';
 export { select,evaluate,parseSelectionInput,type SelectionInput,type SelectionResult } from './selection.js';
 export { createBinding,validateBinding,bindingSchemaDigest } from './bindings.js';
+
+export {economicEvidenceSchema,apiTokenCategories,assessEconomics,orderEconomicCandidates,pairedEconomicCost,type EconomicEvidence,type CandidateEconomics,type EconomicLevel} from './economics.js';

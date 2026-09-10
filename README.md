@@ -8,6 +8,7 @@ The governor is maintainer infrastructure. It compiles current evidence into `ro
 
 - `SKILL.md`: the orchestration entrypoint.
 - `routing-pack.json`: generated, versioned task routes, model/effort identities, economics, qualification summaries and freshness.
+- `pack-format.md`: shared-treatment lookup, evidence tiers, host controls and integrity rules.
 - `task-classes.md`, `delegation-contract.md`, `swarm-policy.md`, `verification-policy.md`: focused guidance loaded when needed.
 - `hosts/claude.md` and `hosts/codex.md`: thin mappings to native host controls.
 
@@ -17,11 +18,13 @@ The skill intersects routes with current host availability. Qualified treatments
 
 **The pack now includes provisional routes for Claude Code and Codex.** Six model/effort treatments come from actual local CLI execution and frontier review, with official metadata and explicit observation limits. The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader task fit is provisional extrapolation; this is not evidence of general performance across languages, high-risk work or web research.
 
-No route has been promoted to full governor qualification. Qualified treatments still require the original task, identity, effort, cost and review evidence. Provisional availability is not a savings guarantee: Claude pricing is an API reference/client estimate, and Codex subscription dollar cost is unknown. See [current validation](docs/production-evidence-validation.md), [installed-host validation](docs/routing-pack-validation.md) and [evidence](data/routing/host-observations.json).
+No route has been promoted to full governor qualification. Policy v4 separates capability from economics: task, host, exact identity/effort, latency and review evidence qualify capability; missing billed dollars do not prevent it. Selection uses separately evidenced API-equivalent economics as a normalized cost proxy, never the user's subscription bill. API success cannot qualify a Claude Code or Codex treatment. See [v4 economics](docs/v4-economics.md), [current validation](docs/v4-validation.md), [historical installed-host validation](docs/routing-pack-validation.md) and [evidence](data/routing/host-observations.json).
 
 Installed invocation has been exercised across seven local task shapes on both hosts, including fallback, repair and two/three-worker projects. The UI cases required harness recovery and supervising-frontier browser evidence; those limits and the unsuccessful initial attempts remain in the validation record.
 
 The pack now consumes those accepted cases as evidence for the matching class and treatment, while explicitly identifying untested extrapolations. Hard bugs receive frontier diagnosis before worker fixes; complex changes receive frontier architecture and planning before implementation. Both workflows have [native host verification](data/routing/frontier-ownership-acceptance.json), with failed attempts and controlled-test limits retained. Refresh also records probes of each current official frontier model and why an older evidenced reviewer is retained. [Current frontier probes](data/routing/frontier-probes.json).
+
+One narrow Claude medium-risk mechanical route covers the observed quantity-default fix with a different model and a separate fresh frontier reviewer. Other medium-risk domains, high and critical remain unsupported by the current pack. [Host evidence and scope](docs/v4-host-evidence.md).
 
 ## Copy the complete folder
 

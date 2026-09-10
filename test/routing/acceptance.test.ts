@@ -97,6 +97,35 @@ describe('installed acceptance joins',()=>{
     expect(()=>compile([wrongLane])).toThrowError(expect.objectContaining({code:'TASK_EVIDENCE_SCOPE_MISMATCH'}));
     const pack=compile(routes);
     expect(pack.routes.every(r=>[...r.workers,...r.reviewers].every(t=>t.evidence_tier==='provisional'&&t.qualification===null))).toBe(true);
-    expect(pack.routes.find(r=>r.public_task_class==='bounded_implementation')?.workers[0]?.provisional?.task_evidence).toBeDefined();
+    expect(pack.routes.find(r=>r.public_task_class==='bounded_implementation')?.workers[0]?.task_evidence).toBeDefined();
+  });
+});
+
+
+describe('audited medium-risk quantity smoke',()=>{
+  const audit=()=>JSON.parse(readFileSync('data/routing/medium-smoke-audit.json','utf8'));
+  it('adds only the scoped Claude medium stratum with fresh independent frontier controls',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T04:00:00Z'));
+    const {observations,acceptance}=fixtures(),before=digest(observations),routes=buildProvisionalPilotRoutes(observations,acceptance,audit()),medium=routes.filter(r=>r.risk==='medium');
+    expect(routes).toHaveLength(15);expect(medium).toHaveLength(1);expect(digest(observations)).toBe(before);
+    expect(medium[0]).toMatchObject({publicTaskClass:'mechanical_work',requirements:{fresh_context:true}});expect(medium[0]!.scope).toContain('quantity-default');
+    expect(medium[0]!.workers.map(w=>w.model_id).sort()).toEqual(['claude-haiku-4-5-20251001','claude-sonnet-5']);
+    for(const candidate of [...medium[0]!.workers,...medium[0]!.reviewers])expect(candidate.evidence.task_evidence).toMatchObject({basis:'smoke_extrapolation',records:[],control_evidence:{audit_digest:digest(audit())}});
+    const haiku=medium[0]!.workers.find(w=>w.model_id.startsWith('claude-haiku'))!;
+    expect(haiku.evidence.task_evidence!.control_evidence!.reviews[0]!.reviewer_execution_digest).toBe(audit().reviews[1].reviewer_execution_digest);
+    const pack=compileRoutingPack({mode:'production',policy:JSON.parse(readFileSync('policy/constitution.json','utf8')),strata:[],provisional:routes});
+    expect(pack.routes.find(r=>r.stratum.worker_request.risk==='medium')!.review_rule).toMatchObject({required:true,different_model:true,fresh_context:true,frontier:true});
+  });
+  it.each([
+    ['source',(a:any)=>{a.source_digest=digest('changed');}],
+    ['run',(a:any)=>{a.reviews[0].run_digest=digest('changed');}],
+    ['worker',(a:any)=>{a.reviews[0].worker_identity=a.reviews[0].reviewer_identity;}],
+    ['reviewer',(a:any)=>{a.reviews[0].reviewer_identity=a.reviews[0].worker_identity;}],
+    ['review output',(a:any)=>{a.reviews[1].reviewer_execution_digest=a.reviews[0].reviewer_execution_digest;}],
+    ['artifact',(a:any)=>{a.reviews[0].artifact_digest=digest('changed');}],
+    ['context',(a:any)=>{a.reviews[0].fresh_artifact_only_context=false;}],
+    ['duplicate',(a:any)=>{a.reviews.push(a.reviews[0]);}],
+  ])('refuses altered %s evidence',(_name,mutate)=>{
+    const {observations,acceptance}=fixtures(),value=audit();mutate(value);expect(()=>buildProvisionalPilotRoutes(observations,acceptance,value)).toThrow();
   });
 });

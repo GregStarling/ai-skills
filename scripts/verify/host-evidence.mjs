@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createWriteStream } from 'node:fs';
+import { observedAssistantModel } from '../../dist/runtime/telemetry.js';
 
 // Maintainer-only native CLI experiment; deliberately grants no qualification.
 const output = resolve('artifacts/portable-host-evidence');
@@ -41,7 +42,7 @@ export async function execute(binary, args, cwd, prompt, destination, timeoutMs 
       const result = events.findLast(event => event.type === 'result');
       const completed = events.findLast(event => event.type === 'turn.completed');
       const summary = { code, signal, timed_out: timedOut, duration_ms: Date.now() - start, stdout_sha256: hash(stdout), stderr_sha256: hash(stderr),
-        observed_models: [...new Set(events.filter(event => event.type === 'assistant').map(event => event.message?.model).filter(Boolean))],
+        observed_models: [...new Set(events.map(observedAssistantModel).filter(model => model !== null))],
         observed_effort: null, usage: result?.usage ?? completed?.usage ?? null, client_estimated_cost_usd: result?.total_cost_usd ?? null,
         model_usage: result?.modelUsage ?? null, qualification_authority: false };
       await writeFile(join(destination, 'summary.json'), JSON.stringify(summary, null, 2));

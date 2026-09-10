@@ -5,12 +5,12 @@ import {Ledger} from './index.js';
 import {digest,hashBytes} from '../core/canonical.js';
 import {publicTaskClassSchema} from '../routing/contracts.js';
 import {parseSelectionInput,evaluateReview,qualify,policyDigest,parsePolicy,type SelectionInput,type ReviewProof} from '../governance/index.js';
-import {candidateIdentity,parseRuntimeReport} from '../schema/index.js';
+import {candidateIdentity,parseRuntimeReport,executionEnvironmentSchema} from '../schema/index.js';
 import {validateObservations} from '../evidence/index.js';
 import {decodeSources,encodeSources} from '../evidence/sources.js';
 
 const id=z.string().min(1),sha=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.string().datetime({offset:true});
-const contextSchema=z.object({source:id,observed_at:iso,origin:z.enum(['production_usage','qualification_evaluation']),public_task_class:publicTaskClassSchema,task_id:id,baseline_digest:sha.optional()}).strict();
+const contextSchema=z.object({source:id,observed_at:iso,origin:z.enum(['production_usage','qualification_evaluation']),public_task_class:publicTaskClassSchema,task_id:id,baseline_digest:sha.optional(),execution_environment:executionEnvironmentSchema.optional()}).strict();
 const captureSchema=z.object({schema_version:z.literal('delegate_receipt_capture.v1'),context:contextSchema,receipt_text:id,receipt_digest:sha}).strict();
 const reviewSchema=z.object({selection:z.unknown(),reviewerCandidateId:id,packageDigest:sha,implementerSessionId:id,proof:z.object({outcome:z.enum(['accepted','rejected','escalated']),artifact_digest:sha,package_digest:sha,runtime_receipt_digest:sha.nullable(),session_id:id.nullable(),parent_session_id:id.nullable(),context_kind:z.enum(['new','resumed','forked','unknown']),inherited_context_digest:sha.nullable()}).strict()}).strict();
 const evidenceSchema=z.object({selection:z.unknown(),observationId:id,attemptReceipts:z.record(id,sha),review:reviewSchema.optional()}).strict();
@@ -52,6 +52,11 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
  if(Date.parse(now)>Date.now())throw Error('RECEIPT_OBSERVATION_FUTURE');
  const input=selection(evidence.selection,now),row=input.observations.find(o=>o.observation_id===evidence.observationId);
  if(currentPolicy!==undefined&&policyDigest(input.policy)!==policyDigest(parsePolicy(currentPolicy)))throw Error('RECEIPT_ASSESSMENT_POLICY_CHANGED');
+ if(input.policy.policy_version>=4){
+  const environment=capture.context.execution_environment;
+  if(!environment||environment==='unknown'||environment!==input.request.execution_environment)throw Error('RECEIPT_EXECUTION_ENVIRONMENT_UNRESOLVED');
+  if(raw['execution_environment']!==undefined&&raw['execution_environment']!==environment)throw Error('RECEIPT_EXECUTION_ENVIRONMENT_CONFLICT');
+ }
  if(!row)throw Error('RECEIPT_OBSERVATION_MISSING');
  const [observation]=validateObservations([row],{registry:input.registry,candidates:input.candidates,mode:'production',sources:input.sources!,runtimeReports:input.runtimeReports??new Map()});
  if(!observation)throw Error('RECEIPT_OBSERVATION_MISSING');
@@ -83,6 +88,7 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
   const reportDigest=evidence.attemptReceipts[attempt.attempt_id]!,reportValue=runtimeReports.get(reportDigest);
   if(!reportValue||digest(reportValue)!==reportDigest)throw Error('RECEIPT_ATTEMPT_UNRESOLVED');
   const report=parseRuntimeReport(reportValue);requireSources(report,sources);
+  if(input.policy.policy_version>=4&&report.execution_environment!==capture.context.execution_environment)throw Error('RECEIPT_ATTEMPT_ENVIRONMENT_MISMATCH');
   if(report.provider==='synthetic'||Date.parse(report.completed_at)>Date.parse(now))throw Error('RECEIPT_ATTEMPT_INVALID');
   if(attempt.kind!=='review'&&(report.candidate_id!==candidate.candidate_id||report.provider!==candidate.provider||report.observed_identity.model_id!==undefined&&report.observed_identity.model_id!==candidate.snapshot_id||report.observed_identity.effort!==undefined&&report.observed_identity.effort!==candidate.effort))throw Error('RECEIPT_ATTEMPT_IDENTITY_MISMATCH');
   if(attempt.cost_usd!==(report.usage?.cost_usd??null))throw Error('RECEIPT_ATTEMPT_COST_MISMATCH');

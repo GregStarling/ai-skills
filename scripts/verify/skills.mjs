@@ -24,6 +24,7 @@ try{
    assert.ok(inside!== '..'&&!inside.startsWith('../')&&!isAbsolute(inside),`External consumer dependency: ${target}`);assert.ok(existsSync(linked),`Missing copied reference: ${target}`);
   }
  }}inspect(copy);
- const pack=JSON.parse(readFileSync(join(copy,'routing-pack.json'),'utf8'));assert.equal(pack.schema_version,'routing_pack.v2');assert.equal(pack.mode,'production');
+ const pack=JSON.parse(readFileSync(join(copy,'routing-pack.json'),'utf8'));assert.equal(pack.schema_version,'routing_pack.v3');assert.equal(pack.mode,'production');
+ for(const route of pack.routes)for(const ref of [...route.workers,...route.reviewers])assert.ok(Object.hasOwn(pack.treatments,ref.candidate_identity),'Copied treatment reference must resolve');
  console.log(JSON.stringify({schema_version:'portable_skills_check.v1',status:'passed',skills:['delegate','refresh-models'],inert:true,copied_consumer_files:files.sort(),scope:'source_structure_and_reference_closure_only',behavioral_validation_required:true}));
 }finally{rmSync(temporary,{recursive:true,force:true});}

@@ -15,7 +15,7 @@ async function invoke(name:string,input:unknown){
 describe('routing pack CLI boundaries',()=>{
  it('compiles an honest production gap pack and refuses to overwrite a staged artifact',async()=>{
   const output=join(directory,'staged.json');const result=await invoke('compile-routing-pack',{strata:[],output});
-  expect(result.exitCode).toBe(0);expect(result.body.status).toBe('COMPILED');expect(result.body.pack.mode).toBe('production');expect(result.body.pack.routes).toEqual([]);expect(result.body.pack.missing_routes).toHaveLength(7);expect(result.body.pack.routing_modes.full_project).toBe('decompose');
+  expect(result.exitCode).toBe(0);expect(result.body.status).toBe('COMPILED');expect(result.body.pack.mode).toBe('production');expect(result.body.pack.schema_version).toBe('routing_pack.v3');expect(result.body.pack.treatments).toEqual({});expect(result.body.pack.routes).toEqual([]);expect(result.body.pack.missing_routes).toHaveLength(7);expect(result.body.pack.routing_modes.full_project).toBe('decompose');
   const bytes=await readFile(output,'utf8');expect(JSON.parse(bytes)).toEqual(result.body.pack);
   expect((await invoke('compile-routing-pack',{strata:[],output})).exitCode).toBe(2);expect(await readFile(output,'utf8')).toBe(bytes);
  });

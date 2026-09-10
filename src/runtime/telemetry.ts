@@ -2,6 +2,13 @@ import type { NativeProvider } from "../adapters/shared.js";
 export type NativeTelemetry = { result_text: string | null; session_id: string | null; observed_model_ids: string[]; identity_status: "matched" | "unknown" | "mixed" | "mismatched"; cost_usd: number | null; cost_source: "provider_estimate" | "unknown"; input_tokens: number | null; output_tokens: number | null; malformed_events: number; provider_error: boolean };
 const object = (value: unknown): Record<string, unknown> | null => typeof value === "object" && value !== null && !Array.isArray(value) ? value as Record<string, unknown> : null;
 const finite = (value: unknown): number | null => typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
+const modelIdentity = (value: unknown): value is string => typeof value === "string" && /^[a-z0-9][a-z0-9._:/@-]*$/i.test(value) && !/^(synthetic|error|unknown|unavailable|undefined|null|none|placeholder|n\/a)$/i.test(value);
+/** Error envelopes may echo a requested model or use a synthetic placeholder. Neither is serving evidence. */
+export function observedAssistantModel(value: unknown): string | null {
+  const event = object(value), message = object(event?.["message"]);
+  if (event?.["type"] !== "assistant" || event["is_api_error_message"] === true || event["is_error"] === true || event["error"]) return null;
+  return modelIdentity(message?.["model"]) ? message["model"] : null;
+}
 export function parseNativeTelemetry(provider: NativeProvider, stdout: string, requestedModel: string): NativeTelemetry {
   const models = new Set<string>(); const messageIds = new Set<string>();
   let text: string | null = null, session: string | null = null, cost: number | null = null, inputTokens: number | null = null, outputTokens: number | null = null, malformed = 0, providerError = false;
@@ -14,8 +21,9 @@ export function parseNativeTelemetry(provider: NativeProvider, stdout: string, r
     if (event["type"] === "thread.started" && typeof event["thread_id"] === "string") session = event["thread_id"];
     if (provider === "anthropic") {
       const message = object(event["message"]);
+      if (event["is_api_error_message"] === true || event["is_error"] === true || event["type"] === "error") providerError = true;
       if (event["type"] === "assistant" && message) {
-        if (typeof message["model"] === "string") models.add(message["model"]);
+        const model = observedAssistantModel(event); if (model !== null) models.add(model);
         const id = typeof message["id"] === "string" ? message["id"] : null;
         if (id !== null && !messageIds.has(id)) {
           messageIds.add(id); const usage = object(message["usage"]);
@@ -27,7 +35,8 @@ export function parseNativeTelemetry(provider: NativeProvider, stdout: string, r
         if (event["structured_output"] !== undefined) text = JSON.stringify(event["structured_output"]);
         const reported = finite(event["total_cost_usd"]); if (reported !== null) cost = reported; // final cumulative estimate, never sum
         const modelUsage = object(event["modelUsage"]);
-        if (modelUsage) for (const key of Object.keys(modelUsage)) models.add(key);
+        // Failed results can include auxiliary-model usage despite no requested-model execution.
+        if (modelUsage && event["is_error"] !== true && (event["subtype"] === undefined || event["subtype"] === "success")) for (const key of Object.keys(modelUsage)) if (modelIdentity(key)) models.add(key);
         if (event["is_error"] === true || (typeof event["subtype"] === "string" && event["subtype"] !== "success")) providerError = true;
       }
     } else {

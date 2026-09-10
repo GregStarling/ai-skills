@@ -7,7 +7,8 @@ import {captureReceipt,assessReceipt,validateReceiptEvidence} from '../../src/le
 import {Ledger} from '../../src/ledger/index.js';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
 import {candidateIdentity,parseRuntimeReport,type TaskObservation} from '../../src/schema/index.js';
-import {evaluateReview,parseSelectionInput} from '../../src/governance/index.js';
+import {evaluateReview,parseSelectionInput,qualify,createBinding} from '../../src/governance/index.js';
+import {renderCodex,runtimeVersions} from '../../src/adapters/index.js';
 import {proposeRefresh} from '../../src/refresh/index.js';
 
 // SYNTHETIC TEST DATA: native-shaped boundary fixtures, never model-performance
@@ -16,13 +17,17 @@ const directories:string[]=[];
 const observedAt=new Date(Date.now()-1000).toISOString();
 async function temp(){const directory=await mkdtemp(join(tmpdir(),'governor-receipt-test-'));directories.push(directory);return directory;}
 afterEach(async()=>{await Promise.all(directories.splice(0).map(directory=>rm(directory,{recursive:true,force:true})));});
-function fixture(candidateIndex=0,taskIndex=0,accepted=true){
+function fixture(candidateIndex=0,taskIndex=0,accepted=true,v4=false){
  const input=JSON.parse(readFileSync('fixtures/bindings/valid-initial-backend.json','utf8')).selection;
  const template:TaskObservation=structuredClone(input.observations[0]);
  input.now=observedAt;input.mode='production';input.request.risk='critical';
  // Deliberately permissive test-only sample/interval thresholds exercise plumbing
  // with two tasks. These are NOT proposed operational qualification thresholds.
- input.policy.qualification.minimum_tasks=2;input.policy.promotion.minimum_paired_tasks=2;input.policy.promotion.non_inferiority_margin=.9;
+ if(v4){
+  const active=JSON.parse(readFileSync('policy/constitution.json','utf8'));
+  // Real v4 thresholds with isolated test suite identities; never live evidence.
+  input.policy={...active,roles:input.policy.roles,task_classes:input.policy.task_classes};input.request.execution_environment='codex';
+ }else{input.policy.qualification.minimum_tasks=2;input.policy.promotion.minimum_paired_tasks=2;input.policy.promotion.non_inferiority_margin=.9;}
  for(const record of input.registry.records){record.provider='openai';record.frontier=true;record.pinning.source='registry_metadata';record.content_digest=contentDigest(record);}
  input.registry.content_digest=contentDigest(input.registry);
  for(const candidate of input.candidates){candidate.provider='openai';candidate.provenance.registry_content_digest=input.registry.content_digest;}
@@ -30,24 +35,25 @@ function fixture(candidateIndex=0,taskIndex=0,accepted=true){
  const add=(text:string)=>{const key=hashBytes(text);input.sources[key]=text;return key;};
  const worker=input.candidates[candidateIndex],reviewer=input.candidates[1-candidateIndex];
  const report=(candidate:typeof worker,id:string,cost:number|null,passed=true,known=true)=>{
-  const value=parseRuntimeReport({schema_version:'runtime_report.v1',report_id:`test_${id}`,provider:'openai',candidate_id:candidate.candidate_id,started_at:input.now,completed_at:input.now,command:{executable:'SYNTHETIC_TEST_DATA_NOT_EXECUTED',args:[],cwd:'/tmp'},status:passed?'completed':'failed',exit_code:passed?0:1,signal:null,timeout_ms:1000,stdout_digest:add(`SYNTHETIC TEST stdout ${id}`),stderr_digest:add(`SYNTHETIC TEST stderr ${id}`),observed_identity:known?{source:'provider_receipt',model_id:candidate.snapshot_id,effort:candidate.effort}:{source:'unknown'},usage:{cost_usd:cost}});
+  const value=parseRuntimeReport({schema_version:'runtime_report.v1',report_id:`test_${id}`,provider:'openai',...(v4?{execution_environment:'codex'}:{}),candidate_id:candidate.candidate_id,started_at:input.now,completed_at:input.now,command:{executable:'SYNTHETIC_TEST_DATA_NOT_EXECUTED',args:[],cwd:'/tmp'},status:passed?'completed':'failed',exit_code:passed?0:1,signal:null,timeout_ms:1000,stdout_digest:add(`SYNTHETIC TEST stdout ${id}`),stderr_digest:add(`SYNTHETIC TEST stderr ${id}`),observed_identity:known?{source:'provider_receipt',model_id:candidate.snapshot_id,effort:candidate.effort}:{source:'unknown'},usage:{cost_usd:v4?null:cost}});
   const key=digest(value);input.runtimeReports[key]=value;return key;
  };
  const grade=(row:TaskObservation)=>{row.provenance.source_digest=add(JSON.stringify({schema_version:'grader_result.v1',task_id:row.task_id,fixture_digest:row.fixture_digest,candidate_identity:row.candidate.candidate_identity,artifact_digest:row.provenance.artifact_digest,passed:row.passed,accepted:row.accepted,checks:[{check_id:'synthetic_boundary_check',passed:row.passed,evidence_digest:add(`SYNTHETIC TEST check ${row.observation_id}: ${row.passed}`)}]}));row.content_digest=contentDigest(row);};
  const observation=(candidate:typeof worker,id:string,task:string,role='implementer',passed=true)=>{
   const row:TaskObservation={...structuredClone(template),observation_id:id,lane:'production',candidate:{candidate_id:candidate.candidate_id,candidate_identity:candidateIdentity(candidate)},task_id:task,fixture_digest:add(`SYNTHETIC TEST same-task fixture ${task}`),role_id:role,risk:'critical',measured_at:input.now,passed,accepted:passed,attempts:[{attempt_id:`worker_${id}`,kind:'worker',cost_usd:candidate===input.candidates[0]?.01:.02,cost_source:'provider_estimate',latency_ms:100}],provenance:{source:'native_runtime',source_digest:hashBytes('placeholder'),artifact_digest:add(`SYNTHETIC TEST artifact ${id}`),runtime_receipt_digest:null}};
+  if(v4){row.attempts[0]!.cost_usd=null;row.attempts[0]!.cost_source='unknown';}
   row.provenance.runtime_receipt_digest=report(candidate,id,row.attempts[0]!.cost_usd,passed);grade(row);return row;
  };
  const row=observation(worker,`worker_${candidateIndex}_${taskIndex}`,`paired_task_${taskIndex}`,'implementer',accepted);
- const reviewRows=[0,1].map(i=>observation(reviewer,`reviewer_history_${candidateIndex}_${i}`,`reviewer_task_${i}`,'reviewer'));
+ const reviewRows=Array.from({length:v4?input.policy.qualification.minimum_tasks:2},(_,i)=>observation(reviewer,`reviewer_history_${candidateIndex}_${i}`,`reviewer_task_${i}`,'reviewer'));
  const packageDigest=add(`SYNTHETIC TEST independent review package ${row.observation_id}`);
  const reviewReport=report(reviewer,`current_review_${row.observation_id}`,.001);
- if(accepted)row.attempts.push({attempt_id:`review_${row.observation_id}`,kind:'review',cost_usd:.001,cost_source:'provider_estimate',latency_ms:100});
+ if(accepted)row.attempts.push({attempt_id:`review_${row.observation_id}`,kind:'review',cost_usd:v4?null:.001,cost_source:v4?'unknown':'provider_estimate',latency_ms:100});
  grade(row);
  const reviewSelection={...structuredClone(input),request:{...input.request,role_id:'reviewer'},observations:reviewRows};
  input.observations=[row];
  const raw={schema_version:'delegate_receipt.v1',task_class:'bounded_implementation',task_id:row.task_id,starting_artifact_digest:row.fixture_digest,status:accepted?'completed':'failed',notes:'SYNTHETIC TEST DATA — résumé',attempts:[{candidate_id:worker.candidate_id,candidate_identity:candidateIdentity(worker),role:'worker'},...(accepted?[{candidate_id:reviewer.candidate_id,role:'reviewer'}]:[])]};
- const capture={schema_version:'delegate_receipt_capture.v1' as const,context:{source:'SYNTHETIC TEST DATA; no native invocation',observed_at:input.now,origin:'production_usage' as const,public_task_class:'bounded_implementation',task_id:row.task_id,baseline_digest:row.fixture_digest},receipt_text:'',receipt_digest:''};
+ const capture={schema_version:'delegate_receipt_capture.v1' as const,context:{source:'SYNTHETIC TEST DATA; no native invocation',observed_at:input.now,origin:'production_usage' as const,public_task_class:'bounded_implementation',task_id:row.task_id,baseline_digest:row.fixture_digest,...(v4?{execution_environment:'codex' as const}:{})},receipt_text:'',receipt_digest:''};
  const review={selection:reviewSelection,reviewerCandidateId:reviewer.candidate_id,packageDigest,implementerSessionId:'test-worker-session',proof:{outcome:'accepted' as const,artifact_digest:row.provenance.artifact_digest,package_digest:packageDigest,runtime_receipt_digest:reviewReport,session_id:'test-fresh-review-session',parent_session_id:null,context_kind:'new' as const,inherited_context_digest:null}};
  const evidence={selection:input,observationId:row.observation_id,attemptReceipts:Object.fromEntries(row.attempts.map(a=>[a.attempt_id,a.kind==='review'?reviewReport:row.provenance.runtime_receipt_digest!])),...(accepted?{review}:{})};
  const payload={schema_version:'delegate_receipt_evidence.v1' as const,capture,evidence};
@@ -169,5 +175,38 @@ describe('portable receipt capture and independent evidence ingestion',()=>{
   const unmatched=[...records];
   for(const index of [0,1]){const f=fixtures[index]!,bytes=`SYNTHETIC TEST changed fixture ${index}`;f.row.fixture_digest=hashBytes(bytes);f.input.sources[f.row.fixture_digest]=bytes;f.payload.capture.context.baseline_digest=f.row.fixture_digest;f.raw.starting_artifact_digest=f.row.fixture_digest;f.sealRaw();f.grade(f.row);const captured=await capture(directory,f);unmatched[index]=(await assessReceipt({...captured,evidence:f.evidence})).recordId;}
   const retained=await proposeRefresh({...request,evaluationLedgers:[{directory:ledgerDirectory,recordIds:unmatched}]});expect(retained.qualifications.every(q=>q.status==='QUALIFIED')).toBe(true);expect(retained.decision.outcome).toBe('RETAIN');
+ });
+});
+
+describe('v4 subscription receipt capability boundary',()=>{
+ it('qualifies independently assessed subscription tasks at the unchanged sample floor without billed dollars',async()=>{
+  const directory=await temp(),base=fixture(0,0,true,true),records:string[]=[];
+  const combined=structuredClone(base.input);combined.observations=[];let ledgerDirectory='';
+  expect(combined.policy.policy_version).toBe(4);expect(combined.policy.qualification.minimum_tasks).toBe(20);
+  for(let i=0;i<combined.policy.qualification.minimum_tasks;i++){
+   const f=fixture(0,i,true,true),captured=await capture(directory,f),assessed=await assessReceipt({...captured,evidence:f.evidence});
+   expect(captured.qualification_authority).toBe(false);expect(assessed.qualification).toBe('HOLD');
+   records.push(assessed.recordId);ledgerDirectory=captured.directory;
+   combined.observations.push(f.row);Object.assign(combined.sources,f.input.sources);Object.assign(combined.runtimeReports,f.input.runtimeReports);
+  }
+  const input=parseSelectionInput(combined,{mode:'production'}),qualification=qualify({...input,candidate:input.candidates[0]!});
+  expect(qualification).toMatchObject({status:'QUALIFIED',metrics:{tasks:20,accepted:20,total_cost_usd:null,cost_per_accepted_task_usd:null}});
+  const refreshed=await proposeRefresh({selection:{...combined,observations:[]},directory:join(directory,'refresh'),mode:'adapter-test',trigger:'SYNTHETIC TEST v4 subscription intake',evaluationLedgers:[{directory:ledgerDirectory,recordIds:records}]});
+  expect(refreshed.qualifications.find(q=>q.candidate_id===base.worker.candidate_id)).toMatchObject({status:'QUALIFIED',metrics:{tasks:20,total_cost_usd:null}});
+  const missingHost={...input,request:{...input.request,execution_environment:'api' as const}};
+  expect(qualify({...missingHost,candidate:input.candidates[0]!}).status).toBe('REJECT');
+  // A separately qualified API treatment still cannot authorize native Codex.
+  const api=structuredClone(combined);api.request.execution_environment='api';
+  api.economics={schema_version:'economic_evidence.v1',pricing:[],tasks:[],maintainer_order:api.candidates.map((c:{candidate_id:string})=>c.candidate_id)};
+  for(const row of api.observations){const report={...api.runtimeReports[row.provenance.runtime_receipt_digest],execution_environment:'api'},key=digest(report);api.runtimeReports[key]=report;row.provenance.runtime_receipt_digest=key;row.content_digest=contentDigest(row);}
+  const apiInput=parseSelectionInput(api,{mode:'production'}),binding=createBinding(apiInput);
+  expect(qualify({...apiInput,candidate:apiInput.candidates[0]!}).status).toBe('QUALIFIED');
+  expect(()=>renderCodex({binding,selection:apiInput,mode:'production',runtimeVersion:runtimeVersions.openai,outputSchema:{type:'object'}})).toThrow('HOST_EXECUTION_EVIDENCE_REQUIRED');
+ });
+ it.each(['capture','worker','review'] as const)('refuses missing or API %s environment in a claimed subscription assessment',part=>{
+  const f=fixture(0,0,true,true);
+  if(part==='capture')Reflect.deleteProperty(f.payload.capture.context,'execution_environment');
+  else f.replaceReport(f.row.attempts[part==='worker'?0:1]!.attempt_id,{execution_environment:'api'});
+  expect(()=>validateReceiptEvidence(f.payload)).toThrow(/ENVIRONMENT/);
  });
 });

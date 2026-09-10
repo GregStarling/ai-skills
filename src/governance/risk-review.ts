@@ -4,7 +4,7 @@ import { bindCandidate, validateRegistry } from '../registry/index.js';
 import { parsePolicy, type Policy } from './policy.js';
 import { qualify, type QualificationInput } from './qualification.js';
 
-export type Diagnostic = { rule_id: string; message: string };
+export type Diagnostic = { rule_id: string; message: string; candidate_id?: string };
 export const riskOrder: readonly RiskCategory[] = ['low', 'medium', 'high', 'critical'];
 export function maxRisk(...risks: RiskCategory[]): RiskCategory {
   if (risks.some(r => !riskOrder.includes(r))) throw new Error('unknown_risk');

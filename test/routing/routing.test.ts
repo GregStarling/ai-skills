@@ -3,7 +3,7 @@ import {describe,it,expect,vi,afterEach} from 'vitest';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
 import {candidateIdentity,parseRuntimeReport} from '../../src/schema/index.js';
 import {provisionalIdentity,type ProvisionalTreatmentInput} from '../../src/routing/provisional.js';
-import {compileRoutingPack,parseRoutingPack,resolveRouting,RoutingError,type RoutingPack} from '../../src/routing/index.js';
+import {compileRoutingPack,parseRoutingPack,expandRoutingPack,resolveRouting,RoutingError,type RoutingPack} from '../../src/routing/index.js';
 
 const fixture=()=>JSON.parse(readFileSync('fixtures/bindings/valid-initial-backend.json','utf8')).selection;
 function reviewer(worker:any){const value=structuredClone(worker);value.request.role_id='reviewer';value.candidates=value.candidates.filter((candidate:any)=>candidate.candidate_id==='candidate_beta');value.observations=value.observations.filter((row:any)=>row.candidate.candidate_id==='candidate_beta');for(const row of value.observations){row.role_id='reviewer';row.content_digest=contentDigest(row);}delete value.incumbentCandidateId;return value;}
@@ -25,7 +25,7 @@ function production(){
 function compileProduction(worker=production()){
   const review=reviewer(worker);return compileRoutingPack({mode:'production',policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection:review}]});
 }
-function host(pack:RoutingPack,candidates=pack.routes[0]!.workers){return {treatments:candidates.map(c=>({provider:c.provider,model_id:c.model_id,snapshot_id:c.snapshot_id,effort:c.effort,serving:c.serving})),tools:['terminal'],capabilities:['terminal'],context_window_tokens:100000,supports_fresh_context:true};}
+function host(pack:RoutingPack,candidates=pack.routes[0]!.workers){return {treatments:candidates.map(reference=>{const c=pack.treatments[reference.candidate_identity]!;return {provider:c.provider,model_id:c.model_id,snapshot_id:c.snapshot_id,effort:c.effort,serving:c.serving};}),tools:['terminal'],capabilities:['terminal'],context_window_tokens:100000,supports_fresh_context:true};}
 afterEach(()=>vi.useRealTimers());
 
 describe('portable routing pack',()=>{
@@ -124,7 +124,7 @@ it('keeps requested effort reproducible when served effort is not observable',()
   vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));
   const entry:any=provisionalRoute();entry.workers[0].effort='low';entry.workers[0].evidence.observed_effort=null;entry.workers[0].evidence.configured_effort='low';entry.workers[0].evidence.effort_source='requested_configuration';
   const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[entry]});
-  expect(pack.routes[0]!.workers[0]).toMatchObject({effort:'low',provisional:{observed_effort:null,configured_effort:'low',effort_source:'requested_configuration'}});
+  expect(pack.treatments[pack.routes[0]!.workers[0]!.candidate_identity]).toMatchObject({effort:'low',provisional:{observed_effort:null,configured_effort:'low',effort_source:'requested_configuration'}});
   entry.workers[0].evidence.control_limitations=[];expect(()=>compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[entry]})).toThrow('unobserved effort requires');
 });
 
@@ -157,6 +157,7 @@ it('selects frontier eligibility before reviewer cost ranking and retains eligib
   const worker=fixture(),review=structuredClone(worker);review.request.role_id='reviewer';for(const row of review.observations){row.role_id='reviewer';row.content_digest=contentDigest(row);}
   const compile=(reviewerSelection:any)=>compileRoutingPack({mode:'simulation_test',generatedAt:worker.now,policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection}]});
   const initial=compile(review);expect(initial.routes[0]!.reviewer_decision).toMatchObject({outcome:'SELECT',selected_candidate_id:'candidate_beta'});expect(initial.routes[0]!.reviewers.map(r=>r.candidate_id)).toEqual(['candidate_beta']);
+  const excluded=compile({...review,eligibleCandidateIds:['candidate_alpha']});expect(excluded.routes[0]!.reviewers).toEqual([]);
   review.incumbentCandidateId='candidate_beta';expect(compile(review).routes[0]!.reviewer_decision).toMatchObject({outcome:'RETAIN',selected_candidate_id:'candidate_beta'});
   review.incumbentCandidateId='candidate_alpha';const invalidIncumbent=compile(review);expect(invalidIncumbent.routes[0]!.reviewer_decision.outcome).toBe('ESCALATION_REQUIRED');expect(invalidIncumbent.routes[0]!.reviewers).toEqual([]);
 });
@@ -231,4 +232,84 @@ describe('provisional evidence before economics',()=>{
     const request={publicTaskClass:'bounded_implementation' as const,stratumDigest:route.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'claude' as const}};
     expect(resolveRouting(pack,request)).toMatchObject({worker:{candidate_id:'candidate_beta',evidence_tier:'qualified'},reviewer:{candidate_id:'candidate_beta',evidence_tier:'qualified'}});
   });
+});
+
+
+describe('factored routing_pack.v3 wire format',()=>{
+  it('stores shared metadata once while preserving route-specific evidence and resolution',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));
+    const first=provisionalRoute(),second={...provisionalRoute(),publicTaskClass:'repo_exploration' as const};
+    const pack=compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[first,second]});
+    expect(pack.schema_version).toBe('routing_pack.v3');expect(Object.keys(pack.treatments)).toHaveLength(2);
+    expect(pack.routes.flatMap(r=>[...r.workers,...r.reviewers])).toHaveLength(4);
+    expect(pack.routes[0]!.workers[0]).not.toHaveProperty('model_id');
+    const expanded=expandRoutingPack(JSON.parse(JSON.stringify(pack)));
+    for(const route of expanded.routes){
+      expect(route.workers[0]).toMatchObject({candidate_id:'cheap_alias',model_id:'cheap_alias',provisional:{host:'codex'}});
+      const wireRoute=pack.routes.find(r=>r.stratum_digest===route.stratum_digest)!;
+      expect(resolveRouting(pack,{publicTaskClass:route.public_task_class,stratumDigest:route.stratum_digest,now:'2026-09-10T01:00:00Z',host:{...host(pack,[...wireRoute.workers,...wireRoute.reviewers]),host:'codex'}}).worker).toEqual(route.workers[0]);
+    }
+    const installed=rankedPack();expect(installed.routes[0]!.workers[0]!.task_evidence?.basis).toBe('installed_acceptance');
+    expect(Object.values(installed.treatments).every(t=>!t.provisional||!Object.hasOwn(t.provisional,'task_evidence'))).toBe(true);
+    expect(Buffer.byteLength(JSON.stringify(pack))).toBeLessThan(Buffer.byteLength(JSON.stringify(expanded)));
+  });
+  it('rejects unresolved or altered treatment identities, metadata tampering, conflicts and old versions',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T00:00:00Z'));const pack=provisionalPack(),identity=pack.routes[0]!.workers[0]!.candidate_identity;
+    const missing=structuredClone(pack);delete missing.treatments[identity];missing.content_digest=contentDigest(missing);expect(()=>parseRoutingPack(missing)).toThrow(/unresolved treatment reference/);
+    const altered=structuredClone(pack);altered.treatments[identity]!.effort='high';altered.content_digest=contentDigest(altered);expect(()=>parseRoutingPack(altered)).toThrow(/candidate identity mismatch/);
+    const changed=structuredClone(pack);changed.treatments[identity]!.family='changed';expect(()=>parseRoutingPack(changed)).toThrowError(expect.objectContaining({code:'PACK_TAMPERED'}));
+    const conflict={...provisionalRoute(),publicTaskClass:'repo_exploration' as const};conflict.workers[0]!.evidence.control_limitations.push('A contradictory shared claim');
+    expect(()=>compileRoutingPack({mode:'production',policy:currentPolicy(),strata:[],provisional:[provisionalRoute(),conflict]})).toThrowError(expect.objectContaining({code:'TREATMENT_METADATA_CONFLICT'}));
+    expect(()=>parseRoutingPack({...pack,schema_version:'routing_pack.v2'})).toThrowError(expect.objectContaining({code:'PACK_VERSION_UNSUPPORTED'}));
+  });
+});
+
+
+function subscriptionProduction(){
+  const worker=production();worker.policy.policy_version=4;worker.policy.economics=currentPolicy().economics;worker.policy.review=currentPolicy().review;delete worker.policy.qualification.maximum_cost_per_accepted_task_usd;
+  worker.request.execution_environment='codex';
+  for(const row of worker.observations){
+    const old=worker.runtimeReports[row.provenance.runtime_receipt_digest],report={...old,execution_environment:'codex'};
+    const key=digest(report);worker.runtimeReports[key]=report;delete worker.runtimeReports[row.provenance.runtime_receipt_digest];row.provenance.runtime_receipt_digest=key;
+    for(const attempt of row.attempts){attempt.cost_usd=null;attempt.cost_source='unknown';}row.content_digest=contentDigest(row);
+  }
+  worker.economics={schema_version:'economic_evidence.v1',pricing:[],tasks:[],maintainer_order:['candidate_beta','candidate_alpha']};return worker;
+}
+describe('v4 capability and native-host economics',()=>{
+  it('routes qualified subscription evidence with unknown dollars in declared order and binds the native host',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));const worker=subscriptionProduction(),review=structuredClone(worker);review.request.role_id='reviewer';
+    for(const row of review.observations){row.role_id='reviewer';row.content_digest=contentDigest(row);}
+    const pack=compileRoutingPack({mode:'production',policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection:review}]}),route=pack.routes[0]!;
+    expect(route.workers.map(c=>c.candidate_id)).toEqual(['candidate_beta','candidate_alpha']);expect(route.ranking_basis.workers).toBe('maintainer_order');
+    expect(route.workers[0]).toMatchObject({evidence_tier:'qualified',qualification:{metrics:{cost_per_accepted_task_usd:null,total_cost_usd:null}},economics:{evidence_level:'UNKNOWN',value_usd:null}});
+    expect(route.reviewers.map(c=>c.candidate_id)).toEqual(['candidate_beta']);
+    const input={publicTaskClass:'bounded_implementation' as const,stratumDigest:route.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}};
+    expect(resolveRouting(pack,input)).toMatchObject({worker:{candidate_id:'candidate_beta'},ranking_basis:{worker:'maintainer_order'}});
+    expect(()=>resolveRouting(pack,{...input,host:{...input.host,host:'claude'}})).toThrowError(expect.objectContaining({code:'NO_ELIGIBLE_WORKER'}));
+    worker.request.execution_environment='api';review.request.execution_environment='api';
+    expect(()=>compileRoutingPack({mode:'production',policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection:review}]})).toThrowError(expect.objectContaining({code:'PORTABLE_NATIVE_EXECUTION_REQUIRED'}));
+  });
+  it('does not restore economically excluded capability-qualified candidates to fallback ladders',()=>{
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));const worker=subscriptionProduction();worker.request.max_cost_usd=1;
+    const review=structuredClone(worker);review.request.role_id='reviewer';for(const row of review.observations){row.role_id='reviewer';row.content_digest=contentDigest(row);}
+    const pack=compileRoutingPack({mode:'production',policy:worker.policy,strata:[{publicTaskClass:'bounded_implementation',workerSelection:worker,reviewerSelection:review}]});
+    expect(pack.routes[0]!.workers).toEqual([]);expect(pack.routes[0]!.worker_decision.rule_ids).toContain('no_economically_eligible_candidate');
+    expect(pack.exclusions).toEqual(expect.arrayContaining([expect.objectContaining({lane:'worker',status:'EXCLUDED',rule_ids:['economic_explicit_ceiling_unverified']})]));
+  });
+});
+
+
+it('does not let unmeasured provisional fallback bypass an explicit task dollar ceiling',()=>{
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));const worker=production();worker.request.max_cost_usd=1;
+  const strata=[{publicTaskClass:'bounded_implementation' as const,workerSelection:worker,reviewerSelection:reviewer(worker)}],base=compileRoutingPack({mode:'production',policy:worker.policy,strata}),route=base.routes[0]!;
+  const extra={...provisionalRoute(),publicTaskClass:'bounded_implementation' as const,requirements:route.requirements,qualifiedStratumDigest:route.stratum_digest};
+  expect(()=>compileRoutingPack({mode:'production',policy:worker.policy,strata,provisional:[extra]})).toThrowError(expect.objectContaining({code:'PROVISIONAL_EXPLICIT_COST_CEILING_UNVERIFIED'}));
+  const pack=provisionalPack(),provisional=pack.routes[0]!;
+  for(const request of [provisional.stratum.worker_request,provisional.stratum.reviewer_request])request.max_cost_usd=1;
+  provisional.stratum_digest=digest(provisional.stratum);pack.content_digest=contentDigest(pack);
+  expect(()=>resolveRouting(pack,{publicTaskClass:'mechanical_work',stratumDigest:provisional.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...provisional.workers,...provisional.reviewers]),host:'codex'}})).toThrowError(expect.objectContaining({code:'NO_ELIGIBLE_WORKER'}));
+  // Schema-defined null means no explicit dollar ceiling, not a zero budget.
+  for(const request of [provisional.stratum.worker_request,provisional.stratum.reviewer_request]){delete request.max_cost_usd;request.constraints.max_cost_usd=null;request.constraints_digest=digest(request.constraints);}
+  provisional.stratum_digest=digest(provisional.stratum);pack.content_digest=contentDigest(pack);
+  expect(resolveRouting(pack,{publicTaskClass:'mechanical_work',stratumDigest:provisional.stratum_digest,now:'2026-09-09T01:00:00Z',host:{...host(pack,[...provisional.workers,...provisional.reviewers]),host:'codex'}}).worker.evidence_tier).toBe('provisional');
 });

@@ -43,6 +43,7 @@ export function validateBinding(value:unknown,input:SelectionInput) {
     if(canonicalJson(binding)!==canonicalJson(expected))fail('binding_recomputation_mismatch','Binding differs from independent decision and expiry recomputation.');
     const current=select(input);
     const eligibility=current.qualifications.find(q=>q.candidate_id===binding.candidate.candidate_id);
+    if(policy.policy_version>=4&&current.selected?.candidate_id!==binding.candidate.candidate_id)fail('binding_economic_selection_changed','Candidate no longer wins the current economic selection.');
     if(eligibility?.status!=='QUALIFIED')fail('binding_no_longer_qualified','Candidate no longer meets current evidence and eligibility rules.');
   } catch(error){fail('binding_recomputation_failed',error instanceof Error?error.message:'Cannot reconstruct decision.');}
   const stale=now>=Date.parse(binding.refresh_due_at);

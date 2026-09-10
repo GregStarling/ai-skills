@@ -7,6 +7,7 @@ const id=z.string().min(1),hash=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.
 const officialUrl=z.string().url().refine(value=>{const url=new URL(value);return url.protocol==='https:'&&['openai.com','anthropic.com','claude.com','chatgpt.com'].some(domain=>url.hostname===domain||url.hostname.endsWith(`.${domain}`));},'official HTTPS source required');
 const citation=z.object({url:officialUrl,checked_at:iso}).strict();
 export const acceptanceTaskClasses={tinybug:'mechanical_work',mechanical:'mechanical_work',backend:'bounded_implementation',ui:'ui_implementation',hardbug:'hard_debugging',multicomponent:'complex_implementation'} as const;
+export const mediumSmokeReviewSchema=z.object({run_id:id,run_digest:hash,worker_identity:hash,reviewer_identity:hash,reviewer_request_digest:hash,reviewer_execution_digest:hash,artifact_digest:hash,fresh_artifact_only_context:z.literal(true)}).strict();
 const taskEvidenceRecordSchema=z.object({
   case_id:id,case:z.enum(['tinybug','mechanical','backend','ui','hardbug','multicomponent']),record_digest:hash,
   observed_at:iso,host_version:id,acceptance:z.enum(['PASS','PASS_WITH_HARNESS_RECOVERY']),
@@ -20,7 +21,9 @@ export const taskEvidenceSchema=z.object({
   host:z.enum(['codex','claude']),candidate_identity:hash,
   source:z.object({path:z.literal('data/routing/installed-acceptance.json'),content_digest:hash,digest_encoding:z.literal('canonical_json_sha256')}).strict(),
   records:z.array(taskEvidenceRecordSchema),limitations:z.array(id).nonempty(),
+  control_evidence:z.object({source:z.literal('data/routing/medium-smoke-audit.json'),audit_digest:hash,host_observations_digest:hash,reviews:z.array(mediumSmokeReviewSchema).nonempty()}).strict().optional(),
 }).strict().superRefine((e,ctx)=>{
+  if(e.control_evidence&&(e.basis!=='smoke_extrapolation'||e.host!=='claude'||e.public_task_class!=='mechanical_work'||e.control_evidence.reviews.some(r=>r.worker_identity===r.reviewer_identity||(e.role==='worker'?r.worker_identity:r.reviewer_identity)!==e.candidate_identity)))ctx.addIssue({code:'custom',message:'medium smoke controls must bind the exact Claude quantity-default role'});
   if((e.basis==='installed_acceptance')!==(e.records.length>0))ctx.addIssue({code:'custom',message:'installed acceptance requires records; extrapolation must not claim accepted records'});
   for(const record of e.records){
     if(acceptanceTaskClasses[record.case]!==e.public_task_class)ctx.addIssue({code:'custom',message:'acceptance case does not match task class'});

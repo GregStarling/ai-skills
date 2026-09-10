@@ -2551,6 +2551,15 @@
             "synthetic"
           ]
         },
+        "execution_environment": {
+          "type": "string",
+          "enum": [
+            "claude_code",
+            "codex",
+            "api",
+            "unknown"
+          ]
+        },
         "candidate_id": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9_:-]{1,95}$"
