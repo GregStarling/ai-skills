@@ -9,12 +9,12 @@ This skill is a companion to the `delegate` skill in this repository. Delegate d
 
 ## What the measurement showed
 
-One user's 14 days of Claude Code transcripts (Sep 2026, API list price as a proxy for usage) gave the order of leverage. Treat these as one sample, not a law, and remeasure with [measure/burn.mjs](measure/burn.mjs) before changing the defaults below.
+Two weeks of one user's Claude Code transcripts (Sep 2026, API list price as a proxy for usage) gave the order of leverage. Treat it as one sample, not a law, and remeasure with [measure/burn.mjs](measure/burn.mjs) before changing the defaults below.
 
-- About 71 percent of proxy cost was cache reads, meaning context re-sent on later turns. Output tokens were about 8 percent.
-- Nearly all work ran in the frontier main session. Subagents did about 0.2 percent. Cheaper models were essentially unused.
-- Peak context per session: median 179K tokens, 90th percentile 577K, maximum 992K. The longest session ran 692 turns and re-sent roughly 500M context tokens.
-- The largest single items carried in context were browser screenshots and full-size PNG reads.
+- Most of the proxy cost was cache reads, meaning context re-sent on later turns. Output was a small fraction.
+- Nearly all work ran in the frontier main session. Subagents and cheaper models were barely used.
+- Sessions routinely ran for hundreds of turns with context far past the point where a handoff would have been cheaper.
+- The largest single items carried in context were browser screenshots and full-size image reads.
 
 So the order of leverage is: keep the coordinator small, keep images and documents out of it, delegate reads and searches, and only then tune the worker model.
 
