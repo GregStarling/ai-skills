@@ -24,6 +24,8 @@ Intersect every treatment with actual host models, efforts, tools and controls. 
 
 ## Delegate and integrate
 
+For substantial exploration, visual inspection, or a task-boundary handoff, read [context discipline](context-discipline.md).
+
 Give one worker a compact [delegation contract](delegation-contract.md), including settled decisions and acceptance checks. Even a tiny task uses a worker followed by frontier verification; scale the packet and checks down. The frontier owns architecture, UI judgment, boundaries and integration; workers implement.
 
 For independent workstreams, read [swarm-policy.md](swarm-policy.md). Default to at most three concurrent workers, with a normal ceiling of five further limited by the host/project. Settle interfaces and ownership first and use dependency-ordered waves.
