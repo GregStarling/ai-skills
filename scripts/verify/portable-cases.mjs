@@ -65,12 +65,14 @@ export async function createCase(name, directory) {
   return { name, directory: cwd, task: fixture.task, owned_files: Object.keys(fixture.files), grading_limitations: fixture.limitation ?? null };
 }
 
-export async function gradeCase(name, directory) {
+export async function gradeCase(name, directory, {behaviorOnly=false} = {}) {
   const fixture = cases[name];
   if (!fixture) throw new Error(`Unknown portable case: ${name}`);
+  if (behaviorOnly && name !== 'mechanical') throw new Error('Behavior-only baseline is defined for the mechanical fixture');
   const gradingDirectory = await mkdtemp(join(tmpdir(), 'delegate-portable-grader-'));
   const cwd = resolve(directory);
-  const body = `import assert from 'node:assert/strict';\nimport {readFile} from 'node:fs/promises';\nconst base=${JSON.stringify(pathToFileURL(cwd + '/').href)};\nconst module=file=>import(new URL(file,base));\nconst read=file=>readFile(new URL(file,base),'utf8');\n${fixture.checks}\nconsole.log('PASS ${name}');\n`;
+  const checks = behaviorOnly ? `const {link}=await module('link.mjs');assert.equal(link('  Two   Words '),'/items/two-words');assert.equal(link('A'),'/items/a');assert.equal(link(''),'/items/');` : fixture.checks;
+  const body = `import assert from 'node:assert/strict';\nimport {readFile} from 'node:fs/promises';\nconst base=${JSON.stringify(pathToFileURL(cwd + '/').href)};\nconst module=file=>import(new URL(file,base));\nconst read=file=>readFile(new URL(file,base),'utf8');\n${checks}\nconsole.log('PASS ${name}${behaviorOnly ? '-behavior' : ''}');\n`;
   const path = join(gradingDirectory, 'grade.mjs');
   await writeFile(path, body);
   const result = spawnSync(process.execPath, [path], { cwd, encoding: 'utf8', timeout: 5000 });

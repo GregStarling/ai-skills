@@ -1,10 +1,14 @@
 import {mkdir,mkdtemp,readFile,writeFile} from 'node:fs/promises';
-import {join,resolve} from 'node:path';
+import {join,resolve,dirname} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {parseArgs} from 'node:util';
+import {parseCalibrationManifest,calibrationPrompt,reviewerCalibrationGate} from '../dist/routing/reviewer-calibration.js';
 import {tmpdir} from 'node:os';
 import {spawnSync} from 'node:child_process';
 import {hashBytes,digest} from '../dist/core/canonical.js';
 import {executeFrontier} from './verify/frontier-host.mjs';
 
+async function legacyEvaluation(){
 // Exact existing quantity-default artifact only. Successful reviews do not qualify a model.
 const root=resolve(import.meta.dirname,'..');
 const targets=JSON.parse(await readFile(join(root,'data/routing/frontier-targets.json'),'utf8')).targets;
@@ -36,3 +40,67 @@ const report={schema_version:'frontier_reviewer_evaluations.v1',evaluated_at:new
 await writeFile(join(artifactRoot,'report.json'),JSON.stringify(report,null,2)+'\n');
 await writeFile(join(root,'data/routing/frontier-reviewer-evaluations.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify({artifactRoot,rows:rows.map(row=>({host:row.host,accepted:row.accepted,identity_assurance:row.identity_evidence.assurance.overall,output:row.output}))}));
+
+}
+
+async function reserve(ledgerFile, entry) {
+ const ledger=JSON.parse(await readFile(ledgerFile,'utf8'));
+ if(ledger.executions.filter(row=>row.group==='calibration').length>=ledger.calibration_limit)throw Error('CALIBRATION_BUDGET_EXHAUSTED');
+ if(ledger.executions.some(row=>row.id===entry.id))throw Error('EXECUTION_ALREADY_RESERVED');
+ ledger.executions.push({...entry,group:'calibration',started_at:new Date().toISOString()});
+ await writeFile(ledgerFile,JSON.stringify(ledger,null,2)+'\n');
+}
+export async function evaluateCalibration(manifestFile, outputDirectory, ledgerFile, onlyHost=null){
+ const manifestBytes=await readFile(manifestFile,'utf8'),manifest=parseCalibrationManifest(JSON.parse(manifestBytes));
+ const fixtureRoot=dirname(resolve(manifestFile)),root=resolve(import.meta.dirname,'..');
+ const targets=JSON.parse(await readFile(join(root,'data/routing/frontier-targets.json'),'utf8')).targets.filter(target=>!onlyHost||target.host===onlyHost);
+ if(!targets.length)throw Error('Unknown calibration host');
+ // A new directory is mandatory: failed runs cannot be overwritten by a later pass.
+ await mkdir(outputDirectory,{recursive:false});
+ const checks=await readFile(join(fixtureRoot,manifest.checks_file),'utf8'),reports=[];
+ const readFiles=async directory=>Object.fromEntries(await Promise.all(['quantity.mjs','quantity.test.mjs'].map(async file=>[file,await readFile(join(directory,file),'utf8')])));
+ for(const target of targets){
+  const rows=[],hostRoot=join(outputDirectory,target.host);await mkdir(hostRoot);
+  for(const fixture of manifest.cases){
+   const directory=await mkdtemp(join(tmpdir(),`reviewer-calibration-${target.host}-${fixture.id}-`));
+   const destination=join(hostRoot,fixture.id);await mkdir(destination);
+   const original=await readFile(join(fixtureRoot,fixture.artifact_file),'utf8');
+   await writeFile(join(directory,'quantity.mjs'),original);await writeFile(join(directory,'quantity.test.mjs'),checks);
+   let worker=null;
+   if(fixture.id==='positive'){
+    const workerTarget=target.host==='claude'
+     ?{host:'claude',provider:'anthropic',model_id:'claude-haiku-4-5-20251001',effort:'not_applicable'}
+     :{host:'codex',provider:'openai',model_id:'gpt-5.5',effort:'low'};
+    await reserve(ledgerFile,{id:`${target.host}-calibration-worker`,host:target.host,role:'worker',model:workerTarget.model_id,effort:workerTarget.effort,destination:join(destination,'worker')});
+    worker=await executeFrontier({target:workerTarget,directory,destination:join(destination,'worker'),write:true,timeoutMs:240000,
+     prompt:`Fix quantity.mjs only. Requirement: ${manifest.requirements} Read and run quantity.test.mjs, preserve it unchanged, and verify your correction. Do not install anything, use subagents, or modify other files. Return a concise result and actual check results.`});
+   }
+   const filesBefore=await readFiles(directory);
+   // The objective oracle is independent of the reviewer's claimed verdict.
+   const objective=spawnSync(process.execPath,['quantity.test.mjs'],{cwd:directory,encoding:'utf8',timeout:15000});
+   const prompt=calibrationPrompt(manifest);
+   await reserve(ledgerFile,{id:`${target.host}-calibration-${fixture.id}`,host:target.host,role:'reviewer',model:target.model_id,effort:target.effort,destination:join(destination,'reviewer')});
+   const reviewer=await executeFrontier({target,directory,prompt,destination:join(destination,'reviewer')});
+   const row={case_id:fixture.id,directory,initial_artifact_digest:hashBytes(original),files_before:filesBefore,files_after:await readFiles(directory),
+    objective:{exit_code:objective.status,signal:objective.signal,stdout:objective.stdout,stderr:objective.stderr},
+    reviewer_evidence:reviewer.evidence,...(worker?{worker_evidence:worker.evidence}:{})};
+   // Test replacement by the positive worker is also a failed calibration capture.
+   if(filesBefore['quantity.test.mjs']!==checks)row.files_before['quantity.test.mjs']=checks;
+   rows.push(row);await writeFile(join(destination,'case.json'),JSON.stringify(row,null,2)+'\n');
+  }
+  const gate=reviewerCalibrationGate(manifest,rows,target);
+  const report={host:target.host,target,manifest,manifest_digest:hashBytes(manifestBytes),rows,gate,qualification_authority:false};
+  reports.push(report);await writeFile(join(hostRoot,'report.json'),JSON.stringify(report,null,2)+'\n');
+  if(gate.admitted)await writeFile(join(hostRoot,'admissible-positive.json'),JSON.stringify({target,scope:manifest.scope,positive:rows.find(row=>row.case_id==='positive'),calibration_report_digest:digest(report),qualification_authority:false},null,2)+'\n');
+ }
+ await writeFile(join(outputDirectory,'report.json'),JSON.stringify({reports,qualification_authority:false},null,2)+'\n');
+ console.log(JSON.stringify({outputDirectory,hosts:reports.map(report=>({host:report.host,...report.gate}))}));
+ return reports;
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
+ const {values}=parseArgs({options:{manifest:{type:'string'},output:{type:'string'},ledger:{type:'string'},host:{type:'string'}}});
+ if(values.manifest){
+  if(!values.output||!values.ledger)throw Error('--manifest requires --output and --ledger');
+  await evaluateCalibration(resolve(values.manifest),resolve(values.output),resolve(values.ledger),values.host??null);
+ }else await legacyEvaluation();
+}
