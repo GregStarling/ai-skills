@@ -55,7 +55,7 @@ export function validateReceiptEvidence(value:unknown,currentPolicy?:unknown){
  // They are not qualification observations; maintainers must capture independent
  // worker evidence through the existing governed assessment pipeline.
  if(raw['mode']==='direct')throw Error('RECEIPT_DIRECT_NOT_QUALIFIABLE');
- if(raw['schema_version']==='delegate_receipt.v2')throw Error('RECEIPT_V2_LOCAL_ONLY');
+ if(raw['schema_version']==='delegate_receipt.v2'||raw['schema_version']==='delegate_receipt.v3')throw Error('RECEIPT_V2_LOCAL_ONLY');
  const input=selection(evidence.selection,now),row=input.observations.find(o=>o.observation_id===evidence.observationId);
  if(currentPolicy!==undefined&&policyDigest(input.policy)!==policyDigest(parsePolicy(currentPolicy)))throw Error('RECEIPT_ASSESSMENT_POLICY_CHANGED');
  if(input.policy.policy_version>=4){

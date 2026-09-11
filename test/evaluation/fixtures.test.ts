@@ -33,7 +33,9 @@ describe('held-out fixture grading',()=>{
   expect((await execute('git',['-C',prepared.workspace,'rev-list','--count','HEAD'])).stdout.trim()).toBe('1');
   expect(fixturePrompt(prepared)).toContain('Edit only: src/add.ts');
   const options={prepared,candidateIdentity:identity,dependencyDirectory:resolve('node_modules')};
-  const parent=await gradeFixture(options);expect(parent.status).toBe('behavioral_failure');expect(parent.result.accepted).toBe(false);
+  await mkdir(join(prepared.workspace,'node_modules/.vite/vitest'),{recursive:true});
+  await writeFile(join(prepared.workspace,'node_modules/.vite/vitest/results.json'),'{}');
+  const parent=await gradeFixture(options);expect(parent.result.checks.find(c=>c.check_id==='scope')?.passed).toBe(true);expect(parent.status).toBe('behavioral_failure');expect(parent.result.accepted).toBe(false);
   await writeFile(join(prepared.workspace,'src/add.ts'),'export const add=(a:number,b:number)=>a+b;');
   const fixed=await gradeFixture(options);expect(fixed.status).toBe('passed');expect(fixed.result.accepted).toBe(false);
   for(const check of fixed.result.checks)expect(hashBytes(fixed.sourceMap.get(check.evidence_digest)!)).toBe(check.evidence_digest);

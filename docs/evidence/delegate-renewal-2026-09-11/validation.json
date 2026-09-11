@@ -1,0 +1,65 @@
+{
+  "schema_version": "delegate_renewal_validation.v1",
+  "checked_at": "2026-09-11T04:23:37.226Z",
+  "status": "PASS",
+  "checks": {
+    "npm_test": {
+      "passed": 717,
+      "skipped": 0,
+      "files": 41
+    },
+    "npm_test_before_build": {
+      "passed": 715,
+      "skipped": 2,
+      "reason": "Two harvested fixture checks require built dist."
+    },
+    "typecheck": "PASS",
+    "build": "PASS",
+    "portable_skills": "PASS",
+    "publication": "VALID",
+    "entry_expiry_guard": "PASS",
+    "historical_blobs": "8 verified byte-identical against a7966cc"
+  },
+  "pack_content_digest": "sha256:0dc26099e7ead306d8dd499ef6ecec324a8d163df2b50971ee16bef42f60fb57",
+  "consumer_folder_digest": "sha256:e797626848d489bb3a14fca1dece3072ca650a62bd9a03825c454a6d08d3ee91",
+  "earliest_entry_expires_at": "2026-10-11T02:29:16.954Z",
+  "logs": [
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-test-before-build.log",
+      "digest": "sha256:2dc4c3b3dddb90fdd34dbe97fdad3944d18281c027b458ab74715db02784086a",
+      "status": "failed_then_repaired"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-targeted-recheck.log",
+      "digest": "sha256:8b29735a980e5247ba0953c7b6e3bd07ab78377e4d5263e42be7cb08f4fbe57e",
+      "status": "passed"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-test-before-build-final.log",
+      "digest": "sha256:37d3928719a2545e1d4e0b72604fdc240ed440cf866661b810f9cac59f8965dd",
+      "status": "passed"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-typecheck.log",
+      "digest": "sha256:e34f5fa67f3292c509bdc1835d120f41aa0641c79f37eff3ffd04bff60b9431e",
+      "status": "passed"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-build.log",
+      "digest": "sha256:d5a456cc364120c12db850e9be6e9aab0c03ed2cd88258663a7bf81e02d9e482",
+      "status": "passed"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-skills.log",
+      "digest": "sha256:cbe025314c94f1a7251500a7f68f923be7b1e73a6aa6d2d84d8946804806e35f",
+      "status": "passed"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/publication-test-built.log",
+      "digest": "sha256:95e5a94431e9aab1c281e887d163d73262455ad269fcf85c649829ec5051494d",
+      "status": "passed"
+    }
+  ],
+  "initial_failures": "Three lookup assertions described the previous pack and were updated alongside fresh evidence. One process-cleanup timing failure did not reproduce in the targeted recheck or either final full suite; runtime code was unchanged.",
+  "qualification_authority": false
+}

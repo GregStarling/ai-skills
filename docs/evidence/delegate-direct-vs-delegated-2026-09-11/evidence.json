@@ -1,0 +1,2358 @@
+{
+  "record_type": "direct_vs_delegated_evaluation",
+  "origin": "qualification_evaluation",
+  "qualification_authority": false,
+  "published_at": "2026-09-11T03:34:58.970Z",
+  "ledger_parser": {
+    "path": "scripts/verify/trace-ledger.mjs",
+    "digest": "sha256:bdb2c3163f03b988f362bdfcfbe908edf3a08a23253bd376390836811efe65b8"
+  },
+  "verdict_author": {
+    "host": "Codex desktop maintainer task",
+    "model": "not exposed in captured task metadata",
+    "version": "not exposed in captured task metadata"
+  },
+  "statement": "exploratory evidence; not qualification; no measured savings claim; counters are not subscription spending",
+  "preflights": [
+    {
+      "id": "m4-preflight-claude-1",
+      "host": "claude",
+      "passed": true,
+      "purpose": "capacity_preflight",
+      "qualification_authority": false,
+      "result": {
+        "path": "artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/result.json",
+        "digest": "sha256:016e1eb05c9ec0859d5676d9fd543db74a28e714115be3765e3952a66a7a5541"
+      },
+      "stdout": {
+        "path": "artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/stdout.jsonl",
+        "digest": "sha256:2549626fc7e43a34c65b7fe87ea03785d790414dc42df2a823ca3b8d58f07cff"
+      },
+      "summary": {
+        "path": "artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/summary.json",
+        "digest": "sha256:d3f8af032d876380c581d386db1e46ec28b2fd34df8ef048d9791a2052f2139f"
+      },
+      "executions": 1
+    },
+    {
+      "id": "m4-preflight-codex-1",
+      "host": "codex",
+      "passed": true,
+      "purpose": "capacity_preflight",
+      "qualification_authority": false,
+      "result": {
+        "path": "artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/result.json",
+        "digest": "sha256:30357879d4688d921dc9ce791ce7eab789763ebc74b86b3559bf04704cd1c8ae"
+      },
+      "stdout": {
+        "path": "artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/stdout.jsonl",
+        "digest": "sha256:67fba53e375b09d56a7ed34ac2a4a978de6dbc6978626dcd274c3917ea3867fb"
+      },
+      "summary": {
+        "path": "artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/summary.json",
+        "digest": "sha256:7deb5eb6404e8a6907b8f02cad88e2b02377b6f51a0ca227d9ea03634ec26931"
+      },
+      "executions": 1
+    }
+  ],
+  "pending": [
+    {
+      "id": "m4-pending-claude-research",
+      "host": "claude",
+      "case": "research",
+      "classification": "pending_frontier_trace_review",
+      "passed": false,
+      "matched_receipt": false,
+      "executions": 3,
+      "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/result.json",
+        "digest": "sha256:b134aef51d0dd55c8374a9e0da67a63a69bed43bf0088e01195822f72be376bb"
+      },
+      "stdout": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/coordinator/stdout.jsonl",
+        "digest": "sha256:9e6cda565b733bac7db70d4f4e0bb23a8f2cfb37756e2849b1e3069623fe42d2"
+      },
+      "maintainer_review": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/maintainer-review.json",
+        "digest": "sha256:9de35954f04e2843f66d60e2e744abb259cd811cbec9229c59ccbdd9a6a356a3"
+      },
+      "reason": "Coordinator inspected retrieved source passages and found a substantive fs.cp claim defect. A second Haiku execution was launched for repair, but coordinator returned before repair completion; host reported stopped and no matched receipt/captured check/finish exists."
+    },
+    {
+      "id": "m4-pending-codex-tinybug",
+      "host": "codex",
+      "case": "tinybug",
+      "classification": "pending_frontier_trace_review",
+      "passed": true,
+      "matched_receipt": true,
+      "executions": 1,
+      "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/result.json",
+        "digest": "sha256:5b90af4faded846d2ded42d40ef85242286b57beafb9068851b0d427fee37777"
+      },
+      "stdout": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:d1a3f323acc7b4287964c09c334e5b3c983822a6131ea58164cd07c13c4f2265"
+      },
+      "maintainer_review": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/maintainer-review.json",
+        "digest": "sha256:f9478aa4f3de1d00a277826148c766a15cc37e6df49ecae988f822f69487a9fc"
+      },
+      "reason": "Final code uses nullish default and preserves explicit zero; external grader passes, direct coordinator read the actual resulting file using nl. No child model launch."
+    },
+    {
+      "id": "m4-pending-codex-research",
+      "host": "codex",
+      "case": "research",
+      "classification": "pending_frontier_trace_review",
+      "passed": true,
+      "matched_receipt": true,
+      "executions": 3,
+      "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/result.json",
+        "digest": "sha256:9a6a0746f95f31c4a24dcc1d60aa9a2581b618ab5ff2465068e666d5d4bce30d"
+      },
+      "stdout": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/coordinator/stdout.jsonl",
+        "digest": "sha256:0b6fb6309c44007ef7433cdae26dc3deecf4441e0bdaf0fe3488b3d190f61c9f"
+      },
+      "maintainer_review": {
+        "path": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/maintainer-review.json",
+        "digest": "sha256:3dcc57ed6e8c14fa7df9007a581412675e6dad1e45a3a66317558dff6487a8e1"
+      },
+      "reason": "Decision-critical fsPromises.cp options and os.tmpdir precedence match the preserved live official pages. Coordinator independently inspected the exact API sections, read the worker report, applied the facts to the final recommendation, passed structural capture, and finished with a matched live_web qualification_evaluation receipt."
+    }
+  ],
+  "pairs": [
+    {
+      "id": "m4-current-claude-1",
+      "host": "claude",
+      "variant": "current",
+      "fixture_id": "foreman-t920-derived-gate-id",
+      "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t920-derived-gate-id/manifest.json",
+        "digest": "sha256:ca00486b5fa6988948fd324370ab1b1b1e769c4e2707799dff5bbbb729f5ef5c"
+      },
+      "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+      "order": [
+        "direct",
+        "delegated"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/pair-manifest.json",
+        "digest": "sha256:c04f049ea7e8800cd7384be5f52d375b8c275c1f854575bfdbaa785eea4dcc8b"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/pair-final.json",
+        "digest": "sha256:826cc5983bbcb641589a3a66fd0adcb65ab0a89f187a76901ce7fa01aa987b91"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "direct",
+          "run_id": "m4-current-claude-1-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "matched",
+          "observed_model_ids": [
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "d2112438-6839-463c-9d06-047e0c70934e",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:ffee4b9f0a5ad343fdbc05fd0eb764acd274bcce3a2288c3b37d8662c40d1b51",
+          "stdout_digest": "sha256:e6ff814d4aa263349615152dfd90e575530e8331e859b055fe27d5e2bfb7130f",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/baseline.json",
+            "digest": "sha256:d4c11b44a00a71509d529e5bb62d41120075521ae4016840eae83c3bea24e3ee"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/maintainer-review.json",
+            "digest": "sha256:927688d39fb1a82b2a126c705f594cc8b976918a01a9e797ae013c2e5e5cb58a"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:20:18.911Z",
+                "ended_at": "2026-09-11T02:22:04.114Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 290,
+                  "outputTokens": 7916,
+                  "cacheReadInputTokens": 348776,
+                  "cacheCreationInputTokens": 48265,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.8563880000000001,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 1549,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_01Jm64aUZ8MNJLYcipAw3zLg",
+                "command": "start",
+                "at": "2026-09-11T02:20:29.957Z"
+              },
+              {
+                "id": "toolu_01HQZmQhxfiA6jjF6qDubY67",
+                "command": "capture",
+                "at": "2026-09-11T02:20:54.071Z"
+              },
+              {
+                "id": "toolu_016nYBoTm155t84s1ES19Ro4",
+                "command": "finish",
+                "at": "2026-09-11T02:21:33.973Z"
+              }
+            ],
+            "task_wall_clock_ms": 75062,
+            "helper_tail_ms": 30141,
+            "duration_ms": 105203,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 290,
+                "outputTokens": 7916,
+                "cacheReadInputTokens": 348776,
+                "cacheCreationInputTokens": 48265,
+                "webSearchRequests": 0,
+                "costUSD": 0.8563880000000001,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 1549,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/ledger-reconciled.json",
+            "digest": "sha256:6bb05d4149c9b43ed07ae7cb7dd1f584aa62d47b7cd00e8e257425e1903c85bb"
+          }
+        },
+        {
+          "mode": "delegated",
+          "run_id": "m4-current-claude-1-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "matched",
+          "observed_model_ids": [
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "65a9d189-18fc-4fa6-9975-1142f7e2bea2",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:fb6914fd42ce84e3b069c7638d3bd4035cf41b8071e43bfdb52057efabdb6f98",
+          "stdout_digest": "sha256:189f0fd37ee18c8f3881e52829109974b0a51f2c29e01202a88fad8fd649813c",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/baseline.json",
+            "digest": "sha256:3a19f2e251a9a43fede913f582832ef5eda21d6560b67043d2dbd67618eb7993"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/maintainer-review.json",
+            "digest": "sha256:5df31607cd96e5ff4cd77a670758089c0ba168656f227adba955ad76f9beffcf"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:22:05.797Z",
+                "ended_at": "2026-09-11T02:24:40.927Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 322,
+                  "outputTokens": 9856,
+                  "cacheReadInputTokens": 375828,
+                  "cacheCreationInputTokens": 40122,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.837144,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 2654,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": "claude-haiku-4-5-20251001",
+                "model_source": "launch_configured",
+                "ended_at": "2026-09-11T02:23:25.114Z",
+                "failed_launch": false,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01UGM9YDD6GYf56DKsd7PnhK",
+                "mechanism": "child_cli",
+                "started_at": "2026-09-11T02:22:59.172Z",
+                "command_digest": "sha256:0d8739e285a6fe0a68055ab4f30fe8b1264359a5503cad5981f33aee97e1b138",
+                "completion_status": "completed"
+              }
+            ],
+            "executions": 2,
+            "reported_execution_lower_bound": 2,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_01H9pDrbMyyzDTgKaoHUmPaT",
+                "command": "start",
+                "at": "2026-09-11T02:22:14.465Z"
+              },
+              {
+                "id": "toolu_0195bJZbDLM97xA5EXJNSbba",
+                "command": "lookup",
+                "at": "2026-09-11T02:22:28.290Z"
+              },
+              {
+                "id": "toolu_01VfRvpaoBRZhoE5RqwpSNNo",
+                "command": "capture",
+                "at": "2026-09-11T02:23:42.670Z"
+              },
+              {
+                "id": "toolu_014ASMWMuxu1uYjFvCR9txAK",
+                "command": "finish",
+                "at": "2026-09-11T02:24:22.517Z"
+              }
+            ],
+            "task_wall_clock_ms": 136720,
+            "helper_tail_ms": 18410,
+            "duration_ms": 155130,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 322,
+                "outputTokens": 9856,
+                "cacheReadInputTokens": 375828,
+                "cacheCreationInputTokens": 40122,
+                "webSearchRequests": 0,
+                "costUSD": 0.837144,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 2654,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/ledger-reconciled.json",
+            "digest": "sha256:58baeb200f8f1b7fbb161741c3279744f085c692d39c8bf975aefd6e314de520"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4-current-claude-2",
+      "host": "claude",
+      "variant": "current",
+      "fixture_id": "foreman-t897-reconnect-notice",
+      "fixture_digest": "sha256:3e7ffe14927fa50f55fcf8e80a871d7edf495458a41406fec1961534df69aa27",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t897-reconnect-notice/manifest.json",
+        "digest": "sha256:ba46a938be03870be7374c5739eb8599404c43b80140fc7d84c21e47299ad1e4"
+      },
+      "parent_revision": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+      "grader_revision": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+      "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+      "order": [
+        "delegated",
+        "direct"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/pair-manifest.json",
+        "digest": "sha256:cb9da3e2c56e81ca204fca3ce249b63630abd0846a4871ddba75a70df2afdf02"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/pair-final.json",
+        "digest": "sha256:a42a467120a67679f542b3e728d3ce3bb113f3b721d3dfe63f5f9dc3d8272bd5"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "delegated",
+          "run_id": "m4-current-claude-2-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "mixed",
+          "observed_model_ids": [
+            "claude-haiku-4-5-20251001",
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "dfb96b6f-8847-46ee-bfec-633ec85bc2a4",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+          "result_digest": "sha256:45e1222bee4541a98d4f5990f173e43304746bd64a50304cd97876f1d1b7f04b",
+          "stdout_digest": "sha256:e34e175d8f5820def8359b8588bd4cc5df6402bf69aabbed91af0a448ce075ec",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/baseline.json",
+            "digest": "sha256:e15b994ae569c5623785fc6fed24003a0eb0a191c59956f13ea7c36060046f18"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/maintainer-review.json",
+            "digest": "sha256:61e4d77107e441cdee5d0ab10b75db2d6587eca53f61e804bc7acd1eda4646f3"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:26:55.793Z",
+                "ended_at": "2026-09-11T02:29:34.234Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 290,
+                  "outputTokens": 10285,
+                  "cacheReadInputTokens": 303911,
+                  "cacheCreationInputTokens": 37545,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.7859805,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 2163,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": "claude-haiku-4-5-20251001",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T02:28:10.490Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 34,
+                  "outputTokens": 2543,
+                  "cacheReadInputTokens": 51979,
+                  "cacheCreationInputTokens": 20968,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.044156900000000006,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 809,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01XixN8SL7tGQ6xZrN1jhQsL",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T02:27:43.577Z",
+                "prompt_digest": "sha256:22748adfb55aee09289b55f314dbb9af53e812793eee7dc2aa36eaca88726497",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 2,
+            "reported_execution_lower_bound": 2,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_01Hjp3DeEaBMw99W5VKa8YBf",
+                "command": "start",
+                "at": "2026-09-11T02:27:04.255Z"
+              },
+              {
+                "id": "toolu_01C8DKqBFktMN81gyasaoguB",
+                "command": "lookup",
+                "at": "2026-09-11T02:27:12.418Z"
+              },
+              {
+                "id": "toolu_01HbgTdTer8zz3UD7uv65ddw",
+                "command": "capture",
+                "at": "2026-09-11T02:28:25.312Z"
+              },
+              {
+                "id": "toolu_01TSMN3GQ8kmF4dQQmSnmYKi",
+                "command": "finish",
+                "at": "2026-09-11T02:29:14.808Z"
+              }
+            ],
+            "task_wall_clock_ms": 139015,
+            "helper_tail_ms": 19426,
+            "duration_ms": 158441,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 290,
+                "outputTokens": 10285,
+                "cacheReadInputTokens": 303911,
+                "cacheCreationInputTokens": 37545,
+                "webSearchRequests": 0,
+                "costUSD": 0.7859805,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 2163,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 34,
+                "outputTokens": 2543,
+                "cacheReadInputTokens": 51979,
+                "cacheCreationInputTokens": 20968,
+                "webSearchRequests": 0,
+                "costUSD": 0.044156900000000006,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 809,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/ledger-reconciled.json",
+            "digest": "sha256:2bcc18f13e360d2d2adb309a5ffe87aaeba705fd2ea1be6f310f2b0302cdd268"
+          }
+        },
+        {
+          "mode": "direct",
+          "run_id": "m4-current-claude-2-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "matched",
+          "observed_model_ids": [
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "6d8046d0-e905-44d4-95cc-b8acb5be7a55",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+          "result_digest": "sha256:3727c98b0dc71ced6baa93a91a42d2d4662ed485a1b5432ca39b7c478471fdca",
+          "stdout_digest": "sha256:8b9d4322f06e38600719ba558edbb90cf92a6fe8770ecbfd5a3e31661c3e0edf",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/baseline.json",
+            "digest": "sha256:a8add58356a3a03b47a04e4dc417aadcdb3d1a513877f493a096d3d821a9c407"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/maintainer-review.json",
+            "digest": "sha256:9db690bed08fd4612ad892e5a4b46f51e6e3590bb0f4f57e9b64e3bde7b73ba4"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:29:37.917Z",
+                "ended_at": "2026-09-11T02:31:21.045Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 290,
+                  "outputTokens": 8449,
+                  "cacheReadInputTokens": 264633,
+                  "cacheCreationInputTokens": 30459,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.6495815,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 2355,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_012vdHsfMWS5LdYYsiGb38UK",
+                "command": "start",
+                "at": "2026-09-11T02:29:45.838Z"
+              },
+              {
+                "id": "toolu_01KPn42aVBByi5u3adKCQ2V8",
+                "command": "capture",
+                "at": "2026-09-11T02:30:23.533Z"
+              },
+              {
+                "id": "toolu_01S2xqRRsGqdMHDMZ3yB8PfN",
+                "command": "finish",
+                "at": "2026-09-11T02:31:07.279Z"
+              }
+            ],
+            "task_wall_clock_ms": 89362,
+            "helper_tail_ms": 13766,
+            "duration_ms": 103128,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 290,
+                "outputTokens": 8449,
+                "cacheReadInputTokens": 264633,
+                "cacheCreationInputTokens": 30459,
+                "webSearchRequests": 0,
+                "costUSD": 0.6495815,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 2355,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/ledger-reconciled.json",
+            "digest": "sha256:3183d83990a4abe4708abe08e3f343747f6cb03495aaac7a873bb8001bbc4eb0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4-current-codex-1",
+      "host": "codex",
+      "variant": "current",
+      "fixture_id": "foreman-t920-derived-gate-id",
+      "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t920-derived-gate-id/manifest.json",
+        "digest": "sha256:ca00486b5fa6988948fd324370ab1b1b1e769c4e2707799dff5bbbb729f5ef5c"
+      },
+      "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+      "order": [
+        "direct",
+        "delegated"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/pair-manifest.json",
+        "digest": "sha256:a4df618bb0ba5560507851fa4e21148d907a1374321bbd75a375c3b12c93afd0"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/pair-final.json",
+        "digest": "sha256:bcbe0ca7547c549be4344742dbe0bb42c98ee727b02764d13382c43590c35061"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "direct",
+          "run_id": "m4-current-codex-1-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e5f-1213-7700-a05b-93038a79c784",
+          "session_id": "01a08e5f-1213-7700-a05b-93038a79c784",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:a433f9a49309efdd6ac73c4683449088362c80bdef54c6d717239d1a8619c05f",
+          "stdout_digest": "sha256:6a12e71a011247e17cf5c7e6f42799527588c8d35641460f0712634a5b22b394",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/baseline.json",
+            "digest": "sha256:7225c47fc49e422d6cb048e6884337ea1975cb56b0370a443612beafc7291e56"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/maintainer-review.json",
+            "digest": "sha256:7a5cb1bf81440de230837beb1cddbfbb56df00906051e1546fe5257e4090bcac"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T02:49:49.922Z",
+                "ended_at": "2026-09-11T02:53:30.112Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 732995,
+                  "cached_input_tokens": 685952,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 9123,
+                  "reasoning_output_tokens": 2807
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_7",
+                "command": "start",
+                "at": "2026-09-11T02:50:21.172Z"
+              },
+              {
+                "id": "item_19",
+                "command": "capture",
+                "at": "2026-09-11T02:51:09.704Z"
+              },
+              {
+                "id": "item_28",
+                "command": "lookup",
+                "at": "2026-09-11T02:52:02.348Z"
+              },
+              {
+                "id": "item_35",
+                "command": "finish",
+                "at": "2026-09-11T02:52:44.675Z"
+              }
+            ],
+            "task_wall_clock_ms": 174753,
+            "helper_tail_ms": 45437,
+            "duration_ms": 220190,
+            "model_counters": null,
+            "limitations": [
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/ledger-reconciled.json",
+            "digest": "sha256:88f81fe433322607cb343fe6f47391367079b06d5e37898712609856772f98bb"
+          }
+        },
+        {
+          "mode": "delegated",
+          "run_id": "m4-current-codex-1-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e62-84d2-7320-bf69-4fe68d71cd78",
+          "session_id": "01a08e62-84d2-7320-bf69-4fe68d71cd78",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:e628ff7380e5cc3836b8d4d378b098ca69c3414c5364db9479f16a5288f22d7e",
+          "stdout_digest": "sha256:66387f95dec69247a7f081d7125ce426ff13866578018bd689b5f0f35085ef26",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/baseline.json",
+            "digest": "sha256:a5c1abcd27f4feaebc7abf067dfa0d9594121349c9e68c5a69d509caaca990e1"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/maintainer-review.json",
+            "digest": "sha256:67423055c465e3edf378989e4d8fdc5982aa7a515a28ae9ea1090574af2a96c7"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T02:53:35.958Z",
+                "ended_at": "2026-09-11T02:59:42.870Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 1035657,
+                  "cached_input_tokens": 971904,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 16433,
+                  "reasoning_output_tokens": 6229
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": null,
+                "model_source": "unknown",
+                "ended_at": "2026-09-11T02:57:03.902Z",
+                "failed_launch": false,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "id": "item_22",
+                "mechanism": "spawn_agent",
+                "started_at": "2026-09-11T02:55:49.856Z",
+                "receiver_thread_ids": [
+                  "01a08e64-8e64-7740-aa19-46610802ed18"
+                ],
+                "prompt_digest": "sha256:a0305a9474687bb683e956a7805343e91cb161722ecf41637629668940b51be0",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 2,
+                "role": "worker",
+                "model": null,
+                "model_source": "agent_asserted_receipt",
+                "ended_at": null,
+                "failed_launch": true,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "mechanism": "receipt_reported_attempt",
+                "budget_only": true,
+                "started_at": null
+              }
+            ],
+            "executions": 3,
+            "reported_execution_lower_bound": 3,
+            "failed_launches": 1,
+            "rework_heuristic": 1,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_12",
+                "command": "start",
+                "at": "2026-09-11T02:54:29.257Z"
+              },
+              {
+                "id": "item_14",
+                "command": "lookup",
+                "at": "2026-09-11T02:54:39.036Z"
+              },
+              {
+                "id": "item_20",
+                "command": "lookup",
+                "at": "2026-09-11T02:55:38.056Z"
+              },
+              {
+                "id": "item_33",
+                "command": "capture",
+                "at": "2026-09-11T02:56:46.483Z"
+              },
+              {
+                "id": "item_44",
+                "command": "finish",
+                "at": "2026-09-11T02:58:21.452Z"
+              }
+            ],
+            "task_wall_clock_ms": 285494,
+            "helper_tail_ms": 81418,
+            "duration_ms": 366912,
+            "model_counters": null,
+            "limitations": [
+              "Charged 1 additional matched-receipt attempts absent from host tool events; agent-asserted budget evidence, not runtime identity.",
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/ledger-reconciled.json",
+            "digest": "sha256:53667d844cec5c334f1313de3ec39f92a379fab63188b88da5ad79c1a763c68c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4-current-codex-2",
+      "host": "codex",
+      "variant": "current",
+      "fixture_id": "foreman-t897-reconnect-notice",
+      "fixture_digest": "sha256:3e7ffe14927fa50f55fcf8e80a871d7edf495458a41406fec1961534df69aa27",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t897-reconnect-notice/manifest.json",
+        "digest": "sha256:ba46a938be03870be7374c5739eb8599404c43b80140fc7d84c21e47299ad1e4"
+      },
+      "parent_revision": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+      "grader_revision": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+      "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+      "order": [
+        "delegated",
+        "direct"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/pair-manifest.json",
+        "digest": "sha256:72e95d2037b12431a20441a06bad77a4fbf93aa2d5aa3a9fbd66d0904c40e616"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/pair-final.json",
+        "digest": "sha256:6feedfc90a27a1d28e98df87e3e5bfee9ff72d56a5159e64d7b35335a11e9eec"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "delegated",
+          "run_id": "m4-current-codex-2-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e6c-db4c-7863-8496-cc003a069268",
+          "session_id": "01a08e6c-db4c-7863-8496-cc003a069268",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+          "result_digest": "sha256:782e342e82cd15013b12289e80cf4613d83362d95dd4f285c38bfad5e1c261b6",
+          "stdout_digest": "sha256:25c2a92784f26f97e74178eb25bc601cd1af64bca748b0e470b4011a0fa6a9f4",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/baseline.json",
+            "digest": "sha256:6719769aae38cd2ce8ffef0a7e5ad8f3065f558bb0305f48271074beac9fae91"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/maintainer-review.json",
+            "digest": "sha256:6eed25942cf47015ef31c3084a967d0ec4bbbb682fd2726413c0230f4df8fda4"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T03:04:53.470Z",
+                "ended_at": "2026-09-11T03:10:41.109Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 1014328,
+                  "cached_input_tokens": 947584,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 13776,
+                  "reasoning_output_tokens": 4486
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": null,
+                "model_source": "unknown",
+                "ended_at": "2026-09-11T03:08:44.036Z",
+                "failed_launch": false,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "id": "item_28",
+                "mechanism": "spawn_agent",
+                "started_at": "2026-09-11T03:06:51.893Z",
+                "receiver_thread_ids": [
+                  "01a08e6e-a876-7193-8be1-f8ecba075dbe"
+                ],
+                "prompt_digest": "sha256:ead5ef3368d769f70d19dc48d2db46c1f0924a78e77b0bc92fab2a51309073c8",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 2,
+                "role": "worker",
+                "model": null,
+                "model_source": "agent_asserted_receipt",
+                "ended_at": null,
+                "failed_launch": true,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "mechanism": "receipt_reported_attempt",
+                "budget_only": true,
+                "started_at": null
+              }
+            ],
+            "executions": 3,
+            "reported_execution_lower_bound": 3,
+            "failed_launches": 1,
+            "rework_heuristic": 1,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_2",
+                "command": "start",
+                "at": "2026-09-11T03:05:08.208Z"
+              },
+              {
+                "id": "item_12",
+                "command": "lookup",
+                "at": "2026-09-11T03:05:32.906Z"
+              },
+              {
+                "id": "item_14",
+                "command": "lookup",
+                "at": "2026-09-11T03:05:39.018Z"
+              },
+              {
+                "id": "item_26",
+                "command": "lookup",
+                "at": "2026-09-11T03:06:38.125Z"
+              },
+              {
+                "id": "item_36",
+                "command": "capture",
+                "at": "2026-09-11T03:08:01.869Z"
+              },
+              {
+                "id": "item_56",
+                "command": "finish",
+                "at": "2026-09-11T03:09:46.460Z"
+              }
+            ],
+            "task_wall_clock_ms": 292990,
+            "helper_tail_ms": 54649,
+            "duration_ms": 347639,
+            "model_counters": null,
+            "limitations": [
+              "Charged 1 additional matched-receipt attempts absent from host tool events; agent-asserted budget evidence, not runtime identity.",
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/ledger-reconciled.json",
+            "digest": "sha256:2ff8ab8c0ee6dc2102e04d75572b29f47fd6d4416427dec818f5f6cadf773c17"
+          }
+        },
+        {
+          "mode": "direct",
+          "run_id": "m4-current-codex-2-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+          "pack_content_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+          "copied_pack_sha256": "51781af8a6757d7ebcd6b011d3cd683b01a2b94294e40766bc57ab7d6570710e",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e72-30f5-79e2-aed1-e9e71db31323",
+          "session_id": "01a08e72-30f5-79e2-aed1-e9e71db31323",
+          "instruction_variant": "current",
+          "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+          "result_digest": "sha256:b3798d2310dd8a95dff4256548f8e7a0a656ab3f7eae4f7131fa003c62ece248",
+          "stdout_digest": "sha256:a4206f8d8cbcc1b9660574f3e8bd77d90f14835f5759c101b1b5cc2feb493ffc",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/baseline.json",
+            "digest": "sha256:ccdd24d9571f214e7a251d9c083e6a83bdbfde5f274188f94ae999b7c0685465"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/maintainer-review.json",
+            "digest": "sha256:cb2ba70f9f6d1f6e0438e54a06061e1222aa2cae96e326766b3725920536f111"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T03:10:43.077Z",
+                "ended_at": "2026-09-11T03:14:26.566Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 747080,
+                  "cached_input_tokens": 689024,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 10138,
+                  "reasoning_output_tokens": 2988
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_7",
+                "command": "start",
+                "at": "2026-09-11T03:11:13.636Z"
+              },
+              {
+                "id": "item_21",
+                "command": "capture",
+                "at": "2026-09-11T03:12:13.226Z"
+              },
+              {
+                "id": "item_31",
+                "command": "lookup",
+                "at": "2026-09-11T03:13:02.527Z"
+              },
+              {
+                "id": "item_37",
+                "command": "finish",
+                "at": "2026-09-11T03:13:44.891Z"
+              }
+            ],
+            "task_wall_clock_ms": 181814,
+            "helper_tail_ms": 41675,
+            "duration_ms": 223489,
+            "model_counters": null,
+            "limitations": [
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/ledger-reconciled.json",
+            "digest": "sha256:2c2dc654a7474d2e4c4989cca869e3c308aab24f1f9bf21e3c486c634d0999e8"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4-before-claude-1",
+      "host": "claude",
+      "variant": "before",
+      "fixture_id": "foreman-t920-derived-gate-id",
+      "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t920-derived-gate-id/manifest.json",
+        "digest": "sha256:ca00486b5fa6988948fd324370ab1b1b1e769c4e2707799dff5bbbb729f5ef5c"
+      },
+      "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+      "order": [
+        "direct",
+        "delegated"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/pair-manifest.json",
+        "digest": "sha256:a0f1fc2e9a4adbe1bb17386bcd56ba21c6132cb35c7d5c65d34396d8226e963a"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/pair-final.json",
+        "digest": "sha256:e510815ee3bd5712fe87348244dfc7606106925d8ddefad7c22c113aef3fb95c"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "direct",
+          "run_id": "m4-before-claude-1-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:b78790de928c204b6df2c23b4a23c1a25ca34ac8550539039c0e95aefe9aea65",
+          "pack_content_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
+          "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "matched",
+          "observed_model_ids": [
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "601446f0-771e-4118-8986-74e48200908f",
+          "instruction_variant": "legacy",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:a80757045f02dd3edd76cbb5348fa3ca5c5bcbf572c730e051c958a1511752fa",
+          "stdout_digest": "sha256:71b99fa563600f98f357874bb25fdfb7515287f288a78f212f1c7136a4cd26ed",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/baseline.json",
+            "digest": "sha256:87f6d65693b63e723d911347ef94c5ed21b1a111d7a0c3090917108acea8e309"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/maintainer-review.json",
+            "digest": "sha256:1a1e7bbc55abdd03cb7314e1a9984bbe400a369039ccfe60dc2e43c5a5d32e08"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:34:37.641Z",
+                "ended_at": "2026-09-11T02:36:05.112Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 290,
+                  "outputTokens": 6744,
+                  "cacheReadInputTokens": 291410,
+                  "cacheCreationInputTokens": 34253,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.658285,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 941,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_01Fk6sBapTTbkoLRVQwRBRVW",
+                "command": "start",
+                "at": "2026-09-11T02:34:46.301Z"
+              },
+              {
+                "id": "toolu_01S791Z6VrvSnJejn5FZWPD9",
+                "command": "capture",
+                "at": "2026-09-11T02:35:06.192Z"
+              },
+              {
+                "id": "toolu_0126uTvvAd2eBaZL8SC5qzqS",
+                "command": "record",
+                "at": "2026-09-11T02:35:42.960Z"
+              },
+              {
+                "id": "toolu_0126uTvvAd2eBaZL8SC5qzqS",
+                "command": "advise",
+                "at": "2026-09-11T02:35:42.960Z"
+              },
+              {
+                "id": "toolu_0126uTvvAd2eBaZL8SC5qzqS",
+                "command": "advise",
+                "at": "2026-09-11T02:35:42.960Z"
+              },
+              {
+                "id": "toolu_0126uTvvAd2eBaZL8SC5qzqS",
+                "command": "advise",
+                "at": "2026-09-11T02:35:42.960Z"
+              },
+              {
+                "id": "toolu_0126uTvvAd2eBaZL8SC5qzqS",
+                "command": "status",
+                "at": "2026-09-11T02:35:42.960Z"
+              }
+            ],
+            "task_wall_clock_ms": 65319,
+            "helper_tail_ms": 22152,
+            "duration_ms": 87471,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 290,
+                "outputTokens": 6744,
+                "cacheReadInputTokens": 291410,
+                "cacheCreationInputTokens": 34253,
+                "webSearchRequests": 0,
+                "costUSD": 0.658285,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 941,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/ledger-reconciled.json",
+            "digest": "sha256:002b602ef509c9c19e64de12bf02f15f9950c13a6e10c011691ab4dc94e8309f"
+          }
+        },
+        {
+          "mode": "delegated",
+          "run_id": "m4-before-claude-1-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:b78790de928c204b6df2c23b4a23c1a25ca34ac8550539039c0e95aefe9aea65",
+          "pack_content_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
+          "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "2.1.267 (Claude Code)\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "mixed",
+          "observed_model_ids": [
+            "claude-haiku-4-5-20251001",
+            "claude-opus-5"
+          ],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": null,
+          "session_id": "2dc217dd-2809-4c37-8aaa-d4377f3c4263",
+          "instruction_variant": "legacy",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:760be39cb28f6ef7bc4be783f2ef9b71eaa92005c2ddb976a2900f02e60407d8",
+          "stdout_digest": "sha256:977aeb2c21242ad29d96f6ae86965262fef286026bba68338bb14e7a98e9669d",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/baseline.json",
+            "digest": "sha256:b5d8d4eb14dec2959589e06bbc8606e648d13c2afc3ab4f2a8024d7f23c70ff4"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/maintainer-review.json",
+            "digest": "sha256:e20fa811068cc39c57d3b6f24e3fbc499b58b1873d274add38fbff88011b10e9"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T02:36:07.069Z",
+                "ended_at": "2026-09-11T02:39:44.189Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 418,
+                  "outputTokens": 14954,
+                  "cacheReadInputTokens": 655807,
+                  "cacheCreationInputTokens": 63804,
+                  "webSearchRequests": 0,
+                  "costUSD": 1.3418835,
+                  "contextWindow": 1000000,
+                  "maxOutputTokens": 64000,
+                  "thinkingTokens": 4677,
+                  "canonicalModel": "claude-opus-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": "claude-haiku-4-5-20251001",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T02:37:32.894Z",
+                "failed_launch": false,
+                "usage": {
+                  "inputTokens": 34,
+                  "outputTokens": 2423,
+                  "cacheReadInputTokens": 50955,
+                  "cacheCreationInputTokens": 20445,
+                  "webSearchRequests": 0,
+                  "costUSD": 0.04280075,
+                  "contextWindow": 200000,
+                  "maxOutputTokens": 32000,
+                  "thinkingTokens": 929,
+                  "canonicalModel": "claude-haiku-4-5",
+                  "provider": "firstParty",
+                  "costBasis": "list"
+                },
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01CVPo4YWycUccg22hZCXSZm",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T02:37:07.708Z",
+                "prompt_digest": "sha256:058be845fd9e35903640cfeeaa95d3115255d3dee21aca41e8685e6dde78d68d",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 2,
+            "reported_execution_lower_bound": 2,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_011pcdjWzsKgPumiXx8fJfTZ",
+                "command": "start",
+                "at": "2026-09-11T02:36:16.856Z"
+              },
+              {
+                "id": "toolu_01Wzi7iapwyALHiBqZhUtVZj",
+                "command": "capture",
+                "at": "2026-09-11T02:37:46.657Z"
+              },
+              {
+                "id": "toolu_01H2AjaGq98zaV25cV8jToYE",
+                "command": "record",
+                "at": "2026-09-11T02:39:21.968Z"
+              },
+              {
+                "id": "toolu_01H2AjaGq98zaV25cV8jToYE",
+                "command": "advise",
+                "at": "2026-09-11T02:39:21.968Z"
+              },
+              {
+                "id": "toolu_01H2AjaGq98zaV25cV8jToYE",
+                "command": "advise",
+                "at": "2026-09-11T02:39:21.968Z"
+              },
+              {
+                "id": "toolu_01H2AjaGq98zaV25cV8jToYE",
+                "command": "advise",
+                "at": "2026-09-11T02:39:21.968Z"
+              },
+              {
+                "id": "toolu_01H2AjaGq98zaV25cV8jToYE",
+                "command": "status",
+                "at": "2026-09-11T02:39:21.968Z"
+              }
+            ],
+            "task_wall_clock_ms": 194899,
+            "helper_tail_ms": 22221,
+            "duration_ms": 217120,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 418,
+                "outputTokens": 14954,
+                "cacheReadInputTokens": 655807,
+                "cacheCreationInputTokens": 63804,
+                "webSearchRequests": 0,
+                "costUSD": 1.3418835,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 4677,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 34,
+                "outputTokens": 2423,
+                "cacheReadInputTokens": 50955,
+                "cacheCreationInputTokens": 20445,
+                "webSearchRequests": 0,
+                "costUSD": 0.04280075,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 929,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/ledger-reconciled.json",
+            "digest": "sha256:7b8ad6a1ac94c7353e85fcd36194a4d875ce85efeb87fecfb53ef6bc9d334095"
+          }
+        }
+      ]
+    },
+    {
+      "id": "m4-before-codex-1",
+      "host": "codex",
+      "variant": "before",
+      "fixture_id": "foreman-t920-derived-gate-id",
+      "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+      "fixture_manifest": {
+        "path": "fixtures/harvested/foreman-t920-derived-gate-id/manifest.json",
+        "digest": "sha256:ca00486b5fa6988948fd324370ab1b1b1e769c4e2707799dff5bbbb729f5ef5c"
+      },
+      "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+      "order": [
+        "direct",
+        "delegated"
+      ],
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/pair-manifest.json",
+        "digest": "sha256:db45e4f598cd1217964fdabc6b9ad4946760c146b4a5c684db2c5222b4566030"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/pair-final.json",
+        "digest": "sha256:1e040e4ebc38715b23042fce59f613c75b29b0fd47e295fcf5731b6d6fb9078d"
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "claim": "lower wall clock at n=1",
+        "verdict": "direct",
+        "reason": "Direct has lower task time and no higher rework heuristic."
+      },
+      "quality_gates": {
+        "direct": true,
+        "delegated": true
+      },
+      "arms": [
+        {
+          "mode": "direct",
+          "run_id": "m4-before-codex-1-direct",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:b78790de928c204b6df2c23b4a23c1a25ca34ac8550539039c0e95aefe9aea65",
+          "pack_content_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
+          "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e7e-b9a9-70d2-ac3d-377a8ca3608d",
+          "session_id": "01a08e7e-b9a9-70d2-ac3d-377a8ca3608d",
+          "instruction_variant": "legacy",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:24eef5891e78033117cd14aab8c670ac6b543ce0c399f901a2bb9c43dba94061",
+          "stdout_digest": "sha256:3a2df9f3ddcec5de8d1e997c9716a7875bad65a4e9a3e98a706f2ef4e73d7eca",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/baseline.json",
+            "digest": "sha256:06f4386aeb6fa74e114907f4241567804dc3a5ff4846eed914b476363f8c1824"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/maintainer-review.json",
+            "digest": "sha256:d882d5012dc1e73b44d5dd45a67ab7ae831f859d6cc715abbb5bcd732dd567b3"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T03:24:23.959Z",
+                "ended_at": "2026-09-11T03:28:29.245Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 899134,
+                  "cached_input_tokens": 838144,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 11338,
+                  "reasoning_output_tokens": 4093
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_8",
+                "command": "start",
+                "at": "2026-09-11T03:25:01.066Z"
+              },
+              {
+                "id": "item_22",
+                "command": "capture",
+                "at": "2026-09-11T03:25:51.793Z"
+              },
+              {
+                "id": "item_30",
+                "command": "record",
+                "at": "2026-09-11T03:27:05.763Z"
+              },
+              {
+                "id": "item_32",
+                "command": "advise",
+                "at": "2026-09-11T03:27:17.040Z"
+              },
+              {
+                "id": "item_33",
+                "command": "advise",
+                "at": "2026-09-11T03:27:24.751Z"
+              },
+              {
+                "id": "item_34",
+                "command": "advise",
+                "at": "2026-09-11T03:27:31.484Z"
+              },
+              {
+                "id": "item_35",
+                "command": "status",
+                "at": "2026-09-11T03:27:37.618Z"
+              }
+            ],
+            "task_wall_clock_ms": 161804,
+            "helper_tail_ms": 83482,
+            "duration_ms": 245286,
+            "model_counters": null,
+            "limitations": [
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/ledger-reconciled.json",
+            "digest": "sha256:dab3883cff931630b576693baa5af162c8643b21710e5deb5f519d63d7c92b91"
+          }
+        },
+        {
+          "mode": "delegated",
+          "run_id": "m4-before-codex-1-delegated",
+          "qualification_authority": false,
+          "quality_gate": true,
+          "acceptance": "pending_frontier_trace_review",
+          "skill_folder_digest": "sha256:b78790de928c204b6df2c23b4a23c1a25ca34ac8550539039c0e95aefe9aea65",
+          "pack_content_digest": "sha256:e65c17c8910146e621095f4f94e252603fa39a3a27b6749d2124c1788974f5cc",
+          "copied_pack_sha256": "71354aa3b57bf61352dbca93df811c94d139f291b6c14bafac2ba79ec5259aa0",
+          "refresh_due": false,
+          "earliest_entry_expires_at": "2026-10-10T02:07:24.124Z",
+          "host_version": {
+            "stdout": "codex-cli 0.154.0\n",
+            "stderr": "",
+            "exit_code": 0
+          },
+          "identity_status": "unknown",
+          "observed_model_ids": [],
+          "receipt_observed_fields": "agent_asserted",
+          "thread_id": "01a08e82-7d06-7e40-a94e-f3aec12b3ce8",
+          "session_id": "01a08e82-7d06-7e40-a94e-f3aec12b3ce8",
+          "instruction_variant": "legacy",
+          "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+          "result_digest": "sha256:afcb4db1b287424a3f1980fa8ed0b4b823084b3a4845efa955b013475e660d27",
+          "stdout_digest": "sha256:0ed81db0e2e4677083cc15e5483e673177eb333b21b30b89746170cca46e946b",
+          "baseline": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/baseline.json",
+            "digest": "sha256:c9dc621a517307867d136def67c4574e3c621f934ef7ee01066cc44fb5ac636f"
+          },
+          "maintainer_review": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/maintainer-review.json",
+            "digest": "sha256:6a4d5886cc5e4fc5912b452ee1f9b94d0024ed3387942202ac059a5cdcc86133"
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": null,
+                "model_source": "unknown",
+                "started_at": "2026-09-11T03:28:30.980Z",
+                "ended_at": "2026-09-11T03:33:53.704Z",
+                "failed_launch": false,
+                "usage": {
+                  "input_tokens": 1114423,
+                  "cached_input_tokens": 1043328,
+                  "cache_write_input_tokens": 0,
+                  "output_tokens": 13769,
+                  "reasoning_output_tokens": 3801
+                },
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": null,
+                "model_source": "unknown",
+                "ended_at": "2026-09-11T03:30:58.443Z",
+                "failed_launch": false,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "id": "item_20",
+                "mechanism": "spawn_agent",
+                "started_at": "2026-09-11T03:30:01.552Z",
+                "receiver_thread_ids": [
+                  "01a08e83-dcd1-7652-8048-8ef8e773a7a7"
+                ],
+                "prompt_digest": "sha256:93becb1fb59253d558e948e99978fb700c9efd05bc96cd2a14b09d5b0ec919bb",
+                "usage_scope": "thread_total_child_inclusion_unknown"
+              },
+              {
+                "index": 2,
+                "role": "worker",
+                "model": null,
+                "model_source": "agent_asserted_receipt",
+                "ended_at": null,
+                "failed_launch": true,
+                "usage": null,
+                "counter_kind": "host_reported_counter",
+                "mechanism": "receipt_reported_attempt",
+                "budget_only": true,
+                "started_at": null
+              }
+            ],
+            "executions": 3,
+            "reported_execution_lower_bound": 3,
+            "failed_launches": 1,
+            "rework_heuristic": 1,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "item_2",
+                "command": "start",
+                "at": "2026-09-11T03:28:47.165Z"
+              },
+              {
+                "id": "item_32",
+                "command": "capture",
+                "at": "2026-09-11T03:31:08.193Z"
+              },
+              {
+                "id": "item_45",
+                "command": "record",
+                "at": "2026-09-11T03:32:46.558Z"
+              },
+              {
+                "id": "item_47",
+                "command": "advise",
+                "at": "2026-09-11T03:32:54.524Z"
+              },
+              {
+                "id": "item_49",
+                "command": "advise",
+                "at": "2026-09-11T03:33:11.605Z"
+              },
+              {
+                "id": "item_50",
+                "command": "advise",
+                "at": "2026-09-11T03:33:11.613Z"
+              },
+              {
+                "id": "item_51",
+                "command": "status",
+                "at": "2026-09-11T03:33:11.688Z"
+              }
+            ],
+            "task_wall_clock_ms": 255578,
+            "helper_tail_ms": 67146,
+            "duration_ms": 322724,
+            "model_counters": null,
+            "limitations": [
+              "Charged 1 additional matched-receipt attempts absent from host tool events; agent-asserted budget evidence, not runtime identity.",
+              "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+            ]
+          },
+          "ledger_capture": {
+            "path": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/ledger-reconciled.json",
+            "digest": "sha256:a058ee45307b40d3c7053927187de126e708a3a05b060dceb1d6e00c85e780dc"
+          }
+        }
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "shape": "bounded_backend",
+      "pairs": [
+        "m4-current-claude-1",
+        "m4-current-codex-1"
+      ],
+      "quality_gated_pairs": 2,
+      "delegated_wins_or_ties": 0,
+      "passed": false,
+      "verdict": "no evidence supports delegation for this shape",
+      "rule": "declared proposal, authorizes evidence spending only, never route authority"
+    },
+    {
+      "shape": "hard_debugging",
+      "pairs": [
+        "m4-current-claude-2",
+        "m4-current-codex-2"
+      ],
+      "quality_gated_pairs": 2,
+      "delegated_wins_or_ties": 0,
+      "passed": false,
+      "verdict": "no evidence supports delegation for this shape",
+      "rule": "declared proposal, authorizes evidence spending only, never route authority"
+    }
+  ],
+  "research_gate": {
+    "completed_hosts": [
+      "codex"
+    ],
+    "requires_matched_receipts": true
+  },
+  "execution_index": [
+    {
+      "id": "implementation-budget",
+      "purpose": "implementation_worker",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-budget-repair",
+      "purpose": "implementation_repair",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-repair.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-budget-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-budget-integrity-repair",
+      "purpose": "implementation_repair",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-integrity-repair.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-budget-final-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-final-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-preflight-claude-1",
+      "purpose": "capacity_preflight",
+      "host": "claude",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-pending-claude-research",
+      "purpose": "pending_row",
+      "host": "claude",
+      "worst_case": 3,
+      "status": "completed",
+      "executions": 3,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-assembly",
+      "purpose": "implementation_worker",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-claude-1-direct",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-claude-1-delegated",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 2,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-assembly-repair",
+      "purpose": "implementation_repair",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-repair.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-claude-2-delegated",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 2,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-claude-2-direct",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-assembly-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-before-claude-1-direct",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-before-claude-1-delegated",
+      "purpose": "matched_arm",
+      "host": "claude",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 2,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-assembly-final-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-final-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-preflight-codex-1",
+      "purpose": "capacity_preflight",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-calibration",
+      "purpose": "implementation_worker",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-pending-codex-tinybug",
+      "purpose": "pending_row",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-assembly-path-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-path-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-codex-1-direct",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "implementation-calibration-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-codex-1-delegated",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 2,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "renewal-integration-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-integration-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-codex-1-unexported-attempt",
+      "purpose": "matched_arm_accounting_correction",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/ledger-reviewed.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "unexported-attempt-review",
+      "purpose": "frontier_review",
+      "host": "codex_native",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/unexported-attempt-review.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-codex-2-delegated",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 3,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-current-codex-2-direct",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-pending-codex-research",
+      "purpose": "pending_row",
+      "host": "codex",
+      "worst_case": 3,
+      "status": "completed",
+      "executions": 3,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-before-codex-1-direct",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 1,
+      "status": "completed",
+      "executions": 1,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    },
+    {
+      "id": "m4-before-codex-1-delegated",
+      "purpose": "matched_arm",
+      "host": "codex",
+      "worst_case": 4,
+      "status": "completed",
+      "executions": 3,
+      "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/result.json",
+      "providerLimit": false,
+      "uncertain": false,
+      "unbudgeted": false
+    }
+  ],
+  "budget": {
+    "ceiling": 130,
+    "executions": 44,
+    "reserved": 0,
+    "halted": false,
+    "stopped_hosts": [],
+    "snapshot": {
+      "path": "artifacts/delegate-completion-2026-09-11/budget-at-m4-publication.json",
+      "digest": "sha256:f88004082aa02c7d391327b4a2c46a95b58377dce5baf97d9c8b531f282def04"
+    }
+  },
+  "limitations": [
+    "Historical Codex delegated repeat-reminder check returned STATE_BUSY when helper probes overlapped; suppression is unverified for that arm. The artifact quality gate is separate from this lifecycle check.",
+    "Exploratory out-of-route TypeScript fixtures; not route evidence.",
+    "Some Claude arms overlapped maintainer offline checks; later arms ran without the full suite. Load was uncontrolled and n=1 timing is not a causal overhead estimate.",
+    "Legacy record boundaries were recovered by expanding locally declared helper variables in the preserved commands. Original zero-tail ledgers remain untouched. Helper calls are regex-derived; routing_reads counts Read tool events only, not shell reads or reads internal to lookup.",
+    "Host-reported counters / list-price estimates; no counters summed across overlapping scopes.",
+    "Receipt observed fields are agent_asserted; Codex native turn_context is configuration evidence, not served effort."
+  ]
+}

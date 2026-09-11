@@ -58,7 +58,7 @@ Each treatment requires official availability/pricing citations with dates, an a
 
 Missing full evidence (`HOLD`) can bootstrap; an actual rejection in the same scope and lane cannot be relabeled provisional. V4 preserves capability thresholds and exact identity/host checks, moving dollar ceilings to economic selection. Provisional records are never silently counted as qualified. The separately audited Claude quantity smoke supports one narrow medium-risk mechanical stratum, with distinct worker/reviewer models and a fresh artifact-only reviewer process; it does not expand other task scopes.
 
-Consumers write `delegate_receipt.v1` files using native file tools. Maintainers use `receipt-ingest` to archive exact versions in the existing append-only ledger, then `receipt-assess` to validate independent task, attempt, artifact and review evidence. Validated records feed the existing `refresh` command through `evaluationLedgers`; qualification and same-task paired promotion remain unchanged. Unassessed records grant no authority. See [production receipt ingestion](production-receipts.md). No central service or automatic upload is required.
+The packaged helper (`skills/delegate/scripts/local-learning.mjs`, called through its `record` command) writes `delegate_receipt.v2` files locally; `delegate_receipt.v1` remains the maintainer-ingestible shape, and older v1 receipts stay importable. Maintainers use `receipt-ingest` to archive exact versions in the existing append-only ledger, then `receipt-assess` to validate independent task, attempt, artifact and review evidence. Validated records feed the existing `refresh` command through `evaluationLedgers`; qualification and same-task paired promotion remain unchanged. Unassessed records grant no authority. See [production receipt ingestion](production-receipts.md). No central service or automatic upload is required.
 
 ## Current-frontier refresh checkpoint
 
@@ -70,4 +70,48 @@ An available model must complete a task evaluation and independent maintainer re
 
 The pilot refresh script refuses missing, changed-target, future-dated or older-than-seven-day frontier discovery/probe records, and available models with unreviewed evaluations. Unavailable or indeterminate models retain their observed reason while eligible evidenced reviewers remain usable. These are publication preconditions for the maintainer refresh, not a new consumer runtime dependency or a shorter pack lifetime. The low-level compiler remains usable independently for governed envelopes and algorithm tests.
 
-On September 10, 2026, actual probes of [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) and [Claude Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) were rejected by Codex CLI 0.142.5 and Claude Code 2.1.222 respectively because newer clients are required. The Claude response names 2.1.251 as its minimum; the Codex response gives no minimum version. The existing GPT5.5/high and Opus5/high reviewers are therefore deliberately retained for these tested CLI routes. See the exact [probe record](../data/routing/frontier-probes.json). No global host update was performed.
+On September 10, 2026, actual probes of [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) and [Claude Fable 5.1](https://platform.claude.com/docs/en/models/fable-5-1/overview) were rejected by Codex CLI 0.142.5 and Claude Code 2.1.222 respectively because newer clients are required. The Claude response names 2.1.251 as its minimum; the Codex response gives no minimum version. The existing GPT5.5/high and Opus5/high reviewers are therefore deliberately retained for these tested CLI routes. That rejection record was later overwritten in place by the upgraded-client probe; the upgraded-client history is in [v5 host evidence](v5-host-evidence.md) and the preserved pre-v5 upgraded-host report is [`frontier-probes-pre-v5.json`](../data/routing/frontier-probes-pre-v5.json). No global host update was performed.
+
+Later on 2026-09-10 the current [`data/routing/frontier-probes.json`](../data/routing/frontier-probes.json) (`frontier_probes.v2`, same `targets_digest`) records both frontiers as `available` on codex-cli 0.154.0 and Claude Code 2.1.267, attempted at 07:19:54Z, with `evaluation.status` `passed` under the fresh independent Opus 5 / high review bound in `data/routing/frontier-probe-reviews.json` (review digest `sha256:392f983b…`). Derived assurance is `CONFIGURATION_ATTESTED` for Astra and `PARTIALLY_RUNTIME_ATTESTED` for Fable. Fable and Astra are deliberately not admitted as workers or reviewers: their reviewer executions predate the complete environment capture and stay `not_admitted` in `data/routing/frontier-reviewer-evaluations.json`, and the calibration runs in [delegate usability results](delegate-usability-results.md) carry no qualification authority. GPT-5.5/high and Opus 5/high remain the published reviewer lanes.
+
+## Refresh runbook
+
+Windows from `policy/constitution.json` `routing_pack`: `refresh_after_days` 7 (frontier preflight), `provisional_evidence_max_age_days` 30 (entry evidence), `hard_expiry_days` 30 (pack). Each provisional entry expires 30 days after the earliest of its smoke `observed_at`, `availability.checked_at`, `pricing.checked_at` and every joined acceptance record's `observed_at`, so citation dates and acceptance record dates both bound entry expiry. A recompile is free only while `data/routing/frontier-targets.json` is younger than 7 days: it was checked at 2026-09-10T04:09:41.232Z, so until 2026-09-17T04:09:41.232Z. `scripts/probe-frontiers.mjs` overwrites `data/routing/frontier-probes.json` and `data/routing/frontier-identity-evidence.json` in place (it also copies them under `artifacts/frontier-probes/<timestamp>/`), so archive both byte-identical before any re-probe (precedent: `frontier-probes-pre-v5.json` and `v5-frontier-history.json`).
+
+Steps in order; every launched model execution counts, including failed launches and repairs.
+
+| Step | Model executions |
+| --- | --- |
+| 1. Refetch official model docs; rewrite `data/routing/frontier-targets.json` with model/effort, source URL, `checked_at` and source-byte digest | free |
+| 2. Archive `frontier-probes.json` and `frontier-identity-evidence.json` byte-identical with a digest record | free |
+| 3. `npm run build && node scripts/probe-frontiers.mjs` | 2 (one per frontier) |
+| 4. `node scripts/review-frontier-probes.mjs <artifactRoot>` with the `artifacts/frontier-probes/<timestamp>` path printed by step 3 | 1 (fresh independent reviewer) |
+| 5. Hand-edit `data/routing/frontier-probes.json`: set each probe's `evaluation.status` to `passed` or `failed` and `evaluation.review_digest` to the review artifact digest | free |
+| 6. Hand-write `data/routing/frontier-probe-reviews.json` binding the diagnosis, probe trace, fixture, review manifest, review request and reviewer trace digests | free |
+| 7. Smoke re-observation of the six treatments: `node scripts/verify/host-evidence.mjs` runs `codex`, `codex-standard`, `claude` and `claude-haiku` (each a worker plus a fresh reviewer) into `artifacts/portable-host-evidence/<host>-<timestamp>/result.json`; assemble those into a new `data/routing/host-observations.json` | 8 (4 worker runs + 4 fresh reviews) |
+| 8. Refresh the six treatments' `availability` and `pricing` citations (`url`, `checked_at`) in the new `host-observations.json` | free, manual, required: those `checked_at` values bound entry expiry |
+| 9. Derive `data/routing/medium-smoke-audit.json` from the two Claude runs' reviewer executions in step 7 with the unchanged literal scope | 0; the `MEDIUM_SMOKE_RUN_MISMATCH` binding requires exactly those executions |
+| 10. Installed acceptance re-run: `node scripts/verify/installed-delegate.mjs` into a new `data/routing/installed-acceptance.json` | about 28 to 42 |
+| 11. `node scripts/refresh-routing-pack.mjs`, then `npm test`, `npm run typecheck`, `node scripts/verify/skills.mjs` and the CI pack validation heredoc | free |
+
+Steps 3 to 6 are the preflight (3 executions); steps 7 to 9 are the smoke renewal (8); step 10 is the acceptance renewal.
+
+## Renewal
+
+Renewal decision (2026-09-10): pending, due 2026-10-02. Phrased against the published pack (`content_digest` `sha256:e65c17c8…`, `generated_at` 2026-09-10T07:25:11.453Z, `refresh_after` 2026-09-17T07:25:11.453Z, `expires_at` 2026-10-10T07:25:11.453Z; route entries expire 2026-10-10T02:07:24.124Z to 02:19:56.560Z):
+
+- (a) Lapse, 0 executions: route entries expire 2026-10-10T02:07:24Z to 02:19:56Z, `lookup` returns gaps for every route from then, and CI publication validation fails from the published pack's own `expires_at` (its `generated_at` plus 30 days) until a renewal lands.
+- (b) Smoke-only renewal, 11 executions: 3 preflight (steps 3 and 4) plus 8 smoke (step 7). The medium audit is derived free from the fresh Claude smoke reviewer executions, never a rebinding of the September reviews.
+- (c) Full renewal, about 39 to 53 executions: (b) plus the installed acceptance re-run (step 10).
+
+Under (b) and (c) stale acceptance records are demoted to `smoke_extrapolation` at compile time by a rule to be added in M5.2 of [the completion plan](delegate-completion-plan.md).
+
+## 2026-09-11 counted full renewal
+
+Full renewal was approved and executed under [the completion authorization](delegate-completion-authorization-2026-09-11.md). The earlier commands and captures above describe their original generation. Use [the new results](delegate-renewal-results.md) and [current status](validation-status.md) for this publication: 101/130 attempts, 11/14 installed cases accepted, 3 incomplete cases retained and excluded. Eight original inputs moved byte-identically to data/routing/archive/2026-09-10/ before fresh canonical inputs were staged.
+
+For future renewals, authorize a new execution ceiling first; never reuse this campaign ledger or overwrite raw captures. Reserve every model execution through campaign-budget.mjs before launch and settle from preserved evidence, counting failed launches. Renewal-campaign.mjs supplies isolated learning state, sanitized host environment, a trace-bound final inspection request and the installed case cap. Run full-project cases serially when necessary to respect the three-worker limit. Preserve matched receipts and inspect actual final source; UI acceptance also requires actual rendered inspection. Missing evidence withholds a case instead of relabeling it a pass.
+
+Assemble fresh treatment and acceptance files with assemble-evidence.mjs; derive the medium audit from the fresh Claude smoke reviews, retaining its exact quantity-default scope. Stage fresh three-case reviewer calibrations with stage-calibration.mjs and its named eight-execution ledger. Admission is only mechanical_work/low and follows the incumbent; never manufacture a new worker observation. Recompile with node scripts/refresh-routing-pack.mjs, update validation-status.md to the exact pack and folder digests, then run npm test, npm run typecheck, npm run build, node scripts/verify/skills.mjs and the CI publication heredoc. Do not use --allow-short-entries for an ordinary renewal. Preserve dated reports and publish the complete consumer folder together.
+
+No evidence supports delegation for either M4 TypeScript shape, so M5.5/M5.6 and the conditional v4 bump were skipped. Renewal is scoped provisional evidence, not qualification or measured savings.

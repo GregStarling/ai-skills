@@ -33,14 +33,15 @@ describe('local receipt import boundaries',()=>{
  });
 });
 
-function localReceipt(mode:'direct'|'delegated'){
+function localReceipt(mode:'direct'|'delegated',version:'v2'|'v3'='v2'){
  const date=new Date(Date.now()-2000).toISOString(),sha=hashBytes('synthetic receipt fixture');
  const attempt=(role:'coordinator'|'worker')=>({attempt_id:role,role,candidate_id:null,candidate_identity:null,evidence_tier:null,configured:{model:null,effort:null},observed:{model:null,effort:null},outcome:'accepted',started_at:null,completed_at:null,evidence:[]});
- return {schema_version:'delegate_receipt.v2',task_id:'test-task',run_id:'test-run',session_id:'test-session',parent_run_id:null,project_id:sha,host:'codex',host_version:'synthetic',execution_environment:'codex',task_class:'mechanical_work',risk:'low',scope:'synthetic boundary test',research_kind:null,origin:'qualification_evaluation',mode,started_at:date,completed_at:date,elapsed_ms:0,baseline_digest:null,pack_content_digest:mode==='delegated'?sha:null,stratum_digest:mode==='delegated'?sha:null,skill_folder_digest:sha,attempts:[attempt('coordinator'),...(mode==='delegated'?[attempt('worker')]:[])],checks:[],relevant_checks_complete:false,acceptance:'accepted',usage:null};
+ const v2={schema_version:'delegate_receipt.v2',task_id:'test-task',run_id:'test-run',session_id:'test-session',parent_run_id:null,project_id:sha,host:'codex',host_version:'synthetic',execution_environment:'codex',task_class:'mechanical_work',risk:'low',scope:'synthetic boundary test',research_kind:null,origin:'qualification_evaluation',mode,started_at:date,completed_at:date,elapsed_ms:0,baseline_digest:null,pack_content_digest:mode==='delegated'?sha:null,stratum_digest:mode==='delegated'?sha:null,skill_folder_digest:sha,attempts:[attempt('coordinator'),...(mode==='delegated'?[attempt('worker')]:[])],checks:[] as any[],relevant_checks_complete:false,acceptance:'accepted',usage:null};
+ return version==='v2'?v2:{...v2,schema_version:'delegate_receipt.v3',guidance_digest:sha,host_version_source:'caller'};
 }
-describe('v2 local records never imply qualification',()=>{
- it.each(['direct','delegated'] as const)('archives %s v2 unchanged and keeps qualification authority separate',async(mode)=>{
-  const saved=await capture(localReceipt(mode));
+describe('v2 and v3 local records never imply qualification',()=>{
+ it.each([['direct','v2'],['delegated','v2'],['direct','v3'],['delegated','v3']] as const)('archives %s %s unchanged and keeps qualification authority separate',async(mode,version)=>{
+  const saved=await capture(localReceipt(mode,version));
   expect(saved.record?.payload).toMatchObject({receipt_text:saved.text,receipt_digest:hashBytes(saved.text)});
   expect(saved.result).toMatchObject({status:'PENDING_EVIDENCE',qualification_authority:false});
   expect(()=>validateReceiptEvidence({schema_version:'delegate_receipt_evidence.v1',capture:saved.record!.payload,evidence:{selection:{},observationId:'x',attemptReceipts:{}}})).toThrow(mode==='direct'?'RECEIPT_DIRECT_NOT_QUALIFIABLE':'RECEIPT_V2_LOCAL_ONLY');

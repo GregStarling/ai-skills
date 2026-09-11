@@ -1,0 +1,608 @@
+{
+  "role": "reviewer",
+  "public_task_classes": [
+    "mechanical_work"
+  ],
+  "risk": "low",
+  "treatment": {
+    "candidate_id": "codex-gpt-6-astra-high",
+    "provider": "openai",
+    "model_id": "gpt-6-astra",
+    "snapshot_id": null,
+    "effort": "high",
+    "serving": {
+      "fallback": "disabled",
+      "tool_use": "host_tools",
+      "json_schema": false
+    },
+    "material_serving_settings": [
+      "fallback",
+      "tool_use"
+    ],
+    "family": "gpt-6-astra",
+    "frontier": true,
+    "capabilities": [
+      "terminal"
+    ],
+    "context_window_tokens": null,
+    "evidence": {
+      "observed_at": "2026-09-11T03:37:51.646Z",
+      "host": "codex",
+      "host_version": "codex-cli 0.154.0",
+      "observed_model_id": "gpt-6-astra",
+      "observed_effort": null,
+      "configured_effort": "high",
+      "effort_source": "requested_configuration",
+      "identity_source": "host_configuration",
+      "control_limitations": [
+        "Calibration evidence only: zero/nullish quantity-default local JavaScript review; three cases are not governor qualification.",
+        "Served effort and provider fallback are not attested; raw native sources determine assurance.",
+        "Admission is restricted to mechanical_work at low risk; this calibration grants no authority for other classes or the medium stratum."
+      ],
+      "availability": {
+        "url": "https://learn.chatgpt.com/docs/models",
+        "checked_at": "2026-09-11T02:29:16.954Z"
+      },
+      "pricing": {
+        "url": "https://learn.chatgpt.com/docs/models",
+        "checked_at": "2026-09-11T02:29:16.954Z",
+        "input_usd_per_million": null,
+        "output_usd_per_million": null,
+        "unknown_reason": "No applicable verified pricing rates captured in this calibration; the official model source establishes availability only."
+      },
+      "smoke": {
+        "task": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+        "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+        "execution_digest": "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe",
+        "review_digest": "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe",
+        "accepted": true,
+        "frontier_reviewed": true
+      },
+      "qualification_failure": null
+    }
+  },
+  "report": {
+    "host": "codex",
+    "target": {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6-astra",
+      "effort": "high",
+      "source": {
+        "url": "https://learn.chatgpt.com/docs/models",
+        "checked_at": "2026-09-11T02:29:16.954Z",
+        "content_digest": "sha256:f4ffe196ccff81a40e1ff1f80d97ddd0c9523bb01b1716f1bd5a8aa4836bda23",
+        "claim": "Official model guidance identifies Astra as its most capable model and lists Codex CLI availability."
+      }
+    },
+    "manifest": {
+      "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+      "requirements": "Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero.",
+      "checks_file": "quantity.test.mjs",
+      "cases": [
+        {
+          "id": "positive",
+          "artifact_file": "zero-defect.mjs",
+          "expected_verdict": "ACCEPT"
+        },
+        {
+          "id": "defective",
+          "artifact_file": "zero-defect.mjs",
+          "expected_verdict": "REPAIR"
+        },
+        {
+          "id": "boundary",
+          "artifact_file": "boundary-valid.mjs",
+          "expected_verdict": "ACCEPT"
+        }
+      ]
+    },
+    "manifest_digest": "sha256:a98981ad28acf64f71c00ca6f4ec74492d8e678380a6ce5efd849d0716e910b4",
+    "rows": [
+      {
+        "case_id": "positive",
+        "directory": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt",
+        "reviewer_host_version": "codex-cli 0.154.0",
+        "worker_host_version": "codex-cli 0.154.0",
+        "initial_artifact_digest": "sha256:ba510d78f1173c4c532e49ef007583dfa796d9d8ceb5607aa57c0397938a873a",
+        "files_before": {
+          "quantity.mjs": "export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity ?? 1), 0);\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "files_after": {
+          "quantity.mjs": "export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity ?? 1), 0);\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "objective": {
+          "exit_code": 0,
+          "signal": null,
+          "stdout": "TAP version 13\n# Subtest: preserves zero while summing quantities\nok 1 - preserves zero while summing quantities\n  ---\n  duration_ms: 0.499708\n  type: 'test'\n  ...\n# Subtest: defaults only absent quantities\nok 2 - defaults only absent quantities\n  ---\n  duration_ms: 0.055334\n  type: 'test'\n  ...\n# Subtest: empty input returns zero\nok 3 - empty input returns zero\n  ---\n  duration_ms: 0.034958\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 4.491375\n",
+          "stderr": ""
+        },
+        "reviewer_evidence": {
+          "schema_version": "frontier_identity_evidence.v1",
+          "candidate": {
+            "schema_version": "candidate.v1",
+            "candidate_id": "frontier_codex_high",
+            "provider": "openai",
+            "model_id": "gpt-6-astra",
+            "snapshot_id": "gpt-6-astra",
+            "effort": "high",
+            "serving": {
+              "fallback": "disabled",
+              "tool_use": "host_tools",
+              "json_schema": false
+            },
+            "material_serving_settings": [
+              "fallback",
+              "tool_use",
+              "json_schema"
+            ],
+            "provenance": {
+              "registry_id": "frontier_probe_targets",
+              "model_record_id": "frontier_codex",
+              "registry_content_digest": "sha256:78f9261995797553b07cfa854dd819bbff2d69ad0dd6023b1c901aeafa820690"
+            }
+          },
+          "report": {
+            "schema_version": "runtime_report.v1",
+            "report_id": "frontier_codex_1789097896759",
+            "provider": "openai",
+            "execution_environment": "codex",
+            "candidate_id": "frontier_codex_high",
+            "started_at": "2026-09-11T03:37:51.646Z",
+            "completed_at": "2026-09-11T03:38:16.757Z",
+            "command": {
+              "executable": "codex",
+              "args": [
+                "exec",
+                "--ignore-user-config",
+                "--ignore-rules",
+                "--ephemeral",
+                "--skip-git-repo-check",
+                "-C",
+                "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt",
+                "-s",
+                "read-only",
+                "-m",
+                "gpt-6-astra",
+                "-c",
+                "model_reasoning_effort=\"high\"",
+                "--json",
+                "-"
+              ],
+              "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt"
+            },
+            "status": "completed",
+            "exit_code": 0,
+            "signal": null,
+            "timeout_ms": 90000,
+            "stdout_digest": "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe",
+            "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "native_evidence": {
+              "request_digest": "sha256:864227bc7310b5730870e90b0ef00087ee73616e5ff49bd17407f8fad291ca7a",
+              "process_digest": "sha256:5a1da48f08adaeb610f2129c8723566573765fdca921614b193eebd0fd201827",
+              "version_digest": "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+            },
+            "observed_identity": {
+              "source": "unknown"
+            }
+          },
+          "sources": {
+            "sha256:864227bc7310b5730870e90b0ef00087ee73616e5ff49bd17407f8fad291ca7a": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:98e5347854ad7dec839b2fce2e2f5f8591bf848361690c5967574101bd17962c\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt\",\n      \"-s\",\n      \"read-only\",\n      \"-m\",\n      \"gpt-6-astra\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"high\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt\"\n  },\n  \"prompt_digest\": \"sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/reviewer/environment-controls.json\",\n      \"content_digest\": \"sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528\"\n    }\n  ]\n}\n",
+            "sha256:5a1da48f08adaeb610f2129c8723566573765fdca921614b193eebd0fd201827": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:864227bc7310b5730870e90b0ef00087ee73616e5ff49bd17407f8fad291ca7a\",\n  \"started_at\": \"2026-09-11T03:37:51.646Z\",\n  \"completed_at\": \"2026-09-11T03:38:16.757Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+            "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b": "codex-cli 0.154.0\n",
+            "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe": "{\"type\":\"thread.started\",\"thread_id\":\"01a08e8b-0a83-7c02-8674-b8a3c0bc0ebb\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll read both files and run the test command, then check the implementation against the requirement.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt\\nquantity.test.mjs\\nquantity.mjs\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.test.mjs'\",\"aggregated_output\":\"import test from 'node:test';\\nimport assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\n\\ntest('preserves zero while summing quantities', () => {\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\\n});\\ntest('defaults only absent quantities', () => {\\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\\n});\\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity ?? 1), 0);\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"TAP version 13\\n# Subtest: preserves zero while summing quantities\\nok 1 - preserves zero while summing quantities\\n  ---\\n  duration_ms: 0.304625\\n  type: 'test'\\n  ...\\n# Subtest: defaults only absent quantities\\nok 2 - defaults only absent quantities\\n  ---\\n  duration_ms: 0.0535\\n  type: 'test'\\n  ...\\n# Subtest: empty input returns zero\\nok 3 - empty input returns zero\\n  ---\\n  duration_ms: 0.036416\\n  type: 'test'\\n  ...\\n1..3\\n# tests 3\\n# suites 0\\n# pass 3\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n# duration_ms 5.065167\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"agent_message\",\"text\":\"ACCEPT — Reviewed both files. The implementation sums quantities, preserves explicit zero, defaults only null or undefined to one, and returns zero for empty input. `node quantity.test.mjs` passed all 3 tests.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":66714,\"cached_input_tokens\":60544,\"cache_write_input_tokens\":0,\"output_tokens\":248,\"reasoning_output_tokens\":0}}\n",
+            "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+            "sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee": "Independently review quantity.mjs against this requirement: Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero. Read the actual artifact and quantity.test.mjs, then run node quantity.test.mjs. Do not edit files, install anything, or use subagents. Return ACCEPT if correct or REPAIR with a concrete defect as the first word. This is a fresh artifact-only review; no worker report or prior verdict is supplied.",
+            "sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"CODEX_APP_TOOLS_PIPE_PATH\",\n    \"CODEX_CI\",\n    \"CODEX_INTERNAL_ORIGINATOR_OVERRIDE\",\n    \"CODEX_MCP_NODE_PATH\",\n    \"CODEX_PERMISSION_PROFILE\",\n    \"CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE\",\n    \"CODEX_SESSION_ID\",\n    \"CODEX_SHELL\",\n    \"CODEX_THREAD_ID\",\n    \"COLORTERM\",\n    \"COMMAND_MODE\",\n    \"DISABLE_AUTO_UPDATE\",\n    \"FPATH\",\n    \"GH_PAGER\",\n    \"GIT_PAGER\",\n    \"HOMEBREW_CELLAR\",\n    \"HOMEBREW_PREFIX\",\n    \"HOMEBREW_REPOSITORY\",\n    \"INFOPATH\",\n    \"LANG\",\n    \"LC_ALL\",\n    \"LC_CTYPE\",\n    \"LOGNAME\",\n    \"LOG_FORMAT\",\n    \"MallocNanoZone\",\n    \"NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S\",\n    \"NO_COLOR\",\n    \"NVM_BIN\",\n    \"NVM_CD_FLAGS\",\n    \"NVM_DIR\",\n    \"NVM_INC\",\n    \"OLDPWD\",\n    \"OSLogRateLimit\",\n    \"PAGER\",\n    \"PWD\",\n    \"RUST_LOG\",\n    \"SAKANA_API_KEY\",\n    \"SHLVL\",\n    \"SSH_AUTH_SOCK\",\n    \"TERM\",\n    \"XPC_FLAGS\",\n    \"XPC_SERVICE_NAME\",\n    \"ZSH_TMUX_AUTOSTART\",\n    \"ZSH_TMUX_AUTOSTARTED\",\n    \"_\",\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+          },
+          "assurance": {
+            "overall": "CONFIGURATION_ATTESTED",
+            "model": {
+              "value": "gpt-6-astra",
+              "assurance": "host_configuration"
+            },
+            "effort": {
+              "value": "high",
+              "assurance": "host_configuration"
+            },
+            "execution_environment": "codex",
+            "evidence_digest": "sha256:f6a257b39a79fe69af1cce107196ea4a6c88e794517a9f5f2828b8099e57d980",
+            "limitations": [
+              "No host fallback was configured; provider-side fallback state is not independently attested.",
+              "Served model is not independently exposed by this host trace.",
+              "Served effort is not independently exposed by this host trace."
+            ],
+            "diagnostics": []
+          }
+        },
+        "worker_evidence": {
+          "schema_version": "frontier_identity_evidence.v1",
+          "candidate": {
+            "schema_version": "candidate.v1",
+            "candidate_id": "frontier_codex_low",
+            "provider": "openai",
+            "model_id": "gpt-5.5",
+            "snapshot_id": "gpt-5.5",
+            "effort": "low",
+            "serving": {
+              "fallback": "disabled",
+              "tool_use": "host_tools",
+              "json_schema": false
+            },
+            "material_serving_settings": [
+              "fallback",
+              "tool_use",
+              "json_schema"
+            ],
+            "provenance": {
+              "registry_id": "frontier_probe_targets",
+              "model_record_id": "frontier_codex",
+              "registry_content_digest": "sha256:9b5a69afbf1d4d16bd5b3137606f0cfef64ec77125398561936576aa63b020a6"
+            }
+          },
+          "report": {
+            "schema_version": "runtime_report.v1",
+            "report_id": "frontier_codex_1789097871589",
+            "provider": "openai",
+            "execution_environment": "codex",
+            "candidate_id": "frontier_codex_low",
+            "started_at": "2026-09-11T03:37:30.481Z",
+            "completed_at": "2026-09-11T03:37:51.587Z",
+            "command": {
+              "executable": "codex",
+              "args": [
+                "exec",
+                "--ignore-user-config",
+                "--ignore-rules",
+                "--ephemeral",
+                "--skip-git-repo-check",
+                "-C",
+                "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt",
+                "-s",
+                "workspace-write",
+                "-m",
+                "gpt-5.5",
+                "-c",
+                "model_reasoning_effort=\"low\"",
+                "--json",
+                "-"
+              ],
+              "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt"
+            },
+            "status": "completed",
+            "exit_code": 0,
+            "signal": null,
+            "timeout_ms": 240000,
+            "stdout_digest": "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b",
+            "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "native_evidence": {
+              "request_digest": "sha256:dfa52cd630a7ee393fbd19fa2847c055925c66df34d0d0de1b958dd6186aa908",
+              "process_digest": "sha256:12671a8ec1729a596d3bf6c82e99f6ce288c8866941adbffbc47a40e2e1b1dcf",
+              "version_digest": "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+            },
+            "observed_identity": {
+              "source": "unknown"
+            }
+          },
+          "sources": {
+            "sha256:dfa52cd630a7ee393fbd19fa2847c055925c66df34d0d0de1b958dd6186aa908": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:e28470fef86a480d47650ee32fb6bb9ca968e6ead793638d7efe3aeb1ed79bb5\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt\",\n      \"-s\",\n      \"workspace-write\",\n      \"-m\",\n      \"gpt-5.5\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"low\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt\"\n  },\n  \"prompt_digest\": \"sha256:dc9e80a12732499f46d9ceb129e4d0ab91dfda70729a0279c117bce22f742cab\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/worker/environment-controls.json\",\n      \"content_digest\": \"sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528\"\n    }\n  ]\n}\n",
+            "sha256:12671a8ec1729a596d3bf6c82e99f6ce288c8866941adbffbc47a40e2e1b1dcf": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:dfa52cd630a7ee393fbd19fa2847c055925c66df34d0d0de1b958dd6186aa908\",\n  \"started_at\": \"2026-09-11T03:37:30.481Z\",\n  \"completed_at\": \"2026-09-11T03:37:51.587Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+            "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b": "codex-cli 0.154.0\n",
+            "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b": "{\"type\":\"thread.started\",\"thread_id\":\"01a08e8a-b81d-7332-a8dc-ae4c23f3c6ba\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll keep this tightly scoped to `quantity.mjs`: first I’m reading the implementation and its test, then I’ll patch only that file and run the test exactly enough to verify the behavior.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,220p' quantity.mjs\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,220p' quantity.mjs\\\"\",\"aggregated_output\":\"export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity || 1), 0);\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,220p' quantity.test.mjs\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"sed -n '1,220p' quantity.test.mjs\\\"\",\"aggregated_output\":\"import test from 'node:test';\\nimport assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\n\\ntest('preserves zero while summing quantities', () => {\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\\n});\\ntest('defaults only absent quantities', () => {\\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\\n});\\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"The bug is the `|| 1` fallback, which treats `0` as missing. I’m changing that to a nullish-only default so zero and other falsy numeric values survive.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_4\",\"type\":\"file_change\",\"changes\":[{\"path\":\"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt/quantity.mjs\",\"kind\":\"update\"}],\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"file_change\",\"changes\":[{\"path\":\"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-positive-5UnOlt/quantity.mjs\",\"kind\":\"update\"}],\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_5\",\"type\":\"agent_message\",\"text\":\"Patch is in place and still only touches `quantity.mjs`. I’m running the existing test file now to get the actual check result.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node --test quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_6\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node --test quantity.test.mjs'\",\"aggregated_output\":\"TAP version 13\\n# Subtest: preserves zero while summing quantities\\nok 1 - preserves zero while summing quantities\\n  ---\\n  duration_ms: 0.309708\\n  type: 'test'\\n  ...\\n# Subtest: defaults only absent quantities\\nok 2 - defaults only absent quantities\\n  ---\\n  duration_ms: 0.053292\\n  type: 'test'\\n  ...\\n# Subtest: empty input returns zero\\nok 3 - empty input returns zero\\n  ---\\n  duration_ms: 0.044\\n  type: 'test'\\n  ...\\n1..3\\n# tests 3\\n# suites 0\\n# pass 3\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n# duration_ms 34.963834\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_7\",\"type\":\"agent_message\",\"text\":\"Fixed `quantity.mjs` only: changed the default from `item.quantity || 1` to `item.quantity ?? 1`, preserving explicit `0` while defaulting only `null`/`undefined`.\\n\\nCheck run:\\n\\n`node --test quantity.test.mjs`\\n\\nResult: 3 tests passed, 0 failed.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":61759,\"cached_input_tokens\":48640,\"cache_write_input_tokens\":0,\"output_tokens\":601,\"reasoning_output_tokens\":7}}\n",
+            "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+            "sha256:dc9e80a12732499f46d9ceb129e4d0ab91dfda70729a0279c117bce22f742cab": "Fix quantity.mjs only. Requirement: Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero. Read and run quantity.test.mjs, preserve it unchanged, and verify your correction. Do not install anything, use subagents, or modify other files. Return a concise result and actual check results.",
+            "sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"CODEX_APP_TOOLS_PIPE_PATH\",\n    \"CODEX_CI\",\n    \"CODEX_INTERNAL_ORIGINATOR_OVERRIDE\",\n    \"CODEX_MCP_NODE_PATH\",\n    \"CODEX_PERMISSION_PROFILE\",\n    \"CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE\",\n    \"CODEX_SESSION_ID\",\n    \"CODEX_SHELL\",\n    \"CODEX_THREAD_ID\",\n    \"COLORTERM\",\n    \"COMMAND_MODE\",\n    \"DISABLE_AUTO_UPDATE\",\n    \"FPATH\",\n    \"GH_PAGER\",\n    \"GIT_PAGER\",\n    \"HOMEBREW_CELLAR\",\n    \"HOMEBREW_PREFIX\",\n    \"HOMEBREW_REPOSITORY\",\n    \"INFOPATH\",\n    \"LANG\",\n    \"LC_ALL\",\n    \"LC_CTYPE\",\n    \"LOGNAME\",\n    \"LOG_FORMAT\",\n    \"MallocNanoZone\",\n    \"NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S\",\n    \"NO_COLOR\",\n    \"NVM_BIN\",\n    \"NVM_CD_FLAGS\",\n    \"NVM_DIR\",\n    \"NVM_INC\",\n    \"OLDPWD\",\n    \"OSLogRateLimit\",\n    \"PAGER\",\n    \"PWD\",\n    \"RUST_LOG\",\n    \"SAKANA_API_KEY\",\n    \"SHLVL\",\n    \"SSH_AUTH_SOCK\",\n    \"TERM\",\n    \"XPC_FLAGS\",\n    \"XPC_SERVICE_NAME\",\n    \"ZSH_TMUX_AUTOSTART\",\n    \"ZSH_TMUX_AUTOSTARTED\",\n    \"_\",\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+          },
+          "assurance": {
+            "overall": "CONFIGURATION_ATTESTED",
+            "model": {
+              "value": "gpt-5.5",
+              "assurance": "host_configuration"
+            },
+            "effort": {
+              "value": "low",
+              "assurance": "host_configuration"
+            },
+            "execution_environment": "codex",
+            "evidence_digest": "sha256:ca9600cc318c065f1960958c0ded4c6c5a36b94402e5e940f1d6cf9708d779a1",
+            "limitations": [
+              "No host fallback was configured; provider-side fallback state is not independently attested.",
+              "Served model is not independently exposed by this host trace.",
+              "Served effort is not independently exposed by this host trace."
+            ],
+            "diagnostics": []
+          }
+        }
+      },
+      {
+        "case_id": "defective",
+        "directory": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0",
+        "reviewer_host_version": "codex-cli 0.154.0",
+        "worker_host_version": null,
+        "initial_artifact_digest": "sha256:ba510d78f1173c4c532e49ef007583dfa796d9d8ceb5607aa57c0397938a873a",
+        "files_before": {
+          "quantity.mjs": "export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity || 1), 0);\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "files_after": {
+          "quantity.mjs": "export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity || 1), 0);\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "objective": {
+          "exit_code": 1,
+          "signal": null,
+          "stdout": "TAP version 13\n# Subtest: preserves zero while summing quantities\nnot ok 1 - preserves zero while summing quantities\n  ---\n  duration_ms: 0.843917\n  type: 'test'\n  location: '/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0/quantity.test.mjs:5:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    4 !== 3\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 3\n  actual: 4\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0/quantity.test.mjs:6:10)\n    Test.runInAsyncScope (node:async_hooks:214:14)\n    Test.run (node:internal/test_runner/test:1047:25)\n    Test.start (node:internal/test_runner/test:944:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)\n  ...\n# Subtest: defaults only absent quantities\nok 2 - defaults only absent quantities\n  ---\n  duration_ms: 0.153459\n  type: 'test'\n  ...\n# Subtest: empty input returns zero\nok 3 - empty input returns zero\n  ---\n  duration_ms: 0.082833\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 2\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 6.387666\n",
+          "stderr": ""
+        },
+        "reviewer_evidence": {
+          "schema_version": "frontier_identity_evidence.v1",
+          "candidate": {
+            "schema_version": "candidate.v1",
+            "candidate_id": "frontier_codex_high",
+            "provider": "openai",
+            "model_id": "gpt-6-astra",
+            "snapshot_id": "gpt-6-astra",
+            "effort": "high",
+            "serving": {
+              "fallback": "disabled",
+              "tool_use": "host_tools",
+              "json_schema": false
+            },
+            "material_serving_settings": [
+              "fallback",
+              "tool_use",
+              "json_schema"
+            ],
+            "provenance": {
+              "registry_id": "frontier_probe_targets",
+              "model_record_id": "frontier_codex",
+              "registry_content_digest": "sha256:78f9261995797553b07cfa854dd819bbff2d69ad0dd6023b1c901aeafa820690"
+            }
+          },
+          "report": {
+            "schema_version": "runtime_report.v1",
+            "report_id": "frontier_codex_1789097914802",
+            "provider": "openai",
+            "execution_environment": "codex",
+            "candidate_id": "frontier_codex_high",
+            "started_at": "2026-09-11T03:38:16.824Z",
+            "completed_at": "2026-09-11T03:38:34.801Z",
+            "command": {
+              "executable": "codex",
+              "args": [
+                "exec",
+                "--ignore-user-config",
+                "--ignore-rules",
+                "--ephemeral",
+                "--skip-git-repo-check",
+                "-C",
+                "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0",
+                "-s",
+                "read-only",
+                "-m",
+                "gpt-6-astra",
+                "-c",
+                "model_reasoning_effort=\"high\"",
+                "--json",
+                "-"
+              ],
+              "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0"
+            },
+            "status": "completed",
+            "exit_code": 0,
+            "signal": null,
+            "timeout_ms": 90000,
+            "stdout_digest": "sha256:42ec2f72fb4f85da438656666c74d0601d64b6c0c2a1bb5d4b0d100cf15addc6",
+            "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "native_evidence": {
+              "request_digest": "sha256:46a2acfe67fe4767a7afd3c2505cbf82a3fb0a1be421f29b9e9cf0900162ce67",
+              "process_digest": "sha256:368081299e9ada8c7dfae5d0cae3e7102df6a4a0102293d1e33c12034fd55b93",
+              "version_digest": "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+            },
+            "observed_identity": {
+              "source": "unknown"
+            }
+          },
+          "sources": {
+            "sha256:46a2acfe67fe4767a7afd3c2505cbf82a3fb0a1be421f29b9e9cf0900162ce67": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:98e5347854ad7dec839b2fce2e2f5f8591bf848361690c5967574101bd17962c\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0\",\n      \"-s\",\n      \"read-only\",\n      \"-m\",\n      \"gpt-6-astra\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"high\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0\"\n  },\n  \"prompt_digest\": \"sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/defective/reviewer/environment-controls.json\",\n      \"content_digest\": \"sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528\"\n    }\n  ]\n}\n",
+            "sha256:368081299e9ada8c7dfae5d0cae3e7102df6a4a0102293d1e33c12034fd55b93": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:46a2acfe67fe4767a7afd3c2505cbf82a3fb0a1be421f29b9e9cf0900162ce67\",\n  \"started_at\": \"2026-09-11T03:38:16.824Z\",\n  \"completed_at\": \"2026-09-11T03:38:34.801Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:42ec2f72fb4f85da438656666c74d0601d64b6c0c2a1bb5d4b0d100cf15addc6\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+            "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b": "codex-cli 0.154.0\n",
+            "sha256:42ec2f72fb4f85da438656666c74d0601d64b6c0c2a1bb5d4b0d100cf15addc6": "{\"type\":\"thread.started\",\"thread_id\":\"01a08e8b-6b92-7690-8085-3836ba787421\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll read both files and run the test command, then check the implementation against each requirement.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd; rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0\\nquantity.test.mjs\\nquantity.mjs\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs quantity.test.mjs'\",\"aggregated_output\":\"export const totalQuantity = items => items.reduce((sum, item) => sum + (item.quantity || 1), 0);\\nimport test from 'node:test';\\nimport assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\n\\ntest('preserves zero while summing quantities', () => {\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\\n});\\ntest('defaults only absent quantities', () => {\\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\\n});\\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"TAP version 13\\n# Subtest: preserves zero while summing quantities\\nnot ok 1 - preserves zero while summing quantities\\n  ---\\n  duration_ms: 0.57825\\n  type: 'test'\\n  location: '/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0/quantity.test.mjs:5:1'\\n  failureType: 'testCodeFailure'\\n  error: |-\\n    Expected values to be strictly equal:\\n    \\n    4 !== 3\\n    \\n  code: 'ERR_ASSERTION'\\n  name: 'AssertionError'\\n  expected: 3\\n  actual: 4\\n  operator: 'strictEqual'\\n  stack: |-\\n    TestContext.<anonymous> (file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-defective-8uuFb0/quantity.test.mjs:6:10)\\n    Test.runInAsyncScope (node:async_hooks:214:14)\\n    Test.run (node:internal/test_runner/test:1047:25)\\n    Test.start (node:internal/test_runner/test:944:17)\\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)\\n  ...\\n# Subtest: defaults only absent quantities\\nok 2 - defaults only absent quantities\\n  ---\\n  duration_ms: 0.06725\\n  type: 'test'\\n  ...\\n# Subtest: empty input returns zero\\nok 3 - empty input returns zero\\n  ---\\n  duration_ms: 0.068458\\n  type: 'test'\\n  ...\\n1..3\\n# tests 3\\n# suites 0\\n# pass 2\\n# fail 1\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n# duration_ms 5.003084\\n\",\"exit_code\":1,\"status\":\"failed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"agent_message\",\"text\":\"REPAIR — `quantity.mjs:1` uses `item.quantity || 1`, which replaces explicit zero with one. Use `item.quantity ?? 1` to default only null or undefined.\\n\\nRead both files and ran `node quantity.test.mjs`: 2 passed, 1 failed (expected 3, received 4). No files changed.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":47740,\"cached_input_tokens\":42368,\"cache_write_input_tokens\":0,\"output_tokens\":210,\"reasoning_output_tokens\":0}}\n",
+            "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+            "sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee": "Independently review quantity.mjs against this requirement: Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero. Read the actual artifact and quantity.test.mjs, then run node quantity.test.mjs. Do not edit files, install anything, or use subagents. Return ACCEPT if correct or REPAIR with a concrete defect as the first word. This is a fresh artifact-only review; no worker report or prior verdict is supplied.",
+            "sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"CODEX_APP_TOOLS_PIPE_PATH\",\n    \"CODEX_CI\",\n    \"CODEX_INTERNAL_ORIGINATOR_OVERRIDE\",\n    \"CODEX_MCP_NODE_PATH\",\n    \"CODEX_PERMISSION_PROFILE\",\n    \"CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE\",\n    \"CODEX_SESSION_ID\",\n    \"CODEX_SHELL\",\n    \"CODEX_THREAD_ID\",\n    \"COLORTERM\",\n    \"COMMAND_MODE\",\n    \"DISABLE_AUTO_UPDATE\",\n    \"FPATH\",\n    \"GH_PAGER\",\n    \"GIT_PAGER\",\n    \"HOMEBREW_CELLAR\",\n    \"HOMEBREW_PREFIX\",\n    \"HOMEBREW_REPOSITORY\",\n    \"INFOPATH\",\n    \"LANG\",\n    \"LC_ALL\",\n    \"LC_CTYPE\",\n    \"LOGNAME\",\n    \"LOG_FORMAT\",\n    \"MallocNanoZone\",\n    \"NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S\",\n    \"NO_COLOR\",\n    \"NVM_BIN\",\n    \"NVM_CD_FLAGS\",\n    \"NVM_DIR\",\n    \"NVM_INC\",\n    \"OLDPWD\",\n    \"OSLogRateLimit\",\n    \"PAGER\",\n    \"PWD\",\n    \"RUST_LOG\",\n    \"SAKANA_API_KEY\",\n    \"SHLVL\",\n    \"SSH_AUTH_SOCK\",\n    \"TERM\",\n    \"XPC_FLAGS\",\n    \"XPC_SERVICE_NAME\",\n    \"ZSH_TMUX_AUTOSTART\",\n    \"ZSH_TMUX_AUTOSTARTED\",\n    \"_\",\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+          },
+          "assurance": {
+            "overall": "CONFIGURATION_ATTESTED",
+            "model": {
+              "value": "gpt-6-astra",
+              "assurance": "host_configuration"
+            },
+            "effort": {
+              "value": "high",
+              "assurance": "host_configuration"
+            },
+            "execution_environment": "codex",
+            "evidence_digest": "sha256:b4154eeb2594a08c32804ea4b59dc64896630760a25b66b82c33d8c4c3c8d184",
+            "limitations": [
+              "No host fallback was configured; provider-side fallback state is not independently attested.",
+              "Served model is not independently exposed by this host trace.",
+              "Served effort is not independently exposed by this host trace."
+            ],
+            "diagnostics": []
+          }
+        }
+      },
+      {
+        "case_id": "boundary",
+        "directory": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX",
+        "reviewer_host_version": "codex-cli 0.154.0",
+        "worker_host_version": null,
+        "initial_artifact_digest": "sha256:122d75224c24c3a6982b6ac730c96ec360e29da9108b60d748b0591b6d4aee17",
+        "files_before": {
+          "quantity.mjs": "export function totalQuantity(items) {\n  let total = 0;\n  for (const item of items) {\n    const quantity = item.quantity;\n    total += quantity === null || quantity === undefined ? 1 : quantity;\n  }\n  return total;\n}\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "files_after": {
+          "quantity.mjs": "export function totalQuantity(items) {\n  let total = 0;\n  for (const item of items) {\n    const quantity = item.quantity;\n    total += quantity === null || quantity === undefined ? 1 : quantity;\n  }\n  return total;\n}\n",
+          "quantity.test.mjs": "import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\n\ntest('preserves zero while summing quantities', () => {\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\n});\ntest('defaults only absent quantities', () => {\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\n});\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\n"
+        },
+        "objective": {
+          "exit_code": 0,
+          "signal": null,
+          "stdout": "TAP version 13\n# Subtest: preserves zero while summing quantities\nok 1 - preserves zero while summing quantities\n  ---\n  duration_ms: 0.308125\n  type: 'test'\n  ...\n# Subtest: defaults only absent quantities\nok 2 - defaults only absent quantities\n  ---\n  duration_ms: 0.045958\n  type: 'test'\n  ...\n# Subtest: empty input returns zero\nok 3 - empty input returns zero\n  ---\n  duration_ms: 0.033958\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 4.066083\n",
+          "stderr": ""
+        },
+        "reviewer_evidence": {
+          "schema_version": "frontier_identity_evidence.v1",
+          "candidate": {
+            "schema_version": "candidate.v1",
+            "candidate_id": "frontier_codex_high",
+            "provider": "openai",
+            "model_id": "gpt-6-astra",
+            "snapshot_id": "gpt-6-astra",
+            "effort": "high",
+            "serving": {
+              "fallback": "disabled",
+              "tool_use": "host_tools",
+              "json_schema": false
+            },
+            "material_serving_settings": [
+              "fallback",
+              "tool_use",
+              "json_schema"
+            ],
+            "provenance": {
+              "registry_id": "frontier_probe_targets",
+              "model_record_id": "frontier_codex",
+              "registry_content_digest": "sha256:78f9261995797553b07cfa854dd819bbff2d69ad0dd6023b1c901aeafa820690"
+            }
+          },
+          "report": {
+            "schema_version": "runtime_report.v1",
+            "report_id": "frontier_codex_1789097935028",
+            "provider": "openai",
+            "execution_environment": "codex",
+            "candidate_id": "frontier_codex_high",
+            "started_at": "2026-09-11T03:38:34.858Z",
+            "completed_at": "2026-09-11T03:38:55.027Z",
+            "command": {
+              "executable": "codex",
+              "args": [
+                "exec",
+                "--ignore-user-config",
+                "--ignore-rules",
+                "--ephemeral",
+                "--skip-git-repo-check",
+                "-C",
+                "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX",
+                "-s",
+                "read-only",
+                "-m",
+                "gpt-6-astra",
+                "-c",
+                "model_reasoning_effort=\"high\"",
+                "--json",
+                "-"
+              ],
+              "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX"
+            },
+            "status": "completed",
+            "exit_code": 0,
+            "signal": null,
+            "timeout_ms": 90000,
+            "stdout_digest": "sha256:c3f8446903b35068c068fc544f98ab42b6f8b6aa106360aafb99576588bd236d",
+            "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "native_evidence": {
+              "request_digest": "sha256:e762553bda015b35ef728a6849a3521311502f75a4cceb14534274ca174df566",
+              "process_digest": "sha256:a8d5e849c7ff96edcbbdf78777acaa66c6f3e352e54cb9cef4706cf76499b03c",
+              "version_digest": "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+            },
+            "observed_identity": {
+              "source": "unknown"
+            }
+          },
+          "sources": {
+            "sha256:e762553bda015b35ef728a6849a3521311502f75a4cceb14534274ca174df566": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:98e5347854ad7dec839b2fce2e2f5f8591bf848361690c5967574101bd17962c\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX\",\n      \"-s\",\n      \"read-only\",\n      \"-m\",\n      \"gpt-6-astra\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"high\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX\"\n  },\n  \"prompt_digest\": \"sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/boundary/reviewer/environment-controls.json\",\n      \"content_digest\": \"sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528\"\n    }\n  ]\n}\n",
+            "sha256:a8d5e849c7ff96edcbbdf78777acaa66c6f3e352e54cb9cef4706cf76499b03c": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:e762553bda015b35ef728a6849a3521311502f75a4cceb14534274ca174df566\",\n  \"started_at\": \"2026-09-11T03:38:34.858Z\",\n  \"completed_at\": \"2026-09-11T03:38:55.027Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:c3f8446903b35068c068fc544f98ab42b6f8b6aa106360aafb99576588bd236d\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+            "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b": "codex-cli 0.154.0\n",
+            "sha256:c3f8446903b35068c068fc544f98ab42b6f8b6aa106360aafb99576588bd236d": "{\"type\":\"thread.started\",\"thread_id\":\"01a08e8b-b368-77e0-a343-5dbf6e33ff7a\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll read both files and run the test suite, then check the implementation against each requirement.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc \\\"pwd && rg --files -g 'AGENTS.md' -g 'quantity.mjs' -g 'quantity.test.mjs'\\\"\",\"aggregated_output\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/reviewer-calibration-codex-boundary-QQDdTX\\nquantity.test.mjs\\nquantity.mjs\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs quantity.test.mjs'\",\"aggregated_output\":\"export function totalQuantity(items) {\\n  let total = 0;\\n  for (const item of items) {\\n    const quantity = item.quantity;\\n    total += quantity === null || quantity === undefined ? 1 : quantity;\\n  }\\n  return total;\\n}\\nimport test from 'node:test';\\nimport assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\n\\ntest('preserves zero while summing quantities', () => {\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 2}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: 0}, {quantity: 0}]), 0);\\n});\\ntest('defaults only absent quantities', () => {\\n  assert.equal(totalQuantity([{quantity: null}, {quantity: undefined}, {}]), 3);\\n  assert.equal(totalQuantity([{quantity: -1}, {quantity: 2.5}]), 1.5);\\n});\\ntest('empty input returns zero', () => assert.equal(totalQuantity([]), 0));\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"TAP version 13\\n# Subtest: preserves zero while summing quantities\\nok 1 - preserves zero while summing quantities\\n  ---\\n  duration_ms: 0.317042\\n  type: 'test'\\n  ...\\n# Subtest: defaults only absent quantities\\nok 2 - defaults only absent quantities\\n  ---\\n  duration_ms: 0.047625\\n  type: 'test'\\n  ...\\n# Subtest: empty input returns zero\\nok 3 - empty input returns zero\\n  ---\\n  duration_ms: 0.033042\\n  type: 'test'\\n  ...\\n1..3\\n# tests 3\\n# suites 0\\n# pass 3\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n# duration_ms 3.925625\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_4\",\"type\":\"agent_message\",\"text\":\"ACCEPT — Read both files. The implementation sums quantities, preserves explicit zero, defaults only null or undefined to one, and returns zero for empty input. `node quantity.test.mjs` passed all 3 tests.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":66536,\"cached_input_tokens\":60544,\"cache_write_input_tokens\":0,\"output_tokens\":192,\"reasoning_output_tokens\":0}}\n",
+            "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+            "sha256:471c7d6e26f66d1ed35ef0a23967102fcb19907711733a8d677729487ca8d1ee": "Independently review quantity.mjs against this requirement: Sum supplied quantities; preserve explicit zero; default only null or undefined quantities to one; empty input returns zero. Read the actual artifact and quantity.test.mjs, then run node quantity.test.mjs. Do not edit files, install anything, or use subagents. Return ACCEPT if correct or REPAIR with a concrete defect as the first word. This is a fresh artifact-only review; no worker report or prior verdict is supplied.",
+            "sha256:27b9d9a2eafa7e60cb095ecc227f9964592d63e35393b22e4923047511377528": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"CODEX_APP_TOOLS_PIPE_PATH\",\n    \"CODEX_CI\",\n    \"CODEX_INTERNAL_ORIGINATOR_OVERRIDE\",\n    \"CODEX_MCP_NODE_PATH\",\n    \"CODEX_PERMISSION_PROFILE\",\n    \"CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE\",\n    \"CODEX_SESSION_ID\",\n    \"CODEX_SHELL\",\n    \"CODEX_THREAD_ID\",\n    \"COLORTERM\",\n    \"COMMAND_MODE\",\n    \"DISABLE_AUTO_UPDATE\",\n    \"FPATH\",\n    \"GH_PAGER\",\n    \"GIT_PAGER\",\n    \"HOMEBREW_CELLAR\",\n    \"HOMEBREW_PREFIX\",\n    \"HOMEBREW_REPOSITORY\",\n    \"INFOPATH\",\n    \"LANG\",\n    \"LC_ALL\",\n    \"LC_CTYPE\",\n    \"LOGNAME\",\n    \"LOG_FORMAT\",\n    \"MallocNanoZone\",\n    \"NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S\",\n    \"NO_COLOR\",\n    \"NVM_BIN\",\n    \"NVM_CD_FLAGS\",\n    \"NVM_DIR\",\n    \"NVM_INC\",\n    \"OLDPWD\",\n    \"OSLogRateLimit\",\n    \"PAGER\",\n    \"PWD\",\n    \"RUST_LOG\",\n    \"SAKANA_API_KEY\",\n    \"SHLVL\",\n    \"SSH_AUTH_SOCK\",\n    \"TERM\",\n    \"XPC_FLAGS\",\n    \"XPC_SERVICE_NAME\",\n    \"ZSH_TMUX_AUTOSTART\",\n    \"ZSH_TMUX_AUTOSTARTED\",\n    \"_\",\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+          },
+          "assurance": {
+            "overall": "CONFIGURATION_ATTESTED",
+            "model": {
+              "value": "gpt-6-astra",
+              "assurance": "host_configuration"
+            },
+            "effort": {
+              "value": "high",
+              "assurance": "host_configuration"
+            },
+            "execution_environment": "codex",
+            "evidence_digest": "sha256:913bf05caf15c4c3bbbce467125a829784eca788e097bacd14c51ee7310ce8bf",
+            "limitations": [
+              "No host fallback was configured; provider-side fallback state is not independently attested.",
+              "Served model is not independently exposed by this host trace.",
+              "Served effort is not independently exposed by this host trace."
+            ],
+            "diagnostics": []
+          }
+        }
+      }
+    ],
+    "gate": {
+      "admitted": true,
+      "diagnostics": [],
+      "results": [
+        {
+          "case_id": "positive",
+          "verdict": "ACCEPT",
+          "identity_assurance": "CONFIGURATION_ATTESTED",
+          "stdout_digest": "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe"
+        },
+        {
+          "case_id": "defective",
+          "verdict": "REPAIR",
+          "identity_assurance": "CONFIGURATION_ATTESTED",
+          "stdout_digest": "sha256:42ec2f72fb4f85da438656666c74d0601d64b6c0c2a1bb5d4b0d100cf15addc6"
+        },
+        {
+          "case_id": "boundary",
+          "verdict": "ACCEPT",
+          "identity_assurance": "CONFIGURATION_ATTESTED",
+          "stdout_digest": "sha256:c3f8446903b35068c068fc544f98ab42b6f8b6aa106360aafb99576588bd236d"
+        }
+      ],
+      "qualification_authority": false
+    },
+    "qualification_authority": false
+  },
+  "runs": [
+    {
+      "id": "calibration-codex-quantity-positive",
+      "host": "codex",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "started_at": "2026-09-11T03:37:30.481Z",
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b",
+      "reviewer_stdout_digest": "sha256:9279eec8a39fa07377b8328b21b488eadde45e935b428baf788f340ba65400fe",
+      "worker": {
+        "model": "gpt-5.5",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "gpt-6-astra",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      },
+      "objective_passed": true,
+      "qualification_authority": false
+    }
+  ],
+  "report_digest": "sha256:e0b17a6526a34ca7178725d003583ab36a09aa795f54370533cbc561995bb9ce"
+}

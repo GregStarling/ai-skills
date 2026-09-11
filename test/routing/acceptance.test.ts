@@ -1,12 +1,13 @@
 import {readFileSync} from 'node:fs';
-import {afterEach,describe,expect,it,vi} from 'vitest';
+import {afterEach,beforeEach,describe,expect,it,vi} from 'vitest';
 import {digest} from '../../src/core/canonical.js';
 import {buildProvisionalPilotRoutes} from '../../src/routing/acceptance.js';
 import {compileRoutingPack} from '../../src/routing/compiler.js';
 import {provisionalTreatmentSchema} from '../../src/routing/provisional.js';
 
-const fixtures=()=>({observations:JSON.parse(readFileSync('data/routing/host-observations.json','utf8')),acceptance:JSON.parse(readFileSync('data/routing/installed-acceptance.json','utf8'))});
+const fixtures=()=>({observations:JSON.parse(readFileSync('data/routing/archive/2026-09-10/host-observations.json','utf8')),acceptance:JSON.parse(readFileSync('data/routing/archive/2026-09-10/installed-acceptance.json','utf8'))});
 const route=(routes:ReturnType<typeof buildProvisionalPilotRoutes>,host:string,task:string)=>routes.find(r=>r.publicTaskClass===task&&r.workers[0]!.evidence.host===host)!;
+beforeEach(()=>{vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T04:00:00Z'));});
 afterEach(()=>vi.useRealTimers());
 
 describe('installed acceptance joins',()=>{
@@ -102,8 +103,57 @@ describe('installed acceptance joins',()=>{
 });
 
 
+describe('per-case consumer-folder provenance',()=>{
+  const audit=()=>JSON.parse(readFileSync('data/routing/archive/2026-09-10/medium-smoke-audit.json','utf8'));
+  const entries=(routes:ReturnType<typeof buildProvisionalPilotRoutes>)=>routes.flatMap(r=>[...r.workers,...r.reviewers]);
+  const namedCases=(limitations:string[])=>new Set(limitations.flatMap(l=>[...l.matchAll(/Case (\S+) accepted/g)].map(m=>m[1]!)));
+  const tinybug=['claude-tinybug-1789009415239','codex-tinybug-1789009415239'];
+
+  it('names exactly the joined records per entry and never extrapolated ones',()=>{
+    const {observations,acceptance}=fixtures(),all=entries(buildProvisionalPilotRoutes(observations,acceptance,audit()));
+    expect(all.length).toBeGreaterThan(0);
+    for(const t of all){
+      const te=t.evidence.task_evidence!,named=namedCases(te.limitations);
+      if(te.basis==='installed_acceptance')expect(named).toEqual(new Set(te.records.map(r=>r.case_id)));
+      else expect(named.size).toBe(0);
+      expect(te.limitations.join(' ')).not.toMatch(/\bfinal\b/i);
+    }
+  });
+
+  it('marks exactly the ten records accepted on an earlier folder iteration',()=>{
+    const {observations,acceptance}=fixtures(),all=entries(buildProvisionalPilotRoutes(observations,acceptance,audit()));
+    const earlier=new Set<string>(),provenance=new Set<string>();
+    for(const t of all)for(const l of t.evidence.task_evidence!.limitations)for(const [,id] of l.matchAll(/Case (\S+) accepted/g)){provenance.add(id!);if(l.includes('Earlier iteration'))earlier.add(id!);}
+    const expected=acceptance.cases.filter((c:any)=>['backend','hardbug','mechanical','multicomponent','ui'].includes(c.case)).map((c:any)=>c.id);
+    expect(expected).toHaveLength(10);expect([...earlier].sort()).toEqual([...expected].sort());
+    for(const id of tinybug){expect(acceptance.cases.find((c:any)=>c.id===id)?.copied_skill_digest).toBe(acceptance.final_consumer_folder_digest);expect(provenance.has(id)).toBe(true);expect(earlier.has(id)).toBe(false);}
+    const sample=all.find(t=>namedCases(t.evidence.task_evidence!.limitations).has('claude-mechanical-1789007904504'))!;
+    expect(sample.evidence.task_evidence!.limitations).toContain("Case claude-mechanical-1789007904504 accepted on consumer-folder iteration a379a55d (maintainer-recorded attribution bound by record_digest); the published folder may differ. Earlier iteration than the acceptance run's last iteration 2509569e.");
+  });
+
+  it('derives attribution only from digests, ignoring the recorded match flag',()=>{
+    const {observations,acceptance}=fixtures(),before=buildProvisionalPilotRoutes(observations,acceptance,audit());
+    const flipped=structuredClone(acceptance);for(const c of flipped.cases)c.matches_final_skill=true;
+    const after=buildProvisionalPilotRoutes(observations,flipped,audit());
+    expect(after.map(r=>entries([r]).map(t=>({basis:t.evidence.task_evidence!.basis,limitations:t.evidence.task_evidence!.limitations})))).toEqual(before.map(r=>entries([r]).map(t=>({basis:t.evidence.task_evidence!.basis,limitations:t.evidence.task_evidence!.limitations}))));
+  });
+
+  it('refuses a case without its copied folder digest',()=>{
+    const {observations,acceptance}=fixtures();delete acceptance.cases[0].copied_skill_digest;
+    expect(()=>buildProvisionalPilotRoutes(observations,acceptance)).toThrow();
+  });
+
+  it('leaves the medium stratum untouched',()=>{
+    const {observations,acceptance}=fixtures(),medium=buildProvisionalPilotRoutes(observations,acceptance,audit()).find(r=>r.risk==='medium')!;
+    expect(medium.scope).toBe('claude medium pilot: Zero/nullish quantity-default fixes in local plain JavaScript only. Separate fresh artifact-only frontier verification is mandatory. Existing native smoke only; no medium installed task acceptance or governor qualification.');
+    expect(medium.workers.map(w=>w.candidate_id).sort()).toEqual(['claude-claude-haiku-4-5-20251001-not_applicable','claude-claude-sonnet-5-low']);
+    expect(medium.reviewers.map(w=>w.candidate_id)).toEqual(['claude-claude-opus-5-high']);
+    for(const t of entries([medium]))expect(t.evidence.task_evidence!.limitations).toEqual(['Limited to the audited zero/nullish quantity-default fixes in local plain JavaScript; no broader medium-risk acceptance or capability qualification.','The reviewer ran separately in a fresh artifact-only process; served effort was not exposed. Configured effort is not runtime attestation.']);
+  });
+});
+
 describe('audited medium-risk quantity smoke',()=>{
-  const audit=()=>JSON.parse(readFileSync('data/routing/medium-smoke-audit.json','utf8'));
+  const audit=()=>JSON.parse(readFileSync('data/routing/archive/2026-09-10/medium-smoke-audit.json','utf8'));
   it('adds only the scoped Claude medium stratum with fresh independent frontier controls',()=>{
     vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-10T04:00:00Z'));
     const {observations,acceptance}=fixtures(),before=digest(observations),routes=buildProvisionalPilotRoutes(observations,acceptance,audit()),medium=routes.filter(r=>r.risk==='medium');
@@ -127,5 +177,27 @@ describe('audited medium-risk quantity smoke',()=>{
     ['duplicate',(a:any)=>{a.reviews.push(a.reviews[0]);}],
   ])('refuses altered %s evidence',(_name,mutate)=>{
     const {observations,acceptance}=fixtures(),value=audit();mutate(value);expect(()=>buildProvisionalPilotRoutes(observations,acceptance,value)).toThrow();
+  });
+});
+
+
+describe('installed acceptance renewal horizon',()=>{
+  const entries=(routes:ReturnType<typeof buildProvisionalPilotRoutes>)=>routes.flatMap(r=>[...r.workers,...r.reviewers]);
+  it('preserves the September join and demotes October records before the refresh horizon',()=>{
+    const {observations,acceptance}=fixtures();
+    const original=buildProvisionalPilotRoutes(observations,acceptance);
+    expect(buildProvisionalPilotRoutes(observations,acceptance,undefined,{now:'2026-09-10T04:00:00Z'})).toEqual(original);
+    const demoted=entries(buildProvisionalPilotRoutes(observations,acceptance,undefined,{now:'2026-10-04T00:00:00Z'}));
+    expect(demoted.every(t=>t.evidence.task_evidence?.basis==='smoke_extrapolation')).toBe(true);
+    expect(demoted.some(t=>t.evidence.task_evidence?.limitations.some(l=>l.includes('entry extrapolates from smoke until re-accepted')))).toBe(true);
+  });
+  it('uses policy age and refresh days at the exact evidence cutoff',()=>{
+    const {observations,acceptance}=fixtures();
+    acceptance.cases=[acceptance.cases.find((c:any)=>c.host==='codex'&&c.case==='backend')];
+    const record=acceptance.cases[0],routingPack={provisional_evidence_max_age_days:12,refresh_after_days:3};
+    const cutoff=Date.parse(record.original_attempt.started_at)+9*86400000;
+    const records=(offset:number)=>entries(buildProvisionalPilotRoutes(observations,acceptance,undefined,{now:new Date(cutoff+offset).toISOString(),routingPack})).flatMap(t=>t.evidence.task_evidence!.records);
+    expect(records(-60000).length).toBeGreaterThan(0);
+    expect(records(0)).toEqual([]);expect(records(60000)).toEqual([]);
   });
 });

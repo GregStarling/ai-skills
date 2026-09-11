@@ -1,0 +1,12 @@
+{
+  "admissions": [
+    {
+      "host": "codex",
+      "report_digest": "sha256:e0b17a6526a34ca7178725d003583ab36a09aa795f54370533cbc561995bb9ce"
+    },
+    {
+      "host": "claude",
+      "report_digest": "sha256:98952c5e979b4001d7e228275aa2f0a62d043dcd260db9dcdd96f4456d2ce6d7"
+    }
+  ]
+}

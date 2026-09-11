@@ -184,3 +184,14 @@ export function validateRoutingPackPublication(value:unknown,now=new Date().toIS
   if(Date.parse(pack.expires_at)<=Date.parse(parsed.data))throw new RoutingError('PACK_EXPIRED');
   return pack;
 }
+
+/** The earliest worker/reviewer evidence boundary, independent of the pack header. */
+export function earliestEntryExpiry(pack:RoutingPack):string|null{
+  const entries=pack.routes.flatMap(route=>[...route.workers,...route.reviewers]);
+  return entries.length?new Date(Math.min(...entries.map(entry=>Date.parse(entry.expires_at)))).toISOString():null;
+}
+export function assertEntriesOutlivePack(pack:RoutingPack,hours:number):void{
+  if(!Number.isFinite(hours)||hours<0)throw new RoutingError('INVALID_ENTRY_EXPIRY_TOLERANCE');
+  const earliest=earliestEntryExpiry(pack);
+  if(earliest!==null&&Date.parse(earliest)<Date.parse(pack.expires_at)-hours*3600000)throw new RoutingError('ENTRIES_EXPIRE_BEFORE_PACK',`Earliest entry ${earliest} precedes pack expiry ${pack.expires_at} by more than ${hours} hours.`);
+}

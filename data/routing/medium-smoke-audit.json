@@ -1,26 +1,26 @@
 {
   "schema_version": "medium_smoke_audit.v1",
-  "source_digest": "sha256:4b4106b2336048e1f48a64831dccc1f127746de255dd95cc57a2b5e35df626a5",
+  "source_digest": "sha256:ecd8dbed9ce79f94f2f946e1ae78037ff4f09a2f2c81fde5577ea461961a4913",
   "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
   "reviews": [
     {
-      "run_id": "claude-1789006044123",
-      "run_digest": "sha256:9403f3f02ddca1e5a5ee3c5c9b84523e05d123345daa17748ef220057193a1d7",
+      "run_id": "renewal-smoke-claude-1789098050695",
+      "run_digest": "sha256:a5952b2dcf82c891168b695826ca2c653fff6c68831c080fda4c489e724ce088",
       "worker_identity": "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
       "reviewer_identity": "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057",
-      "reviewer_request_digest": "sha256:d2b05c31d67ad1b7840e3c5f0e522157bfbabb551592520ea2788c59ab2e906f",
-      "reviewer_execution_digest": "sha256:2dd28c2a5242ef5a496917d660f754507493507e44fb99bed57f89de1f2a949e",
+      "reviewer_request_digest": "sha256:04ab910ec33600e05df3999d876b902b3c5c09be6571e0acfff0f76cf9aa1cd1",
+      "reviewer_execution_digest": "sha256:59edd561168ec212fa500bb8a20268631989c7ca20fbcd48d7fdd8639ee6bf12",
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
       "fresh_artifact_only_context": true
     },
     {
-      "run_id": "claude-haiku-1789006119985",
-      "run_digest": "sha256:4c5724d9d898dc5c239b649e4bff79e43766fadd3f550c7479f626805fe5ccd7",
+      "run_id": "renewal-smoke-claude-haiku-1789098012388",
+      "run_digest": "sha256:3fe9a32c35718840d79a0f17c912277a909639b21c0710ad26db3ac3037af650",
       "worker_identity": "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324",
       "reviewer_identity": "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057",
-      "reviewer_request_digest": "sha256:c2d588d728ef2fbd7524f6588cdfba33cfffc4620655c0bd8b9ec659b601ac5b",
-      "reviewer_execution_digest": "sha256:63a9d1892694f904f55826ccdb5575289b795c79dbfcf3f317b038705f0c73bc",
-      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "reviewer_request_digest": "sha256:71a3688524dd342734ffa44f7f0f32665584f3d28042646af71988f47e9229c0",
+      "reviewer_execution_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a",
+      "artifact_digest": "sha256:643672e68a3c3efa1e9ccd5b4f5a70665431d3477087b7322b9dbf5ef4de63bb",
       "fresh_artifact_only_context": true
     }
   ]

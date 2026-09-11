@@ -1,0 +1,57 @@
+{
+  "schema_version": "frontier_historical_preservation.v1",
+  "source_revision": "a7966cc",
+  "status": "preserved",
+  "files": [
+    {
+      "original_path": "data/routing/host-observations.json",
+      "archived_path": "data/routing/archive/2026-09-10/host-observations.json",
+      "content_digest": "sha256:6bb0bdcb3f2582d8f2840cb2d9321f86508918b163e6273e18ab84ec40bb63ef",
+      "git_blob_sha": "52da1a28a1e3748d53fdd39cb8c3ce5c946d9281"
+    },
+    {
+      "original_path": "data/routing/medium-smoke-audit.json",
+      "archived_path": "data/routing/archive/2026-09-10/medium-smoke-audit.json",
+      "content_digest": "sha256:9c63bf80d9ccded85c0229413f3639a051aae946d8c8fab5e91644bb5cc3ee69",
+      "git_blob_sha": "8e185880a5d3b418e0a7ed500819842f0b9a07d9"
+    },
+    {
+      "original_path": "data/routing/frontier-targets.json",
+      "archived_path": "data/routing/archive/2026-09-10/frontier-targets.json",
+      "content_digest": "sha256:122cacd1e305a96405897a9a86e6f8f1c74d2f7c227b4e93ed1c2ea87bb69b26",
+      "git_blob_sha": "dab8b039ccbdb2cd1c169c3357d638d764179836"
+    },
+    {
+      "original_path": "data/routing/frontier-probes.json",
+      "archived_path": "data/routing/archive/2026-09-10/frontier-probes.json",
+      "content_digest": "sha256:d277a7eb5ff71ae613fa68251c1716ae56c3dc9fa7f8c1d1f5cefe3dba525b30",
+      "git_blob_sha": "cddbc580b6e2bfb1cf5ce4eb29d3b90602260b55"
+    },
+    {
+      "original_path": "data/routing/frontier-identity-evidence.json",
+      "archived_path": "data/routing/archive/2026-09-10/frontier-identity-evidence.json",
+      "content_digest": "sha256:ae1cbae45b2a4b5348ad095c6e787fe8f85db94efded0d00728589b313e4495d",
+      "git_blob_sha": "454e65905413908b24916d14b4256bf6cc41839f"
+    },
+    {
+      "original_path": "data/routing/frontier-probe-reviews.json",
+      "archived_path": "data/routing/archive/2026-09-10/frontier-probe-reviews.json",
+      "content_digest": "sha256:cd83ed61b934ec2fb99457302f30b1949b18acb0d9fd5898f5fc144f04dc92e8",
+      "git_blob_sha": "f9942e0f7e3f4c4ffcc98325ca1388c69a9de7c7"
+    },
+    {
+      "original_path": "data/routing/installed-acceptance.json",
+      "archived_path": "data/routing/archive/2026-09-10/installed-acceptance.json",
+      "content_digest": "sha256:d3b7b497fc47f804c0d513dc3061bfc3499453c6185387ab6db81e92ee72da74",
+      "git_blob_sha": "96bd85b9c5904b226474e8cb215f22811004ceea"
+    },
+    {
+      "original_path": "data/routing/frontier-reviewer-evaluations.json",
+      "archived_path": "data/routing/archive/2026-09-10/frontier-reviewer-evaluations.json",
+      "content_digest": "sha256:93855e6177026fb3283302925bb81e484188873e40339353b1f7813eab985228",
+      "git_blob_sha": "1b8838c54abb8e7a23a97b27d9acdea08c810c79"
+    }
+  ],
+  "preserved_at": "2026-09-11T04:20:31.066Z",
+  "qualification_authority": false
+}

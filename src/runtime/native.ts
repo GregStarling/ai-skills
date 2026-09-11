@@ -130,3 +130,5 @@ export async function runNative(input: NativeInput): Promise<NativeExecution> {
   writeFileSync(join(output, "receipt.json"), `${canonicalJson(result)}\n`, { flag: "wx" });
   return result;
 }
+
+export { captureIdentityEnvironment } from './identity-assurance.js';

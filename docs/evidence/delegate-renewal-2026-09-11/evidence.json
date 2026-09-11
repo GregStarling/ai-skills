@@ -1,0 +1,3527 @@
+{
+  "schema_version": "delegate_renewal_evidence.v1",
+  "published_at": "2026-09-11T04:20:30.746Z",
+  "authorization": "docs/delegate-completion-authorization-2026-09-11.md",
+  "qualification_authority": false,
+  "scope": "Full renewal of existing routes plus calibrated low-risk mechanical reviewers; no expansion or wire change.",
+  "cases": [
+    {
+      "run_id": "renewal-installed-claude-tinybug",
+      "host": "claude",
+      "case": "tinybug",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/result.json",
+        "digest": "sha256:d6d2cc6a69737963c0afbea406019915c4cab262340ec473442db3f7d770c1b4"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:a0db0275eeb7fdfda81e8a3e06cb6b1ffa86516b25724281fc66780e8518ddc9"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/maintainer-review-final.json",
+        "digest": "sha256:6fbbc25ae6d5549ee411d9f0acf670c4e67029378b09362cb1b036d2493f25d6"
+      },
+      "started_at": "2026-09-11T03:38:33.436Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Final quantity expression defaults only null/undefined and preserves explicit zero and the reduce initial zero. Root inspected the saved final source; independent grading passes. Root selected actual final Read/cat events, correcting the collector proposal tool IDs. Any earlier rejected review remains preserved and is superseded by this final review.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_013UNfkLTbACn1iHKPdnNUpF"
+      ],
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:b0a019aa6b6d8115e330f949cf055a6a838464a49813605b349eaad27f136b5a"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:38:33.436Z",
+            "ended_at": "2026-09-11T03:40:51.563Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 354,
+              "outputTokens": 9897,
+              "cacheReadInputTokens": 362587,
+              "cacheCreationInputTokens": 34870,
+              "webSearchRequests": 0,
+              "costUSD": 0.7791885000000001,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 2629,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:39:48.850Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01SRTbq8WNgC7cV7SKxzu82k",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:39:26.881Z",
+            "command_digest": "sha256:d120440b0038e10a9795daad7187c19a344c4684d10c70106776c2057dea801d",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_014areQncLQjKmn5kjQ8GVCS",
+            "command": "start",
+            "at": "2026-09-11T03:38:49.628Z"
+          },
+          {
+            "id": "toolu_01YFvBvmFgYymmigy8Gqk8vs",
+            "command": "lookup",
+            "at": "2026-09-11T03:38:57.432Z"
+          },
+          {
+            "id": "toolu_01Bd8SKQCyNbN8LsqndyqSpQ",
+            "command": "capture",
+            "at": "2026-09-11T03:39:56.654Z"
+          },
+          {
+            "id": "toolu_01WAJ96zjtC2ZLgd3TdoF1Qy",
+            "command": "finish",
+            "at": "2026-09-11T03:40:35.029Z"
+          }
+        ],
+        "task_wall_clock_ms": 121593,
+        "helper_tail_ms": 16534,
+        "duration_ms": 138127,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 354,
+            "outputTokens": 9897,
+            "cacheReadInputTokens": 362587,
+            "cacheCreationInputTokens": 34870,
+            "webSearchRequests": 0,
+            "costUSD": 0.7791885000000001,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 2629,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Child Edit events unavailable; worker attribution is an inference from the sole source-writing child launch between failing and passing artifact states. Parent trace contains no source edit. This is not direct child Edit-tool proof.",
+        "Child modelUsage is host-reported usage identity; observed_message_models stays empty. Served effort remains unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-mechanical",
+      "host": "claude",
+      "case": "mechanical",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/result.json",
+        "digest": "sha256:43d60f3ea141caa44af5c96ca0c5110d5b080cbab577944d3ca7f2b233e6f108"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:c6d8f7e3dba34a50a302908ac0981bbbabf5d5590ba25e78107d3a1c27015492"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/maintainer-review-final.json",
+        "digest": "sha256:e5c49df56b09a4622debfc35bc23d3e8193c1ee2a8078d5a9307d905b93b2f81"
+      },
+      "started_at": "2026-09-11T03:40:51.692Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Both export and sole import/call use normalizeSlug; original trim/lowercase/whitespace replacement behavior is preserved. Root inspected the saved final source; independent grading passes. Root selected actual final Read/cat events, correcting the collector proposal tool IDs. Any earlier rejected review remains preserved and is superseded by this final review.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01Q9FB3pjQ3i6tbsWB7A4Xzb",
+        "toolu_014apYRMQcRXSmdbSjiyY8kR"
+      ],
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:84618f1f6e893c2772997536a02ae150e869d693c5b04da6bc9e23e6fa21891d"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:40:51.692Z",
+            "ended_at": "2026-09-11T03:43:38.904Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 226,
+              "outputTokens": 13257,
+              "cacheReadInputTokens": 237417,
+              "cacheCreationInputTokens": 39251,
+              "webSearchRequests": 0,
+              "costUSD": 0.8437735000000001,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 5058,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:42:20.977Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_018LyveTJrm1VqnLHcrx1Kss",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:42:04.949Z",
+            "command_digest": "sha256:a98b07af8b028a9d4b925587eaba7411e7125ad59f799cfe52afad3a3a2c4007",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_014ozxfja596Goxkm7dMn5RL",
+            "command": "start",
+            "at": "2026-09-11T03:41:07.669Z"
+          },
+          {
+            "id": "toolu_01D99txXeUqJc7fbDSFSUxJj",
+            "command": "lookup",
+            "at": "2026-09-11T03:41:22.454Z"
+          },
+          {
+            "id": "toolu_01PWrgnF8ykrz5pnZ7MEU67f",
+            "command": "capture",
+            "at": "2026-09-11T03:42:45.717Z"
+          },
+          {
+            "id": "toolu_01CpMZbeB6ZL5E9fv4sKTLiq",
+            "command": "finish",
+            "at": "2026-09-11T03:43:23.516Z"
+          }
+        ],
+        "task_wall_clock_ms": 151824,
+        "helper_tail_ms": 15388,
+        "duration_ms": 167212,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 226,
+            "outputTokens": 13257,
+            "cacheReadInputTokens": 237417,
+            "cacheCreationInputTokens": 39251,
+            "webSearchRequests": 0,
+            "costUSD": 0.8437735000000001,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 5058,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Child Edit events unavailable; worker attribution is an inference from the sole source-writing child launch between failing and passing artifact states. Parent trace contains no source edit. This is not direct child Edit-tool proof.",
+        "Child modelUsage is host-reported usage identity; observed_message_models stays empty. Served effort remains unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-backend",
+      "host": "claude",
+      "case": "backend",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/result.json",
+        "digest": "sha256:f922e3f9d6e4a8e369cd42775898050d6216a761079545c13cb333e8fca1ce87"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:e7d1973fbad234f3793762042acb7108d62400cb9ad34b767c74c6ede116c711"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/maintainer-review-final.json",
+        "digest": "sha256:c396f9d14d4d619fc526176a6300a36148b0aa666c55f16c5bd84a4d3bc83229"
+      },
+      "started_at": "2026-09-11T03:43:39.040Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "paginate validates positive integer bounds, slices without mutation, returns the specified totals and handles empty and beyond-last pages. Root inspected the saved final source; independent grading passes. Root selected actual final Read/cat events, correcting the collector proposal tool IDs. Any earlier rejected review remains preserved and is superseded by this final review.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01V3SFmNaSPNhZXjoCCHMFz9"
+      ],
+      "artifact_digests": {
+        "paginate.mjs": "sha256:331662c17b8f4be2983a96fb731170d60d524f346d80862fae7d8d15d93c60f9"
+      },
+      "receipt_digests": [
+        "sha256:67dc7ca38de0f0334d460db30affb36c89ba2b329df7a1fe40dc41ab3169fc58"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:43:39.040Z",
+            "ended_at": "2026-09-11T03:46:01.434Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 322,
+              "outputTokens": 9442,
+              "cacheReadInputTokens": 314932,
+              "cacheCreationInputTokens": 32687,
+              "webSearchRequests": 0,
+              "costUSD": 0.7219960000000001,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 2294,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:44:56.619Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01DbezfNURoMHhnuyMuJiDN7",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:44:26.770Z",
+            "command_digest": "sha256:75455334730bd7266b1309572fd4a2dc52365bfb8d7be0eaa5a23f1dfa03cdab",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_01J1phBw41GjeRDnZtKrMcxX",
+            "command": "start",
+            "at": "2026-09-11T03:43:51.387Z"
+          },
+          {
+            "id": "toolu_01GXevDPLbE2t1AjgBcLuDPm",
+            "command": "lookup",
+            "at": "2026-09-11T03:44:01.703Z"
+          },
+          {
+            "id": "toolu_012SdHjBaCLj9Xu2F8vqyDzp",
+            "command": "capture",
+            "at": "2026-09-11T03:45:22.145Z"
+          },
+          {
+            "id": "toolu_0153VVXeAddZV1VAFPR3mtGR",
+            "command": "finish",
+            "at": "2026-09-11T03:45:45.032Z"
+          }
+        ],
+        "task_wall_clock_ms": 125992,
+        "helper_tail_ms": 16402,
+        "duration_ms": 142394,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 322,
+            "outputTokens": 9442,
+            "cacheReadInputTokens": 314932,
+            "cacheCreationInputTokens": 32687,
+            "webSearchRequests": 0,
+            "costUSD": 0.7219960000000001,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 2294,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Child Edit events unavailable; worker attribution is an inference from the sole source-writing child launch between failing and passing artifact states. Parent trace contains no source edit. This is not direct child Edit-tool proof.",
+        "Child modelUsage is host-reported usage identity; observed_message_models stays empty. Served effort remains unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/result.json",
+        "digest": "sha256:4246bffab19443761d505b60dde1d5c8aaac1b2c2a427980a76a3b9aad1cb346"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:9832eee7722365311be825c9fae5ff6b8824a6a9c90fdc3a63244f2903cce4ed"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/maintainer-review-final.json",
+        "digest": "sha256:3e887ac4b467b57e4dfec79b6a35804184f210a2820980a014a470285199d9c4"
+      },
+      "started_at": "2026-09-11T03:46:01.539Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "INCOMPLETE",
+      "reason": "INCOMPLETE: coordinator ended while the background worker was stopped. The saved artifact passes structural and later rendered review, but no valid matched receipt or final coordinator artifact inspection exists. Separate rendered review grants no replacement lifecycle acceptance.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [],
+      "artifact_digests": {
+        "index.html": "sha256:eadd54ec90fff539253509fc2bdbb8172db236eaf6514bf447dbfbc5facb795c"
+      },
+      "receipt_digests": [],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:46:01.539Z",
+            "ended_at": "2026-09-11T03:49:49.548Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 226,
+              "outputTokens": 19755,
+              "cacheReadInputTokens": 238270,
+              "cacheCreationInputTokens": 44049,
+              "webSearchRequests": 0,
+              "costUSD": 1.0546299999999997,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 11006,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:49:49.514Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01QroocaXjViez6ZQonsGFiY",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:49:25.734Z",
+            "command_digest": "sha256:9e6eef960521a2fd13e80dfe0f057474755896f64f2cf23e088f7cd1ba58604f",
+            "background_task_id": "b96v4kq3o",
+            "completion_status": "stopped"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_019qvBDUaFfGhxdg8gBcNCPU",
+            "command": "start",
+            "at": "2026-09-11T03:46:17.475Z"
+          },
+          {
+            "id": "toolu_013X4fdM5RCMmQKnaZzuhEGn",
+            "command": "lookup",
+            "at": "2026-09-11T03:46:23.248Z"
+          }
+        ],
+        "task_wall_clock_ms": 228009,
+        "helper_tail_ms": 0,
+        "duration_ms": 228009,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 226,
+            "outputTokens": 19755,
+            "cacheReadInputTokens": 238270,
+            "cacheCreationInputTokens": 44049,
+            "webSearchRequests": 0,
+            "costUSD": 1.0546299999999997,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 11006,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Claude child summary lacks direct Edit events; any worker attribution is an exclusive-child process inference, not child Edit-tool proof."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-hardbug",
+      "host": "claude",
+      "case": "hardbug",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/result.json",
+        "digest": "sha256:e5bc1d7926615cd8a11e9fc1119d92a6cd926455c799e951f930ad2d00404141"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:3b3e5c1b6d3bd4771b1e37d77d3bc0ebba9484f62db0e880d3bc9e41140bfeee"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/maintainer-review-final.json",
+        "digest": "sha256:442085df111cf23c976a24d02bdda3d1ac06ce3765709afd222a6c4fc03d9a34"
+      },
+      "started_at": "2026-09-11T03:49:49.648Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected search.mjs: only the latest request publishes and returns a result; stale successes and stale failures resolve undefined; the newest failure still propagates. Deterministic external checks and final coordinator Read pass.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01MgdREv2focvJ71kyxJF7hA"
+      ],
+      "artifact_digests": {
+        "search.mjs": "sha256:e84f2ab703270a14ccfa5525fb3221bd624dbb0d9c10e1e46e2ef7bf7a9b8e32"
+      },
+      "receipt_digests": [
+        "sha256:4fa0cb5ab2a7c8b6ccfbc0decfa07843df5caa5b0edc76c7610ae3f282d5f69e"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:49:49.648Z",
+            "ended_at": "2026-09-11T03:52:54.137Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 322,
+              "outputTokens": 12611,
+              "cacheReadInputTokens": 352968,
+              "cacheCreationInputTokens": 38173,
+              "webSearchRequests": 0,
+              "costUSD": 0.8750989999999998,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 3435,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:51:34.996Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01KCihcfvEYQiNH1Dw2Gb6Uk",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:51:14.566Z",
+            "command_digest": "sha256:6f190c0d6dcee6b75c59703629d4a142a48e6942ba353fb4f0590edb9b09d63e",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_01D1VA7nME34CzY5CYVwmjmV",
+            "command": "start",
+            "at": "2026-09-11T03:50:01.751Z"
+          },
+          {
+            "id": "toolu_015ar5ZmKrsBQCYnZ41ePs4f",
+            "command": "lookup",
+            "at": "2026-09-11T03:50:25.873Z"
+          },
+          {
+            "id": "toolu_01DRUD86jqwS2fwKfWhSXPNo",
+            "command": "capture",
+            "at": "2026-09-11T03:51:50.397Z"
+          },
+          {
+            "id": "toolu_015AtPQQdRNRgRqhf67i1imX",
+            "command": "finish",
+            "at": "2026-09-11T03:52:33.727Z"
+          }
+        ],
+        "task_wall_clock_ms": 164079,
+        "helper_tail_ms": 20410,
+        "duration_ms": 184489,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 322,
+            "outputTokens": 12611,
+            "cacheReadInputTokens": 352968,
+            "cacheCreationInputTokens": 38173,
+            "webSearchRequests": 0,
+            "costUSD": 0.8750989999999998,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 3435,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Claude child summary lacks direct Edit events; any worker attribution is an exclusive-child process inference, not child Edit-tool proof."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-multicomponent",
+      "host": "claude",
+      "case": "multicomponent",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/result.json",
+        "digest": "sha256:b749457523fe0995e6259e30c560ad2b86a9dc37516d79d973a4c45abe345885"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:d11c15e35f5d6d8abb318e8d30eea5595a49f17ac3ed48d4daeeb52820d64d98"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:5a0efed053fc902f6d94b5114f96e876d504aa5a8d05d9aae8445cc5f1a0f4c6"
+      },
+      "started_at": "2026-09-11T03:52:54.254Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected all three final modules: validation, trimming, immutable addition and normalized summary satisfy the settled contract. Matched receipt and all final coordinator Reads pass.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_011vgtHyDjwCoTLzMxt2K5vF",
+        "toolu_01Vpzw9GcsABYyX8yoUsoHVm",
+        "toolu_018k8s8XdFSMpGb1dmzBwWR5"
+      ],
+      "artifact_digests": {
+        "task.mjs": "sha256:3618fb0fef0bcc5d3aff6ea4583ce0d0018d4e0305328dda638e7e0bbcb547e8",
+        "service.mjs": "sha256:b3f2ded56613f34217abc53b3e9b5b4273d908e949988a22fdada2095cd8325c",
+        "view.mjs": "sha256:957d0db5692eca350282d18b63afd76c5c3ce2ec24b3fcc3ecdd8f431cc2278c"
+      },
+      "receipt_digests": [
+        "sha256:c2af86f137274d3126b12b18436b4757dd2a04a0009be6205a96ed92d223519e"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T03:52:54.254Z",
+            "ended_at": "2026-09-11T03:55:48.606Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 322,
+              "outputTokens": 12321,
+              "cacheReadInputTokens": 351921,
+              "cacheCreationInputTokens": 39439,
+              "webSearchRequests": 0,
+              "costUSD": 0.8799855,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 2956,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T03:54:44.320Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01ALuin8TVfVBksW8Bni5RWB",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T03:54:13.420Z",
+            "command_digest": "sha256:89e0e3b885f510e292f8bc0366bca6130a11afbef217563ce8e826be696eaa12",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_015hKiAycLt6anZv1yKzZv1G",
+            "command": "start",
+            "at": "2026-09-11T03:53:05.730Z"
+          },
+          {
+            "id": "toolu_01K48c9SRY1tdDyFHZxTc1Ja",
+            "command": "lookup",
+            "at": "2026-09-11T03:53:19.526Z"
+          },
+          {
+            "id": "toolu_01C2EGY39HNrhPLaRjwNpV8t",
+            "command": "capture",
+            "at": "2026-09-11T03:54:51.914Z"
+          },
+          {
+            "id": "toolu_018YY7P1pDcNBTCDtDdMPwKN",
+            "command": "finish",
+            "at": "2026-09-11T03:55:27.869Z"
+          }
+        ],
+        "task_wall_clock_ms": 153615,
+        "helper_tail_ms": 20737,
+        "duration_ms": 174352,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 322,
+            "outputTokens": 12321,
+            "cacheReadInputTokens": 351921,
+            "cacheCreationInputTokens": 39439,
+            "webSearchRequests": 0,
+            "costUSD": 0.8799855,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 2956,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Worker attribution is an inference from a sole successful child process, before/after artifact checks and no coordinator source edits; child summary does not expose Edit events."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/result.json",
+        "digest": "sha256:78948d90ea33e92a301f25e474c47c3728fc0ae41754763958260586d2843e2c"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:ddf4a97fec9b7f67b755368d11be7713ae2572603ea52d36c0065361d03c3c07"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/maintainer-review-final.json",
+        "digest": "sha256:5238c3b33ed06822916fef559032430914cebbaad6f804c829761f4d9fc92464"
+      },
+      "started_at": "2026-09-11T04:09:16.800Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "INCOMPLETE",
+      "reason": "INCOMPLETE: coordinator ended after starting two background Haiku workers; both were stopped at shutdown. All three saved artifacts remain the original stubs, the external grader fails, no final artifact inspection or integration occurred, and both receipt files are empty invalid JSON.",
+      "external_grader_passed": false,
+      "executions": 3,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 2,
+      "inspection_tool_ids": [],
+      "artifact_digests": {
+        "store.mjs": "sha256:8d18ea1a51f2c1acef35ecb29c09643020612d181d0d2feef584f471e036f10c",
+        "view.mjs": "sha256:b70afa6024677ef1ed84fe9583bb5cc045f05acb7d7dcafa329292912e77af93",
+        "app.mjs": "sha256:d58c91ba3ff301f11ce9f95d0733601ed930113edce8f5b08d4da454025a0bff"
+      },
+      "receipt_digests": [],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T04:09:16.800Z",
+            "ended_at": "2026-09-11T04:12:02.289Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 162,
+              "outputTokens": 13896,
+              "cacheReadInputTokens": 161810,
+              "cacheCreationInputTokens": 40393,
+              "webSearchRequests": 0,
+              "costUSD": 0.8330449999999999,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 5993,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T04:12:02.247Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01UYTovPrKtceR8ipYdeQteR",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T04:11:43.414Z",
+            "command_digest": "sha256:71dc382ab3808f04b28a0ee1e155ebc38a3283c2f66b8307170ca3747f0bf02c",
+            "background_task_id": "bwj85a8bq",
+            "completion_status": "stopped"
+          },
+          {
+            "index": 2,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T04:12:02.248Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01753QsgRx4b6BH6Qopi3jJM",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T04:11:53.669Z",
+            "command_digest": "sha256:d9bbd10f20b9f681426029955d754483510950dc88588c1a2cb035d2d2747207",
+            "background_task_id": "bxm0x2j2v",
+            "completion_status": "stopped"
+          }
+        ],
+        "executions": 3,
+        "reported_execution_lower_bound": 3,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_01YWoFs2JAVsCUSp42qW6CKa",
+            "command": "start",
+            "at": "2026-09-11T04:09:34.572Z"
+          },
+          {
+            "id": "toolu_01UdbokU5UtXLp3B3zezTL6R",
+            "command": "lookup",
+            "at": "2026-09-11T04:09:45.506Z"
+          },
+          {
+            "id": "toolu_01KniXFKL1ktPdfkv6nzPiW2",
+            "command": "lookup",
+            "at": "2026-09-11T04:09:47.438Z"
+          }
+        ],
+        "task_wall_clock_ms": 165489,
+        "helper_tail_ms": 0,
+        "duration_ms": 165489,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 162,
+            "outputTokens": 13896,
+            "cacheReadInputTokens": 161810,
+            "cacheCreationInputTokens": 40393,
+            "webSearchRequests": 0,
+            "costUSD": 0.8330449999999999,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 5993,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "The two configured worker launches show intended decomposition only; no successful worker delivery or frontier integration is claimed.",
+        "Started worker processes count even though no artifact was completed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-tinybug",
+      "host": "codex",
+      "case": "tinybug",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/result.json",
+        "digest": "sha256:0f5288ed4ba21fe39cb3c1921f072b6b7d69b6188e4ed5b293394f2b1d8af96c"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:570647cdd9b773cbec8192cd967e7d1ee0d9c16ffc761c5cde2dfec9ed9507e9"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/maintainer-review-final.json",
+        "digest": "sha256:6f89e24b2b258d599a4b2f55d832f31046ac32470e2ff75fcb9ea8a026179613"
+      },
+      "started_at": "2026-09-11T03:38:41.157Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Final quantity expression defaults only null/undefined and preserves explicit zero and the reduce initial zero. Root inspected the saved final source; independent grading passes. Root selected actual final Read/cat events, correcting the collector proposal tool IDs. Any earlier rejected review remains preserved and is superseded by this final review.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_24"
+      ],
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:30b4900fdab86e624c5af0b06ed49530a4bd990861ea77783be792cb1ea935d4"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T03:38:41.157Z",
+            "ended_at": "2026-09-11T03:42:24.387Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 528249,
+              "cached_input_tokens": 489856,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 9393,
+              "reasoning_output_tokens": 2665
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "gpt-5.5",
+            "model_source": "receipt_configured",
+            "ended_at": "2026-09-11T03:42:15.068Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_16",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T03:39:59.544Z",
+            "receiver_thread_ids": [
+              "01a08e8c-fcb9-7802-8487-75968134e3dc"
+            ],
+            "prompt_digest": "sha256:6d69f08c7df2c9409317e9788b24082bd249af80dbb068c5e448b1d4b3f6f86f",
+            "usage_scope": "thread_total_child_inclusion_unknown",
+            "receipt_binding": "single_child_and_single_attempt_in_matched_run",
+            "receipt_role": "worker"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_2",
+            "command": "start",
+            "at": "2026-09-11T03:38:56.807Z"
+          },
+          {
+            "id": "item_12",
+            "command": "lookup",
+            "at": "2026-09-11T03:39:30.004Z"
+          },
+          {
+            "id": "item_14",
+            "command": "lookup",
+            "at": "2026-09-11T03:39:39.568Z"
+          },
+          {
+            "id": "item_26",
+            "command": "capture",
+            "at": "2026-09-11T03:41:00.236Z"
+          },
+          {
+            "id": "item_38",
+            "command": "finish",
+            "at": "2026-09-11T03:42:06.547Z"
+          }
+        ],
+        "task_wall_clock_ms": 205390,
+        "helper_tail_ms": 17840,
+        "duration_ms": 223230,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native turn_context explicitly records configured gpt-5.5/low. Served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-mechanical",
+      "host": "codex",
+      "case": "mechanical",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/result.json",
+        "digest": "sha256:88b27b549716de0418ac26300265a54bf98b3a60791134792cd6d9e2d7b3920e"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:203e5d83b0c478c495d9bcaf1369f46a47862c364a00b1c7d242768d0d8e23b1"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/maintainer-review-final.json",
+        "digest": "sha256:500d1a2b071f2e2cbb6e0e9792045591bc85542119e2dfebc6e1f21b8fc72cf1"
+      },
+      "started_at": "2026-09-11T03:42:24.521Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Both export and sole import/call use normalizeSlug; original trim/lowercase/whitespace replacement behavior is preserved. Root inspected the saved final source; independent grading passes. Root selected actual final Read/cat events, correcting the collector proposal tool IDs. Any earlier rejected review remains preserved and is superseded by this final review.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "accounting_reconciliation": null,
+      "failed_launches": 1,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_28",
+        "item_29"
+      ],
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:f12ea4b84c01fbfef3cba83cd1b5c5077c514b17eae7275a73a67dc4f8a1f3a2"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T03:42:24.521Z",
+            "ended_at": "2026-09-11T03:47:43.580Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 814555,
+              "cached_input_tokens": 739328,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 13232,
+              "reasoning_output_tokens": 4305
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": null,
+            "model_source": "unknown",
+            "ended_at": "2026-09-11T03:47:20.916Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_24",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T03:44:19.188Z",
+            "receiver_thread_ids": [
+              "01a08e90-f2f4-7b90-9feb-d8b60ee7b43c"
+            ],
+            "prompt_digest": "sha256:60bb144c8ebc8fab23ae51d5afe38924a9f30e829ce43c4c8e05c10bb8704429",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 2,
+            "role": "worker",
+            "model": null,
+            "model_source": "agent_asserted_receipt",
+            "ended_at": null,
+            "failed_launch": true,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "mechanism": "receipt_reported_attempt",
+            "budget_only": true,
+            "started_at": null
+          }
+        ],
+        "executions": 3,
+        "reported_execution_lower_bound": 3,
+        "failed_launches": 1,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_13",
+            "command": "start",
+            "at": "2026-09-11T03:43:11.598Z"
+          },
+          {
+            "id": "item_16",
+            "command": "lookup",
+            "at": "2026-09-11T03:43:27.573Z"
+          },
+          {
+            "id": "item_22",
+            "command": "lookup",
+            "at": "2026-09-11T03:44:08.941Z"
+          },
+          {
+            "id": "item_32",
+            "command": "capture",
+            "at": "2026-09-11T03:45:30.032Z"
+          },
+          {
+            "id": "item_46",
+            "command": "finish",
+            "at": "2026-09-11T03:47:12.708Z"
+          }
+        ],
+        "task_wall_clock_ms": 288187,
+        "helper_tail_ms": 30872,
+        "duration_ms": 319059,
+        "model_counters": null,
+        "limitations": [
+          "Charged 1 additional matched-receipt attempts absent from host tool events; agent-asserted budget evidence, not runtime identity.",
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native turn_context explicitly records configured gpt-5.5/low. Served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-backend",
+      "host": "codex",
+      "case": "backend",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/result.json",
+        "digest": "sha256:f70a4df6b457fff0d8f43029a65769ca8e27a1adb6ccb19441cebce787a941e9"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:9411bb3b7cf22db8160e8dadb2776652e3e9eead0f903b0c714058751e570ad9"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/maintainer-review-final.json",
+        "digest": "sha256:e9c1e57e3ec85191c669805e9c61a9fa3488a16f7ea4129a357bd29f00ef8b44"
+      },
+      "started_at": "2026-09-11T03:47:43.743Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected paginate.mjs: positive integer validation, nonmutating slicing, total/totalPages and empty/beyond-last behavior satisfy the settled contract. External checks and exact final coordinator cat pass.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_59"
+      ],
+      "artifact_digests": {
+        "paginate.mjs": "sha256:1e101fc08303c7851cb0281f241141b8056aa0b8437ded63a898e7cc9247714a"
+      },
+      "receipt_digests": [
+        "sha256:c5691576b1b142a9b8caddfa1dc2f2e82ba836e3c46e2b7a05c0d4b42484cded"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T03:47:43.743Z",
+            "ended_at": "2026-09-11T03:52:41.342Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 1313770,
+              "cached_input_tokens": 1219968,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 12446,
+              "reasoning_output_tokens": 2798
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "gpt-5.5",
+            "model_source": "receipt_configured",
+            "ended_at": "2026-09-11T03:52:14.139Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_32",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T03:49:54.008Z",
+            "receiver_thread_ids": [
+              "01a08e96-0ed8-7c93-b967-58735c70b0e2"
+            ],
+            "prompt_digest": "sha256:2240fbab477e880b67a723afffc2877cf9e1346002499e7add4d2688a71c9fd2",
+            "usage_scope": "thread_total_child_inclusion_unknown",
+            "receipt_binding": "single_child_and_single_attempt_in_matched_run",
+            "receipt_role": "worker"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_2",
+            "command": "start",
+            "at": "2026-09-11T03:47:58.128Z"
+          },
+          {
+            "id": "item_13",
+            "command": "lookup",
+            "at": "2026-09-11T03:48:43.348Z"
+          },
+          {
+            "id": "item_26",
+            "command": "lookup",
+            "at": "2026-09-11T03:49:32.394Z"
+          },
+          {
+            "id": "item_43",
+            "command": "capture",
+            "at": "2026-09-11T03:50:55.789Z"
+          },
+          {
+            "id": "item_50",
+            "command": "finish",
+            "at": "2026-09-11T03:52:03.346Z"
+          }
+        ],
+        "task_wall_clock_ms": 259603,
+        "helper_tail_ms": 37996,
+        "duration_ms": 297599,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native child turn_context proves configured gpt-5.5/low, not served effort. Child patch call_H2GnSw4GynzTftozLOKI5toq is preserved."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-ui",
+      "host": "codex",
+      "case": "ui",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/result.json",
+        "digest": "sha256:a38a1468baf6d5781920f2234a450b014f01a6ce4bf15199de0a2bf1c11796e6"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:d5bc0bc209355865d864b817b32d3f494a060b57195bd682577726d0dc740644"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/maintainer-review-final.json",
+        "digest": "sha256:4d5393d208fce9661371b599c98bab60eec1091009dfb3870acedabda4ced535"
+      },
+      "started_at": "2026-09-11T03:52:41.459Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected actual index.html and both actual screenshots with view_image: labelled controls, semantic list, visible focus and readable layouts fit both widths. Matched receipt, final coordinator cat and external checks pass.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_27"
+      ],
+      "artifact_digests": {
+        "index.html": "sha256:9f33058fb5610648b2fd69ddb3d0d5c7a4d1d3fa2f47f3abe6add184fd441322"
+      },
+      "receipt_digests": [
+        "sha256:8f41c9d648ac519105d4052e9913a12d98396a7e7d48d09ffd2528dca0e6cbf1"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T03:52:41.459Z",
+            "ended_at": "2026-09-11T03:57:31.006Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 592689,
+              "cached_input_tokens": 551424,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 10708,
+              "reasoning_output_tokens": 3339
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "gpt-5.5",
+            "model_source": "receipt_configured",
+            "ended_at": "2026-09-11T03:57:13.438Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_23",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T03:53:58.754Z",
+            "receiver_thread_ids": [
+              "01a08e99-cae3-7622-ab14-789b6f86b55b"
+            ],
+            "prompt_digest": "sha256:737757d22d4491bf9b65b0c6c2200ccefbaed35df9a9b12278543d5863077eff",
+            "usage_scope": "thread_total_child_inclusion_unknown",
+            "receipt_binding": "single_child_and_single_attempt_in_matched_run",
+            "receipt_role": "worker"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_13",
+            "command": "start",
+            "at": "2026-09-11T03:53:16.429Z"
+          },
+          {
+            "id": "item_18",
+            "command": "lookup",
+            "at": "2026-09-11T03:53:33.128Z"
+          },
+          {
+            "id": "item_20",
+            "command": "lookup",
+            "at": "2026-09-11T03:53:40.670Z"
+          },
+          {
+            "id": "item_29",
+            "command": "capture",
+            "at": "2026-09-11T03:56:01.516Z"
+          },
+          {
+            "id": "item_39",
+            "command": "finish",
+            "at": "2026-09-11T03:56:51.901Z"
+          }
+        ],
+        "task_wall_clock_ms": 250442,
+        "helper_tail_ms": 39105,
+        "duration_ms": 289547,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native child configuration is gpt-5.5/low; served effort and served model are not independently exposed.",
+        "Fresh gpt-5.5/high reviewer returned ACCEPT, but its export omits image-tool events. Its claim of viewing images is not treated as raw image proof. Maintainer viewed actual screenshots independently."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-hardbug",
+      "host": "codex",
+      "case": "hardbug",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/result.json",
+        "digest": "sha256:bfb61ca37987bbfade38030d5912d59dc3a25c7a1d0ff0083a2587a497c8b656"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:a6108751debb22ed0251995a4f566c4e4c9fe6427b926fcb81f74ad945164f02"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/maintainer-review-final.json",
+        "digest": "sha256:2d5ad7a74d0265f0f21d1eda15ede953d7eb086233750243aff94f6303ef1f39"
+      },
+      "started_at": "2026-09-11T03:57:31.120Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected search.mjs: monotonic request identity suppresses stale resolution and rejection while latest rejection propagates. Final coordinator cat and external checks pass.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "accounting_reconciliation": null,
+      "failed_launches": 1,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_32"
+      ],
+      "artifact_digests": {
+        "search.mjs": "sha256:76e7686f32fecee62fcb9a2ede650cdae24badb13c8aa419f851260e26e1ade2"
+      },
+      "receipt_digests": [
+        "sha256:3dfd8d6abaf8272fbf8a2c4bd76ca2cb6a0e4acb8b92be9c6bde79e297bc92b7"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T03:57:31.120Z",
+            "ended_at": "2026-09-11T04:02:30.380Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 805461,
+              "cached_input_tokens": 740992,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 13203,
+              "reasoning_output_tokens": 3526
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": null,
+            "model_source": "unknown",
+            "ended_at": "2026-09-11T04:02:20.512Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_28",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T03:59:34.108Z",
+            "receiver_thread_ids": [
+              "01a08e9e-e8dd-7f23-aeb0-c254f2eab248"
+            ],
+            "prompt_digest": "sha256:b2985468c57a6d98d9be234c64e6ee75df4ea51b3763a034fe4b0079b78e8ea5",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 2,
+            "role": "worker",
+            "model": null,
+            "model_source": "agent_asserted_receipt",
+            "ended_at": null,
+            "failed_launch": true,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "mechanism": "receipt_reported_attempt",
+            "budget_only": true,
+            "started_at": null
+          }
+        ],
+        "executions": 3,
+        "reported_execution_lower_bound": 3,
+        "failed_launches": 1,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_5",
+            "command": "start",
+            "at": "2026-09-11T03:57:53.454Z"
+          },
+          {
+            "id": "item_13",
+            "command": "lookup",
+            "at": "2026-09-11T03:58:20.242Z"
+          },
+          {
+            "id": "item_24",
+            "command": "lookup",
+            "at": "2026-09-11T03:59:14.389Z"
+          },
+          {
+            "id": "item_26",
+            "command": "lookup",
+            "at": "2026-09-11T03:59:21.520Z"
+          },
+          {
+            "id": "item_39",
+            "command": "capture",
+            "at": "2026-09-11T04:00:48.219Z"
+          },
+          {
+            "id": "item_51",
+            "command": "finish",
+            "at": "2026-09-11T04:02:13.228Z"
+          }
+        ],
+        "task_wall_clock_ms": 282108,
+        "helper_tail_ms": 17152,
+        "duration_ms": 299260,
+        "model_counters": null,
+        "limitations": [
+          "Charged 1 additional matched-receipt attempts absent from host tool events; agent-asserted budget evidence, not runtime identity.",
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native child configuration is gpt-5.5/low; served effort and served model are not independently exposed."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-multicomponent",
+      "host": "codex",
+      "case": "multicomponent",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/result.json",
+        "digest": "sha256:33b33a5480dd2c8510a12199963f4cf38a4e11cdb022bb47aa74c4ea51921c5d"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:98b6ba36b862c781dfb47a0b11279ee478db88a3f45d6f8d8d07116b49d5172f"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:6d91b41eac0f7f1d203e6d817d3e0d823d145a74ce14218773a84102f6d33483"
+      },
+      "started_at": "2026-09-11T04:02:30.491Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "INCOMPLETE",
+      "reason": "INCOMPLETE: final modules pass source inspection and external checks, but finish returned RECEIPT_V3_MALFORMED. Only an unofficial coordinator receipt was written; no matched valid receipt exists. Withheld from acceptance.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "accounting_reconciliation": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/accounting-reconciliation.json",
+        "digest": "sha256:34c51252c5b9f8c633aebdcb13b89d1259bcec1eedf9ca3395eceeb82d660c31"
+      },
+      "failed_launches": 1,
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_33",
+        "item_34",
+        "item_35"
+      ],
+      "artifact_digests": {
+        "task.mjs": "sha256:1bc2f312ed59a00cc8f8ffa46172e8eb9cf5ba55577273222256a7c758ba30e0",
+        "service.mjs": "sha256:d6824654dd7aa00d1f5e9574018f9dcbec939f19d91e34658d6c362e043956fb",
+        "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+      },
+      "receipt_digests": [],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T04:02:30.491Z",
+            "ended_at": "2026-09-11T04:08:40.301Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 794789,
+              "cached_input_tokens": 739968,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 14657,
+              "reasoning_output_tokens": 4231
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": null,
+            "model_source": "unknown",
+            "ended_at": "2026-09-11T04:08:27.404Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_29",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T04:04:39.045Z",
+            "receiver_thread_ids": [
+              "01a08ea3-9006-7041-82ba-046d5b0ef358"
+            ],
+            "prompt_digest": "sha256:22916e3569a5c32b40d943a44b3942e9e3f835fb1a0a7d7903916769f69f553c",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_13",
+            "command": "start",
+            "at": "2026-09-11T04:03:16.077Z"
+          },
+          {
+            "id": "item_20",
+            "command": "lookup",
+            "at": "2026-09-11T04:03:35.863Z"
+          },
+          {
+            "id": "item_27",
+            "command": "lookup",
+            "at": "2026-09-11T04:04:26.427Z"
+          },
+          {
+            "id": "item_37",
+            "command": "capture",
+            "at": "2026-09-11T04:06:20.228Z"
+          },
+          {
+            "id": "item_48",
+            "command": "finish",
+            "at": "2026-09-11T04:07:41.933Z"
+          }
+        ],
+        "task_wall_clock_ms": 311442,
+        "helper_tail_ms": 58368,
+        "duration_ms": 369810,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Failed Spark CLI attempt recovered from native session is counted in a separate accounting reconciliation; raw result remains unchanged."
+      ]
+    },
+    {
+      "run_id": "renewal-installed-codex-fullproject",
+      "host": "codex",
+      "case": "fullproject",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/result.json",
+        "digest": "sha256:b4f38b0f72fb143b6522f6d74b850d9d4a7854ce029b9eb4f97f77b080872e89"
+      },
+      "trace": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:221904169160125fb0ffa63ed2a3408ed0124b122dba568129364b98e8b309c1"
+      },
+      "review": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/maintainer-review-final.json",
+        "digest": "sha256:a50c1067b44b6c4aa178a0e9bcdfa673fa9d088b63211cd999020c122867654c"
+      },
+      "started_at": "2026-09-11T04:12:47.350Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Root inspected all final source. Two actual gpt-5.5/low native workers own store.mjs and view.mjs separately; parent patch integrates app.mjs. Store validation, unique ids and copies, escaped semantic checkbox markup and app delegation satisfy the settled contract. Final coordinator cat of all three artifacts, external grader and two matched receipt files pass.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "accounting_reconciliation": null,
+      "failed_launches": 0,
+      "worker_count": 2,
+      "inspection_tool_ids": [
+        "item_40",
+        "item_42",
+        "item_44"
+      ],
+      "artifact_digests": {
+        "store.mjs": "sha256:b80f7e88666d3272ec989c1f2ddddd5dfa7514ab9229a0a07aab826dd9fa5bfa",
+        "view.mjs": "sha256:289b273c870e4ddb8989c473fe19eac24cdda01ce597731b5ecc3dab17b5f974",
+        "app.mjs": "sha256:b152b1fbc39b432cbf291bc229b18a4082c8859860a1d89b1842cb26c46e00a3"
+      },
+      "receipt_digests": [
+        "sha256:b453b30231939822f534163f05cc3287ff03c17be315cec18d129c84806221b2",
+        "sha256:bff889210443e5990e1356dedba36ac1bfad3d0f13700ebbe14b7d831586e945"
+      ],
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T04:12:47.350Z",
+            "ended_at": "2026-09-11T04:18:58.225Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 1412187,
+              "cached_input_tokens": 1345408,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 15807,
+              "reasoning_output_tokens": 4007
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": null,
+            "model_source": "unknown",
+            "ended_at": "2026-09-11T04:18:47.426Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_26",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T04:14:29.396Z",
+            "receiver_thread_ids": [
+              "01a08eac-9215-7612-a06b-a50d18a93e31"
+            ],
+            "prompt_digest": "sha256:90deb95089a451a078075f026ab71573c4d1b34cd9e76b75ecff63ff1d06676b",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 2,
+            "role": "worker",
+            "model": null,
+            "model_source": "unknown",
+            "ended_at": "2026-09-11T04:18:47.428Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_27",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T04:14:38.364Z",
+            "receiver_thread_ids": [
+              "01a08eac-b51d-7c13-9b52-22f062ada681"
+            ],
+            "prompt_digest": "sha256:40500ae2284ed7418af33a9399226e91a96718b98ae9405ecc0c6074567ddfe7",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          }
+        ],
+        "executions": 3,
+        "reported_execution_lower_bound": 3,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_17",
+            "command": "start",
+            "at": "2026-09-11T04:13:44.422Z"
+          },
+          {
+            "id": "item_19",
+            "command": "lookup",
+            "at": "2026-09-11T04:13:55.669Z"
+          },
+          {
+            "id": "item_46",
+            "command": "capture",
+            "at": "2026-09-11T04:16:12.783Z"
+          },
+          {
+            "id": "item_50",
+            "command": "capture",
+            "at": "2026-09-11T04:16:39.690Z"
+          },
+          {
+            "id": "item_67",
+            "command": "finish",
+            "at": "2026-09-11T04:18:24.082Z"
+          }
+        ],
+        "task_wall_clock_ms": 336732,
+        "helper_tail_ms": 34143,
+        "duration_ms": 370875,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "folder_digest": "sha256:c26f10f0133603809068886da893c2073d4765ce924cd1d9a89dc3e19c923317",
+      "pack_digest": "sha256:e6e532af2fe5f0b572b0c0cc338e837e60eda8fb03248981ce1ec47ef9622b3f",
+      "whole_project_route_authority": false,
+      "limitations": [
+        "Native configuration and patch events are preserved; served model/effort and child token counters remain unavailable.",
+        "Whole-project acceptance proves decomposition only and never contributes a whole-project worker route.",
+        "One malformed capture input failed before any check ran; the actual verification ran once afterward."
+      ]
+    }
+  ],
+  "accepted_case_ids": [
+    "renewal-installed-claude-tinybug",
+    "renewal-installed-claude-mechanical",
+    "renewal-installed-claude-backend",
+    "renewal-installed-claude-hardbug",
+    "renewal-installed-claude-multicomponent",
+    "renewal-installed-codex-tinybug",
+    "renewal-installed-codex-mechanical",
+    "renewal-installed-codex-backend",
+    "renewal-installed-codex-ui",
+    "renewal-installed-codex-hardbug",
+    "renewal-installed-codex-fullproject"
+  ],
+  "smokes": [
+    {
+      "host": "codex",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-smoke-codex/result.json",
+        "digest": "sha256:593d96f641afadbdab235810b1bfb9a76f8043b7d04d84b5fc94346bcf3d3aaa"
+      },
+      "treatments": {
+        "worker": [
+          "gpt-5.3-codex-spark",
+          "low"
+        ],
+        "reviewer": [
+          "gpt-5.5",
+          "high"
+        ]
+      },
+      "worker_reused_execution": null,
+      "worker_stdout_digest": "sha256:3c23c30df3493549593178ed74b64e3aa7024d55af6e33fa72c2544e08221305",
+      "reviewer_stdout_digest": "sha256:286157c232ad83828bd4d5111cb83b83a8fabea0b3861f9ea4f0c240f03272f6"
+    },
+    {
+      "host": "codex-standard",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-smoke-codex-standard/result.json",
+        "digest": "sha256:43ea9fe1f7de1639931060f9c3da204ea3a9d7afc598905dc1b7ffbe50ce1427"
+      },
+      "treatments": {
+        "worker": [
+          "gpt-5.5",
+          "low"
+        ],
+        "reviewer": [
+          "gpt-5.5",
+          "high"
+        ]
+      },
+      "worker_reused_execution": "codex-calibration-worker",
+      "worker_stdout_digest": "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b",
+      "reviewer_stdout_digest": "sha256:5032047281c440f8eb8e7e906707c2a784d150e43ef535d06fa4159ffecd0ca2"
+    },
+    {
+      "host": "claude",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-smoke-claude/result.json",
+        "digest": "sha256:cd6f7a411178825cf504e284418c749973eb0458a01932496d03349243c573da"
+      },
+      "treatments": {
+        "worker": [
+          "claude-sonnet-5",
+          "low"
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "worker_reused_execution": null,
+      "worker_stdout_digest": "sha256:7b7658a4dc9765be4788f3f2eb631a923545cdab7481165f7cc48c67dbd7793c",
+      "reviewer_stdout_digest": "sha256:59edd561168ec212fa500bb8a20268631989c7ca20fbcd48d7fdd8639ee6bf12"
+    },
+    {
+      "host": "claude-haiku",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-smoke-claude-haiku/result.json",
+        "digest": "sha256:588a5fc754a90c7161cf39ec0f43bb7f3d2c6cc5a614aaa5aec684a44482934c"
+      },
+      "treatments": {
+        "worker": [
+          "claude-haiku-4-5-20251001",
+          null
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "worker_reused_execution": "claude-calibration-worker",
+      "worker_stdout_digest": "sha256:9d1f829ebc52bff73a1e4f8df46b3fb76bc46ea77238ae0fcfca4907c1a0e3e3",
+      "reviewer_stdout_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a"
+    }
+  ],
+  "browser": [
+    {
+      "host": "claude",
+      "capture": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/browser-checks.json",
+        "digest": "sha256:df9623b3a5c529be693d8b8dcc2ac465f35d54b6c618b09b9686f9afcfcf13b2"
+      },
+      "review_stdout": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/frontier-review/stdout.jsonl",
+        "digest": "sha256:9d1b10da4aac390dee360d62dbb18282d769176602bd2453c849869bd4ccdccd"
+      },
+      "inputs": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/frontier-review/input-digests.json",
+        "digest": "sha256:bffcd4c77cb902e42357deb7d0604593f49ab58859138d050c374e0a0d7bd1b2"
+      },
+      "images": [
+        {
+          "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/320.png",
+          "digest": "sha256:8fc2f12b5de2c370125d458fcc90b9aecb1e729a5a84cd40ad19b85de3acc0fa"
+        },
+        {
+          "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/1280.png",
+          "digest": "sha256:6bf1a6eed238adb1112d1f73e3ac038d275a68e3b5dd727d36b03ca85cb1c19a"
+        }
+      ]
+    },
+    {
+      "host": "codex",
+      "capture": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/browser-checks.json",
+        "digest": "sha256:dd5e6aafa70882a84cec895eca01d2b3cf2eb632183701f384be9e54f35ae893"
+      },
+      "review_stdout": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/frontier-review/stdout.jsonl",
+        "digest": "sha256:6b172f3a1582e54a9f08425f40ab2306dcdabfffb47e3e54ff953d7814f24b20"
+      },
+      "inputs": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/frontier-review/input-digests.json",
+        "digest": "sha256:d81720cc473a0e68f76c3d49b241390ea2b52ede2729c131e794b02f98a615b3"
+      },
+      "images": [
+        {
+          "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/320.png",
+          "digest": "sha256:fef2ca9676306779cf7e97866c7ce9da081e21fb3fbfab52a28ba635fe57ae8a"
+        },
+        {
+          "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/1280.png",
+          "digest": "sha256:cd967adf4a8effb5340e178b213fd5a71896155fb26452dbcd0fd7bb8df371ae"
+        }
+      ]
+    }
+  ],
+  "canonical_sources": [
+    {
+      "path": "data/routing/frontier-identity-evidence.json",
+      "digest": "sha256:634a115cdf55a8cc2f79b1236fa01eaa765060804702c7ac6f83c2143dc7a6de",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/frontier-identity-evidence.json"
+    },
+    {
+      "path": "data/routing/frontier-probe-reviews.json",
+      "digest": "sha256:3e04ea40de0e527b25574949cb8e3b9e0e84e54d7d6363978d16f484c77ca739",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/frontier-probe-reviews.json"
+    },
+    {
+      "path": "data/routing/frontier-probes.json",
+      "digest": "sha256:9bf6ed15a21e19364b69082760242e5f83d399d67f2c1ab81679480f4884160b",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/frontier-probes.json"
+    },
+    {
+      "path": "data/routing/frontier-targets.json",
+      "digest": "sha256:55438b90ffaf31a1e08b856c1588792cf07bfca48d026a01f1dc2b525d8c89d0",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/frontier-targets.json"
+    },
+    {
+      "path": "data/routing/host-observations.json",
+      "digest": "sha256:0757f0bba7abb9c8066caa6a9fffb4de9e631d1343c6a7daa2d12f7fa71a6cde",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/host-observations.json"
+    },
+    {
+      "path": "data/routing/installed-acceptance.json",
+      "digest": "sha256:501ef35a1cddadf79595ffa36d18020f1888c90f109aa44bdcceba109cfebe13",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/installed-acceptance.json"
+    },
+    {
+      "path": "data/routing/medium-smoke-audit.json",
+      "digest": "sha256:ff77614e1a4212b2522ec6e55a0101bdbfe4618349dee28e8ed1ec009094502b",
+      "assembly_source": "artifacts/delegate-completion-2026-09-11/canonical-renewal/medium-smoke-audit.json"
+    }
+  ],
+  "metadata": [
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/metadata/openai-models.md",
+      "digest": "sha256:f4ffe196ccff81a40e1ff1f80d97ddd0c9523bb01b1716f1bd5a8aa4836bda23"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/metadata/openai-pricing.md",
+      "digest": "sha256:d00a374011ea04b8106b68525bcf193871cfbf8b4679a64aabc4d93525c2732d"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/metadata/claude-models.html",
+      "digest": "sha256:8ef5c1a2849777d61f06e7e98a59c77b98bc51945ef65aac880c5e7a58e6b726"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/metadata/claude-pricing.html",
+      "digest": "sha256:4e95b2ef92d970caa34c960e55a34498e33357396475ef368eb6fa9c9cf15562"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/metadata/metadata-reviewed.json",
+      "digest": "sha256:e655ab91e59ea2857be669ca6a6d966fb069cda21d5cbef2024e251312f0aefb"
+    }
+  ],
+  "calibration": {
+    "path": "artifacts/delegate-completion-2026-09-11/renewal-calibration/report.json",
+    "digest": "sha256:364d62605ad6d44bb78aee35bc68209126e3874a8350629c15601026800f98ac"
+  },
+  "calibration_ledger": {
+    "path": "artifacts/reviewer-calibration/2026-09-11/ledger.json",
+    "digest": "sha256:af473916025d3601e0497fa895d00ea3afa8fbc0c4482e7b70244611691ef696"
+  },
+  "admissions": {
+    "path": "artifacts/delegate-completion-2026-09-11/canonical-renewal/reviewer-calibration/admissions.json",
+    "digest": "sha256:d93535568973c856ce30c095c4b55ed8f3e362e178cdc4fdf75451299ad196ff"
+  },
+  "archive": "data/routing/archive/2026-09-10/preservation.json",
+  "budget": {
+    "schema_version": "completion_budget.v1",
+    "ceiling": 130,
+    "executions": 101,
+    "reserved": 0,
+    "halted": false,
+    "stopped_hosts": [],
+    "authorization": "User approved full remaining update, 130 additional executions, routing-data and consumer/pack updates on 2026-09-11 in Codex task.",
+    "entries": [
+      {
+        "id": "implementation-budget",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-budget.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-budget-repair",
+        "purpose": "implementation_repair",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-repair.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-budget-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-budget-integrity-repair",
+        "purpose": "implementation_repair",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-integrity-repair.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-budget-final-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-final-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-preflight-claude-1",
+        "purpose": "capacity_preflight",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-pending-claude-research",
+        "purpose": "pending_row",
+        "host": "claude",
+        "worst_case": 3,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-assembly",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-claude-1-direct",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-claude-1-delegated",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-assembly-repair",
+        "purpose": "implementation_repair",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-repair.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-claude-2-delegated",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-claude-2-direct",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-assembly-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-before-claude-1-direct",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-before-claude-1-delegated",
+        "purpose": "matched_arm",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-assembly-final-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-final-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-preflight-codex-1",
+        "purpose": "capacity_preflight",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-calibration",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-pending-codex-tinybug",
+        "purpose": "pending_row",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-assembly-path-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-path-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-codex-1-direct",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "implementation-calibration-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-codex-1-delegated",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-integration-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-integration-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-codex-1-unexported-attempt",
+        "purpose": "matched_arm_accounting_correction",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/ledger-reviewed.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "unexported-attempt-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/unexported-attempt-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-codex-2-delegated",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-current-codex-2-direct",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-pending-codex-research",
+        "purpose": "pending_row",
+        "host": "codex",
+        "worst_case": 3,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-before-codex-1-direct",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-before-codex-1-delegated",
+        "purpose": "matched_arm",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-frontier-probe-codex",
+        "purpose": "renewal_frontier_probe",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/codex/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-frontier-probe-claude",
+        "purpose": "renewal_frontier_probe",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/claude/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-frontier-probe-review",
+        "purpose": "renewal_frontier_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/independent-review/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "codex-calibration-worker",
+        "purpose": "reviewer_calibration_worker",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/worker/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "codex-calibration-positive",
+        "purpose": "reviewer_calibration_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "codex-calibration-defective",
+        "purpose": "reviewer_calibration_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/defective/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-tinybug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "codex-calibration-boundary",
+        "purpose": "reviewer_calibration_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/boundary/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-tinybug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-worker",
+        "purpose": "reviewer_calibration_worker",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/positive/worker/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-positive",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/positive/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-defective",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/defective/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-boundary",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/boundary/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-standard-1789097994542-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-codex-standard/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-haiku-1789098012388-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-claude-haiku/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-1789098025541-worker",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-codex/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-1789098025541-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-codex/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1789098050695-worker",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-claude/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-mechanical",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1789098050695-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-smoke-claude/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-mechanical",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-worker-attribution-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-worker-attribution-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-backend",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-ui",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-backend",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-evidence-collection-1",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-1.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-hardbug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-browser-review-claude",
+        "purpose": "renewal_rendered_frontier_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/frontier-review/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-ui",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-multicomponent",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-evidence-collection-2",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-2.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-hardbug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-browser-review-codex",
+        "purpose": "renewal_rendered_frontier_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/frontier-review/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-multicomponent",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-evidence-collection-3",
+        "purpose": "implementation_worker",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-3.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-publication-review",
+        "purpose": "frontier_review",
+        "host": "codex_native",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-publication-review.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-claude-fullproject",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 6,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-codex-multicomponent-tally-correction",
+        "purpose": "failed_launch_accounting_correction",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/accounting-reconciliation.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-installed-codex-fullproject",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 6,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      }
+    ],
+    "qualification_authority": false
+  },
+  "execution_index": [
+    {
+      "id": "implementation-budget",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget.json"
+    },
+    {
+      "id": "implementation-budget-repair",
+      "host": "codex_native",
+      "purpose": "implementation_repair",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-repair.json"
+    },
+    {
+      "id": "implementation-budget-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-review.json"
+    },
+    {
+      "id": "implementation-budget-integrity-repair",
+      "host": "codex_native",
+      "purpose": "implementation_repair",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-integrity-repair.json"
+    },
+    {
+      "id": "implementation-budget-final-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-budget-final-review.json"
+    },
+    {
+      "id": "m4-preflight-claude-1",
+      "host": "claude",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "source": "artifacts/direct-vs-delegated/preflight-claude-2026-09-11T02-09-35.360Z/result.json"
+    },
+    {
+      "id": "m4-pending-claude-research",
+      "host": "claude",
+      "purpose": "pending_row",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/m4-pending-claude-research/result.json"
+    },
+    {
+      "id": "implementation-assembly",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly.json"
+    },
+    {
+      "id": "m4-current-claude-1-direct",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/direct/result.json"
+    },
+    {
+      "id": "m4-current-claude-1-delegated",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/current-claude-1/m4-current-claude-1/delegated/result.json"
+    },
+    {
+      "id": "implementation-assembly-repair",
+      "host": "codex_native",
+      "purpose": "implementation_repair",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-repair.json"
+    },
+    {
+      "id": "m4-current-claude-2-delegated",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/delegated/result.json"
+    },
+    {
+      "id": "m4-current-claude-2-direct",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-claude-2/m4-current-claude-2/direct/result.json"
+    },
+    {
+      "id": "implementation-assembly-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-review.json"
+    },
+    {
+      "id": "m4-before-claude-1-direct",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/direct/result.json"
+    },
+    {
+      "id": "m4-before-claude-1-delegated",
+      "host": "claude",
+      "purpose": "matched_arm",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/before-claude-1/m4-before-claude-1/delegated/result.json"
+    },
+    {
+      "id": "implementation-assembly-final-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-final-review.json"
+    },
+    {
+      "id": "m4-preflight-codex-1",
+      "host": "codex",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "source": "artifacts/direct-vs-delegated/preflight-codex-2026-09-11T02-44-38.002Z/result.json"
+    },
+    {
+      "id": "implementation-calibration",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration.json"
+    },
+    {
+      "id": "m4-pending-codex-tinybug",
+      "host": "codex",
+      "purpose": "pending_row",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-tinybug/result.json"
+    },
+    {
+      "id": "implementation-assembly-path-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-assembly-path-review.json"
+    },
+    {
+      "id": "m4-current-codex-1-direct",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/direct/result.json"
+    },
+    {
+      "id": "implementation-calibration-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/implementation-calibration-review.json"
+    },
+    {
+      "id": "m4-current-codex-1-delegated",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/result.json"
+    },
+    {
+      "id": "renewal-integration-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-integration-review.json"
+    },
+    {
+      "id": "m4-current-codex-1-unexported-attempt",
+      "host": "codex",
+      "purpose": "matched_arm_accounting_correction",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-1/m4-current-codex-1/delegated/ledger-reviewed.json"
+    },
+    {
+      "id": "unexported-attempt-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/unexported-attempt-review.json"
+    },
+    {
+      "id": "m4-current-codex-2-delegated",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/delegated/result.json"
+    },
+    {
+      "id": "m4-current-codex-2-direct",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/current-codex-2/m4-current-codex-2/direct/result.json"
+    },
+    {
+      "id": "m4-pending-codex-research",
+      "host": "codex",
+      "purpose": "pending_row",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/m4-pending-codex-research/result.json"
+    },
+    {
+      "id": "m4-before-codex-1-direct",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/direct/result.json"
+    },
+    {
+      "id": "m4-before-codex-1-delegated",
+      "host": "codex",
+      "purpose": "matched_arm",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/before-codex-1/m4-before-codex-1/delegated/result.json"
+    },
+    {
+      "id": "renewal-frontier-probe-codex",
+      "host": "codex",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/codex/accounting.json"
+    },
+    {
+      "id": "renewal-frontier-probe-claude",
+      "host": "claude",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/claude/accounting.json"
+    },
+    {
+      "id": "renewal-frontier-probe-review",
+      "host": "claude",
+      "purpose": "renewal_frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes/independent-review/accounting.json"
+    },
+    {
+      "id": "codex-calibration-worker",
+      "host": "codex",
+      "purpose": "reviewer_calibration_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/worker/accounting.json"
+    },
+    {
+      "id": "codex-calibration-positive",
+      "host": "codex",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/positive/reviewer/accounting.json"
+    },
+    {
+      "id": "codex-calibration-defective",
+      "host": "codex",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/defective/reviewer/accounting.json"
+    },
+    {
+      "id": "renewal-installed-claude-tinybug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/result.json"
+    },
+    {
+      "id": "codex-calibration-boundary",
+      "host": "codex",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/codex/boundary/reviewer/accounting.json"
+    },
+    {
+      "id": "renewal-installed-codex-tinybug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/result.json"
+    },
+    {
+      "id": "claude-calibration-worker",
+      "host": "claude",
+      "purpose": "reviewer_calibration_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/positive/worker/accounting.json"
+    },
+    {
+      "id": "claude-calibration-positive",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/positive/reviewer/accounting.json"
+    },
+    {
+      "id": "claude-calibration-defective",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/defective/reviewer/accounting.json"
+    },
+    {
+      "id": "claude-calibration-boundary",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-calibration/claude/boundary/reviewer/accounting.json"
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1789097994542-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-codex-standard/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1789098012388-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-claude-haiku/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-1789098025541-worker",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-codex/worker/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-1789098025541-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-codex/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1789098050695-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-claude/worker/summary.json"
+    },
+    {
+      "id": "renewal-installed-claude-mechanical",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/result.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1789098050695-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-smoke-claude/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-installed-codex-mechanical",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/result.json"
+    },
+    {
+      "id": "renewal-worker-attribution-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-worker-attribution-review.json"
+    },
+    {
+      "id": "renewal-installed-claude-backend",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/result.json"
+    },
+    {
+      "id": "renewal-installed-claude-ui",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/result.json"
+    },
+    {
+      "id": "renewal-installed-codex-backend",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/result.json"
+    },
+    {
+      "id": "renewal-evidence-collection-1",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-1.json"
+    },
+    {
+      "id": "renewal-installed-claude-hardbug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/result.json"
+    },
+    {
+      "id": "renewal-browser-review-claude",
+      "host": "claude",
+      "purpose": "renewal_rendered_frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/browser/frontier-review/accounting.json"
+    },
+    {
+      "id": "renewal-installed-codex-ui",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/result.json"
+    },
+    {
+      "id": "renewal-installed-claude-multicomponent",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/result.json"
+    },
+    {
+      "id": "renewal-evidence-collection-2",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-2.json"
+    },
+    {
+      "id": "renewal-installed-codex-hardbug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/result.json"
+    },
+    {
+      "id": "renewal-browser-review-codex",
+      "host": "codex",
+      "purpose": "renewal_rendered_frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/browser/frontier-review/accounting.json"
+    },
+    {
+      "id": "renewal-installed-codex-multicomponent",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/result.json"
+    },
+    {
+      "id": "renewal-evidence-collection-3",
+      "host": "codex_native",
+      "purpose": "implementation_worker",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-evidence-collection-3.json"
+    },
+    {
+      "id": "renewal-publication-review",
+      "host": "codex_native",
+      "purpose": "frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-publication-review.json"
+    },
+    {
+      "id": "renewal-installed-claude-fullproject",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/result.json"
+    },
+    {
+      "id": "renewal-codex-multicomponent-tally-correction",
+      "host": "codex",
+      "purpose": "failed_launch_accounting_correction",
+      "executions": 1,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/accounting-reconciliation.json"
+    },
+    {
+      "id": "renewal-installed-codex-fullproject",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/result.json"
+    }
+  ],
+  "assembly_script": {
+    "path": "scripts/verify/assemble-evidence.mjs",
+    "digest": "sha256:2617d6f19bc33fe22084c87cf8f446c0f94dda84632df4128d317bfbb1681497"
+  },
+  "publication_code_review": {
+    "path": "artifacts/delegate-completion-2026-09-11/renewal-publication-review.json",
+    "digest": "sha256:e620ecf5570ab1e7828d89dd987f101d2cd210b7badc4641f902ecd04e5c9dcc"
+  },
+  "limitations": [
+    "Failed launches and incomplete cases remain counted; no replacement trials.",
+    "Two calibration-positive worker executions are reused byte-identically by smoke assembly and counted once.",
+    "Host counters and list-price estimates are not measured subscription spending.",
+    "Native configuration is distinct from served identity; model and effort limits remain in each capture.",
+    "Captured consumer folder precedes this evidence-driven routing-pack publication; guidance bytes are unchanged.",
+    "Whole-project cases prove decomposition only and never create a whole-project worker route."
+  ]
+}

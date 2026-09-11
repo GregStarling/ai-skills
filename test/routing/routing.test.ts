@@ -1,3 +1,4 @@
+import {earliestEntryExpiry,assertEntriesOutlivePack} from '../../src/routing/contracts.js';
 import {readFileSync} from 'node:fs';
 import {describe,it,expect,vi,afterEach} from 'vitest';
 import {contentDigest,digest,hashBytes} from '../../src/core/canonical.js';
@@ -352,11 +353,11 @@ describe('local routing preferences preserve governed boundaries',()=>{
   expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:route.workers[1]!.candidate_identity}})).toEqual(resolveRouting(pack,input));
  });
  it('cannot cross installed-acceptance and smoke-extrapolation task evidence',()=>{
-  const pack=parseRoutingPack(JSON.parse(readFileSync('skills/delegate/routing-pack.json','utf8'))),route=pack.routes.find(r=>r.public_task_class==='mechanical_work'&&r.workers.some(w=>w.task_evidence?.host==='codex'))!;
-  const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:pack.generated_at,host:{...host(pack,[...route.workers,...route.reviewers]),host:'codex' as const}},baseline=resolveRouting(pack,input);
+  localFixture();const pack=rankedPack(),route=pack.routes[0]!;
+  const input={publicTaskClass:'mechanical_work' as const,stratumDigest:route.stratum_digest,now:pack.generated_at,host:{...host(pack,[...route.workers,...route.reviewers]),host:'claude' as const}},baseline=resolveRouting(pack,input);
   const extrapolated=route.workers.find(w=>w.task_evidence?.basis==='smoke_extrapolation')!;
   expect(baseline.worker.provisional?.task_evidence?.basis).toBe('installed_acceptance');
-  expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:extrapolated.candidate_identity}})).toEqual(baseline);
+  expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'claude',preferred_worker_identity:extrapolated.candidate_identity}})).toEqual(baseline);
  });
  it('does not switch reviewers to accommodate a preferred worker',()=>{
   localFixture();const policy=currentPolicy();policy.review.low.different_model=true;
@@ -366,4 +367,18 @@ describe('local routing preferences preserve governed boundaries',()=>{
   expect(baseline.reviewer.candidate_id).toBe('frontier_alias');
   expect(resolveRouting(pack,{...input,localPreferences:{pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'codex',preferred_worker_identity:route.workers[1]!.candidate_identity}})).toEqual(baseline);
  });
+});
+
+
+describe('entry publication horizon',()=>{
+  it('refuses a header that outlives evidence by more than the tolerance',()=>{
+    const pack=compileProduction();
+    const expiry=earliestEntryExpiry(pack)!;
+    pack.expires_at=new Date(Date.parse(expiry)+24*3600000).toISOString();
+    expect(()=>assertEntriesOutlivePack(pack,24)).not.toThrow();
+    pack.expires_at=new Date(Date.parse(pack.expires_at)+1).toISOString();
+    expect(()=>assertEntriesOutlivePack(pack,24)).toThrowError(expect.objectContaining({code:'ENTRIES_EXPIRE_BEFORE_PACK'}));
+    expect(()=>assertEntriesOutlivePack(pack,-1)).toThrowError(expect.objectContaining({code:'INVALID_ENTRY_EXPIRY_TOLERANCE'}));
+    pack.routes=[];expect(earliestEntryExpiry(pack)).toBeNull();
+  });
 });

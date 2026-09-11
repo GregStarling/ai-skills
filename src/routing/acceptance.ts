@@ -1,6 +1,7 @@
 import {z} from 'zod';
-import {digest} from '../core/canonical.js';
+import {digest,hashBytes} from '../core/canonical.js';
 import {mediumSmokeReviewSchema,acceptanceTaskClasses,provisionalIdentity,provisionalTreatmentSchema,taskEvidenceSchema,type ProvisionalTreatmentInput} from './provisional.js';
+import {reviewerCalibrationGate,type CalibrationRow,type CalibrationTarget} from './reviewer-calibration.js';
 import type {ProvisionalRouteInput} from './compiler.js';
 
 const id=z.string().min(1),hash=z.string().regex(/^sha256:[a-f0-9]{64}$/),iso=z.string().datetime({offset:true});
@@ -16,9 +17,9 @@ const caseSchema=z.object({
   worker_count:z.number().int().nonnegative(),workers:z.array(workerSchema),
   frontier:z.object({configuration:z.union([z.array(controls),z.object({requested_model:id,requested_effort:id}).passthrough()]),observed_message_models:z.array(id),actual_artifact_inspected:z.boolean(),check_count:z.number().int().nonnegative()}).passthrough(),
   external_grader_passed:z.boolean(),artifact_digests:z.record(id,hash),receipt_count:z.number().int().nonnegative(),receipt_digests:z.array(hash),
-  recovery:recoverySchema.nullable(),browser:browserSchema.nullable(),trace_digests:z.array(hash),
+  recovery:recoverySchema.nullable(),browser:browserSchema.nullable(),trace_digests:z.array(hash),copied_skill_digest:hash,
 }).passthrough();
-const acceptanceSchema=z.object({schema_version:z.literal('installed_delegate_acceptance.v1'),validated_at:iso,host_versions:z.object({codex:id,claude:id}),cases:z.array(caseSchema)}).passthrough();
+const acceptanceSchema=z.object({schema_version:z.literal('installed_delegate_acceptance.v1'),validated_at:iso,final_consumer_folder_digest:hash,host_versions:z.object({codex:id,claude:id}),cases:z.array(caseSchema)}).passthrough();
 const runRole=z.object({model:id,configured_effort:id}).passthrough();
 const observationsSchema=z.object({treatments:z.array(provisionalTreatmentSchema),runs:z.array(z.object({
   host,objective_passed:z.boolean(),worker_stdout_digest:hash,reviewer_stdout_digest:hash,
@@ -26,6 +27,12 @@ const observationsSchema=z.object({treatments:z.array(provisionalTreatmentSchema
 }).passthrough())}).passthrough();
 type AcceptedCase=z.infer<typeof caseSchema>;
 type Role='worker'|'reviewer';
+const iteration=(folderDigest:string)=>folderDigest.slice('sha256:'.length,'sha256:'.length+8);
+/** Folder attribution is maintainer-recorded and bound by record_digest; it is derived only from the two digests, never from any agent-written match flag. */
+function folderProvenance(record:AcceptedCase,lastIteration:string):string{
+  const base=`Case ${record.id} accepted on consumer-folder iteration ${iteration(record.copied_skill_digest)} (maintainer-recorded attribution bound by record_digest); the published folder may differ.`;
+  return record.copied_skill_digest===lastIteration?base:`${base} Earlier iteration than the acceptance run's last iteration ${iteration(lastIteration)}.`;
+}
 
 const scopes={
   repo_exploration:'Read and explain a small local JavaScript/HTML codebase with file evidence.',
@@ -65,8 +72,37 @@ function roleMatches(t:ProvisionalTreatmentInput,record:AcceptedCase,role:Role):
   return Array.isArray(config)?matches(t,null,null,config,record.frontier.observed_message_models):matches(t,config.requested_model,config.requested_effort,null,record.frontier.observed_message_models);
 }
 
+const admissionSchema=z.object({role:z.literal('reviewer'),public_task_classes:z.tuple([z.literal('mechanical_work')]),risk:z.literal('low'),treatment:provisionalTreatmentSchema,report:z.object({target:z.object({host,provider:z.enum(['openai','anthropic']),model_id:id,effort:id}).passthrough(),manifest:z.unknown(),rows:z.array(z.unknown()),gate:z.object({admitted:z.literal(true)}).passthrough()}).passthrough(),runs:observationsSchema.shape.runs.length(1),report_digest:hash}).strict();
+
+function scopedAdmissions(input:unknown[],observations:z.infer<typeof observationsSchema>){
+  const identities=new Set(observations.treatments.map(provisionalIdentity)),ids=new Set(observations.treatments.map(t=>t.candidate_id));
+  return input.map(value=>{
+    const entry=admissionSchema.parse(value),{treatment,report}=entry;
+    if(entry.report_digest!==digest((value as {report:unknown}).report))throw Error('ADMISSION_REPORT_DIGEST_MISMATCH');
+    const target=report.target as CalibrationTarget;
+    const gate=reviewerCalibrationGate(report.manifest,report.rows as CalibrationRow[],target);
+    if(!gate.admitted)throw Error('CALIBRATION_NOT_ADMISSIBLE');
+    if((report.manifest as {scope:string}).scope!=='Zero/nullish quantity-default fixes in local plain JavaScript only.')throw Error('ADMISSION_SCOPE_MISMATCH');
+    if(!treatment.frontier||treatment.evidence.host!==target.host||treatment.provider!==target.provider||treatment.model_id!==target.model_id||treatment.effort!==target.effort)throw Error('ADMISSION_TREATMENT_MISMATCH');
+    const identity=provisionalIdentity(treatment);
+    if(identities.has(identity)||ids.has(treatment.candidate_id))throw Error('ADMISSION_IDENTITY_COLLISION');
+    identities.add(identity);ids.add(treatment.candidate_id);
+    const run=entry.runs[0]!,positive=(report.rows as CalibrationRow[]).find(r=>r.case_id==='positive')!;
+    const workerEvidence=positive.worker_evidence as {candidate:{model_id:string;effort:string};report:{stdout_digest:string}};
+    const reviewEvidence=positive.reviewer_evidence as {report:{stdout_digest:string;started_at:string}};
+    const worker=observations.treatments.find(t=>!t.frontier&&t.evidence.host===target.host&&t.model_id===run.worker.model&&t.effort===run.worker.configured_effort&&t.evidence.smoke.execution_digest===run.worker_stdout_digest);
+    if(!worker||run.host!==target.host||!run.objective_passed||run.reviewer.verdict!=='ACCEPT'||run['scope']!=='tinybug: zero/nullish quantity default only'||workerEvidence.candidate.model_id!==worker.model_id||workerEvidence.candidate.effort!==worker.effort||workerEvidence.report.stdout_digest!==run.worker_stdout_digest||reviewEvidence.report.stdout_digest!==run.reviewer_stdout_digest||run.reviewer.model!==treatment.model_id||run.reviewer.configured_effort!==treatment.effort||treatment.evidence.smoke.execution_digest!==run.reviewer_stdout_digest||treatment.evidence.observed_at!==reviewEvidence.report.started_at||treatment.evidence.smoke.artifact_digest!==hashBytes(positive.files_before['quantity.mjs']!))throw Error('ADMISSION_RUN_MISMATCH');
+    return treatment;
+  });
+}
+
 /** Join audited installed cases to exact existing treatments; this grants no governor qualification. */
-export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceInput:unknown,mediumAuditInput?:unknown):ProvisionalRouteInput[]{
+export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceInput:unknown,mediumAuditInput?:unknown,options:{now?:string;admissions?:unknown[];routingPack?:{provisional_evidence_max_age_days:number;refresh_after_days:number}}={}):ProvisionalRouteInput[]{
+  const now=Date.parse(iso.parse(options.now??new Date().toISOString()));
+  const timing=options.routingPack??{provisional_evidence_max_age_days:30,refresh_after_days:7};
+  if(!Number.isFinite(timing.provisional_evidence_max_age_days)||timing.provisional_evidence_max_age_days<=0||!Number.isFinite(timing.refresh_after_days)||timing.refresh_after_days<=0)throw Error('INVALID_ACCEPTANCE_WINDOW');
+  const expires=(record:AcceptedCase)=>Date.parse(record.original_attempt.started_at)+timing.provisional_evidence_max_age_days*86400000;
+  const horizon=now+timing.refresh_after_days*86400000;
   const observations=observationsSchema.parse(observationInput),acceptance=acceptanceSchema.parse(acceptanceInput);
   if(new Set(acceptance.cases.map(c=>c.id)).size!==acceptance.cases.length)throw new Error('Duplicate installed acceptance case id');
   const rawCases=(acceptanceInput as {cases:unknown[]}).cases;
@@ -74,20 +110,24 @@ export function buildProvisionalPilotRoutes(observationInput:unknown,acceptanceI
   const source={path:'data/routing/installed-acceptance.json' as const,content_digest:digest(acceptanceInput),digest_encoding:'canonical_json_sha256' as const};
   const roles=(t:ProvisionalTreatmentInput,role:Role)=>observations.runs.some(run=>run.host===t.evidence.host&&run.objective_passed&&run.reviewer.verdict==='ACCEPT'&&run[role].model===t.model_id&&run[role].configured_effort===t.effort&&t.evidence.smoke.execution_digest===(role==='worker'?run.worker_stdout_digest:run.reviewer_stdout_digest))&&(role!=='reviewer'||t.frontier);
   const admittedWorkers=observations.treatments.filter(t=>roles(t,'worker')),admittedReviewers=observations.treatments.filter(t=>roles(t,'reviewer'));
+  const additions=scopedAdmissions(options.admissions??[],observations);
   const routes:ProvisionalRouteInput[]=[];
   for(const currentHost of ['codex','claude'] as const){
     const candidates=observations.treatments.filter(t=>t.evidence.host===currentHost);
     for(const [publicTaskClass,scope] of Object.entries(scopes) as [keyof typeof scopes,string][]){
       const enrich=(t:ProvisionalTreatmentInput,role:Role):ProvisionalTreatmentInput=>{
-        const records=acceptance.cases.filter(record=>record.case!=='fullproject'&&acceptanceTaskClasses[record.case]===publicTaskClass&&Date.parse(record.original_attempt.started_at)<=Date.parse(acceptance.validated_at)&&accepted(record)&&admittedWorkers.some(worker=>roleMatches(worker,record,'worker'))&&admittedReviewers.some(reviewer=>roleMatches(reviewer,record,'reviewer'))&&roleMatches(t,record,role));
+        const matching=acceptance.cases.filter(record=>record.case!=='fullproject'&&acceptanceTaskClasses[record.case]===publicTaskClass&&Date.parse(record.original_attempt.started_at)<=Date.parse(acceptance.validated_at)&&accepted(record)&&admittedWorkers.some(worker=>roleMatches(worker,record,'worker'))&&admittedReviewers.some(reviewer=>roleMatches(reviewer,record,'reviewer'))&&roleMatches(t,record,role));
+        const records=matching.filter(record=>expires(record)>horizon),stale=matching.filter(record=>expires(record)<=horizon);
+        const demotions=stale.map(record=>`Installed acceptance ${record.id} expires ${new Date(expires(record)).toISOString()}; entry extrapolates from smoke until re-accepted`);
         const task_evidence=taskEvidenceSchema.parse({public_task_class:publicTaskClass,role,host:currentHost,candidate_identity:provisionalIdentity(t),basis:records.length?'installed_acceptance':'smoke_extrapolation',source,
           records:records.map(record=>({case_id:record.id,case:record.case,record_digest:recordDigests.get(record.id),observed_at:record.original_attempt.started_at,host_version:acceptance.host_versions[record.host],acceptance:record.acceptance,artifact_digests:record.artifact_digests,trace_digests:record.trace_digests,receipt_digests:record.receipt_digests,recovery:record.recovery?{kind:record.recovery.kind,limitations:record.recovery.limitations,trace_digests:record.recovery.trace_digests}:null,browser:record.browser?{artifact_digest:record.browser.artifact_digest,reviewer:record.browser.reviewer,viewports:record.browser.viewports,checks:record.browser.checks}:null})),
-          limitations:records.length?['Only the referenced accepted cases support this exact host, model, effort and role; broader task fit remains provisional, not governor qualification.',...records.flatMap(record=>record.recovery?.limitations??[])]:['No matching installed acceptance case exists for this class, host, model, effort and role. This entry extrapolates from its original smoke and official metadata.'],
+          limitations:records.length?['Only the referenced accepted cases support this exact host, model, effort and role; broader task fit remains provisional, not governor qualification.',...records.flatMap(record=>record.recovery?.limitations??[]),...records.map(record=>folderProvenance(record,acceptance.final_consumer_folder_digest))]:['No matching installed acceptance case exists for this class, host, model, effort and role. This entry extrapolates from its original smoke and official metadata.',...demotions],
         });
         return {...t,evidence:{...t.evidence,task_evidence}};
       };
       const workers=candidates.filter(t=>roles(t,'worker')).map(t=>enrich(t,'worker')),reviewers=candidates.filter(t=>roles(t,'reviewer')).map(t=>enrich(t,'reviewer'));
       if(!workers.length||!reviewers.length)continue;
+      if(publicTaskClass==='mechanical_work')reviewers.push(...additions.filter(t=>t.evidence.host===currentHost).map(t=>enrich(t,'reviewer')));
       routes.push({publicTaskClass,scope:`${currentHost} pilot: ${scope} Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification.`,risk:'low',requirements:{tools:['terminal'],capabilities:['terminal'],context_window_tokens:0,fresh_context:false},workers,reviewers});
     }
   }

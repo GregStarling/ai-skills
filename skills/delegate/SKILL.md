@@ -3,58 +3,56 @@ name: delegate
 description: Complete small work directly or delegate bounded work when that improves total efficiency, while preserving high-quality output and relevant verification. Use when the user invokes delegate or asks for efficient delegation. Receiving a bounded worker or reviewer packet does not activate this workflow again.
 ---
 
-Achieve the requested quality with the least total effort needed. Token reductions matter only when quality is preserved. This folder is the complete consumer: no Foreman, Node installation, governor service, registry setup or extra API keys are required.
+Achieve the requested quality with the least total effort. Token savings count only when quality is preserved. This folder is the complete consumer: no service, registry, extra API key or global installation. Change no user configuration.
 
-If already receiving a bounded worker or reviewer packet, execute it and return to the coordinator. Do not recursively invoke this skill. The coordinator owns routing and the final receipt.
+If you received a bounded worker or reviewer packet, execute it and return to the coordinator; do not invoke this skill again. The coordinator owns routing and the final receipt.
 
-## Local task lifecycle
+## 1. Classify
 
-Read [local learning](local-learning.md) and use the optional packaged helper at start and delivery for both direct and delegated tasks, and at useful milestones for session advice. No runtime installation is required; unavailable learning falls back to ordinary work. User history and reminder settings stay local, outside this folder.
+Classify each workstream with [task-classes.md](task-classes.md). A `full_project` is decomposed by you into bounded workstreams and stays your responsibility. For `research` read [research.md](research.md): live-web research is direct work. If the user explicitly asks for a worker anyway, honour it as unrouted work: disclose that no route covers it, keep frontier verification, start with `research_kind` `live_web` and bind no route. At `finish` record it as `mode` `direct` with no worker attempt and a `source` verdict per source check, and name the worker's model and effort in the report; the helper binds worker attempts to a route only.
 
-## Choose direct execution or delegation
+## 2. Start
 
-Complete small work directly when handing it off would add more effort than completing and verifying it. Delegate substantial bounded work when it improves total efficiency. Include exploration, coordination, context transfer, implementation, integration, verification, failed attempts and repairs in that judgment; a cheaper first attempt is not necessarily a cheaper completion. Prefer reusing useful context to duplicating work.
+Call the helper's `start` with host, class and risk as described in [local learning](local-learning.md). A direct task is `start` then `finish`; a delegated task adds `lookup` (repeated after a worker fails). If the helper is unavailable, continue and say so once.
 
-Spend stronger reasoning on ambiguity and consequential decisions, including diagnosis, architecture and product judgment. Match reasoning effort to the uncertainty and consequences; do not use maximum effort by habit or lower an evidence-bound treatment's exact effort to save usage.
+## 3. Choose direct or delegated
 
-A bare `$delegate` invocation permits this choice. Honor explicit requests for a worker, exact models, strict pack governance or independent review. Direct execution uses ordinary host/project checks and is not a qualified pack route. Skip coordinator pack lookup for direct work; collect its lightweight local outcome through the helper and preserve the relevant artifact, regression, rendered UI/interaction, source and calculation checks described in [verification-policy.md](verification-policy.md), including any required independent review.
+Work directly when all four hold:
 
-For delegated work, follow **frontier coordination → worker → integration → frontier verification → targeted repair → acceptance** and the sections below. Stop in either mode when the requested quality and acceptance checks are satisfied and no material defect remains; do not add speculative polish or repeat completed reviews without new evidence.
+- the exact files and change are already known;
+- the diff would be shorter than the six-section work order;
+- no independent reviewer or fresh context is required;
+- verification is one existing command.
 
-## Classify and route
+Delegate only when all three hold:
 
-Use [task-classes.md](task-classes.md) and follow `routing_modes` before delegation:
+- the work is bounded by settled interfaces;
+- it needs more than one focused pass;
+- lookup returns a route (step 4).
 
-- `research`: read [focused research](research.md); distinguish supplied-source analysis from live source discovery and check actual source-access tools and route scope.
-- `full_project`: frontier planning and decomposition; settle interfaces and route bounded workstreams individually. A full project remains your responsibility through the requested outcome.
-- `ui_implementation`: frontier specifies the interface before delegation.
-- `hard_debugging`: frontier executes a minimal reproduction, captures the failure, diagnoses its cause and defines the precise fix. Resolve or report blocked reproduction before assigning implementation; source reading alone is insufficient.
-- `complex_implementation`: frontier settles architecture, interfaces and the implementation plan before assigning workers.
+Ambiguous or higher-risk work stays with you. Count exploration, packet writing, integration, verification, failed attempts and repairs as delegation cost; a cheaper first attempt is not a cheaper completion. Spend stronger reasoning on ambiguity and consequential decisions; never lower a route's exact effort to save usage. Direct work uses ordinary host and project checks and is not a pack route. A bare `$delegate` permits this choice; honour explicit requests for a worker, exact models or independent review.
 
-Read [pack-format.md](pack-format.md) for lookup and eligibility, the matching entries in [routing-pack.json](routing-pack.json), and the applicable [Claude](hosts/claude.md) or [Codex](hosts/codex.md) guide. Load other references only when their step applies. Read only the relevant routes and referenced treatments; keep provenance hashes out of worker packets.
+## 4. Look up a route
 
-Match scope, risk and constraints. Prefer qualified treatments, then matching installed task acceptance, then smoke extrapolation. Apply economics within that evidence level and preserve retained qualified incumbents. API-equivalent economics are a normalized expense proxy, not subscription billing. Never relabel a failed capability check as provisional eligibility.
+Run `lookup` first, passing your own model and effort as `coordinator`. A gap ends routing: report its code, keep useful planning, never manufacture a route. Do not open `routing-pack.json` or `pack-format.md` unless lookup is unavailable.
 
-Intersect every treatment with actual host models, efforts, tools and controls. Confirm an eligible frontier verifier before dispatch. Honor evidence scope, expiry and reviewer independence; disclose provisional use and material limits once. If no eligible worker/verifier remains, report the precise gap and preserve useful planning. Do not manufacture routes or run maintainer evaluations during the user's task.
+Use lookup's `workers` and `reviewers` order as given. When an entry's `evidence_tier` is `provisional`, say so once and quote `limitations`. Then confirm on the actual host with the [Claude Code](hosts/claude-code.md) or [Codex](hosts/codex.md) guide: the model is selectable, the effort is expressible (omit it when `not_applicable`) and a reviewer satisfies `review_rule`. An empty lane is an exact gap. When `refresh_due` is true, say so and continue with unexpired entries.
 
-## Delegate and integrate
+Safety rules:
 
-For substantial exploration, visual inspection, or a task-boundary handoff, read [context discipline](context-discipline.md).
+- The task must fit route.scope as returned by lookup, read literally; a task outside that scope is a gap even when class, risk and host match.
+- A host-reported substitution or an observed model or effort that contradicts the configured treatment rejects that treatment for this task; record the contradiction, never relabel it eligible.
 
-Give one worker a compact [delegation contract](delegation-contract.md), including settled decisions and acceptance checks. Scale the packet and checks to the work. The frontier owns architecture, UI judgment, boundaries and integration; workers implement.
+## 5. Delegate and integrate
 
-For independent workstreams, read [swarm-policy.md](swarm-policy.md). Default to at most three concurrent workers, with a normal ceiling of five further limited by the host/project. Settle interfaces and ownership first and use dependency-ordered waves.
+Give one worker a compact [work order](delegation-contract.md) with settled decisions and acceptance checks; its Route line carries `candidate_id`, `model`, `effort` and `serving` from lookup. You own architecture, UI judgment, boundaries and integration; workers implement. For substantial exploration or visual inspection read [context discipline](context-discipline.md); for independent workstreams read [swarm-policy.md](swarm-policy.md) (at most three concurrent workers by default).
 
-Inspect effective dispatch settings and record substitutions. Requested/configured and provider-observed settings are distinct. Omit unsupported effort overrides; unknown effort remains unknown.
+Record what the host actually launched; configured and observed settings stay separate, and unknown effort stays unknown. If a worker is unavailable or fails repeatedly without progress, re-run `lookup` with `failed_candidate_ids` naming it and take the new `workers` and `reviewers`; say why. Keep bounded repairs with the original worker; return architectural ambiguity to yourself. Do not quietly become the implementation worker or drop required independence.
 
-If unavailable, try the next eligible compiled treatment and explain the fallback briefly. Keep bounded repairs with the original worker. Repeated failure without progress or insufficient capability advances to another eligible treatment; architectural ambiguity returns to frontier planning. Do not silently make the frontier the implementation worker or bypass required independence.
+## 6. Verify
 
-## Verify, repair and deliver
+Apply [verification-policy.md](verification-policy.md). Frontier verification is mandatory for every delegated task. Verify it yourself only when lookup returned `coordinator_may_verify: true` for your own model and effort; otherwise launch a reviewer from `reviewers`, in a fresh process when `review_rule.fresh_context` is true. Inspect actual artifacts: the diff and tests, rendered UI and interactions, sources and calculations. Re-verify after every repair and after integration. Stop when acceptance is met and no material defect remains; no speculative polish or repeated review without new evidence.
 
-Apply [verification-policy.md](verification-policy.md). Frontier verification is mandatory. For low risk, the eligible frontier coordinator normally verifies directly; launch another reviewer when the route's model/family/context rules require it or the coordinator is ineligible.
+## 7. Finish and report
 
-Inspect actual artifacts and relevant tests, rendered UI/interaction evidence, source-supported claims or calculations. Verify the integrated result and every material correction. Keep worker and reviewer evidence tiers distinct.
-
-Deliver when acceptance is met and no material defect remains. Avoid repeated reviews, speculative polish and infrastructure work; respect scope and permissions.
-
-Record every attempt and final acceptance through the [local helper](local-learning.md), preserving the evidence requirements in [verification-policy.md](verification-policy.md). Report models/efforts, evidence tiers, meaningful fallbacks/repairs, verification and material limits. Report token/cost totals only when observed; distinguish measured economics from advertised-price proxies and unknown economics.
+Run the real verification once through `capture` when it is due, then call `finish` once at delivery: acceptance, `checks` referencing those captures (or one command the helper runs once), `inspected` for review, visual and source verdicts, and every attempt including failures. A delegated finish adds `pack_path` and the route digest from lookup. Report models and efforts actually used, provisional status, fallbacks and repairs, checks and material limits. Report tokens or costs only when observed. Never present a requested model as proof of the served model, or an estimate as a bill.

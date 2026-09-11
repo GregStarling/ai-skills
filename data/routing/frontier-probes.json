@@ -1,6 +1,6 @@
 {
   "schema_version": "frontier_probes.v2",
-  "targets_digest": "sha256:edac851c2db3bbeb9b05f66542e11712486f754c3d5b413649631601632b4942",
+  "targets_digest": "sha256:7862016b1fb1505a993e1942af001dd4c3816a684c4e222b6009f94fef71e43f",
   "probes": [
     {
       "provider": "openai",
@@ -9,9 +9,9 @@
       "effort": "high",
       "host_version": "codex-cli 0.154.0",
       "attempted": true,
-      "attempted_at": "2026-09-10T07:19:54.238Z",
+      "attempted_at": "2026-09-11T03:36:33.224Z",
       "availability": "available",
-      "reason": "Native CLI completed; bounded diagnostic evaluation passed independent artifact review.",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
       "invocation": "native_cli",
       "native_agent_status": "not_probed",
       "configured_model": "gpt-6-astra",
@@ -29,22 +29,22 @@
           "assurance": "host_configuration"
         },
         "execution_environment": "codex",
-        "evidence_digest": "sha256:f1db18079dbb0dae4c7bbb0ae3743bd15593546ec3d80b9cc5367c995ea985b4",
+        "evidence_digest": "sha256:0e862eb58fd761616f6129ad8f4fc9b73982504faf2c3483aeaac19509b30447",
         "limitations": [
           "No host fallback was configured; provider-side fallback state is not independently attested.",
           "Served model is not independently exposed by this host trace.",
           "Served effort is not independently exposed by this host trace."
         ]
       },
-      "identity_evidence_digest": "sha256:e374eff4416370d7aa4f520b539c8ef3beaa757fed65d5e18b344c949270ec10",
+      "identity_evidence_digest": "sha256:d9523c2fd218858486804222ef432b0f176abe7061dc80af125f80b428b950b8",
       "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:6ec05fc9e66920e4991f8220a51b16b91eb9e4ae418e98734aa616b3edaebb7a",
-      "stderr_digest": "sha256:696aef3f55c230191fe02632d5874ef0057390441739cb1afc3b7da83d9d54a7",
+      "stdout_digest": "sha256:cd0f34dae94c1984e4e801df469c9e9c7278e1d60667e480f5c2061df8b202a6",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "evaluation": {
         "status": "passed",
-        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
-        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
+        "review_digest": "sha256:d88a3fd6d9a997b6b726fa23c6c4faa587731084cdf1b9cd2ddbaee4d1699653",
+        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
       }
     },
     {
@@ -54,9 +54,9 @@
       "effort": "high",
       "host_version": "2.1.267 (Claude Code)",
       "attempted": true,
-      "attempted_at": "2026-09-10T07:19:54.235Z",
+      "attempted_at": "2026-09-11T03:36:45.621Z",
       "availability": "available",
-      "reason": "Native CLI completed; bounded diagnostic evaluation passed independent artifact review.",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
       "invocation": "native_cli",
       "native_agent_status": "not_probed",
       "configured_model": "claude-fable-5-1",
@@ -76,21 +76,21 @@
           "assurance": "host_configuration"
         },
         "execution_environment": "claude_code",
-        "evidence_digest": "sha256:2f9ac3e9abfe6788ca31ad8b208e858245fcc87be7ada021010fdeccf844e96e",
+        "evidence_digest": "sha256:81b5c4c6babe8c44628555d7d9e7492f56b6d62d004d919c1525f44fe81f9103",
         "limitations": [
           "No host fallback was configured; provider-side fallback state is not independently attested.",
           "Served effort is not independently exposed by this host trace."
         ]
       },
-      "identity_evidence_digest": "sha256:31ac85664d54478ba5880ea418a8fdc0e7838803ee993178cecf0154830cbacd",
+      "identity_evidence_digest": "sha256:a7f68a1e0384ebd66196b6d0aa684c15b6583de84478d1358ccc63d36942a96f",
       "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:2edf2c59cbfae8698868ab032a61cec997ca63889f3ec7ceef52669a707d2ed5",
+      "stdout_digest": "sha256:f5cea2b526f51b63c95003361e31373c318f8cca7f1596e9936a800cbe6b52ea",
       "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "evaluation": {
         "status": "passed",
-        "review_digest": "sha256:392f983b7d03a26698dae5f9d92a10a6f8e5653a09f5021376c9e844fd85cc94",
-        "note": "Fresh independent Opus 5 / high review read original source/test/trace, reran the failing test, checked the zero/nullish diagnosis and minimal fix, and verified no fixture mutation. Review binds actual trace, fixture, diagnosis and reviewer artifacts in data/routing/frontier-probe-reviews.json. This diagnostic pass alone grants no routing or governor qualification."
+        "review_digest": "sha256:d88a3fd6d9a997b6b726fa23c6c4faa587731084cdf1b9cd2ddbaee4d1699653",
+        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
       }
     }
   ]

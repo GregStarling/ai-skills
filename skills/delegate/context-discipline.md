@@ -16,8 +16,9 @@ of the evidence needed for acceptance.
 Give substantial file, log, or documentation investigations to a focused worker
 when noise isolation, independent parallel work, or model economics justify the
 coordination. Return findings, exact sources, and uncertainties. A single
-targeted search need not spawn an agent. Choose the underlying task's work shape
-using the entrypoint's direct-versus-delegated decision. For delegation, use an eligible route and the
+targeted search need not spawn an agent. Decide with the direct-versus-delegated
+rule in `SKILL.md` (step 3): four conditions for direct, three for delegated.
+For delegation, use the route lookup returned and the
 [existing packet](delegation-contract.md), rather than copying the entire chat.
 
 Judge the whole workflow by accepted quality, completion time, and observable

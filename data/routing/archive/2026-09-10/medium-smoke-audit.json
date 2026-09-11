@@ -1,0 +1,27 @@
+{
+  "schema_version": "medium_smoke_audit.v1",
+  "source_digest": "sha256:4b4106b2336048e1f48a64831dccc1f127746de255dd95cc57a2b5e35df626a5",
+  "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
+  "reviews": [
+    {
+      "run_id": "claude-1789006044123",
+      "run_digest": "sha256:9403f3f02ddca1e5a5ee3c5c9b84523e05d123345daa17748ef220057193a1d7",
+      "worker_identity": "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+      "reviewer_identity": "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057",
+      "reviewer_request_digest": "sha256:d2b05c31d67ad1b7840e3c5f0e522157bfbabb551592520ea2788c59ab2e906f",
+      "reviewer_execution_digest": "sha256:2dd28c2a5242ef5a496917d660f754507493507e44fb99bed57f89de1f2a949e",
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "fresh_artifact_only_context": true
+    },
+    {
+      "run_id": "claude-haiku-1789006119985",
+      "run_digest": "sha256:4c5724d9d898dc5c239b649e4bff79e43766fadd3f550c7479f626805fe5ccd7",
+      "worker_identity": "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324",
+      "reviewer_identity": "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057",
+      "reviewer_request_digest": "sha256:c2d588d728ef2fbd7524f6588cdfba33cfffc4620655c0bd8b9ec659b601ac5b",
+      "reviewer_execution_digest": "sha256:63a9d1892694f904f55826ccdb5575289b795c79dbfcf3f317b038705f0c73bc",
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "fresh_artifact_only_context": true
+    }
+  ]
+}

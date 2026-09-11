@@ -6,6 +6,7 @@ import {afterEach,describe,expect,it} from 'vitest';
 
 const harness=await import(pathToFileURL(resolve('scripts/verify/installed-delegate.mjs')).href);
 const cases=await import(pathToFileURL(resolve('scripts/verify/portable-cases.mjs')).href);
+const {folderDigest}=await import(pathToFileURL(resolve('skills/delegate/scripts/local-learning.mjs')).href);
 const temporary:string[]=[];
 async function project(){
  const directory=await mkdtemp(join(tmpdir(),'delegate-existing-project-'));temporary.push(directory);
@@ -22,6 +23,8 @@ describe('installed Delegate in an existing isolated project',()=>{
   expect(await Promise.all(names.map(name=>readFile(join(directory,name),'utf8')))).toEqual(before);
   expect(prepared.fixtureRoot).toBe(join(await realpath(directory),'.delegate/fixtures/mechanical'));
   expect(await harness.folderDigests(prepared.skillPath)).toEqual(await harness.folderDigests(resolve('skills/delegate')));
+  expect(prepared.skill_folder_digest).toBe(await folderDigest(resolve('skills/delegate')));
+  expect(prepared.skill_folder_digest).toMatch(/^sha256:/);
   expect((await cases.gradeCase('mechanical',prepared.fixtureRoot,{behaviorOnly:true})).passed).toBe(true);
   expect((await cases.gradeCase('mechanical',prepared.fixtureRoot)).passed).toBe(false);
  });
@@ -116,3 +119,62 @@ describe('installed Delegate in an existing isolated project',()=>{
   expect(await readdir(outside)).toEqual(before);
  });
 });
+
+describe('offline matched harness contracts',()=>{
+ it.each(['claude','codex'])('dry run for %s preserves flags and does not probe the host',async host=>{
+  const parent=await project();
+  const trial=await harness.installedTrial(host,'tinybug',{projectRoot:parent,outputDirectory:join(parent,'evidence'),mode:'direct',dryRun:true,timeoutMs:600000});
+  expect(trial.manifest.host_version).toBeNull();expect(trial.manifest.thread_id).toBeNull();
+  expect(trial.manifest.instruction_variant).toBe('current');
+  expect(trial.prompt).toContain('finish-input.json');expect(trial.prompt).not.toContain('reminder-repeat-result.json');
+  expect(trial.prompt).not.toContain('For trace-bound renewal acceptance');
+  if(host==='claude')expect(trial.args.slice(-3)).toEqual(['--max-budget-usd','12','--forward-subagent-text']);
+  else expect(trial.args).toEqual(['exec','--ignore-user-config','--ignore-rules','--skip-git-repo-check','-C',trial.prepared.directory,'-s','workspace-write','-m','gpt-5.5','-c','model_reasoning_effort="high"','--json','-']);
+ });
+ it('binds renewal inspection to each owned artifact in an offline plan',async()=>{
+  const parent=await project();
+  const trial=await harness.installedTrial('codex','tinybug',{projectRoot:parent,outputDirectory:join(parent,'evidence'),dryRun:true,traceBoundInspection:true});
+  expect(trial.prompt).toContain(`after the final edit inspect each owned artifact individually: ${join(trial.prepared.fixtureRoot,'quantity.mjs')}`);
+  expect(trial.prompt).toContain('Inspect all final bytes before finish');
+ });
+ it('classifies provider messages, progress and budget exhaustion without treating grader timestamps as progress',()=>{
+  const classify=(events:any[],extra={})=>harness.classifyTrial({host:'codex',stdout:events.map(e=>JSON.stringify(e)).join('\n'),fixtureRoot:'/trial/candidate',...extra});
+  expect(classify([{type:'error',message:'You have hit your usage limit'}])).toBe('blocked_provider_limit');
+  expect(classify([{type:'turn.failed',error:{message:'Service unavailable'}}])).toBe('blocked_provider_error');
+  expect(classify([{type:'error',message:'rate limit'},{item:{type:'file_change'}}])).toBe('pending_frontier_trace_review');
+  expect(classify([{type:'result',subtype:'error_max_budget_usd',is_error:true}],{host:'claude'})).toBe('harness_budget_cap');
+  expect(classify([{type:'error',message:'rate limit'}],{before:{status:'behavioral_failure',reportPath:'a'},after:{status:'behavioral_failure',reportPath:'b'}})).toBe('blocked_provider_limit');
+  expect(classify([{type:'assistant',message:{content:[{name:'Edit',input:{file_path:'/other/file'}}]}},{type:'error',message:'rate limit'}],{host:'claude'})).toBe('blocked_provider_limit');
+ });
+ it('selects helper commands from the copied source',()=>{
+  expect(harness.helperInstructions("if(command==='start'){} if(command==='record'){}")).toEqual({helper_commands:['record','start'],instruction_variant:'legacy'});
+  expect(harness.helperInstructions('if (command === "finish") {}').instruction_variant).toBe('current');
+ });
+});
+
+// This integration uses only the already prepared dependency clone; CI has neither source nor dist.
+const {existsSync}=await import('node:fs');
+const deps=resolve('artifacts/direct-vs-delegated/deps-b962c1ac/node_modules');
+it.skipIf(!existsSync(resolve('dist/evaluation/index.js'))||!existsSync('/Users/gregpro/foreman/.git')||!existsSync(deps))('prepares equal harvested baselines and isolates dependencies offline',async()=>{
+ const harvested={fixtureId:'foreman-t920-derived-gate-id',sourceRepository:'/Users/gregpro/foreman',dependencyDirectory:deps};
+ const parent=await project();
+ const a=await harness.prepareInstalledTrial('codex',harvested.fixtureId,{harvested,temporaryDirectory:parent,mode:'direct'});
+ const b=await harness.prepareInstalledTrial('codex',harvested.fixtureId,{harvested,temporaryDirectory:parent,mode:'delegated'});
+ expect(a.starting_artifact_digest).toBe(b.starting_artifact_digest);
+ const {lstat}=await import('node:fs/promises');
+ expect((await lstat(join(a.directory,'node_modules'))).isSymbolicLink()).toBe(false);
+ await writeFile(join(a.directory,'node_modules/m3-isolation-marker'),'local');
+ expect(existsSync(join(deps,'m3-isolation-marker'))).toBe(false);
+ expect(existsSync(join(a.fixtureRoot,'AGENTS.md'))).toBe(false);
+ expect(existsSync(join(a.fixtureRoot,'.delegate'))).toBe(false);
+ const trial=await harness.installedTrial('codex',harvested.fixtureId,{harvested,preparedTrial:a,mode:'direct',dryRun:true,outputDirectory:join(parent,'evidence')});
+ const baseline=JSON.parse(await readFile(join(trial.destination,'baseline.json'),'utf8'));
+ expect(baseline.before.status).toBe('behavioral_failure');
+ expect(baseline.before.result.checks.find((c:any)=>c.check_id==='scope').passed).toBe(true);
+ expect(trial.prompt).toContain('Evaluation-only scope exception: treat the bounded_implementation');
+ expect(trial.prompt).toContain('node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json');
+ expect(trial.prompt).toContain('Do not run npm install or modify node_modules');
+ const start=JSON.parse(await readFile(join(trial.manifest.evaluation_directory,'start-input.json'),'utf8'));
+ expect(start.scope).toBe('harvested-'+harvested.fixtureId);expect(start.task_class).toBe('bounded_implementation');
+ await expect(harness.prepareInstalledTrial('codex',harvested.fixtureId,{temporaryDirectory:parent,harvested:{...harvested,dependencyDirectory:'/Users/gregpro/foreman/node_modules'}})).rejects.toThrow('FIXTURE_DEPENDENCIES_INSIDE_SOURCE');
+},120000);

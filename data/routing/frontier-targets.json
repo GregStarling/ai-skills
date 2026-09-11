@@ -1,6 +1,6 @@
 {
   "schema_version": "frontier_targets.v1",
-  "discovered_at": "2026-09-10T04:09:41.251Z",
+  "discovered_at": "2026-09-11T02:29:16.954Z",
   "targets": [
     {
       "provider": "openai",
@@ -8,10 +8,10 @@
       "model_id": "gpt-6-astra",
       "effort": "high",
       "source": {
-        "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
-        "checked_at": "2026-09-10T04:09:41.250Z",
-        "content_digest": "sha256:c799d5053fa337ca714e75296a6fbee1e33648ea9c872aeb41c5c820663b1b43",
-        "claim": "Provider identifies GPT-6 Astra as its most capable model for demanding end-to-end work."
+        "url": "https://learn.chatgpt.com/docs/models",
+        "checked_at": "2026-09-11T02:29:16.954Z",
+        "content_digest": "sha256:f4ffe196ccff81a40e1ff1f80d97ddd0c9523bb01b1716f1bd5a8aa4836bda23",
+        "claim": "Official model guidance identifies Astra as its most capable model and lists Codex CLI availability."
       }
     },
     {
@@ -20,10 +20,10 @@
       "model_id": "claude-fable-5-1",
       "effort": "high",
       "source": {
-        "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
-        "checked_at": "2026-09-10T04:09:41.232Z",
-        "content_digest": "sha256:bdb4c57790486f222f57ffeccddd875626d99bf0620532d28d5d2d1faa12febb",
-        "claim": "Provider identifies Fable5.1 as its latest higher-end model for demanding reasoning and long-horizon work; Opus5 remains the recommended starting point for most workloads."
+        "url": "https://platform.claude.com/docs/en/models/overview",
+        "checked_at": "2026-09-11T02:29:16.954Z",
+        "content_digest": "sha256:8ef5c1a2849777d61f06e7e98a59c77b98bc51945ef65aac880c5e7a58e6b726",
+        "claim": "Official model comparison identifies Fable 5.1 for demanding reasoning and long-horizon agentic work, with Opus 5 the starting point for most workloads."
       }
     }
   ]

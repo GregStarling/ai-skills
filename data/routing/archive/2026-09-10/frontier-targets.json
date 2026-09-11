@@ -1,0 +1,30 @@
+{
+  "schema_version": "frontier_targets.v1",
+  "discovered_at": "2026-09-10T04:09:41.251Z",
+  "targets": [
+    {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6-astra",
+      "effort": "high",
+      "source": {
+        "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
+        "checked_at": "2026-09-10T04:09:41.250Z",
+        "content_digest": "sha256:c799d5053fa337ca714e75296a6fbee1e33648ea9c872aeb41c5c820663b1b43",
+        "claim": "Provider identifies GPT-6 Astra as its most capable model for demanding end-to-end work."
+      }
+    },
+    {
+      "provider": "anthropic",
+      "host": "claude",
+      "model_id": "claude-fable-5-1",
+      "effort": "high",
+      "source": {
+        "url": "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+        "checked_at": "2026-09-10T04:09:41.232Z",
+        "content_digest": "sha256:bdb4c57790486f222f57ffeccddd875626d99bf0620532d28d5d2d1faa12febb",
+        "claim": "Provider identifies Fable5.1 as its latest higher-end model for demanding reasoning and long-horizon work; Opus5 remains the recommended starting point for most workloads."
+      }
+    }
+  ]
+}

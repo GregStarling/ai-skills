@@ -27,7 +27,7 @@ export async function snapshot(directory:string):Promise<FileSnapshot> {
   const files:FileSnapshot = {};
   async function visit(path:string):Promise<void> {
     for (const name of (await readdir(path)).sort()) {
-      if (path === directory && name === '.git') continue;
+      if (path === directory && (name === '.git' || name === 'node_modules')) continue;
       const absolute=join(path,name), local=relative(directory,absolute), info=await lstat(absolute);
       if (info.isSymbolicLink()) files[local]={digest:hashBytes(await readlink(absolute)),mode:info.mode&0o777,type:'symlink'};
       else if (info.isDirectory()) await visit(absolute);

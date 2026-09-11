@@ -1,0 +1,4 @@
+{"at":"2026-09-10T00:00:00Z","line":"{\"type\":\"thread.started\",\"thread_id\":\"redacted-1\"}"}
+{"at":"2026-09-10T00:00:01Z","line":"{\"type\":\"item.started\",\"item\":{\"id\":\"redacted-2\",\"type\":\"collab_tool_call\",\"tool\":\"spawn_agent\",\"sender_thread_id\":\"redacted-1\",\"receiver_thread_ids\":[],\"prompt\":\"[redacted bounded worker packet]\",\"status\":\"in_progress\"}}"}
+{"at":"2026-09-10T00:00:02Z","line":"{\"type\":\"item.completed\",\"item\":{\"id\":\"redacted-2\",\"type\":\"collab_tool_call\",\"tool\":\"spawn_agent\",\"sender_thread_id\":\"redacted-1\",\"receiver_thread_ids\":[\"redacted-3\"],\"prompt\":\"[redacted bounded worker packet]\",\"status\":\"completed\"}}"}
+{"at":"2026-09-10T00:00:03Z","line":"{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":686277,\"cached_input_tokens\":621184,\"output_tokens\":6765,\"reasoning_output_tokens\":1109}}"}

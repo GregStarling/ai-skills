@@ -84,3 +84,7 @@ native capture/adapters, qualification/receipt/refresh/binding/routing integrati
 probe/review scripts and evidence, portable instructions, adversarial tests and
 regenerated synthetic binding/schema fixtures. The existing GitHub Actions
 workflow validates the published commit; its run link is supplied with delivery.
+
+## Addendum 2026-09-10: report location for later runs
+
+Appended; nothing above was edited. From commit `89c2858` the release-proof script writes each run write-once to `docs/evidence/v5-validation/<generated_at>-v5.json` and never touches `data/routing/v5-validation.json`, which remains the 2026-09-10 result linked above. The current pack, folder digests and evidence generations are indexed in [validation-status.md](validation-status.md).

@@ -61,3 +61,17 @@ The v4 `qualify` function applies task count, execution environment, runtime sna
 Once actual data clears those rules, feed the returned worker/reviewer selection envelopes to `compile-routing-pack`. The result may add qualified routes alongside provisional ones. No separate promotion algorithm, receipt-count shortcut or automatic replacement of an incumbent exists.
 
 Under v5, missing served effort/model telemetry alone no longer prevents low/medium subscription qualification. Independently preserved accepted configuration, process, host version and trace evidence can establish policy-sufficient assurance; receipt-written labels cannot. See [identity assurance](v5-identity-assurance.md). Missing subscription dollar cost is also not a capability gap. Many public skill classes also lack declared governor evaluation buckets; those require explicit policy and scoped evaluation evidence. Archive useful runs now, and keep these limitations visible. See [v4 economics](v4-economics.md) for the separate normalized pricing contract.
+
+## Maintainer rules moved out of the consumer folder (2026-09-10)
+
+The following text lived in `skills/delegate/verification-policy.md` until the M1.5 rewrite. It is maintainer guidance and does not bind the consumer.
+
+The helper now writes `delegate_receipt.v3` locally (v2 rows still load; v1 is the maintainer-ingestible shape). Its append-only local events preserve originals and its returned `receipt_path` names the canonical export. Historical v1 receipts remain importable but are not the format for new helper records. Direct and local v2/v3 records cannot be used as governor qualification without a separately supported governed evidence workflow.
+
+The helper records task/run identity, actual times, full attempt history, pack binding for delegated work, installed-folder binding (`skill_folder_digest` and `guidance_digest`), checks and final acceptance. A coordinator acting as verifier records its actual routed identity and an inspected review verdict. These are local execution records, not automatic qualification or claims of billed savings.
+
+Maintainers archive receipt versions and independently validate those sources before counting a run; a final accepted receipt cannot make an earlier failed treatment successful. Assign a stable `task_id` when work starts; preserve it across repairs and intentional challenger replays of that same starting task. Retain the starting artifact/baseline digest, task scope and native trace/check/review references when the host exposes them. Missing lineage remains unknown.
+
+Record the actual `execution_environment` (`claude_code`, `codex`, or `api`; `unknown` if unavailable). An API result and a subscription-host result have distinct provenance even when model and effort match. Billed dollars may remain null without implying lack of capability. Any attached API-equivalent economics are a separately sourced relative-cost proxy, never the user's subscription bill; raw token count alone cannot establish the cheaper treatment.
+
+Preserve native request/configuration, host version, process and trace references when available. Maintainer validators derive v5 identity assurance from those sources; the receipt must not self-attest configuration or served identity. Keep configured values separate from observed values, and preserve contradictions and unknown provider fallback behavior.

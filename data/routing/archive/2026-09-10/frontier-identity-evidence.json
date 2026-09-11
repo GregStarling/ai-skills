@@ -1,0 +1,205 @@
+{
+  "sha256:31ac85664d54478ba5880ea418a8fdc0e7838803ee993178cecf0154830cbacd": {
+    "schema_version": "frontier_identity_evidence.v1",
+    "candidate": {
+      "schema_version": "candidate.v1",
+      "candidate_id": "frontier_claude_high",
+      "provider": "anthropic",
+      "model_id": "claude-fable-5-1",
+      "snapshot_id": "claude-fable-5-1",
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use",
+        "json_schema"
+      ],
+      "provenance": {
+        "registry_id": "frontier_probe_targets",
+        "model_record_id": "frontier_claude",
+        "registry_content_digest": "sha256:f2ed67f0b3667c889510470c8a5599867b62bc285ef4d3ba2d55dc805f4ca21a"
+      }
+    },
+    "report": {
+      "schema_version": "runtime_report.v1",
+      "report_id": "frontier_claude_1789024807335",
+      "provider": "anthropic",
+      "execution_environment": "claude_code",
+      "candidate_id": "frontier_claude_high",
+      "started_at": "2026-09-10T07:19:54.235Z",
+      "completed_at": "2026-09-10T07:20:07.333Z",
+      "command": {
+        "executable": "claude",
+        "args": [
+          "-p",
+          "--model",
+          "claude-fable-5-1",
+          "--effort",
+          "high",
+          "--output-format",
+          "stream-json",
+          "--verbose",
+          "--no-session-persistence",
+          "--setting-sources",
+          "",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--permission-mode",
+          "dontAsk",
+          "--tools",
+          "Read,Bash",
+          "--allowedTools",
+          "Read,Bash",
+          "--max-budget-usd",
+          "2"
+        ],
+        "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "signal": null,
+      "timeout_ms": 90000,
+      "stdout_digest": "sha256:2edf2c59cbfae8698868ab032a61cec997ca63889f3ec7ceef52669a707d2ed5",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "native_evidence": {
+        "request_digest": "sha256:64f140fce98ffb3da330e04e1dd9f357ef3b578338c981cc82792302f0ebf202",
+        "process_digest": "sha256:5cd85de862aaff3a0782d08b04288dcda422262786c29644cd23d5530a99a0e4",
+        "version_digest": "sha256:8af323716e94a684dd2faf7e0720ec75ad20db3791997bd6a6fb7eac59c0a5da"
+      },
+      "observed_identity": {
+        "model_id": "claude-fable-5-1",
+        "source": "runtime_report"
+      }
+    },
+    "sources": {
+      "sha256:64f140fce98ffb3da330e04e1dd9f357ef3b578338c981cc82792302f0ebf202": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"claude_code\",\n  \"candidate_identity\": \"sha256:affa5083b3d460f7ecb479a752fd78bc0dbc512d931b07d73e47b3c500795ea4\",\n  \"command\": {\n    \"executable\": \"claude\",\n    \"args\": [\n      \"-p\",\n      \"--model\",\n      \"claude-fable-5-1\",\n      \"--effort\",\n      \"high\",\n      \"--output-format\",\n      \"stream-json\",\n      \"--verbose\",\n      \"--no-session-persistence\",\n      \"--setting-sources\",\n      \"\",\n      \"--strict-mcp-config\",\n      \"--mcp-config\",\n      \"{\\\"mcpServers\\\":{}}\",\n      \"--permission-mode\",\n      \"dontAsk\",\n      \"--tools\",\n      \"Read,Bash\",\n      \"--allowedTools\",\n      \"Read,Bash\",\n      \"--max-budget-usd\",\n      \"2\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2\"\n  },\n  \"prompt_digest\": \"sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": \"high\",\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": \"claude-fable-5-1\",\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/frontier-probes/1789024794210/claude/environment-controls.json\",\n      \"content_digest\": \"sha256:5f2c714fe1abdf8788e6bb21e90fd00360de73e2250c111d46856e6724b4efba\"\n    }\n  ]\n}\n",
+      "sha256:5cd85de862aaff3a0782d08b04288dcda422262786c29644cd23d5530a99a0e4": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:64f140fce98ffb3da330e04e1dd9f357ef3b578338c981cc82792302f0ebf202\",\n  \"started_at\": \"2026-09-10T07:19:54.235Z\",\n  \"completed_at\": \"2026-09-10T07:20:07.333Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:2edf2c59cbfae8698868ab032a61cec997ca63889f3ec7ceef52669a707d2ed5\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+      "sha256:8af323716e94a684dd2faf7e0720ec75ad20db3791997bd6a6fb7eac59c0a5da": "2.1.267 (Claude Code)\n",
+      "sha256:2edf2c59cbfae8698868ab032a61cec997ca63889f3ec7ceef52669a707d2ed5": "{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2\",\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"tools\":[\"Bash\",\"Read\"],\"mcp_servers\":[],\"model\":\"claude-fable-5-1\",\"permissionMode\":\"dontAsk\",\"slash_commands\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\",\"advisor\",\"agents\",\"auto-mode-setup\",\"autocompact\",\"clear\",\"color\",\"compact\",\"config\",\"context\",\"effort\",\"fast\",\"heapdump\",\"init\",\"mcp\",\"import\",\"model\",\"__remote-workflow\",\"workflow-launch-exec\",\"reload-plugins\",\"reload-skills\",\"rename\",\"ultrareview\",\"security-review\",\"usage-credits\",\"extra-usage\",\"usage\",\"insights\",\"recap\",\"skill-doctor\",\"goal\",\"design-consent\",\"design-revoke\",\"list-agents\",\"team-onboarding\"],\"terminal_slash_commands\":[\"doctor\",\"color\",\"reload-plugins\"],\"apiKeySource\":\"none\",\"claude_code_version\":\"2.1.267\",\"output_style\":\"default\",\"agents\":[\"claude\",\"Explore\",\"general-purpose\",\"Plan\",\"statusline-setup\"],\"skills\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\"],\"plugins\":[],\"capabilities\":[\"interrupt_receipt_v1\",\"interrupt_cancel_queued_v1\",\"msg_lifecycle_v1\"],\"analytics_disabled\":false,\"product_feedback_disabled\":false,\"uuid\":\"bcb13749-db57-4dca-9d54-918911e449c8\",\"memory_paths\":{\"auto\":\"/Users/gregpro/.claude/projects/-private-var-folders-2y-761-mj9n5bd9pk43mnybw9gw0000gn-T-frontier-probe-claude-WZfRl2/memory/\"},\"messaging_socket_path\":\"/tmp/cc-socks/50405.sock\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\"}\n{\"type\":\"rate_limit_event\",\"rate_limit_info\":{\"status\":\"allowed\",\"resetsAt\":1789037400,\"rateLimitType\":\"five_hour\",\"overageStatus\":\"rejected\",\"overageDisabledReason\":\"org_level_disabled\",\"isUsingOverage\":false,\"unifiedWindows\":{\"five_hour\":{\"utilization\":0.08,\"resetsAt\":1789037400},\"seven_day\":{\"utilization\":0.26,\"resetsAt\":1789196400}}},\"uuid\":\"6f542841-51cb-47b6-bc99-8edff356ffff\",\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSbtc2u2r1ZcndEBt3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'll read the source file and run the test in parallel.\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":4303,\"cache_read_input_tokens\":2412,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":4303},\"output_tokens\":1,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"db4dbdcb-42d2-463b-99d4-a6ee39ee757d\",\"timestamp\":\"2026-09-10T07:19:56.722Z\",\"request_id\":\"req_011CeuMSa9fni3VX6hhvMiBo\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSbtc2u2r1ZcndEBt3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_01QsJMRYeVjsvDxMZJ1d6xLq\",\"name\":\"Read\",\"input\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.mjs\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":4303,\"cache_read_input_tokens\":2412,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":4303},\"output_tokens\":1,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"5807db69-44ba-493b-9db8-2ea4153aa643\",\"timestamp\":\"2026-09-10T07:19:57.312Z\",\"request_id\":\"req_011CeuMSa9fni3VX6hhvMiBo\"}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"tool_use_id\":\"toolu_01QsJMRYeVjsvDxMZJ1d6xLq\",\"type\":\"tool_result\",\"content\":\"1\\texport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n2\\t\"}]},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"713aae66-3e10-472e-97ac-e937e8157755\",\"timestamp\":\"2026-09-10T07:19:57.323Z\",\"tool_use_result\":{\"type\":\"text\",\"file\":{\"filePath\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.mjs\",\"content\":\"export const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n\",\"numLines\":2,\"startLine\":1,\"totalLines\":2}}}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSbtc2u2r1ZcndEBt3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_015xQKu5Ui25QyHS3r4XAXkJ\",\"name\":\"Bash\",\"input\":{\"command\":\"node quantity.test.mjs 2>&1\",\"description\":\"Run the quantity test file\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":4303,\"cache_read_input_tokens\":2412,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":4303},\"output_tokens\":1,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"cdcea115-2909-49b2-8287-febcf5ed252b\",\"timestamp\":\"2026-09-10T07:19:58.503Z\",\"request_id\":\"req_011CeuMSa9fni3VX6hhvMiBo\"}\n{\"type\":\"rate_limit_event\",\"rate_limit_info\":{\"status\":\"allowed\",\"resetsAt\":1789037400,\"rateLimitType\":\"five_hour\",\"overageStatus\":\"rejected\",\"overageDisabledReason\":\"org_level_disabled\",\"isUsingOverage\":false,\"unifiedWindows\":{\"five_hour\":{\"utilization\":0.08,\"resetsAt\":1789037400},\"seven_day\":{\"utilization\":0.26,\"resetsAt\":1789196400},\"seven_day_overage_included\":{\"utilization\":0.41,\"resetsAt\":1789196400}}},\"uuid\":\"f7fd3dc5-bd89-4096-9927-33357144e269\",\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\"}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"type\":\"tool_result\",\"content\":\"Exit code 1\\nnode:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\",\"is_error\":true,\"tool_use_id\":\"toolu_015xQKu5Ui25QyHS3r4XAXkJ\"}]},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"56c3b305-95bb-45cf-8052-00a0d32ada15\",\"timestamp\":\"2026-09-10T07:19:58.890Z\",\"tool_use_result\":\"Error: Exit code 1\\nnode:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSva1GbKAmiKoovKEA\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"thinking\",\"thinking\":\"\",\"signature\":\"CAQS2QUKEAgRGAI4AUIIdGhpbmtpbmcSDLuidZON29dCqbCS1xoMbrDTWecuK1zT+AJeIjBnCrdgoPqUJ3Z1+XImK3rLIGPkZOcFoXN+D2ZKiyiYJeBf1Qm+lKfTChWp0clzkL8q9gQPmzSpOZHFIxc//iGTuzLJO3gjF7gpi7d7GNhho03OawsA85fHc8mmrOXsmOlvoVADIMzK2r6ODagLKrwRbi+13/V27lTanYiz0ekLYUF0NJ/VVUiU2NRdRziJrj+DgDbI/WGAe8ghTklmJkmqmJKqGv3PsNQ528EF/KQkX4oj2lbdG57e91hZj8MfgQDiAXtyJDcmDs/NYUZPXfYm82Keiv2xKWRu+oBGwhpWmqrlVCRVTwhouGrBwxsO0p2alvB0iUrSeqTk2HeyNrklF9Q9pMjaT1xYonXXggMmDNcBm8L6WvS9hnzWczlIG9muzeCrC6GI3fpn1XHWr2Hof77eQvB6Mp3AnyFUjcOaEPpXzhcPgwklwarlsfW2ggvm5Qe3S8Eyl5H23pwruQqeG15dU9IqubB3QnjVH+MOYC/Ez6smiLuOlYJ/ylXpYBHTXL6E9VoAH7hM7e8jGWTmAoKzPlzL+pCwDgUnA+aO8sb8fa8HQNSecIgxequirptz7NseKlGloDXUsLCoTgAsnJQTKu/0kDNmI5+Mmed4A4xuQWHgb3MO0F4i1Km/p30ulzDbDq5xY4zIe+Zbxes6d+3jQg2y1+LEw5LWWn/6G/JXzUaoKOqZEpcrJjZg/mKdDBwsYsUBwNuU7pt8Qwzg9l/U8Uy5FAkdl1FBM1W/qZynCaEx2cCnRgJUvaSbx9q0ysrvcF3ZjyTWSv71XxQC41jKCGKY4JHJVtYibd4/fm9IaLXozQ9fuV2ogyA0D09nsqw50lT61ajEiQwi47LgHu3tPzf6P3m/5/ciNGgzEsWBAR46KTjlrGLqv9tje5LKLAUKOAjIPCEYAQ==\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":692,\"cache_read_input_tokens\":6715,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":692},\"output_tokens\":3,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"49038886-6678-46e3-98b8-a7a78b4a7794\",\"timestamp\":\"2026-09-10T07:20:01.868Z\",\"request_id\":\"req_011CeuMSsziZYr5s4Tj7kdAT\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSva1GbKAmiKoovKEA\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"thinking\",\"thinking\":\"\",\"signature\":\"CAQS6AUKEQgRGAI4AUIJbmFycmF0aW9uEgxtcN+L5k/sCfCIVZAaDBRhViCp+cCW0v+o1SIw2grOfNu37Ao4Q+jZ9KEN2t2fKptu2D0RT6PMQrr1HkcvpZlwb1fXwBSHEiRt3yh+KoQFP+bFoD0xcggtxPcJgNJS/5ElPvRsYF2i9Om5fiLo8Jz18VxZS1LVbxTFgzikoYGjsRhSEZcVoZyAAbMH5qL8hegJ+MbF1UnshEzowdb7/DZOs5Gl+WVDE40+wPo9X7XMPZkMzjbBcELWhQk5bCMj0Stl26scA6snLzrnqBmEs41Sm4UQz1wJfuqrff7NcouysS9b6DB2sBSufPAxlrFzsyXiaufyMKZbBYbjSBSsF7iEzodgRUbJKxpYgJzhKiOC4V9MgWaIsTYDQTAMd7/1lPWWdQT9pC+Rr5BIjaRb+diPkGmObg6INCEiiZ3zuKkqRR4zO1Nr1NvrwHvFL9jSabbJCkhXpEMzfVjMA4qmmx1uUL7/eIc7ORH3Sc53QVoEhRGkJgp5Xc9R0d5HT7brWQ9ny4/QSqqzgpyymimRZ7avb5fWyh7Rrt+BwkoIAAHua3i6xeLUk/9AWfEckWZyP9df+jm4pl0iN77zenVZL9tUq4ZoqPkOMsxay/dfws1EJjQiIE+uVVWzN435WLU80XLS4PKW3BuMWqoiwQGz5zwQBTkuv3Ku77Wju0gejKBG+8ZwBypOJg1DUo+TD3UW73N+l29cYk8cXjWEttXeZvnQqM0VCuBLlTuDkfazAWcEueAvTFnGMF/vFv8kvSE773VX9rJNEMgqAux2vPmm4WubGvvxNLGuI2Nmvtx00QSEvB3FBeZGvaWeOvQ0U005W0L7EaWcWeGvtA80NXG8qe03+RZPl4nl0u4HSTLMyNVvRMFWnqy4iXzC/ATgZ/49B4cwd7wE4Q55lV45oKg6Hwnkfz44rz+dygR8zstxkonMq/7pCD4nidvZO71nBBS5Xyo6nlEYAQ==\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":692,\"cache_read_input_tokens\":6715,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":692},\"output_tokens\":3,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"fb1db507-8dda-428b-95fa-d1766298a19c\",\"timestamp\":\"2026-09-10T07:20:01.870Z\",\"request_id\":\"req_011CeuMSsziZYr5s4Tj7kdAT\",\"narration_block_indexes\":[0]}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMSva1GbKAmiKoovKEA\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_013qhxdynYfTbFV4QHCadrA2\",\"name\":\"Read\",\"input\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.test.mjs\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":692,\"cache_read_input_tokens\":6715,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":692},\"output_tokens\":3,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"0b7941d0-fc8e-4cb8-aea7-df587e1cea0e\",\"timestamp\":\"2026-09-10T07:20:02.604Z\",\"request_id\":\"req_011CeuMSsziZYr5s4Tj7kdAT\"}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"tool_use_id\":\"toolu_013qhxdynYfTbFV4QHCadrA2\",\"type\":\"tool_result\",\"content\":\"1\\timport assert from 'node:assert/strict';\\n2\\timport {totalQuantity} from './quantity.mjs';\\n3\\tassert.equal(totalQuantity([{quantity:0},{quantity:2}]),2);\\n4\\t\"}]},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"854a7b5f-d011-4bcd-9ae8-07eb124562c5\",\"timestamp\":\"2026-09-10T07:20:02.608Z\",\"tool_use_result\":{\"type\":\"text\",\"file\":{\"filePath\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-WZfRl2/quantity.test.mjs\",\"content\":\"import assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\nassert.equal(totalQuantity([{quantity:0},{quantity:2}]),2);\\n\",\"numLines\":4,\"startLine\":1,\"totalLines\":4}}}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CeuMTCWTeqWgT6HoKHBiD\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"**REPAIR**\\n\\n**Cause:** `quantity.mjs:1` uses `item.quantity || 1`. The logical OR treats every falsy value as missing, so an explicit quantity of zero is replaced by one. The test sums quantities zero and two and expects two, but gets three because the zero was counted as one.\\n\\n**Fix:** Replace the logical OR with the nullish coalescing operator, which only substitutes the default for null or undefined:\\n\\n```js\\nexport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity ?? 1), 0);\\n```\\n\\nThis is a one-token change on line 1. It preserves explicit zero and still defaults null and undefined quantities to one, as required. No files were edited per your instructions.\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":319,\"cache_read_input_tokens\":7407,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":319},\"output_tokens\":243,\"service_tier\":\"standard\",\"inference_geo\":\"not_available\"},\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"uuid\":\"64545e8c-ee68-40e6-a55d-153b237e9e8f\",\"timestamp\":\"2026-09-10T07:20:07.047Z\",\"request_id\":\"req_011CeuMTA1PKbn1hZRx7g3vh\"}\n{\"duration_api_ms\":12865,\"stop_reason\":\"end_turn\",\"session_id\":\"8a1aa339-10db-4fee-9b26-615d4594422e\",\"total_cost_usd\":0.1472125,\"usage\":{\"input_tokens\":66,\"cache_creation_input_tokens\":5314,\"cache_read_input_tokens\":16534,\"output_tokens\":702,\"output_tokens_details\":{\"thinking_tokens\":79},\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":5314,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"not_available\",\"iterations\":[{\"input_tokens\":32,\"output_tokens\":243,\"cache_read_input_tokens\":7407,\"cache_creation_input_tokens\":319,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":319},\"type\":\"message\"}],\"speed\":\"standard\"},\"modelUsage\":{\"claude-haiku-4-5-20251001\":{\"inputTokens\":974,\"outputTokens\":13,\"cacheReadInputTokens\":0,\"cacheCreationInputTokens\":0,\"webSearchRequests\":0,\"costUSD\":0.001039,\"contextWindow\":200000,\"maxOutputTokens\":32000,\"thinkingTokens\":0,\"canonicalModel\":\"claude-haiku-4-5\",\"provider\":\"firstParty\",\"costBasis\":\"list\"},\"claude-fable-5-1\":{\"inputTokens\":66,\"outputTokens\":702,\"cacheReadInputTokens\":16534,\"cacheCreationInputTokens\":5314,\"webSearchRequests\":0,\"costUSD\":0.14617349999999998,\"contextWindow\":1000000,\"maxOutputTokens\":64000,\"thinkingTokens\":79,\"canonicalModel\":\"claude-fable-5-1\",\"provider\":\"firstParty\",\"costBasis\":\"list\"}},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"subagent_stats\":{\"spawned\":0,\"requested\":{\"background\":0,\"foreground\":0,\"unset\":0},\"started_in_background\":0,\"max_depth\":0,\"spawned_by_subagents\":0,\"completed\":0,\"failed\":0,\"killed\":{\"parent\":0,\"user\":0,\"system\":0},\"refused\":{\"depth_limit\":0,\"concurrency_limit\":0,\"budget\":0},\"by_type\":{}},\"is_error\":false,\"num_turns\":4,\"subtype\":\"success\",\"api_error_status\":null,\"result\":\"**REPAIR**\\n\\n**Cause:** `quantity.mjs:1` uses `item.quantity || 1`. The logical OR treats every falsy value as missing, so an explicit quantity of zero is replaced by one. The test sums quantities zero and two and expects two, but gets three because the zero was counted as one.\\n\\n**Fix:** Replace the logical OR with the nullish coalescing operator, which only substitutes the default for null or undefined:\\n\\n```js\\nexport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity ?? 1), 0);\\n```\\n\\nThis is a one-token change on line 1. It preserves explicit zero and still defaults null and undefined quantities to one, as required. No files were edited per your instructions.\",\"ttft_ms\":2295,\"type\":\"result\",\"duration_ms\":12628,\"uuid\":\"13ef5152-a60c-493d-b043-9b0873530007\",\"ttft_stream_ms\":1426,\"time_to_request_ms\":238,\"first_content_frame_ms\":1426,\"queued_turn_count\":0}\n",
+      "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f": "Read quantity.mjs and run node quantity.test.mjs. Independently diagnose any defect against: preserve explicit zero; default only null/undefined quantities to one. Do not edit files or invoke subagents. Return REPAIR with the cause and precise minimal fix if needed, otherwise ACCEPT. This is a bounded model-availability and diagnostic evaluation, not a request to install anything.",
+      "sha256:5f2c714fe1abdf8788e6bb21e90fd00360de73e2250c111d46856e6724b4efba": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"anthropic\",\n  \"override_names\": [\n    \"CLAUDE_CODE_EFFORT_LEVEL\",\n    \"CLAUDE_CODE_SUBAGENT_MODEL\",\n    \"CODEX_THREAD_ID\"\n  ]\n}\n"
+    },
+    "assurance": {
+      "overall": "PARTIALLY_RUNTIME_ATTESTED",
+      "model": {
+        "value": "claude-fable-5-1",
+        "assurance": "runtime_attested"
+      },
+      "effort": {
+        "value": "high",
+        "assurance": "host_configuration"
+      },
+      "execution_environment": "claude_code",
+      "evidence_digest": "sha256:2f9ac3e9abfe6788ca31ad8b208e858245fcc87be7ada021010fdeccf844e96e",
+      "limitations": [
+        "No host fallback was configured; provider-side fallback state is not independently attested.",
+        "Served effort is not independently exposed by this host trace."
+      ],
+      "diagnostics": []
+    }
+  },
+  "sha256:e374eff4416370d7aa4f520b539c8ef3beaa757fed65d5e18b344c949270ec10": {
+    "schema_version": "frontier_identity_evidence.v1",
+    "candidate": {
+      "schema_version": "candidate.v1",
+      "candidate_id": "frontier_codex_high",
+      "provider": "openai",
+      "model_id": "gpt-6-astra",
+      "snapshot_id": "gpt-6-astra",
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use",
+        "json_schema"
+      ],
+      "provenance": {
+        "registry_id": "frontier_probe_targets",
+        "model_record_id": "frontier_codex",
+        "registry_content_digest": "sha256:195ad1cd88e57e2213d991aee7ccb553c90af5d267a5ec518e92f62f0c752cf4"
+      }
+    },
+    "report": {
+      "schema_version": "runtime_report.v1",
+      "report_id": "frontier_codex_1789024807557",
+      "provider": "openai",
+      "execution_environment": "codex",
+      "candidate_id": "frontier_codex_high",
+      "started_at": "2026-09-10T07:19:54.238Z",
+      "completed_at": "2026-09-10T07:20:07.556Z",
+      "command": {
+        "executable": "codex",
+        "args": [
+          "exec",
+          "--ignore-user-config",
+          "--ignore-rules",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-C",
+          "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-rj6SAV",
+          "-s",
+          "read-only",
+          "-m",
+          "gpt-6-astra",
+          "-c",
+          "model_reasoning_effort=\"high\"",
+          "--json",
+          "-"
+        ],
+        "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-rj6SAV"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "signal": null,
+      "timeout_ms": 90000,
+      "stdout_digest": "sha256:6ec05fc9e66920e4991f8220a51b16b91eb9e4ae418e98734aa616b3edaebb7a",
+      "stderr_digest": "sha256:696aef3f55c230191fe02632d5874ef0057390441739cb1afc3b7da83d9d54a7",
+      "native_evidence": {
+        "request_digest": "sha256:c0598396178419a40399f0cf66d773d97bdbb15a57d3c8af6ef2a2da58f066b4",
+        "process_digest": "sha256:aa662bc33ebd341e7be4a51c4f634d42fcf7d6f332de8aa2720f3af27e4feff0",
+        "version_digest": "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b"
+      },
+      "observed_identity": {
+        "source": "unknown"
+      }
+    },
+    "sources": {
+      "sha256:c0598396178419a40399f0cf66d773d97bdbb15a57d3c8af6ef2a2da58f066b4": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:98e5347854ad7dec839b2fce2e2f5f8591bf848361690c5967574101bd17962c\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-rj6SAV\",\n      \"-s\",\n      \"read-only\",\n      \"-m\",\n      \"gpt-6-astra\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"high\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-rj6SAV\"\n  },\n  \"prompt_digest\": \"sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"/Users/gregpro/ai-skills/artifacts/frontier-probes/1789024794210/codex/environment-controls.json\",\n      \"content_digest\": \"sha256:e025b93c864b159a073e898b4981476dad7a46dc5387d05591b486f50b35d1c6\"\n    }\n  ]\n}\n",
+      "sha256:aa662bc33ebd341e7be4a51c4f634d42fcf7d6f332de8aa2720f3af27e4feff0": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:c0598396178419a40399f0cf66d773d97bdbb15a57d3c8af6ef2a2da58f066b4\",\n  \"started_at\": \"2026-09-10T07:19:54.238Z\",\n  \"completed_at\": \"2026-09-10T07:20:07.556Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:6ec05fc9e66920e4991f8220a51b16b91eb9e4ae418e98734aa616b3edaebb7a\",\n  \"stderr_digest\": \"sha256:696aef3f55c230191fe02632d5874ef0057390441739cb1afc3b7da83d9d54a7\"\n}\n",
+      "sha256:5efa0283757c66156d45d082b4e2e8afb881de3a97862bc03aed7fb34f45df7b": "codex-cli 0.154.0\n",
+      "sha256:6ec05fc9e66920e4991f8220a51b16b91eb9e4ae418e98734aa616b3edaebb7a": "{\"type\":\"thread.started\",\"thread_id\":\"01a08a2f-f884-7d21-a086-f9c097a4e45e\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll read `quantity.mjs`, run the tests, and check the defaulting behavior against your requirements.\\n\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"export const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"node:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-rj6SAV/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\\n\",\"exit_code\":1,\"status\":\"failed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"REPAIR\\n\\nCause: `item.quantity || 1` replaces explicit zero with one. Tests fail: actual `3`, expected `2`.\\n\\nPrecise minimal fix: replace `item.quantity || 1` with `item.quantity ?? 1`, preserving zero and defaulting only `null`/`undefined`.\\n\\nNo files edited.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":31502,\"cached_input_tokens\":26880,\"cache_write_input_tokens\":0,\"output_tokens\":187,\"reasoning_output_tokens\":0}}\n",
+      "sha256:696aef3f55c230191fe02632d5874ef0057390441739cb1afc3b7da83d9d54a7": "2026-09-10T07:19:54.765877Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.770055Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.772855Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.775306Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.778344Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.781276Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.785222Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.788873Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.792025Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.796136Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.799310Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.803113Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.806101Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.809568Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.813077Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.815760Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.818260Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n2026-09-10T07:19:54.821312Z  WARN codex_rollout::list: state db discrepancy during find_thread_path_by_id_str_in_subdir: falling_back\n",
+      "sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f": "Read quantity.mjs and run node quantity.test.mjs. Independently diagnose any defect against: preserve explicit zero; default only null/undefined quantities to one. Do not edit files or invoke subagents. Return REPAIR with the cause and precise minimal fix if needed, otherwise ACCEPT. This is a bounded model-availability and diagnostic evaluation, not a request to install anything.",
+      "sha256:e025b93c864b159a073e898b4981476dad7a46dc5387d05591b486f50b35d1c6": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"CODEX_THREAD_ID\"\n  ]\n}\n"
+    },
+    "assurance": {
+      "overall": "CONFIGURATION_ATTESTED",
+      "model": {
+        "value": "gpt-6-astra",
+        "assurance": "host_configuration"
+      },
+      "effort": {
+        "value": "high",
+        "assurance": "host_configuration"
+      },
+      "execution_environment": "codex",
+      "evidence_digest": "sha256:f1db18079dbb0dae4c7bbb0ae3743bd15593546ec3d80b9cc5367c995ea985b4",
+      "limitations": [
+        "No host fallback was configured; provider-side fallback state is not independently attested.",
+        "Served model is not independently exposed by this host trace.",
+        "Served effort is not independently exposed by this host trace."
+      ],
+      "diagnostics": []
+    }
+  }
+}

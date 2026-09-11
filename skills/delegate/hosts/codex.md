@@ -6,6 +6,4 @@ Some desktop spawn tools expose `model`, `reasoning_effort` and `fork_turns`. Wh
 
 When native spawn cannot express a treatment but an authenticated Codex CLI is already available, use `codex exec -m <model> -c 'model_reasoning_effort="<effort>"' --json` in the authorized workspace. Preserve event output and usage. A fresh process provides a separate conversation for review, with inherited environment/project instructions still disclosed. Do not install a CLI, change user configuration or add API keys. If neither native path supports the treatment, skip it.
 
-Codex discovers project skills under `.agents/skills/delegate/` and personal skills under `~/.agents/skills/delegate/`. Copy the entire folder. In CLI/IDE, invoke `$delegate <task>` or select it through `/skills`; in the desktop app, use its skill selector. If an older skill has the same name, select this project's skill explicitly. This repository's source directory is intentionally not installed.
-
 Sources checked 2026-09-10: [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills), [native subagents and model/effort configuration](https://learn.chatgpt.com/docs/agent-configuration/subagents). The active tool schema determines which controls can actually be supplied.

@@ -36,5 +36,6 @@ jobs:
           import {readFileSync} from 'node:fs';
           import {validateRoutingPackPublication} from './dist/routing/index.js';
           const pack = validateRoutingPackPublication(JSON.parse(readFileSync('skills/delegate/routing-pack.json', 'utf8')));
-          console.log(JSON.stringify({status: 'VALID', content_digest: pack.content_digest, expires_at: pack.expires_at}));
+          const earliest_entry_expires_at = pack.routes.flatMap(route => [...route.workers, ...route.reviewers]).map(entry => entry.expires_at).sort((a, b) => Date.parse(a) - Date.parse(b))[0] ?? null;
+          console.log(JSON.stringify({status: 'VALID', content_digest: pack.content_digest, refresh_after: pack.refresh_after, expires_at: pack.expires_at, earliest_entry_expires_at}));
           NODE

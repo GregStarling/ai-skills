@@ -285,13 +285,13 @@ Delegate is usable within the current pilot scopes, and the evidence program is 
 
 The public routing pack currently contains **15 provisional routes and zero fully qualified routes** across Claude Code and Codex. Routes are not labeled fully qualified until they satisfy the governor's real task, sample, quality, latency, identity and review requirements.
 
-The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader class fit remains provisional extrapolation, not proof of general performance across languages or web research. One narrow Claude medium-risk mechanical route covers the observed quantity-default fix; other medium-risk domains, high and critical remain unsupported. See [host evidence and scope](docs/v4-host-evidence.md).
+The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader class fit remains provisional extrapolation, not proof of general performance across languages or web research. One narrow Claude medium-risk mechanical route covers the observed quantity-default fix; other medium-risk domains, high and critical remain unsupported. The [September renewal](docs/delegate-renewal-results.md) records fresh evidence, incomplete cases and the restricted Astra/Fable mechanical-reviewer admissions.
 
 That means the system may occasionally refuse a route that a human would probably be willing to try.
 
 That is preferable to inventing confidence it has not earned.
 
-The current validation state, host evidence and known limitations are published in [`docs/v5-validation.md`](docs/v5-validation.md).
+The current validation state, pack and folder digests, evidence generations and open decisions are indexed in [`docs/validation-status.md`](docs/validation-status.md); dated reports linked from there are historical.
 
 ---
 
