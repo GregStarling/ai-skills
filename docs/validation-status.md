@@ -17,12 +17,14 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
-`skills/delegate/`, 14 files. Reliability repairs added 2026-09-11: explicit worker-completion waits and compact finish outcome normalization. **All three targeted live cases passed**, with matched receipts and independent trace/artifact checks. See the [follow-up results](delegate-reliability-followup-results-2026-09-11.md) and [checklist](delegate-reliability-followup-plan.md).
+`skills/delegate/`, 14 files. Usage-first guidance added 2026-09-11: frontier execution is limited to genuinely tiny work and judgment; bounded execution routes to cheaper eligible workers when the complete path is expected to use less. Ordinary direct work skips helper calls and receipts, and helper CLI results are compact. Earlier reliability repairs retain explicit worker-completion waits and compact finish outcome normalization. **All three targeted live cases passed** on the preceding guidance iteration, with matched receipts and independent trace/artifact checks. See the [follow-up results](delegate-reliability-followup-results-2026-09-11.md) and [checklist](delegate-reliability-followup-plan.md).
 
 | Digest | Value |
 | --- | --- |
-| Helper `folderDigest` (skill_folder_digest) | `sha256:603f405245b835466650a577657805970a2b0ae0da1c6792f00588cd6b3e0725` |
-| `guidance_digest` (folder without `routing-pack.json`) | `sha256:f78d3f7e5cee1370e75dfd469db9c85ae49a38244c839f8255d78a02439759d1` |
+| Helper `folderDigest` (skill_folder_digest) | `sha256:7cbcf4708792322e8133e80e8e07e5c5d404d343d85eb8ae1204e270039f09db` |
+| `guidance_digest` (folder without `routing-pack.json`) | `sha256:7d8afdb3dc6d19dc14a99bb6195c7defb46a18281f6fe7fb0574ab4c9e809577` |
+
+Assignment routing updated 2026-09-11: the `route` command maps seven concrete assignments to existing evidence routes and returns one worker plus its verification choice. Standalone reproduction and frontier decisions have explicit gaps. Read-only investigations use five-field briefs and skip receipts unless tracking is requested. Local learning no longer uses elapsed time; usage comparisons require complete comparable observed allowance, actual cost or tokens after quality and repair checks. The [coverage audit](delegate-routing-coverage.md) records literal scopes and remaining gaps. The routing pack and historical evidence are unchanged; no new live acceptance or measured usage savings are claimed for this revision.
 
 **Current acceptance: 14 cases across multiple consumer iterations.** Eleven original accepted records remain unchanged; three new follow-up runs passed on repaired folder `3b5f56fe`. The three original failed run IDs remain excluded and preserved in the [renewal results](delegate-renewal-results.md). Recompilation changes the pack after capture; no exact-published-folder live run is claimed. M4's four earlier matched pairs passed quality checks, with direct execution faster in all four.
 
@@ -43,7 +45,7 @@ Measured 2026-09-11 on the maintainer laptop (Node v22.23.2) from a copied folde
 | `lookup`, Claude `mechanical_work` low (3,373 bytes) | 29 |
 | `lookup`, Claude coverage (417 bytes) | 28 |
 
-A direct task therefore costs about 165 ms of helper time beyond the checks it would run anyway, and a check referenced at `finish` never runs twice.
+An explicitly measured direct task costs about 165 ms of helper time beyond the checks it would run anyway, but ordinary direct work now skips the helper. A check referenced at `finish` never runs twice.
 
 These timings used the M1 folder before renewal. The current Claude mechanical lookup includes the additional calibrated reviewer and its scope limitations (4,157 bytes); no new timing measurement is claimed.
 

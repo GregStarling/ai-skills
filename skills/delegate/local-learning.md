@@ -1,16 +1,20 @@
-# Local learning and session advice
+# Delegated-run learning and session advice
 
-The coordinator runs the packaged helper; workers do not. It uses the existing Node runtime and built-ins only; never install a runtime for it. The helper never launches a model: a separate reviewer is launched by the host and only recorded through `finish`. No daemon, uploads, unrelated-chat monitoring or edits to shared routing. If the helper is unavailable, continue with baseline routing and mention the limitation once; `unavailable` is a learning failure, not a task failure.
+Use recording for implementation, explicitly tracked investigations, comparisons and evaluations. Ordinary direct work and read-only investigations skip recording. Untracked investigations still use `route` and frontier verification; their results do not train local preferences. The coordinator runs the helper, using the existing Node runtime and built-ins; never install a runtime for it. It launches no models and uploads nothing. If unavailable, preserve useful work and disclose the recording gap once.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.
 
-## Normal path
+## Normal delegated path
 
-A direct task is `start` then `finish`. A delegated task is `start`, `lookup`, then `finish`. Run the real verification once through `capture` mid-task and reference it at `finish`.
+Run `route` before loading this file. For tracked work, run `start` with the returned `task_class`, `capture` for real verification when due, then `finish` once. If start returns a worker preference, rerun `route` with `cwd` and `run_id` to apply it within eligible evidence. Direct recording remains available for explicit comparisons or evaluations.
+
+### route
+
+Required: `host`, `risk`. Pass `assignment` from the entrypoint table for a single decision, or omit it for coverage with literal scopes and gaps. Optional `coordinator`, `failed_candidate_ids`, `host_treatments`, `supports_fresh_context`, `pack_path`, `cwd` and `run_id` work as in `lookup`. Live discovery must set `research_kind: "live_web"`. Output includes the mapped `task_class`, pack and route metadata, one `worker`, `verification` (`coordinator` or `separate` with reviewer), scope-check requirement, host checks, limitations and gap. These aliases reuse existing routes without widening their scope. No state is created by ordinary routing.
 
 ### start
 
-Required: `cwd`, `host` (`codex` or `claude`), `session_id`, `task_class`, `risk`. Optional: `run_id`; `task_id` (reuse across repairs); `parent_run_id` for a fresh-session handoff; `host_version` (observed from the host binary's `--version` when omitted; the source is recorded as `caller`, `path_binary` or `unknown`); `scope` (optional; without it comparable work is keyed by task_class + risk + research_kind, a declared default); `research_kind` (null, `supplied_sources` or `live_web`); `origin` (`production_usage`, or `qualification_evaluation` for trials); `baseline_digest`. Returns the ids, `skill_folder_digest`, `guidance_digest` and inline `advice` (`modePreference`, `workerPreference`, `localPreferences`; `status` `disabled` when learning is off). Apply advice only when it fits the present task and explicit instructions; it never invents a route and is not qualification. Works with learning disabled.
+Required: `cwd`, `host` (`codex` or `claude`), `session_id`, `task_class`, `risk`. Optional: `run_id`; `task_id` (reuse across repairs); `parent_run_id` for a fresh-session handoff; `host_version`; `scope`; `research_kind` (null, `supplied_sources` or `live_web`); `origin` (`production_usage`, or `qualification_evaluation` for trials); `baseline_digest`. Returns the run and task ids plus compact advice. Apply advice only when it fits the present task and explicit instructions; it never invents a route or proves savings.
 
 ### lookup
 
@@ -44,13 +48,13 @@ Input shape (replace the illustrative values):
 - Every `worker`, `reviewer` and `repair` attempt needs at least one `evidence` reference `{path, digest}` to a file that still verifies (a `capture` reference of this run, or the returned artifact with its `sha256:` digest); the git snapshot is attached only to the coordinator attempt and inspected verdicts, so an attempt without evidence leaves the receipt unsupported.
 - `mode` `delegated` requires `pack_path` and `stratum_digest`. A direct finish omits `attempts`, `pack_path` and `stratum_digest`: the helper binds attempts to a route only, and a `worker` or `repair` attempt on a direct receipt is `RECEIPT_MODE_CONFLICT`.
 - `usage` is null unless observed: `{metric, unit, value, source:{path,digest}, complete}` with metric `attributable_cost`, `allowance`, `api_equivalent` or `tokens`; `complete` true only when all coordinator, worker, review, failure and repair work is included. No observation means null, never zero.
-- Output: `receipt` (`delegate_receipt.v3`), `evidence_supported`, `receipt_path`, `reason` (`skill_changed_during_run` when the folder changed mid-run; that row is excluded from later advice). Report `receipt_path`. If recording fails, preserve the artifacts and state the gap. Older v2 receipts still load.
+- CLI output is compact: `status`, `evidence_supported`, `receipt_path` and `reason`. The full `delegate_receipt.v3` is stored at `receipt_path`. Report that path. If recording fails, preserve the artifacts and state the gap. Older v2 receipts still load.
 
 `record` and `advise` remain for compatibility; `start` already returns advice.
 
-## What counts (declared defaults, not qualification)
+## What counts (explicit measurements only; not qualification)
 
-A positive preference needs at least five evidence-supported tasks per compared option in 30 days on the same project, host, host version and version source, with comparable scope. Direct rows compare by `guidance_digest` (the folder without `routing-pack.json`), so a pack refresh does not reset direct learning; delegated rows stay bound to the exact pack digest. Rows from different host-version sources are never compared. One unsupported comparable receipt still yields baseline advice. Quality failures and repair burden precede cost; elapsed time is a labeled proxy. Estimates, tokens and rounded allowance deltas are not subscription spending.
+A positive preference needs at least five evidence-supported tasks per option in 30 days on the same project, host/version and comparable scope. Direct rows require explicit comparison; delegated rows stay bound to the pack digest. Incomplete or unverified work prevents advice. Quality and repair burden take precedence; usage comparison requires complete, valid observations with the same metric and unit across all rows (`allowance`, `attributable_cost` or `tokens`). Missing, mixed, partial or estimated usage cannot break a tie. Elapsed time never changes preferences. Token comparisons are token savings only; quality/repair preferences make no savings claim. Lookup's baseline price proxies remain separate from learned usage.
 
 ## Corrections, settings, reset
 

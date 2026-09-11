@@ -1,6 +1,6 @@
 # Parallel work
 
-Use one worker by default. Swarm only when all of these hold: at least two independent workstreams, settled interfaces, disjoint ownership or isolated workspaces, meaningful time saved, and a coordinator who can verify the integrated result.
+Use one worker by default. Swarm only when all of these hold: at least two necessary independent workstreams, settled interfaces, disjoint ownership or isolated workspaces, less expected total model usage than sequential execution, and a coordinator who can verify the integrated result. Time saved alone is insufficient.
 
 Do not swarm a small task, unsettled architecture, repeatedly overlapping edits, a sequential dependency chain or one subtle bug needing a coherent mental model. Separate API endpoints may run in parallel. Frontend and backend may run together after agreeing on their interface. A full project usually needs several dependency-ordered waves.
 

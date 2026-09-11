@@ -14,7 +14,7 @@ Stop when acceptance is satisfied and no material defect remains. Do not repeat 
 
 ## Receipt rules
 
-The helper's `finish` writes the receipt (`delegate_receipt.v3`); see [local learning](local-learning.md). Supply these four things:
+For implementation and explicitly tracked investigations, the helper's `finish` writes the receipt (`delegate_receipt.v3`); see [local learning](local-learning.md). Untracked read-only investigations skip receipts but preserve evidence and all verification requirements above. For recorded work supply these four things:
 
 1. One `task_id` across repairs and intentional replays of the same starting task, with the baseline digest and task scope preserved.
 2. Every attempt, including failed launches, fallbacks, repairs and reviewers, with configured and observed settings kept separate and null when unknown. A coordinator that reviews keeps its coordinator attempt and adds an inspected review verdict; it does not invent a second execution.

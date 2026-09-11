@@ -1,86 +1,64 @@
 # Delegate
 
-**Achieve the requested quality with the least total effort needed.**
+**Make your best model's usage go further.**
 
-Complete small work directly when a handoff adds more effort. Delegate substantial bounded work when it improves total efficiency, and spend stronger reasoning on ambiguity and consequential decisions.
+Delegate is a portable skill for Claude Code and Codex that puts cheaper eligible models to work and brings important decisions back to your strongest model. Its north star: **the requested quality with the least total tokens or subscription usage.**
 
-**Delegate** is a portable skill for Claude Code and Codex that separates **judgment from execution**.
+Your strongest model is valuable when the answer requires judgment. Finding the relevant files, tracing a value through a codebase, extracting facts and applying a settled change often need less of that intelligence. Delegate gives those assignments to workers with supporting evidence for the task, while the frontier model stays responsible for decisions and the final result.
 
-For delegated work:
+You describe the outcome. Delegate organizes the work.
+
+## Let the investigation leave your desk
+
+You shouldn't have to solve a problem before you can hand it off.
+
+Give Delegate a question such as “Where does this value get its default?” A worker can investigate within the available route's boundaries and return the relevant source locations, an explanation and anything still unresolved. The frontier checks the decisive evidence, resolves the specific decision and sends the next assignment back to an eligible worker.
 
 ```text
-You
- ↓
-Frontier coordinator
-understand • diagnose • plan • define boundaries
- ↓
-Cheapest sufficiently evidenced worker
-implement • fix • test • research
- ↓
-Frontier verification
-inspect the actual result
- ↓
-PASS
-or targeted repair / escalation
+Your question
+    ↓
+Worker investigates → evidence + unresolved decision
+    ↓
+Frontier decides
+    ↓
+Eligible worker continues → frontier verifies → done
 ```
 
-The goal is simple:
+The answer can be unknown when the investigation starts. What needs to be clear is the question, the scope, the permitted actions and where the worker should stop. That gives workers room to find useful answers without making consequential choices on your behalf.
 
-> **Preserve high-quality output and relevant verification, then minimize the total effort through acceptance—including coordination, failed attempts and repairs.**
+Useful context can stay with the same worker through follow-ups. A change from investigation to implementation gets a fresh eligibility check. The frontier can build on the evidence already gathered instead of repeating the entire search.
 
-No daemon. No database. No routing service. No extra API keys. No Node installation for the skill. Foreman is not required.
+## Spend intelligence where it earns its place
 
-Copy one folder into your project and use it.
+An inexpensive worker can become expensive if it needs repeated repairs or a second model to redo its work. Delegate considers the whole path: coordination, execution, integration, verification and failed attempts.
 
----
+Tiny tasks can finish directly when a handoff would consume more. Larger work can move through bounded assignments, with stronger reasoning reserved for conflicting evidence, architecture, product decisions and acceptance. Parallel workers are useful when they reduce expected total usage; finishing sooner alone isn't enough.
 
-## Quick start
+Every delegated result gets frontier verification. That means checking the sources, changed artifact, relevant tests or rendered interface that support acceptance. The coordinator verifies when eligible; otherwise an eligible reviewer does. Concrete defects go back for targeted repair. Work stops when the requested result is complete and no material defect remains.
 
-Clone this repository:
+The aim is to leave more of your allowance available for the decisions that benefit from your best model.
+
+## Keep the experience small
+
+Delegate fits the coding environment you already use. Install one folder and invoke it with an ordinary task. Your existing authentication and available models supply the execution.
+
+Routine read-only investigations use a short brief and skip receipt-writing ceremony. They still return evidence and receive verification. You can explicitly request a worker, a model or independent review when that matters to the job.
+
+There is no service to host, daemon to supervise or extra API key to manage. The routing helper uses an existing Node runtime and built-in libraries. Model Governor, the tooling maintained in this repository, is not required to use the installed skill.
+
+**Delegate is designed to save usage. Measured subscription savings for this revised workflow have not yet been established.**
+
+## Install and use
+
+Clone the source:
 
 ```sh
 git clone https://github.com/GregStarling/ai-skills.git
 ```
 
-Then copy the **entire** `skills/delegate/` folder into your AI coding environment.
+Choose your environment. These commands install for your user and refuse to overwrite an existing folder or symlink.
 
-The commands below are for a fresh installation and refuse an existing destination. If you already have a `delegate` folder or symlink, move it aside first. When updating, replace the complete folder so old and new routing files are not mixed.
-
-### Claude Code
-
-For one project:
-
-```sh
-mkdir -p "/path/to/your-project/.claude/skills"
-test ! -e "/path/to/your-project/.claude/skills/delegate" && test ! -L "/path/to/your-project/.claude/skills/delegate" &&
-  cp -R ai-skills/skills/delegate "/path/to/your-project/.claude/skills/delegate"
-```
-
-Or install it for your user:
-
-```sh
-mkdir -p ~/.claude/skills
-test ! -e ~/.claude/skills/delegate && test ! -L ~/.claude/skills/delegate &&
-  cp -R ai-skills/skills/delegate ~/.claude/skills/delegate
-```
-
-Then:
-
-```text
-/delegate fix the failing checkout test
-```
-
-### Codex
-
-For one project:
-
-```sh
-mkdir -p "/path/to/your-project/.agents/skills"
-test ! -e "/path/to/your-project/.agents/skills/delegate" && test ! -L "/path/to/your-project/.agents/skills/delegate" &&
-  cp -R ai-skills/skills/delegate "/path/to/your-project/.agents/skills/delegate"
-```
-
-Or install it for your user:
+**Codex**
 
 ```sh
 mkdir -p ~/.agents/skills
@@ -88,256 +66,47 @@ test ! -e ~/.agents/skills/delegate && test ! -L ~/.agents/skills/delegate &&
   cp -R ai-skills/skills/delegate ~/.agents/skills/delegate
 ```
 
-Then in Codex CLI or IDE:
+**Claude Code**
 
-```text
-$delegate fix the failing checkout test
+```sh
+mkdir -p ~/.claude/skills
+test ! -e ~/.claude/skills/delegate && test ! -L ~/.claude/skills/delegate &&
+  cp -R ai-skills/skills/delegate ~/.claude/skills/delegate
 ```
 
-You can also select the skill through `/skills`. In the Codex desktop app, use the skill selector.
+For a project-only installation, use that project's `.agents/skills/` or `.claude/skills/` directory instead. Copy the **entire `delegate` folder**, including its helper and routing pack.
 
-See the [official Codex skill documentation](https://learn.chatgpt.com/docs/build-skills) for discovery and invocation details.
-
-**Copy the complete folder, not just `SKILL.md`.** The routing pack and its supporting files are part of the skill.
-
-Your existing Claude Code or Codex authentication is used. Delegate does not require separate provider API keys.
-
----
-
-## What can I give it?
-
-Start with the task you would normally hand to your coding agent. Delegate first chooses direct execution or delegation. Before dispatching workers, it checks the current pack's supported scope and your host's available controls.
+In Codex:
 
 ```text
-/delegate find out why sync hangs after reconnect and fix it
-
-/delegate build the settings page from this mockup
-
-/delegate add CSV export without changing the public API
-
-/delegate refactor this module and get the tests green
-
-/delegate investigate this repo and tell me where authentication is enforced
-
-/delegate build this feature end to end
+$delegate trace where this setting is read and explain its default
+$delegate summarize these local documents and flag contradictions
+$delegate apply this API rename across the affected JavaScript modules
 ```
 
-For Codex, use `$delegate` instead.
+In Claude Code, use `/delegate` with the same requests. You describe the job; the coordinator prepares worker briefs and checks route coverage. Work outside supported routes stays with the frontier unless you explicitly require a worker.
 
-Delegate also records outcomes locally through an optional dependency-free Node helper, learns conservative preferences among eligible options, and offers an occasional compact session handoff at a useful milestone. Missing runtime or telemetry does not block ordinary work. Personal state stays outside the skill folder and is never automatically uploaded. Supplied-source research and live web discovery have separate evidence requirements; current packaged research routes do not yet establish live-web acceptance. See [local learning](skills/delegate/local-learning.md) and [research boundaries](skills/delegate/research.md).
+To update, pull the repository and replace the complete installed folder. Keep rollback copies **outside skill-discovery directories** to avoid duplicate skills. Personal learning state survives replacement.
 
-Small jobs can be completed directly with appropriate verification. Explicit requests for workers, exact models, strict pack governance or independent review still apply. Larger projects are decomposed into bounded workstreams and can use multiple workers when the work is independent and delegation improves total efficiency.
+## What makes the routing predictable
 
----
+The helper maps seven concrete assignments—locating behavior, analyzing supplied sources, mechanical edits, features, fixes, UI and settled plans—to existing evidence routes. It returns one eligible worker and a verification choice. No additional model call ranks the roster.
 
-## What makes Delegate different?
+Selection respects task evidence before economics, then checks availability, exact effort, expiry and reviewer requirements. Failed candidates are excluded on retry. The coordinator must still confirm literal scope and actual host controls. A missing route returns an explicit gap.
 
-Delegate does **not** ask an LLM to look at a list of models and guess which one feels appropriate.
+The current pack contains **15 provisional routes and zero fully qualified entries** across both hosts. Coverage centers on low-risk local JavaScript/HTML work and supplied local material. Standalone reproduction investigation and live-web discovery lack supported routes. Most higher-risk work also remains outside coverage. See the [coverage audit](docs/delegate-routing-coverage.md) for the exact boundaries.
 
-For delegated work, it uses a versioned routing pack built from model availability, task evidence, host controls, economics, qualification results and explicit limitations. Direct execution is ordinary host work and does not claim pack qualification.
+## Learning that follows the usage goal
 
-The routing rule is:
+Implementation and explicitly tracked work can record outcomes locally. Preferences require at least five supported, comparable tasks per option. Quality and repair burden come first; complete observations of the same usage metric and unit can then break ties. **Elapsed time never changes a learned preference.**
 
-```text
-Can it do the job?
-        ↓
-CAPABILITY
+Missing or partial usage remains unknown. Token comparisons establish token differences, not subscription charges. Baseline API-price proxies are labeled separately from observed usage. Personal history stays on your machine and cannot broaden route authority or weaken verification.
 
-Of the models that can:
-which is cheapest?
-        ↓
-ECONOMICS
-```
-
-Capability comes first.
-
-A cheap model does not win because it is cheap. It has to clear the evidence bar for the work.
-
-Within the same evidence level, cheaper eligible treatments are preferred. Replacing an established qualified route still requires the governor's promotion evidence.
-
-### Subscription-first economics
-
-Delegate is designed primarily for Claude Code and Codex subscription users.
-
-Subscriptions do not necessarily expose a meaningful dollar cost for each individual task, so Delegate uses **API-equivalent economics** as a common proxy for relative model expense.
-
-Where measured data exists, the system can account for the actual token mix, failures, retries, repairs and review work required to get an accepted result.
-
-That makes the question:
-
-> **Which workflow achieves the requested quality with the least total effort?**
-
-not merely:
-
-> Which model has the cheapest token price?
-
-API-equivalent dollars are a routing proxy. They are **not** presented as your actual subscription bill.
-
-A successful API evaluation cannot qualify a Claude Code or Codex treatment. Capability evidence must match the execution host, model and effort.
-
----
-
-## The frontier model still has a job
-
-Delegate is not "send everything to the cheapest model."
-
-Some work is cheap to execute but expensive to misunderstand.
-
-For UI work, the frontier settles the interface before delegating implementation.
-
-For difficult debugging, the frontier reproduces the failure and diagnoses the cause before handing off the fix.
-
-For complex implementation, the frontier settles architecture and interfaces first.
-
-For a full project, the frontier decomposes the project, establishes boundaries between workstreams, integrates the result and remains responsible for the final outcome.
-
-Then cheaper models do the bounded work they have evidence to handle.
-
-**Frontier judgment. Economical execution.**
-
----
-
-## Every result gets checked
-
-Delegation is only half of the loop.
-
-Frontier verification is mandatory for delegated work. Direct work retains the relevant tests, visual checks and any required independent review under the host and project rules.
-
-The verifier inspects the actual artifact, tests, behavior, rendered interface, source-backed claims or other evidence appropriate to the task.
-
-If the result is wrong, Delegate normally sends a targeted repair back to the same inexpensive worker first.
-
-If the worker demonstrates that it cannot handle the task, Delegate escalates to the next eligible treatment.
-
-It does not silently turn the frontier coordinator into the implementation worker just because the first attempt failed.
-
-In either work shape, stop when the requested quality and acceptance checks are satisfied and no material defect remains. Avoid speculative polish and repeated reviews without new evidence.
-
----
-
-## Evidence beats a leaderboard
-
-There is no permanent ranking that says:
-
-```text
-Model A > Model B > Model C
-```
-
-Models are evaluated against kinds of work.
-
-A small model might be the right choice for a mechanical edit and the wrong choice for an ambiguous debugging task.
-
-Delegate prefers stronger evidence in this order:
-
-```text
-qualified task evidence
-        ↓
-matching installed acceptance
-        ↓
-provisional smoke evidence
-```
-
-Economics determine ordering **within the appropriate evidence level**.
-
-A cheaper model with weak evidence does not jump ahead of a model that has actually demonstrated it can perform that class of work.
-
-And when the system does not know something, it says so.
-
-Unknown cost stays unknown. Unobserved effort stays unobserved. Configuration evidence is not mislabeled as runtime attestation. Failed attempts remain failed attempts.
-
-That conservatism is intentional.
-
----
-
-## Built for models that keep changing
-
-Model releases move quickly. The rules should not.
-
-Delegate separates the **constitution** from the **roster**.
-
-```text
-New model released
-        ↓
-discover
-        ↓
-observe / evaluate
-        ↓
-qualify
-        ↓
-compare economics
-        ↓
-compile new routing pack
-```
-
-A new model can change which model gets a task.
-
-It cannot change the rules required to earn that task.
-
-The current governance policy also distinguishes between what a host was configured to run and what the runtime independently proves it served. Identity assurance is derived from preserved execution evidence rather than trusting an agent's own claim about what model ran.
-
-Routing packs do not update themselves. Refresh is due after **seven days**, and a pack expires after **thirty days**. Individual treatments can expire sooner with their underlying evidence. Pull repository updates and replace the complete installed folder; republishing a pack does not renew old evidence.
-
----
-
-## Current status
-
-Delegate is usable within the current pilot scopes, and the evidence program is intentionally conservative.
-
-The public routing pack currently contains **15 provisional routes and zero fully qualified routes** across Claude Code and Codex. Routes are not labeled fully qualified until they satisfy the governor's real task, sample, quality, latency, identity and review requirements.
-
-The pilot covers low-risk local JavaScript/HTML work and analysis of supplied local material. Broader class fit remains provisional extrapolation, not proof of general performance across languages or web research. One narrow Claude medium-risk mechanical route covers the observed quantity-default fix; other medium-risk domains, high and critical remain unsupported. The [September renewal](docs/delegate-renewal-results.md) records fresh evidence, incomplete cases and the restricted Astra/Fable mechanical-reviewer admissions.
-
-That means the system may occasionally refuse a route that a human would probably be willing to try.
-
-That is preferable to inventing confidence it has not earned.
-
-The current validation state, pack and folder digests, evidence generations and open decisions are indexed in [`docs/validation-status.md`](docs/validation-status.md); dated reports linked from there are historical.
-
----
-
-## What's in `skills/delegate/`?
-
-The folder you install contains everything the consumer needs:
-
-```text
-delegate/
-├── SKILL.md
-├── routing-pack.json
-├── pack-format.md
-├── context-discipline.md
-├── local-learning.md
-├── research.md
-├── scripts/
-│   ├── local-learning.mjs
-│   └── local-learning.d.mts
-├── task-classes.md
-├── delegation-contract.md
-├── swarm-policy.md
-├── verification-policy.md
-└── hosts/
-    ├── claude.md
-    └── codex.md
-```
-
-`SKILL.md` teaches the coordinator how to behave.
-
-`routing-pack.json` contains the current model treatments and routes.
-
-The remaining files are focused references loaded only when their part of the workflow applies.
-
-You do not need the Model Governor repository code to use the installed skill.
-
----
+Routing packs carry refresh and expiry dates; this pack calls for refresh after seven days and expires after thirty. Individual entries may expire sooner. Updating a pack doesn't renew its underlying evidence. Details: [local learning](skills/delegate/local-learning.md), [routing maintenance](docs/routing-pack-maintenance.md), and [validation status](docs/validation-status.md).
 
 ## For maintainers
 
-The rest of this repository is the machinery that keeps the portable routing pack honest.
-
-Model Governor handles discovery, evaluation, evidence, qualification, economics, promotion, receipts, identity assurance and pack compilation.
-
-Production receipts can feed future qualification, but a model-written receipt never grants itself authority. Evidence is independently validated before it affects routing.
-
-To run the repository checks:
+The rest of the repository compiles and validates the portable routing pack. To run the release checks:
 
 ```sh
 npm ci
@@ -348,22 +117,4 @@ node scripts/verify/skills.mjs
 node dist/cli/index.js validate-routing-pack --input skills/delegate/routing-pack.json
 ```
 
-GitHub Actions runs these checks on every pull request and `main` push. The historical `verify:v1` and `verify:v1:live` commands cover the governor engine; some fixture calibration checks need a local Foreman source checkout. That is test provenance, not a dependency of the installed skill.
-
-Routing knowledge can be refreshed through [`skills/refresh-models/`](skills/refresh-models/).
-
-For the deeper implementation:
-
-[Routing-pack maintenance](docs/routing-pack-maintenance.md) · [Production receipts](docs/production-receipts.md) · [V5 identity assurance](docs/v5-identity-assurance.md) · [V4 economics](docs/v4-economics.md)
-
----
-
-## The idea
-
-The best model should not have to do all the work.
-
-It should know **what work needs its intelligence**.
-
-Delegate is an attempt to make that distinction explicit, measurable and portable:
-
-> **Achieve the requested quality with the least total effort, preserving relevant verification.**
+GitHub Actions runs these checks on pull requests and pushes to `main`. Passing software checks does not establish model qualification or measured savings. The [validation index](docs/validation-status.md) separates current artifacts from historical model trials.

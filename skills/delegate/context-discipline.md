@@ -13,17 +13,20 @@ by reference. Saving or deleting an image file does not remove it from the
 conversation. A worker's visual verdict cannot replace the frontier's inspection
 of the evidence needed for acceptance.
 
-Give substantial file, log, or documentation investigations to a focused worker
-when noise isolation, independent parallel work, or model economics justify the
-coordination. Return findings, exact sources, and uncertainties. A single
-targeted search need not spawn an agent. Decide with the direct-versus-delegated
-rule in `SKILL.md` (step 3): four conditions for direct, three for delegated.
-For delegation, use the route lookup returned and the
-[existing packet](delegation-contract.md), rather than copying the entire chat.
+Give file, log, or documentation investigations to a focused worker before
+performing the same search yourself, when expected total usage and route scope
+justify it. Inspect only enough upfront to define the question and boundaries.
+Request findings, exact sources, uncertainties and the decision needed from the
+frontier. Review decisive evidence; expand inspection when gaps or contradictions
+warrant it. A single targeted search may stay direct under step 1 of `SKILL.md`.
+Use the [existing packet](delegation-contract.md) and preserve useful worker
+context for follow-ups, with a new route check when the assignment changes.
 
-Judge the whole workflow by accepted quality, completion time, and observable
-usage, including exploration, coordination, failed attempts, repairs and verification. Smaller coordinator context alone
-does not establish lower total usage. Do not infer savings from screenshot counts
-or cumulative transcript size, or introduce arbitrary session-size alarms.
+Judge the whole workflow by accepted quality and observable total model usage,
+including exploration, coordination, failed attempts, repairs and verification.
+Completion time matters only when the user prioritizes it. Smaller coordinator
+context alone does not establish lower total usage. Do not infer savings from
+screenshot counts or cumulative transcript size, or introduce arbitrary
+session-size alarms.
 
-At meaningful milestones, use the [local reminder helper](local-learning.md) for a brief, optional fresh-session suggestion and compact handoff. Reliable host signals or clearly labeled qualitative judgment can support a reminder; neither proves measured savings. Defer during coupled investigations, unsettled worker activity, or costly rediscovery. Default to once per session and never restart automatically.
+At meaningful milestones in an already tracked run, use the [local reminder helper](local-learning.md) for an optional fresh-session suggestion and compact handoff. Do not start recording just to trigger a reminder. Reliable host signals or clearly labeled qualitative judgment can support a reminder; neither proves measured savings. Defer during coupled investigations, unsettled worker activity, or costly rediscovery. Default to once per session and never restart automatically.

@@ -5,7 +5,7 @@ import {join,resolve} from 'node:path';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {runCommand,lookup,digest,normalizeReceipt,reminderDecision,folderDigest,projectIdentity} from '../../skills/delegate/scripts/local-learning.mjs';
+import {runCommand,lookup,routeAssignment,digest,normalizeReceipt,reminderDecision,folderDigest,projectIdentity} from '../../skills/delegate/scripts/local-learning.mjs';
 import {resolveRouting} from '../../src/routing/resolver.js';
 import {RoutingError} from '../../src/routing/contracts.js';
 import {digest as coreDigest} from '../../src/core/canonical.js';
@@ -88,9 +88,9 @@ describe('portable local feedback',()=>{
    if(n===8){await f.call('start',{run_id:'early'});expect((await f.call('advise',{run_id:'early'},at(60000))).modePreference).toBeNull();}
   }
   await f.call('start',{run_id:'next'});
-  const advice=await f.call('advise',{run_id:'next'},at(60000));expect(advice.modePreference.preferred).toBe('direct');expect(advice.modePreference.basis).toBe('elapsed_time_proxy');
+  const advice=await f.call('advise',{run_id:'next'},at(60000));expect(advice.modePreference).toBeNull();
   await f.call('correct',{run_id:'r0',event_id:'c',reason:'missed test'});
-  expect((await f.call('advise',{run_id:'next'},at(60000))).modePreference.preferred).toBe('delegated');
+  expect((await f.call('advise',{run_id:'next'},at(60000))).modePreference).toMatchObject({preferred:'delegated',basis:'quality'});
   await f.call('start',{run_id:'bad'});await f.call('record',{run_id:'bad',...f.record,acceptance:'failed',checks:[],relevant_checks_complete:false});
   expect((await f.call('advise',{run_id:'next'},at(60000))).reason).toContain('incomplete or unverified');
   await f.call('start',{run_id:'other-scope',scope:'different'});expect((await f.call('advise',{run_id:'other-scope'})).modePreference).toBeNull();
@@ -291,7 +291,7 @@ describe('finish',()=>{
   const env={...process.env,DELEGATE_STATE_HOME:f.stateRoot},file=join(f.root,'start.json');await writeFile(file,JSON.stringify({...f.input,run_id:'a'}));
   expect(JSON.parse(spawnSync(process.execPath,[helper,'start',file],{encoding:'utf8',env}).stdout).status).toBe('started');
   const out=spawnSync(process.execPath,[helper,'finish','-'],{encoding:'utf8',env,input:JSON.stringify({...f.input,run_id:'a',...direct,acceptance:'accepted',relevant_checks_complete:false})});
-  expect(out.status).toBe(0);expect(JSON.parse(out.stdout)).toMatchObject({status:'recorded',receipt:{run_id:'a',schema_version:'delegate_receipt.v3'}});
+  expect(out.status).toBe(0);expect(JSON.parse(out.stdout)).toMatchObject({status:'recorded',evidence_supported:expect.any(Boolean),receipt_path:expect.any(String),reason:null});
  }finally{await f.cleanup();}});
  it('returns bounded output tails with a verifying digest and bounds timeouts',async()=>{const f=await fixture();try{
   await f.call('start',{run_id:'a'});
@@ -330,13 +330,15 @@ describe('receipt v3 and learning defaults',()=>{
   expect(r.receipt.checks[0].outcome).toBe('unverified');expect(r.evidence_supported).toBe(false);
  }finally{await f.cleanup();}});
  it('keys direct comparability on the guidance digest and delegated comparability on the pack',async()=>{const f=await fixture();try{
-  const delegated=(run_id:string)=>({run_id,...f.record,...f.delegated,attempts:[f.attempt(),f.attempt('worker','w')],checks:[...f.record.checks,{...f.record.checks[0],kind:'review'}]});
-  for(let n=0;n<5;n++){await f.call('start',{run_id:`d${n}`});await f.call('record',{run_id:`d${n}`,...f.record},at(2000));await f.call('start',{run_id:`w${n}`});await f.call('record',delegated(`w${n}`),at(10000));}
+  const path=join(f.root,'usage.json'),bytes=JSON.stringify({direct:1,delegated:5});await writeFile(path,bytes);
+  const usage=(value:number)=>({metric:'allowance',unit:'units',value,source:{path,digest:sha(bytes)},complete:true});
+  const delegated=(run_id:string)=>({run_id,...f.record,...f.delegated,usage:usage(5),attempts:[f.attempt(),f.attempt('worker','w')],checks:[...f.record.checks,{...f.record.checks[0],kind:'review'}]});
+  for(let n=0;n<5;n++){await f.call('start',{run_id:`d${n}`});await f.call('record',{run_id:`d${n}`,...f.record,usage:usage(1)},at(2000));await f.call('start',{run_id:`w${n}`});await f.call('record',delegated(`w${n}`),at(10000));}
   const second=repack(f.pack,p=>{p.generated_at=new Date(Date.parse(p.generated_at)-60000).toISOString();});
   await writeFile(join(f.skillRoot,'routing-pack.json'),JSON.stringify(second));expect(second.content_digest).not.toBe(f.pack.content_digest);
   await f.call('start',{run_id:'n1'});expect((await f.call('advise',{run_id:'n1'},at(60000))).reason).toContain('insufficient comparable evidence');
   for(let n=5;n<10;n++){await f.call('start',{run_id:`w${n}`});await f.call('record',delegated(`w${n}`),at(10000));}
-  await f.call('start',{run_id:'n2'});expect((await f.call('advise',{run_id:'n2'},at(60000))).modePreference.preferred).toBe('direct');
+  await f.call('start',{run_id:'n2'});expect((await f.call('advise',{run_id:'n2'},at(60000))).modePreference).toMatchObject({preferred:'direct',basis:'allowance:units'});
   await writeFile(join(f.skillRoot,'SKILL.md'),(await readFile(join(f.skillRoot,'SKILL.md'),'utf8'))+'\nchanged guidance\n');
   await f.call('start',{run_id:'n3'});expect((await f.call('advise',{run_id:'n3'},at(60000))).reason).toContain('insufficient comparable evidence');
  }finally{await f.cleanup();}});
@@ -374,6 +376,54 @@ describe('receipt v3 and learning defaults',()=>{
   for(const value of [body,receipt,{a:'é 😀',b:[{c:null,d:[1,2.5,'\\u0000',false]}],z:{y:{x:'ü',w:[]}}}])expect(digest(value)).toBe(coreDigest(value));
   expect(digest(body)).toBe(content_digest);
  }finally{await f.cleanup();}});
+});
+describe('usage-based learning',()=>{
+ it.each(['allowance','tokens','attributable_cost','missing','incomplete','mixed','api_equivalent'])('handles %s without using elapsed time',async metric=>{
+  const f=await fixture();try {
+   const path=join(f.root,'usage.json'),bytes=JSON.stringify({direct:100,delegated:10});await writeFile(path,bytes);
+   for(let n=0;n<10;n++) {
+    const delegated=n>=5,run_id=`usage-${n}`;await f.call('start',{run_id});
+    const usage=metric==='missing'?null:{metric:metric==='incomplete'?'allowance':metric==='mixed'?(delegated?'tokens':'allowance'):metric,unit:'units',value:delegated?10:100,source:{path,digest:sha(bytes)},complete:metric!=='incomplete'};
+    await f.call('record',{run_id,...f.record,...(delegated?{...f.delegated,attempts:[f.attempt(),f.attempt('worker','w')],checks:[...f.record.checks,{...f.record.checks[0],kind:'review'}]}:{}),usage},delegated?at(10000):at(1000));
+   }
+   await f.call('start',{run_id:'next'});const advice=await f.call('advise',{run_id:'next'},at(60000));
+   if(['allowance','tokens','attributable_cost'].includes(metric))expect(advice.modePreference).toMatchObject({preferred:'delegated',basis:`${metric}:units`});else expect(advice.modePreference).toBeNull();
+   if(metric==='allowance'){await rm(path);expect((await f.call('advise',{run_id:'next'},at(60000))).modePreference).toBeNull();}
+  }finally{await f.cleanup();}
+ });
+});
+describe('deterministic assignment routes',()=>{
+ it.each(['codex','claude'])('selects existing routes and reports actual coverage for %s',async host=>{
+  const mappings={locate_behavior:'repo_exploration',summarize_sources:'research',specified_edit:'mechanical_work',implement_feature:'bounded_implementation',implement_fix:'hard_debugging',implement_ui:'ui_implementation',implement_plan:'complex_implementation'};
+  for(const [assignment,task_class] of Object.entries(mappings)) {
+   const input={host,risk:'low',assignment},r=await routeAssignment(input,{now}),baseline=await lookup({host,risk:'low',task_class},{now});
+   expect(r).toMatchObject({task_class,worker:baseline.workers[0],route:baseline.route,scope_match_required:true,host_verified:false,gap:null});
+   expect(r.verification).toEqual({mode:'separate',reviewer:baseline.reviewers[0]});
+  }
+  const coverage=await routeAssignment({host,risk:'low'},{now});expect(coverage.coverage).toHaveLength(9);
+  expect(coverage.coverage.find((r:any)=>r.assignment==='locate_behavior').scope).toContain('JavaScript/HTML');
+  expect(coverage.coverage.find((r:any)=>r.assignment==='summarize_sources').scope).toContain('no web-research evaluation');
+ });
+ it('preserves fallback, host checks and coordinator review eligibility',async()=>{
+  const input={host:'claude',risk:'low',assignment:'specified_edit'},r=await routeAssignment(input,{now});
+  const retry=await routeAssignment({...input,failed_candidate_ids:[r.worker.candidate_id]},{now});expect(retry.worker.candidate_id).not.toBe(r.worker.candidate_id);
+  expect((await routeAssignment({...input,host_treatments:[]},{now}))).toMatchObject({gap:'NO_ELIGIBLE_WORKER',worker:null,verification:null,host_verified:true});
+  expect((await routeAssignment({...input,coordinator:{model:r.verification.reviewer.model,effort:r.verification.reviewer.effort}},{now})).verification).toEqual({mode:'coordinator'});
+ });
+ it('keeps unsupported assignments, scope and expiry explicit without state writes',async()=>{
+  const f=await fixture();try {
+   const input={host:'codex',risk:'low'};
+   expect(await runCommand('route',{...input,assignment:'reproduce_failure'},f.options)).toMatchObject({gap:'INVESTIGATION_ROUTE_NOT_AVAILABLE',worker:null});
+   expect(await routeAssignment({...input,assignment:'frontier_decision'},{now})).toMatchObject({gap:'FRONTIER_DECISION_REQUIRED'});
+   expect(await routeAssignment({...input,assignment:'summarize_sources',research_kind:'live_web'},{now})).toMatchObject({gap:'LIVE_WEB_ROUTE_NOT_AVAILABLE'});
+   expect(await routeAssignment({...input,risk:'high',assignment:'locate_behavior'},{now})).toMatchObject({gap:'ROUTE_NOT_FOUND',worker:null});
+   await expect(routeAssignment({...input,assignment:'typo'},{now})).rejects.toThrow('ASSIGNMENT_UNKNOWN');
+   await expect(routeAssignment({...input,assignment:'locate_behavior',task_class:'mechanical_work'},{now})).rejects.toThrow('ASSIGNMENT_CLASS_CONFLICT');
+   await expect(routeAssignment({...input,assignment:'locate_behavior'},{now:f.pack.expires_at})).rejects.toThrow('PACK_EXPIRED_OR_NOT_YET_VALID');
+   await runCommand('route',{...input,assignment:'locate_behavior'},f.options);
+   await expect(readdir(f.stateRoot)).rejects.toMatchObject({code:'ENOENT'});
+  }finally{await f.cleanup();}
+ });
 });
 describe('session reminders',()=>{
  it('distinguishes qualitative judgment and host signals without claiming savings',()=>{

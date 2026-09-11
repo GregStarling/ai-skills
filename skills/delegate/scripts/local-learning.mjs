@@ -150,13 +150,14 @@ function preference(rows,option) {
   const groups=new Map();
   for(const r of rows){const key=option(r); if(key===null)continue; if(!groups.has(key))groups.set(key,[]); groups.get(key).push(r);}
   if(groups.size<2||[...groups.values()].some(g=>g.length<5))return null;
-  const all=[...groups.values()].flat(), comparable=all.every(r=>r.usage?.complete && ['allowance','attributable_cost'].includes(r.usage.metric) && r.usage.metric===all[0].usage?.metric && r.usage.unit===all[0].usage?.unit);
-  const scored=[...groups].map(([key,g])=>({key,count:g.length,quality:g.filter(r=>r.acceptance!=='accepted'||r.corrected).length/g.length,repairs:g.filter(r=>r.attempts.some(a=>a.role==='repair'||(a.role==='worker'&&a.outcome!=='accepted'))||r.attempts.filter(a=>a.role==='worker').length>1).length/g.length,metric:median(g.map(r=>comparable?r.usage.value:r.elapsed_ms))}));
-  scored.sort((a,b)=>a.quality-b.quality||a.repairs-b.repairs||a.metric-b.metric);
+  const all=[...groups.values()].flat(), comparable=all.every(r=>r.usage?.complete && ['allowance','attributable_cost','tokens'].includes(r.usage.metric) && r.usage.metric===all[0].usage?.metric && r.usage.unit===all[0].usage?.unit);
+  const scored=[...groups].map(([key,g])=>({key,count:g.length,quality:g.filter(r=>r.acceptance!=='accepted'||r.corrected).length/g.length,repairs:g.filter(r=>r.attempts.some(a=>a.role==='repair'||(a.role==='worker'&&a.outcome!=='accepted'))||r.attempts.filter(a=>a.role==='worker').length>1).length/g.length,metric:comparable?median(g.map(r=>r.usage.value)):null}));
+  scored.sort((a,b)=>a.quality-b.quality||a.repairs-b.repairs||(a.metric??0)-(b.metric??0));
   const [first,second]=scored;
   if(first.quality>0)return null;
   if(first.quality===second.quality&&first.repairs===second.repairs&&first.metric===second.metric)return null;
-  return {preferred:first.key,basis:comparable?`${all[0].usage.metric}:${all[0].usage.unit}`:'elapsed_time_proxy',samples:scored};
+  const basis=first.quality!==second.quality?'quality':first.repairs!==second.repairs?'repair_burden':`${all[0].usage.metric}:${all[0].usage.unit}`;
+  return {preferred:first.key,basis,samples:scored};
 }
 export function reminderDecision(input,prior=[]) {
   if(!input || !text(input.session_id))fail('REMINDER_SESSION_REQUIRED');
@@ -205,6 +206,26 @@ const shapes={direct:'single worker',frontier_specify_then_delegate:'specify-the
 const taskClasses=one('repo_exploration','mechanical_work','bounded_implementation','ui_implementation','hard_debugging','complex_implementation','research','full_project');
 const expandReference=(pack,reference)=>{const {task_evidence,...evidence}=reference,shared=pack.treatments[reference.candidate_identity];return {...shared,...evidence,provisional:reference.evidence_tier==='provisional'&&shared.provisional?{...shared.provisional,...(task_evidence?{task_evidence}:{})}:null};};
 const routeHosts=(pack,route)=>{const found=new Set([...route.workers,...route.reviewers].map(x=>pack.treatments[x.candidate_identity]?.provisional?.host).filter(Boolean));const env=route.stratum.worker_request.execution_environment;if(env)found.add(env==='claude_code'?'claude':env);return found;};
+// Assignment aliases select existing evidence; they never widen a route's scope.
+const assignments={locate_behavior:'repo_exploration',summarize_sources:'research',specified_edit:'mechanical_work',implement_feature:'bounded_implementation',implement_fix:'hard_debugging',implement_ui:'ui_implementation',implement_plan:'complex_implementation',reproduce_failure:null,frontier_decision:null};
+export async function routeAssignment(input,options={}) {
+  if(!input||!hosts(input.host)||!risks(input.risk))fail('ROUTE_INPUT_INVALID');
+  if(input.assignment===undefined) {
+    const routes=[];
+    for(const assignment of Object.keys(assignments)) {
+      const r=await routeAssignment({...input,assignment},options);
+      routes.push({assignment,task_class:r.task_class,scope:r.route?.scope??null,gap:r.gap});
+    }
+    return {host:input.host,risk:input.risk,coverage:routes};
+  }
+  if(!Object.hasOwn(assignments,input.assignment))fail('ASSIGNMENT_UNKNOWN');
+  const task_class=assignments[input.assignment];
+  if(input.task_class!==undefined&&input.task_class!==task_class)fail('ASSIGNMENT_CLASS_CONFLICT');
+  if(task_class===null)return {assignment:input.assignment,task_class:null,route:null,worker:null,verification:null,gap:input.assignment==='frontier_decision'?'FRONTIER_DECISION_REQUIRED':'INVESTIGATION_ROUTE_NOT_AVAILABLE',next:input.assignment==='reproduce_failure'?'Delegate a covered locate_behavior portion; retain reproduction until an eligible route covers it.':'Resolve the decision, then route the bounded next assignment.'};
+  if(input.assignment==='summarize_sources'&&input.research_kind==='live_web')return {assignment:input.assignment,task_class,route:null,worker:null,verification:null,gap:'LIVE_WEB_ROUTE_NOT_AVAILABLE'};
+  const r=await lookupWithState({...input,task_class},options);
+  return {assignment:input.assignment,task_class,pack:r.pack,route:r.route,worker:r.gap?null:r.workers[0],verification:r.gap?null:r.coordinator_may_verify?{mode:'coordinator'}:{mode:'separate',reviewer:r.reviewers[0]},ranking_basis:r.ranking_basis,limitations:r.limitations,host_verified:r.host_verified,host_checks:r.host_checks,scope_match_required:true,gap:r.gap};
+}
 /** Pure: reads the pack, never state. `now` is an option only; a `now` inside the input is ignored. */
 export async function lookup(input,{skillRoot=skillDirectory,now=new Date().toISOString()}={}) {
   if(!input||!hosts(input.host))fail('LOOKUP_INPUT_INVALID');
@@ -305,7 +326,7 @@ async function adviseFor(start,input,history,{skillRoot,now}) {
   const localPreferences=workerPreference&&pack&&input.stratum_digest?{pack_content_digest:pack.content_digest,stratum_digest:input.stratum_digest,host:input.host,preferred_worker_identity:workerPreference.preferred}:null;
   return {status:'ok',modePreference,workerPreference,localPreferences,reason:modePreference||workerPreference?'Local evidence supports a preference; recheck eligibility and explicit instructions.':'Baseline: insufficient comparable evidence.',qualification_authority:false};
 }
-async function lookupWithState(input,{stateRoot,skillRoot,now}) {
+async function lookupWithState(input,{stateRoot=process.env.DELEGATE_STATE_HOME || (process.env.XDG_STATE_HOME?join(process.env.XDG_STATE_HOME,'delegate'):join(homedir(),'.local/state/delegate')),skillRoot=skillDirectory,now=new Date().toISOString()}) {
   const first=await lookup(input,{skillRoot,now});
   if(input.localPreferences!==undefined||!text(input.cwd)||!text(input.run_id)||!first.route)return first;
   const identity=await projectIdentity(input.cwd,input.host), history=await events(join(resolve(stateRoot),identity.project_id.slice(7),identity.host,'events'));
@@ -315,6 +336,7 @@ async function lookupWithState(input,{stateRoot,skillRoot,now}) {
   return advice.localPreferences?lookup({...input,localPreferences:advice.localPreferences},{skillRoot,now}):first;
 }
 export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_STATE_HOME || (process.env.XDG_STATE_HOME?join(process.env.XDG_STATE_HOME,'delegate'):join(homedir(),'.local/state/delegate')),skillRoot=skillDirectory,now=new Date().toISOString(),hostCommand=process.env.DELEGATE_HOST_COMMAND}={}) {
+  if(command==='route')return routeAssignment(input,{stateRoot,skillRoot,now});
   if(command==='lookup')return lookupWithState(input??{},{stateRoot,skillRoot,now});
   if(!input || !text(input.cwd))fail('CWD_REQUIRED');
   const identity=await projectIdentity(input.cwd,input.host), base=join(resolve(stateRoot),identity.project_id.slice(7),identity.host), directory=join(base,'events');
@@ -459,7 +481,8 @@ let invokedDirectly=false;
 try { invokedDirectly=!!process.argv[1] && import.meta.url===pathToFileURL(await realpath(resolve(process.argv[1]))).href; } catch { /* Imports from stdin have no executable file. */ }
 if(invokedDirectly) {
   const stdin=async()=>{let s='';process.stdin.setEncoding('utf8');for await(const chunk of process.stdin)s+=chunk;return s;};
+  const compact=(command,result)=>command==='start'?{status:result.status,run_id:result.run_id,task_id:result.task_id,advice:result.advice}:['finish','record'].includes(command)?{status:result.status,evidence_supported:result.evidence_supported,receipt_path:result.receipt_path,reason:result.reason}:result;
   // The CLI always uses the wall clock; a `now` inside the input file is never read.
-  try { if(!process.argv[3])fail('Usage: local-learning.mjs command input.json|-'); const input=JSON.parse(process.argv[3]==='-'?await stdin():await readFile(process.argv[3],'utf8')); console.log(JSON.stringify(await runCommand(process.argv[2],input))); }
+  try { if(!process.argv[3])fail('Usage: local-learning.mjs command input.json|-'); const input=JSON.parse(process.argv[3]==='-'?await stdin():await readFile(process.argv[3],'utf8')); const command=process.argv[2];console.log(JSON.stringify(compact(command,await runCommand(command,input)))); }
   catch(error) { console.log(JSON.stringify({status:'unavailable',reason:error.message,localPreferences:null})); process.exitCode=1; }
 }
