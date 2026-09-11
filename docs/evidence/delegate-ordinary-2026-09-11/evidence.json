@@ -1,0 +1,913 @@
+{
+  "record_type": "ordinary_workflow_comparison",
+  "origin": "ordinary_workflow_evaluation",
+  "qualification_authority": false,
+  "subscription_savings_claim": false,
+  "workflow": "ordinary-investigation-first",
+  "captured_skill_folder_digest": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+  "host": "claude",
+  "host_version": "2.1.267",
+  "approved_executions": 10,
+  "observed_executions": 8,
+  "execution_count_basis": "coordinator processes plus explicit Agent/child launches; not individual API requests or opaque host background operations",
+  "timeout_ms_per_arm": 600000,
+  "execution_count_enforcement": "prompt limit plus post-run audit, not hard quota",
+  "source_commit": "92749bd",
+  "raw_campaign_directory": "artifacts/direct-vs-delegated/ordinary-live-2026-09-11",
+  "pairs": [
+    {
+      "pair_id": "ordinary-live-claude-1",
+      "fixture_id": "foreman-t920-derived-gate-id",
+      "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+      "parent_revision": "e407612b990a43ef1db138a701fdeb3f96aabaa0",
+      "grader_revision": "a0de8d3265ea6fbdc54626f3952a50a68093c9f4",
+      "starting_artifact_digest": "sha256:217499caa6ef535cf293124f273ebb9cefae3c5692fa6bbabf8cd0576f90009b",
+      "order": [
+        "direct",
+        "delegated"
+      ],
+      "arms": {
+        "direct": {
+          "run_id": "ordinary-live-claude-1-direct",
+          "result_digest": "sha256:eb63ebb49214f69a9f683e0dd58003a54b9368796e907545e3456445aa59ef6d",
+          "stdout_digest": "sha256:6cf0a50e306f79ea2545f2a0add5f5b8eba04614a6ebe4680487233aa3ced4c7",
+          "timed_stdout_digest": "sha256:ebbee915373e24945b6b4166a988eca530bfd09714260ab62d9a0a4c7e30d2a6",
+          "manifest_digest": "sha256:5981aff0cbfdc8dd2b830404ad2da3936d316052c1234fa287d1df5d87a37496",
+          "artifact_digests": {
+            "src/acceptance/contracts.ts": "sha256:19a56ff868ead2ce20a74abd0911092f76b0f0f72ec95ae60d0e412a151a6f02"
+          },
+          "qualification_authority": false,
+          "acceptance": "pending_frontier_trace_review",
+          "instructions_unchanged": true,
+          "skill_folder_digest": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "copied_skill_folder_digest_after": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "execution": {
+            "code": 0,
+            "timed_out": false,
+            "started_at": "2026-09-11T16:56:25.034Z",
+            "completed_at": "2026-09-11T16:57:02.048Z",
+            "duration_ms": 37014,
+            "client_estimated_cost_usd": 0.34549799999999997,
+            "observed_models": [
+              "claude-opus-5"
+            ],
+            "observed_effort": null
+          },
+          "after": {
+            "result": {
+              "schema_version": "grader_result.v1",
+              "task_id": "foreman_t920_derived_gate_id",
+              "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+              "candidate_identity": "sha256:acba38238fd95405dc45e454f34340cfdb3f3626f8db7aa03c0635bd6445d17c",
+              "artifact_digest": "sha256:3e9eea910b3804956fc5bff367388cbe61bd08f5ed26be7556b5e9ccd80f1ce5",
+              "passed": true,
+              "accepted": false,
+              "checks": [
+                {
+                  "check_id": "scope",
+                  "passed": true,
+                  "evidence_digest": "sha256:69a2d7074154b8664ff3d0f2a09deae88d933e48be7588f4f3fc094207c1494e"
+                },
+                {
+                  "check_id": "grader_integrity",
+                  "passed": true,
+                  "evidence_digest": "sha256:f30d502b62f1fdd1f27bd62717d07895069253530b483f9b22d582bd91ec71e1"
+                },
+                {
+                  "check_id": "behavioral_tests",
+                  "passed": true,
+                  "evidence_digest": "sha256:990dfbb50b79787bcf27295967ee146cae55735501564b63b8bb0b933407b5c2"
+                }
+              ]
+            },
+            "passed_tests": 11,
+            "changed_paths": [
+              "src/acceptance/contracts.ts"
+            ]
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T16:56:25.034Z",
+                "ended_at": "2026-09-11T16:57:02.048Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [],
+            "task_wall_clock_ms": 37014,
+            "helper_tail_ms": 0,
+            "duration_ms": 37014,
+            "model_counters": {
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 1603,
+                "outputTokens": 14,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0,
+                "webSearchRequests": 0,
+                "costUSD": 0.001673,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 0,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-opus-5": {
+                "inputTokens": 130,
+                "outputTokens": 2846,
+                "cacheReadInputTokens": 79150,
+                "cacheCreationInputTokens": 23245,
+                "webSearchRequests": 0,
+                "costUSD": 0.343825,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 413,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "observations": [],
+          "maintainer_review": {
+            "author": "Codex maintainer (root)",
+            "passed": true,
+            "workflow_adherent": true,
+            "coordinator_inspected_artifact": true,
+            "investigation_sources_verified": false,
+            "ordinary_feedback_verified": false,
+            "repair_worker_executions": 0,
+            "coordinator_repair_edits": 0,
+            "trace_event_positions": [
+              3,
+              8,
+              16,
+              18,
+              22,
+              25
+            ],
+            "notes": "Opus task execution only; source/diff and verification inspected. Native final totals also include a small unassigned Haiku total, retained in cost, not attributed to an Agent launch."
+          }
+        },
+        "delegated": {
+          "run_id": "ordinary-live-claude-1-delegated",
+          "result_digest": "sha256:839e274d19649b939e0ea9a567c46c5cbfe9180878bde222043a59d4ece8e7c1",
+          "stdout_digest": "sha256:f711a9fa86c07bcd92af5fa1f0e711e4651b6817cc7780affba0c88f82f63ad5",
+          "timed_stdout_digest": "sha256:6a1ed3e821b033ae84cc0dfd899b95892a4d94ea8fe57a0b3522aa87950faabe",
+          "manifest_digest": "sha256:11d50c5b678e82543db9ac0198959a59e54ef04ef561dd5fb30bbc2df7683d3e",
+          "artifact_digests": {
+            "src/acceptance/contracts.ts": "sha256:2c3dbd5d9a16682ace968364c68809f82c1266736eb4dba6590315cf6481b855"
+          },
+          "qualification_authority": false,
+          "acceptance": "pending_frontier_trace_review",
+          "instructions_unchanged": true,
+          "skill_folder_digest": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "copied_skill_folder_digest_after": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "execution": {
+            "code": 0,
+            "timed_out": false,
+            "started_at": "2026-09-11T16:57:03.801Z",
+            "completed_at": "2026-09-11T17:00:41.658Z",
+            "duration_ms": 217857,
+            "client_estimated_cost_usd": 1.13067345,
+            "observed_models": [
+              "claude-opus-5",
+              "claude-haiku-4-5-20251001",
+              "claude-sonnet-5"
+            ],
+            "observed_effort": null
+          },
+          "after": {
+            "result": {
+              "schema_version": "grader_result.v1",
+              "task_id": "foreman_t920_derived_gate_id",
+              "fixture_digest": "sha256:058c30d57f5edacc3c6169efdbec568e8fb51cb5b419b9f0e52f700331ca0f92",
+              "candidate_identity": "sha256:acba38238fd95405dc45e454f34340cfdb3f3626f8db7aa03c0635bd6445d17c",
+              "artifact_digest": "sha256:ce5e2cd9a5046e037b6b92c445e836ff4d8cd7c188d58d915439bde9992e169c",
+              "passed": true,
+              "accepted": false,
+              "checks": [
+                {
+                  "check_id": "scope",
+                  "passed": true,
+                  "evidence_digest": "sha256:69a9953b0fd5161abb820884b2ab950ac660400ded26b5b6943318827de99290"
+                },
+                {
+                  "check_id": "grader_integrity",
+                  "passed": true,
+                  "evidence_digest": "sha256:f30d502b62f1fdd1f27bd62717d07895069253530b483f9b22d582bd91ec71e1"
+                },
+                {
+                  "check_id": "behavioral_tests",
+                  "passed": true,
+                  "evidence_digest": "sha256:4bcb481796265fbedea88deb67ee3608357c8958f151d80851bf8916c646383a"
+                }
+              ]
+            },
+            "passed_tests": 11,
+            "changed_paths": [
+              "src/acceptance/contracts.ts"
+            ]
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T16:57:03.801Z",
+                "ended_at": "2026-09-11T17:00:41.658Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": "claude-haiku-4-5-20251001",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T16:58:32.431Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01WNf6pcTvJ7CWFCSZCjM9VZ",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T16:57:38.363Z",
+                "prompt_digest": "sha256:bba4ce20b81749745d46a7a59d33a95d4d721a3840bfec158785ff8bdb9d8e58",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 2,
+                "role": "worker",
+                "model": "claude-sonnet-5",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T16:59:39.280Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01BGxy7K6HucQ7yBbuWzgxAS",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T16:59:01.622Z",
+                "prompt_digest": "sha256:3a5714f191ef1a37dc8eb110085f4105982e75c4a6920b28037df0a87c0a8108",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 3,
+            "reported_execution_lower_bound": 3,
+            "failed_launches": 0,
+            "rework_heuristic": 1,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_01SyRK55QYtiz77r9zZhH3Ur",
+                "command": "dispatch",
+                "at": "2026-09-11T16:57:14.412Z"
+              },
+              {
+                "id": "toolu_013FVFxeMmbcVjrn9WQQfoTY",
+                "command": "dispatch",
+                "at": "2026-09-11T16:57:25.482Z"
+              },
+              {
+                "id": "toolu_01VjCSgYvckmA7jvmQGfxGCG",
+                "command": "observe",
+                "at": "2026-09-11T16:58:46.885Z"
+              },
+              {
+                "id": "toolu_01QNhhhrsvk3DD5tqGTT6ebD",
+                "command": "dispatch",
+                "at": "2026-09-11T16:58:48.402Z"
+              },
+              {
+                "id": "toolu_01JkqppTKU3A7XhfSpXeZKhk",
+                "command": "observe",
+                "at": "2026-09-11T17:00:21.497Z"
+              }
+            ],
+            "task_wall_clock_ms": 217857,
+            "helper_tail_ms": 0,
+            "duration_ms": 217857,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 418,
+                "outputTokens": 9024,
+                "cacheReadInputTokens": 410816,
+                "cacheCreationInputTokens": 50952,
+                "webSearchRequests": 0,
+                "costUSD": 0.942618,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 1518,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 82,
+                "outputTokens": 4623,
+                "cacheReadInputTokens": 233331,
+                "cacheCreationInputTokens": 34557,
+                "webSearchRequests": 0,
+                "costUSD": 0.08972634999999998,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 1692,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-sonnet-5": {
+                "inputTokens": 12,
+                "outputTokens": 1947,
+                "cacheReadInputTokens": 105138,
+                "cacheCreationInputTokens": 23123,
+                "webSearchRequests": 0,
+                "costUSD": 0.0983291,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 174,
+                "canonicalModel": "claude-sonnet-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "observations": [
+            {
+              "digest": "sha256:7e5d649601b151deeb0c47610ca41b6bd9bd836c26e42028bb24064a47606401",
+              "data": {
+                "task_id": "ordinary-live-claude-1-delegated-implement-derived-gate-id",
+                "assignment": "implement_fix",
+                "scope": null,
+                "mode": "delegated",
+                "worker": {
+                  "model": "sonnet",
+                  "effort": null
+                },
+                "acceptance": "accepted",
+                "checks": "passed",
+                "repairs": 0,
+                "usage": null,
+                "guidance_digest": "sha256:dbc1c35aaad25820026c3ca56e4eb5aca5d6e5f719f13913a0a12c71be1142b9",
+                "at": "2026-09-11T17:00:21.545Z"
+              }
+            },
+            {
+              "digest": "sha256:2d68df2266d6fe569984888b1972d69745159149a7ec62bd0b96b23634c4c9f2",
+              "data": {
+                "task_id": "ordinary-live-claude-1-delegated-locate-gate-id",
+                "assignment": "locate_behavior",
+                "scope": null,
+                "mode": "delegated",
+                "worker": {
+                  "model": "haiku",
+                  "effort": null
+                },
+                "acceptance": "accepted",
+                "checks": "passed",
+                "repairs": 0,
+                "usage": null,
+                "guidance_digest": "sha256:dbc1c35aaad25820026c3ca56e4eb5aca5d6e5f719f13913a0a12c71be1142b9",
+                "at": "2026-09-11T16:58:46.935Z"
+              }
+            }
+          ],
+          "maintainer_review": {
+            "author": "Codex maintainer (root)",
+            "passed": true,
+            "workflow_adherent": true,
+            "coordinator_inspected_artifact": true,
+            "investigation_sources_verified": true,
+            "ordinary_feedback_verified": true,
+            "repair_worker_executions": 0,
+            "coordinator_repair_edits": 0,
+            "trace_event_positions": [
+              20,
+              69,
+              91,
+              93,
+              95,
+              108,
+              112,
+              129,
+              131,
+              147,
+              153,
+              174,
+              177
+            ],
+            "notes": "Native Haiku investigation then Opus source verification/settled decisions, native Sonnet edit and Opus artifact/behavior verification. Both isolated observations are accepted/passed, usage null, repairs zero. Initial invalid host label corrected by a helper retry; no extra worker or CLI process. Coordinator corrected an unsuccessful inline verification probe; no artifact repair."
+          }
+        }
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "subscription_savings_claim": false,
+        "claim": "lower API-equivalent estimate at n=1; not subscription savings",
+        "quality": {
+          "direct": true,
+          "delegated": true
+        },
+        "adherence": {
+          "direct": true,
+          "delegated": true
+        },
+        "accounting": {
+          "direct": {
+            "complete": true,
+            "kind": "api_equivalent_cost",
+            "unit": "USD",
+            "comparison_key": "claude-native-firstParty-list",
+            "value": 0.34549799999999997,
+            "source": "native final modelUsage reconciled with total_cost_usd; all traced executions mapped",
+            "subscription_savings_claim": false
+          },
+          "delegated": {
+            "complete": true,
+            "kind": "api_equivalent_cost",
+            "unit": "USD",
+            "comparison_key": "claude-native-firstParty-list",
+            "value": 1.13067345,
+            "source": "native final modelUsage reconciled with total_cost_usd; all traced executions mapped",
+            "subscription_savings_claim": false
+          }
+        },
+        "verdict": "direct",
+        "delegated_change_percent": 227.25904346769013
+      }
+    },
+    {
+      "pair_id": "ordinary-live-claude-2",
+      "fixture_id": "foreman-t897-reconnect-notice",
+      "fixture_digest": "sha256:3e7ffe14927fa50f55fcf8e80a871d7edf495458a41406fec1961534df69aa27",
+      "parent_revision": "d22c79a74141a22114c9dbcd3f63f9defda5364c",
+      "grader_revision": "0c99b05f4080b741517dfc3aa05ba42a5a46be94",
+      "starting_artifact_digest": "sha256:8ff0d60bc52200f2b10e68b69bf747f39deba120c0e175a4efe753215ff96fa8",
+      "order": [
+        "delegated",
+        "direct"
+      ],
+      "arms": {
+        "direct": {
+          "run_id": "ordinary-live-claude-2-direct",
+          "result_digest": "sha256:5ccc3c4ef570bded27322cc0c370980cd1749f84a78e66873d00c748e78de67b",
+          "stdout_digest": "sha256:b2e3909d64a80163dce31f8f54ebd5bedd63a15849e94b163ea059a4f880beb4",
+          "timed_stdout_digest": "sha256:52264b462ee7c5543b5d69c695523475a94b5e357f131c88ec2027b0bc213c5d",
+          "manifest_digest": "sha256:84bd476f258b77e330775e2becb3cf0547fbda558e891370bcd7ea7c451f9d7b",
+          "artifact_digests": {
+            "src/pty/codex-conversation-session.ts": "sha256:a1694f55cfeaad5e3a53e65157f299229ef4bc2dc95e0aca7595871e24569eae"
+          },
+          "qualification_authority": false,
+          "acceptance": "pending_frontier_trace_review",
+          "instructions_unchanged": true,
+          "skill_folder_digest": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "copied_skill_folder_digest_after": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "execution": {
+            "code": 0,
+            "timed_out": false,
+            "started_at": "2026-09-11T17:04:07.091Z",
+            "completed_at": "2026-09-11T17:05:07.591Z",
+            "duration_ms": 60500,
+            "client_estimated_cost_usd": 0.4383395,
+            "observed_models": [
+              "claude-opus-5"
+            ],
+            "observed_effort": null
+          },
+          "after": {
+            "result": {
+              "schema_version": "grader_result.v1",
+              "task_id": "foreman_t897_reconnect_notice",
+              "fixture_digest": "sha256:3e7ffe14927fa50f55fcf8e80a871d7edf495458a41406fec1961534df69aa27",
+              "candidate_identity": "sha256:acba38238fd95405dc45e454f34340cfdb3f3626f8db7aa03c0635bd6445d17c",
+              "artifact_digest": "sha256:c4e8949bc67db2a774acc80a37a065e36469a93a51d036c41fd543d460323852",
+              "passed": true,
+              "accepted": false,
+              "checks": [
+                {
+                  "check_id": "scope",
+                  "passed": true,
+                  "evidence_digest": "sha256:a628ada86368edd42c308002782ffb29768b04b70f3d98f7fc7c7737b1ae24c0"
+                },
+                {
+                  "check_id": "grader_integrity",
+                  "passed": true,
+                  "evidence_digest": "sha256:f4eae09aa319e4d04c6e7aaab7e4a546c59644c18d4a33f4b8a0aa22c128980e"
+                },
+                {
+                  "check_id": "behavioral_tests",
+                  "passed": true,
+                  "evidence_digest": "sha256:a62218c1be285ae0e0685cedf3df37512b06b7a303c394b12f921f1c981fe003"
+                }
+              ]
+            },
+            "passed_tests": 21,
+            "changed_paths": [
+              "src/pty/codex-conversation-session.ts"
+            ]
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T17:04:07.091Z",
+                "ended_at": "2026-09-11T17:05:07.591Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 1,
+            "reported_execution_lower_bound": 1,
+            "failed_launches": 0,
+            "rework_heuristic": 0,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [],
+            "task_wall_clock_ms": 60500,
+            "helper_tail_ms": 0,
+            "duration_ms": 60500,
+            "model_counters": {
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 1591,
+                "outputTokens": 17,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0,
+                "webSearchRequests": 0,
+                "costUSD": 0.001676,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 0,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-opus-5": {
+                "inputTokens": 194,
+                "outputTokens": 4769,
+                "cacheReadInputTokens": 134697,
+                "cacheCreationInputTokens": 24912,
+                "webSearchRequests": 0,
+                "costUSD": 0.4366635,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 1582,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "observations": [],
+          "maintainer_review": {
+            "author": "Codex maintainer (root)",
+            "passed": true,
+            "workflow_adherent": true,
+            "coordinator_inspected_artifact": true,
+            "investigation_sources_verified": false,
+            "ordinary_feedback_verified": false,
+            "repair_worker_executions": 0,
+            "coordinator_repair_edits": 0,
+            "trace_event_positions": [
+              6,
+              8,
+              10,
+              34,
+              39,
+              45,
+              51,
+              52,
+              53,
+              54,
+              58
+            ],
+            "notes": "Opus task execution only; source/diff and verification inspected. Native final totals also include a small unassigned Haiku total, retained in cost, not attributed to an Agent launch."
+          }
+        },
+        "delegated": {
+          "run_id": "ordinary-live-claude-2-delegated",
+          "result_digest": "sha256:6cd2ccf382b4ab2feacbb7dae0727423c0b4bc0e87299935aff29b01e95e58e6",
+          "stdout_digest": "sha256:b72e62b0e7423783047bb05828288edbc164f2617d6dd22ff608239233fd31bb",
+          "timed_stdout_digest": "sha256:814fab9e04576fc9f6daafd24a991852c2f745e893fd1030529c3fa40b053458",
+          "manifest_digest": "sha256:3bf186eaa3a88f6e96fec02b3d6279e736ecae7798bbed3fb1b5b0064c57cb42",
+          "artifact_digests": {
+            "src/pty/codex-conversation-session.ts": "sha256:6579df2e56f97c92c2594ff21b4233d8e99e475c411724f513227c52ef603a35"
+          },
+          "qualification_authority": false,
+          "acceptance": "pending_frontier_trace_review",
+          "instructions_unchanged": true,
+          "skill_folder_digest": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "copied_skill_folder_digest_after": "sha256:0c0c39a532a0f08ec4650d757a9be4da0517295202fcff50f53169b7d1174f5f",
+          "execution": {
+            "code": 0,
+            "timed_out": false,
+            "started_at": "2026-09-11T17:00:46.943Z",
+            "completed_at": "2026-09-11T17:04:05.385Z",
+            "duration_ms": 198442,
+            "client_estimated_cost_usd": 0.8640072999999999,
+            "observed_models": [
+              "claude-opus-5",
+              "claude-haiku-4-5-20251001",
+              "claude-sonnet-5"
+            ],
+            "observed_effort": null
+          },
+          "after": {
+            "result": {
+              "schema_version": "grader_result.v1",
+              "task_id": "foreman_t897_reconnect_notice",
+              "fixture_digest": "sha256:3e7ffe14927fa50f55fcf8e80a871d7edf495458a41406fec1961534df69aa27",
+              "candidate_identity": "sha256:acba38238fd95405dc45e454f34340cfdb3f3626f8db7aa03c0635bd6445d17c",
+              "artifact_digest": "sha256:4c9d4d810ca62aad35af4af14c085abdf86c62f283d1a7afe623fc56e10fd67f",
+              "passed": true,
+              "accepted": false,
+              "checks": [
+                {
+                  "check_id": "scope",
+                  "passed": true,
+                  "evidence_digest": "sha256:d33e95c7e9f9af2df6732372e33171a85431736523b092d92c612435cbdce82c"
+                },
+                {
+                  "check_id": "grader_integrity",
+                  "passed": true,
+                  "evidence_digest": "sha256:f4eae09aa319e4d04c6e7aaab7e4a546c59644c18d4a33f4b8a0aa22c128980e"
+                },
+                {
+                  "check_id": "behavioral_tests",
+                  "passed": true,
+                  "evidence_digest": "sha256:74bb1ce515ea62d17fd4929075a6507da48ab1f2fcf7e28de9e27cbe4c068330"
+                }
+              ]
+            },
+            "passed_tests": 21,
+            "changed_paths": [
+              "src/pty/codex-conversation-session.ts"
+            ]
+          },
+          "ledger": {
+            "rows": [
+              {
+                "index": 0,
+                "role": "coordinator",
+                "mechanism": "host_process",
+                "model": "claude-opus-5",
+                "model_source": "host_reported",
+                "started_at": "2026-09-11T17:00:46.943Z",
+                "ended_at": "2026-09-11T17:04:05.385Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 1,
+                "role": "worker",
+                "model": "claude-haiku-4-5-20251001",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T17:02:13.554Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01X8yWX8wrRors9ApAdJPwv1",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T17:01:23.487Z",
+                "prompt_digest": "sha256:e98ceb73a27438ccdafaf82c53519f3a03f203d0230b1f3ae2ff51b9ed1b5111",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              },
+              {
+                "index": 2,
+                "role": "worker",
+                "model": "claude-sonnet-5",
+                "model_source": "launch_configured_usage_key",
+                "ended_at": "2026-09-11T17:03:18.890Z",
+                "failed_launch": false,
+                "counter_kind": "host_reported_counter",
+                "id": "toolu_01XEMwNvM4Q6W4FVHfAYchAD",
+                "mechanism": "Agent",
+                "started_at": "2026-09-11T17:02:59.478Z",
+                "prompt_digest": "sha256:288d9abb47d85d59488177c3abb610fcc8f362feb85cf03b0be48ac6cfb1d386",
+                "completion_status": "completed",
+                "usage_scope": "model_total",
+                "costBasis": "list"
+              }
+            ],
+            "executions": 3,
+            "reported_execution_lower_bound": 3,
+            "failed_launches": 0,
+            "rework_heuristic": 1,
+            "receipt_repair_attempts": 0,
+            "routing_reads": [],
+            "helper_calls": [
+              {
+                "id": "toolu_011Y4VVoUTHBHEmEaYvCdAo7",
+                "command": "dispatch",
+                "at": "2026-09-11T17:00:58.598Z"
+              },
+              {
+                "id": "toolu_01PC8ExNA8VzKHAJUdaFXcvZ",
+                "command": "dispatch",
+                "at": "2026-09-11T17:01:11.611Z"
+              },
+              {
+                "id": "toolu_015panFpLqxbAsQLH6ikeyS4",
+                "command": "observe",
+                "at": "2026-09-11T17:02:43.133Z"
+              },
+              {
+                "id": "toolu_01WmxHvndiUXjS33JLnNpEqt",
+                "command": "dispatch",
+                "at": "2026-09-11T17:02:44.891Z"
+              },
+              {
+                "id": "toolu_0111HL2rMJXjCcAtEeErXia9",
+                "command": "observe",
+                "at": "2026-09-11T17:03:49.014Z"
+              }
+            ],
+            "task_wall_clock_ms": 198442,
+            "helper_tail_ms": 0,
+            "duration_ms": 198442,
+            "model_counters": {
+              "claude-opus-5": {
+                "inputTokens": 386,
+                "outputTokens": 9709,
+                "cacheReadInputTokens": 353490,
+                "cacheCreationInputTokens": 33047,
+                "webSearchRequests": 0,
+                "costUSD": 0.7518699999999999,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 1954,
+                "canonicalModel": "claude-opus-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-haiku-4-5-20251001": {
+                "inputTokens": 26,
+                "outputTokens": 4552,
+                "cacheReadInputTokens": 48584,
+                "cacheCreationInputTokens": 21832,
+                "webSearchRequests": 0,
+                "costUSD": 0.054934399999999994,
+                "contextWindow": 200000,
+                "maxOutputTokens": 32000,
+                "thinkingTokens": 3045,
+                "canonicalModel": "claude-haiku-4-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              },
+              "claude-sonnet-5": {
+                "inputTokens": 10,
+                "outputTokens": 1780,
+                "cacheReadInputTokens": 89602,
+                "cacheCreationInputTokens": 8585,
+                "webSearchRequests": 0,
+                "costUSD": 0.0572029,
+                "contextWindow": 1000000,
+                "maxOutputTokens": 64000,
+                "thinkingTokens": 120,
+                "canonicalModel": "claude-sonnet-5",
+                "provider": "firstParty",
+                "costBasis": "list"
+              }
+            },
+            "limitations": []
+          },
+          "observations": [
+            {
+              "digest": "sha256:a1c73ea92b238259556137afbe15441773bd46e418ec14345fe7db64027feb26",
+              "data": {
+                "task_id": "ordinary-live-claude-2-delegated-locate-behavior",
+                "assignment": "locate_behavior",
+                "scope": null,
+                "mode": "delegated",
+                "worker": {
+                  "model": "haiku",
+                  "effort": null
+                },
+                "acceptance": "accepted",
+                "checks": "passed",
+                "repairs": 0,
+                "usage": null,
+                "guidance_digest": "sha256:dbc1c35aaad25820026c3ca56e4eb5aca5d6e5f719f13913a0a12c71be1142b9",
+                "at": "2026-09-11T17:02:43.180Z"
+              }
+            },
+            {
+              "digest": "sha256:b86b371b9a82408fc982b2f96681d6d7053a4bf5d10171c930bbc705856a0c3a",
+              "data": {
+                "task_id": "ordinary-live-claude-2-delegated-implement-fix",
+                "assignment": "implement_fix",
+                "scope": null,
+                "mode": "delegated",
+                "worker": {
+                  "model": "sonnet",
+                  "effort": null
+                },
+                "acceptance": "accepted",
+                "checks": "passed",
+                "repairs": 0,
+                "usage": null,
+                "guidance_digest": "sha256:dbc1c35aaad25820026c3ca56e4eb5aca5d6e5f719f13913a0a12c71be1142b9",
+                "at": "2026-09-11T17:03:49.060Z"
+              }
+            }
+          ],
+          "maintainer_review": {
+            "author": "Codex maintainer (root)",
+            "passed": true,
+            "workflow_adherent": true,
+            "coordinator_inspected_artifact": true,
+            "investigation_sources_verified": true,
+            "ordinary_feedback_verified": true,
+            "repair_worker_executions": 0,
+            "coordinator_repair_edits": 0,
+            "trace_event_positions": [
+              22,
+              40,
+              42,
+              49,
+              56,
+              58,
+              91,
+              93,
+              98,
+              106,
+              138,
+              140,
+              164,
+              168,
+              171
+            ],
+            "notes": "Native Haiku investigation then Opus source verification/settled decisions, native Sonnet edit and Opus artifact/behavior verification. Both isolated observations are accepted/passed, usage null, repairs zero. Initial invalid host label corrected by a helper retry; no extra worker or CLI process. Opus corrected an invalid word-boundary regex proposed by Haiku before Sonnet implementation."
+          }
+        }
+      },
+      "verdict": {
+        "qualification_authority": false,
+        "subscription_savings_claim": false,
+        "claim": "lower API-equivalent estimate at n=1; not subscription savings",
+        "quality": {
+          "direct": true,
+          "delegated": true
+        },
+        "adherence": {
+          "direct": true,
+          "delegated": true
+        },
+        "accounting": {
+          "direct": {
+            "complete": true,
+            "kind": "api_equivalent_cost",
+            "unit": "USD",
+            "comparison_key": "claude-native-firstParty-list",
+            "value": 0.4383395,
+            "source": "native final modelUsage reconciled with total_cost_usd; all traced executions mapped",
+            "subscription_savings_claim": false
+          },
+          "delegated": {
+            "complete": true,
+            "kind": "api_equivalent_cost",
+            "unit": "USD",
+            "comparison_key": "claude-native-firstParty-list",
+            "value": 0.8640072999999999,
+            "source": "native final modelUsage reconciled with total_cost_usd; all traced executions mapped",
+            "subscription_savings_claim": false
+          }
+        },
+        "verdict": "direct",
+        "delegated_change_percent": 97.10915854035512
+      }
+    }
+  ],
+  "total_api_equivalent_usd": 2.77851825
+}

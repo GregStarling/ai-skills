@@ -128,6 +128,24 @@ it.skipIf(!hasHarvest)('writes fresh dry-run pairs with matching scopes, alterna
  await expect(driver.runPairs({outputDirectory:result.destination})).rejects.toMatchObject({code:'EEXIST'});
 },120000);
 
+it.skipIf(!hasHarvest)('ordinary dry run omits evidence probes and exceptions in both fresh arms',async()=>{
+ const directory=await temporaryRoot();
+ const result=await driver.runPairs({hosts:['claude'],fixtures:['foreman-t920-derived-gate-id'],workflow:'ordinary-investigation-first',outputDirectory:join(directory,'ordinary'),campaignId:'ordinary-test'});
+ const pair=result.pairs[0];
+ expect(pair.workflow).toBe('ordinary-investigation-first');expect(result.tally.executions).toBe(0);
+ for(const mode of ['direct','delegated']){
+  const {manifest}=pair.arms[mode];temporary.push(manifest.directory);
+  expect(manifest.scope_exception).toBeNull();expect(manifest.qualification_evaluation).toBe(false);
+  expect(manifest.starting_artifact_digest).toBe(pair.starting_artifact_digest);
+  expect(await readdir(manifest.evaluation_directory)).toEqual([]);
+  expect(manifest.prompt).not.toContain('Evaluation-only scope exception');
+  expect(manifest.prompt).not.toContain('start-input.json');
+  expect(manifest.args).toContain('--max-budget-usd');
+ }
+ expect(pair.arms.delegated.manifest.prompt).toContain('first haiku');
+ expect(pair.arms.direct.manifest.prompt).toContain('No workers, dispatch or observe calls');
+},120000);
+
 
 it('rejects a globally stopped host before creating any pair directory',async()=>{
  const budget=await import(pathToFileURL(resolve('scripts/verify/campaign-budget.mjs')).href);

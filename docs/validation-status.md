@@ -21,8 +21,12 @@ The single current-state index. It is updated with every pack recompile and ever
 
 | Digest | Value |
 | --- | --- |
-| Helper `folderDigest` (skill_folder_digest) | `sha256:c875a78223b66fae4c8cea718d4c271719f437b8896cef267378b2458f8111b3` |
-| `guidance_digest` (folder without `routing-pack.json`) | `sha256:4463a207f2d80d1e41b5355b9106957306089d2de72bb8bd93280c8c8f79f483` |
+| Helper `folderDigest` (skill_folder_digest) | `sha256:d7035599f99636078c60af35518d49454466033fd1aad0c40872352394ca536b` |
+| `guidance_digest` (folder without `routing-pack.json`) | `sha256:b43a9eb8e79659effafa6cd66ab42f086e99c84a523b51f39505985d9d87feba` |
+
+Native-host follow-up: Claude guidance explicitly selects Haiku/Sonnet through Agent, distinguishes definition versus invocation effort, and avoids a CLI child merely to tune ordinary effort. The [new ordinary comparison](delegate-ordinary-results-2026-09-11.md) completed four passing arms on frozen folder `0c0c39a5`, using eight of ten explicit executions. Direct estimates were $0.345498 / $0.438340 versus delegated $1.130673 / $0.864007; both proxy verdicts favor direct, with no subscription-savings or general large-repository claim. A one-sentence helper host-name clarification followed capture, so final-folder live acceptance is not claimed. The [evidence-path assessment](delegate-evidence-path-assessment.md) is assessment-only; the pack and historical evidence remain unchanged.
+
+Follow-up release checks: 784 tests across 45 files, typecheck, build, portable packaging/reachability and built-CLI pack validation passed. The installed consumer folder matches the source digest above; its prior version was backed up outside skill discovery. The generic Python skill validator lacked PyYAML; repository YAML/frontmatter validation passed without a new dependency.
 
 Feedback follow-up: routine observation instructions now live in the entrypoint, explicitly accepting frontier source inspection as passed checks without a command. Ordinary history uses the existing canonical project/host identity plus assignment/model/effort and a 30-day window. Free-text scopes are optional metadata; guidance hashes remain provenance, not lookup filters. Existing records remain readable and repeated observation calls retain their original guidance provenance. Strict evidence-receipt comparability is unchanged. Regression tests cover source-verified success, rejection of unchecked success, retained success/failure history after guidance edits or label changes, worktree/subdirectory sharing, and project/host/assignment/effort/time isolation. All 774 tests across 44 files, typecheck, build, portable packaging and pack publication validation passed. No new model trials or savings claims were added for these fixes.
 

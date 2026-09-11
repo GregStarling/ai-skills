@@ -88,6 +88,8 @@ $delegate apply this API rename across the affected TypeScript packages
 
 In Claude Code, use `/delegate` with the same requests. You describe the job; the coordinator bounds the assignments and checks available workers, permissions and verification needs. Your repository's language and size aren't dispatch gates. Stricter project routing policies still apply.
 
+Claude Code's ordinary defaults are native Haiku for economy work and Sonnet for standard work, selected explicitly through Agent. Unsupported or unobserved effort stays unknown; ordinary delegation does not start a separate CLI just to tune it.
+
 To update, pull the repository and replace the complete installed folder. Keep rollback copies **outside skill-discovery directories** to avoid duplicate skills. Personal learning state survives replacement.
 
 ## What makes the routing predictable
@@ -102,7 +104,7 @@ For projects requiring evidence-qualified routing, the separate pack contains **
 
 Ordinary delegated work records a small local outcome, including investigations. Missing usage doesn't prevent failure/repair feedback. Evidence-routed, fully tracked preferences require at least five supported comparable tasks per option. Quality and repair burden come first; complete comparable allowance or attributable-cost observations can then break ties. **Neither elapsed time nor raw token totals select learned winners.**
 
-Missing or partial usage remains unknown. A cheap-model token and a frontier token aren't interchangeable subscription units. Model-specific, cache-aware price estimates are labeled separately from observed spending. Personal history stays on your machine and cannot broaden evidence authority or weaken verification. Earlier paired trials did not establish a delegation advantage; the revised workflow still needs matched usage evidence.
+Missing or partial usage remains unknown. A cheap-model token and a frontier token aren't interchangeable subscription units. Model-specific, cache-aware price estimates are labeled separately from observed spending. Personal history stays on your machine and cannot broaden evidence authority or weaken verification. In the [two new TypeScript comparisons](docs/delegate-ordinary-results-2026-09-11.md), all arms passed, but Haiku investigation → Opus decisions → Sonnet implementation cost more by the API-equivalent proxy than direct Opus. These small samples do not establish subscription savings or general large-repository performance.
 
 Evidence packs carry refresh and expiry dates; this pack calls for refresh after seven days and expires after thirty. Updating a pack doesn't renew its evidence. Ordinary host dispatch doesn't depend on that pack. Details: [local learning](skills/delegate/local-learning.md), [routing maintenance](docs/routing-pack-maintenance.md), and [validation status](docs/validation-status.md).
 
@@ -120,3 +122,5 @@ node dist/cli/index.js validate-routing-pack --input skills/delegate/routing-pac
 ```
 
 GitHub Actions runs these checks on pull requests and pushes to `main`. Passing software checks does not establish model qualification or measured savings. The [validation index](docs/validation-status.md) separates current artifacts from historical model trials.
+
+The [evidence-path assessment](docs/delegate-evidence-path-assessment.md) recommends later separation while preserving existing publishers and receipt consumers. Nothing has been removed.

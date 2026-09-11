@@ -5,7 +5,7 @@ const digest=value=>'sha256:'+createHash('sha256').update(value).digest('hex');
 const array=value=>Array.isArray(value)?value:[];
 const failed=value=>value?.is_error===true||(typeof value?.exit_code==='number'&&value.exit_code!==0)||value?.status==='failed';
 const childCli=/(?:^|&&|\|\||[;\n|])\s*(?:exec\s+)?(claude\s+(?:-p|--print)|codex\s+exec)\b/g;
-const helper=/local-learning\.mjs["']?\s+(start|lookup|capture|finish|record|advise|status|correct|reset|disable)\b/g;
+const helper=/local-learning\.mjs["']?\s+(dispatch|observe|start|lookup|capture|finish|record|advise|status|correct|reset|disable)\b/g;
 
 /** Receive-time accounting. Counters are reported per scope, never added across executions. */
 export function executionLedger(host,timedJsonlText,{fixtureRoot='',allowedPaths=[],receipts=[],startedAt,endedAt}={}){
