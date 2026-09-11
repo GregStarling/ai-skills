@@ -1,29 +1,33 @@
 ---
 name: delegate
-description: Decide whether to do coding work directly or hand bounded parts to cheaper workers while preserving quality and verification. Direct is the default; delegation is for large multi-package investigations, independent parallel workstreams or explicit requests. Use when the user invokes delegate or asks about delegating work. Worker and reviewer packets do not reactivate it.
+description: Use automatically for substantive implementation, investigation, research, analysis, planning and review to choose direct execution or bounded delegation with minimal total allowance and preserved quality. Also use when explicitly requested. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker or reviewer packets.
 ---
 
 Deliver the requested quality along the cheapest complete path, counting coordination, workers, integration, verification and repairs. Prefer attributable allowance measurements; cost estimates are proxies, never bills, and missing usage stays unknown. Change no user configuration.
 
 If given a worker or reviewer packet, execute it and return; do not reactivate this skill.
 
+Automatic activation means considering the least-expensive complete path, not automatically launching workers. Keep creative drafting and voice-sensitive editing with the primary model unless the user explicitly requests delegation. Bounded background research, factual checks or continuity checks for creative work can be considered separately; do not use them to hand off the prose or creative decisions.
+
 ## 1. Choose the path
 
-Direct execution is the default. Six matched comparisons on two bounded TypeScript tasks, across both hosts, all favored direct: coordinator reading, briefing, source verification and integration outweighed what cheaper workers saved. Direct work makes no helper calls.
+Direct execution is the default. On two bounded TypeScript tasks, the ordinary Claude workflow had higher whole-task cost estimates than direct execution; its coordinator alone cost more than the entire direct arm. Older comparisons favored direct on elapsed time, not a comparable usage verdict. These results do not establish subscription savings or generalize to large investigations. Direct work makes no helper calls.
 
 Delegate only when one of these holds:
 
-- **Large investigation (untested):** answering requires reading across several packages or a large unfamiliar area, far more than a brief plus verifying the decisive sources.
-- **Parallel workstreams (untested):** two or more independent workstreams with settled interfaces and disjoint ownership can run at once.
+- **Large investigation (untested):** answering requires reading across several packages, source collections or a large unfamiliar subject area, far more than a brief plus verifying the decisive sources.
+- **Parallel workstreams (untested):** two or more independent workstreams with settled interfaces or clear deliverables and disjoint ownership can run at once.
 - **Explicit request:** the user asks for a worker or a specific model. Honor it and disclose material tradeoffs once.
 
-Size the work with a few direct searches; if it is contained, finish it directly. When unsure, stay direct. Honor explicit independent-review requests on either path.
+Size the work with a few direct searches; if it is contained, finish it directly and skip the remaining dispatch/feedback steps and their references. When unsure, stay direct. Honor explicit independent-review requests on either path.
 
 Size and language never decide eligibility; bound the assignment, not the repository. For unfamiliar or large repositories, cross-package features and bugs, read [context-discipline.md](context-discipline.md) before investigating. Keep frontier work for consequential decisions and acceptance.
 
 ## 2. Ordinary host dispatch
 
 Ordinary delegation uses the actual host's available models and task permissions. It does not require a qualification-pack entry; this is product policy, not evidence about model capability. If the user or project requires evidence-qualified routing, use step 3 instead; never silently fall back from that policy.
+
+For delegated source research, analysis or planning support, read [research.md](research.md). Workers can gather facts and map constraints; the frontier verifies decisive sources, resolves conflicting evidence and makes consequential planning choices. Do not pay for duplicate full-source reading.
 
 Read the [Codex](hosts/codex.md) or [Claude Code](hosts/claude-code.md) host guide. Once per session, bind two slots from the actual selectable model/effort controls: `economy` for straightforward search/extraction/precise edits, `standard` for reproduction and implementation. Choose the cheapest model capable of each role from current host descriptions, without extra model calls, invented rosters or universal price assumptions. Omit an unsupported slot; never silently downgrade standard work to economy. Explicit user model choices override this heuristic.
 

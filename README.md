@@ -4,14 +4,18 @@
 
 Delegate is a portable skill for Claude Code and Codex that decides whether to do a task directly or hand bounded parts to cheaper models, while your strongest model keeps the decisions, verification and final result. **Direct execution is the default.**
 
+It automatically considers delegation for substantive implementation, investigation, research, analysis, planning and review—not just coding. Creative drafting and voice-sensitive editing stay with your primary model unless you explicitly request delegation; bounded research and factual or continuity checks can be considered separately. Casual conversation, simple factual answers and worker packets do not trigger it.
+
 ## What the evidence says so far
 
-Six matched comparisons on two bounded TypeScript tasks, across Claude Code and Codex, all favored direct execution. The workers themselves were inexpensive, but the coordinator still had to read the code, write briefs, check the worker's sources and integrate the result, and that outweighed what the workers saved. In the latest two, delegating cost about twice and over three times the estimated direct cost, and the coordinator had to correct a worker's invalid proposal before implementation. See the [ordinary comparison](docs/delegate-ordinary-results-2026-09-11.md).
+The two ordinary-workflow comparisons on bounded TypeScript tasks favored direct execution on whole-arm API-equivalent estimates. Delegating cost about twice and over three times the estimated direct cost; the coordinator alone cost more than the entire direct arm, and it corrected a worker's invalid proposal before implementation. These are price proxies, not measured subscription savings. See the [ordinary comparison](docs/delegate-ordinary-results-2026-09-11.md).
+
+The [older Claude Code and Codex comparisons](docs/delegate-direct-vs-delegated-results.md) favored direct on elapsed time, not a comparable usage verdict. Codex's child-counter coverage was unknown. Those speed results are not additional economic wins.
 
 So Delegate stays direct unless one of these holds:
 
-- **A large investigation:** answering needs reading across several packages or a large unfamiliar area, far more than a brief plus checking the decisive sources.
-- **Independent parallel work:** two or more workstreams with settled interfaces and separate ownership can run at once.
+- **A large investigation:** answering needs reading across several packages, source collections or a large unfamiliar subject area, far more than a brief plus checking the decisive sources.
+- **Independent parallel work:** two or more workstreams with settled interfaces or clear deliverables and separate ownership can run at once.
 - **You ask for it:** you request a worker or a specific model.
 
 The first two are untested hypotheses, not proven savings.

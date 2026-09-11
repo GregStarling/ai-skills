@@ -34,28 +34,44 @@ export async function execute(binary, args, cwd, prompt, destination, timeoutMs 
     child.stdin.on('error',error=>{if(error.code!=='EPIPE')stderr+=String(error);});
     child.stdin.end(prompt);
     let force;
-    const stop = signal => { try { process.platform !== 'win32' ? process.kill(-child.pid, signal) : child.kill(signal); } catch {} };
+    const stop = signal => {
+      if(child.pid===undefined)return 'complete';
+      try {
+        if(process.platform==='win32'){child.kill(signal);return 'complete';}
+        process.kill(-child.pid,signal);return 'pending';
+      } catch(error) { return error?.code==='ESRCH'?'complete':error?.code==='EPERM'?'pending':'failed'; }
+    };
     const timeout = setTimeout(() => { timedOut = true; stop('SIGTERM'); force = setTimeout(() => stop('SIGKILL'), 1000); }, timeoutMs);
     child.once('error', error => { stderr += String(error); });
     child.once('close', async (code, signal) => {
       try {
+      clearTimeout(timeout);
+      clearTimeout(force);
+      // The leader may close its pipes while same-group workers are still running.
+      // Match runProcess's 2s EPERM settling bound; never advance with unresolved cleanup.
+      const cleanupDeadline=Date.now()+2000;
+      let cleanup=stop('SIGKILL');
+      while(cleanup==='pending'&&Date.now()<cleanupDeadline){
+        await new Promise(resolve=>setTimeout(resolve,25));
+        cleanup=stop('SIGKILL');
+      }
+      if(cleanup==='pending')cleanup='failed';
       const completedAt=new Date().toISOString();
       stamp(decoder.end(),completedAt);if(pending)stampLine(completedAt,pending);
       timedOutStream.end();await finished(timedOutStream);
       const bytes=Buffer.concat(chunks),stdout=bytes.toString('utf8');
-      clearTimeout(timeout);
-      clearTimeout(force);
       liveOut.end();liveErr.end();
       await writeFile(join(destination, 'stdout.jsonl'), bytes);
       await writeFile(join(destination, 'stderr.log'), stderr);
       const events = stdout.split('\n').filter(Boolean).flatMap(line => { try { return [JSON.parse(line)]; } catch { return []; } });
       const result = events.findLast(event => event.type === 'result');
       const completed = events.findLast(event => event.type === 'turn.completed');
-      const summary = { code, signal, timed_out: timedOut, started_at:new Date(start).toISOString(),completed_at:completedAt,duration_ms: Date.parse(completedAt) - start, stdout_sha256: hash(bytes), stderr_sha256: hash(stderr),
+      const summary = { code, signal, timed_out: timedOut, cleanup, started_at:new Date(start).toISOString(),completed_at:completedAt,duration_ms: Date.parse(completedAt) - start, stdout_sha256: hash(bytes), stderr_sha256: hash(stderr),
         observed_models: [...new Set(events.filter(e=>e.type==='assistant'&&!e.is_error&&!e.is_api_error_message&&!e.error).map(e=>e.message?.model).filter(model=>typeof model==='string'&&!/^(synthetic|error|unknown|unavailable|undefined|null|none|placeholder|n\/a)$/i.test(model)&&/^[a-z0-9][a-z0-9._:/@-]*$/i.test(model)))],
         observed_effort: null, usage: result?.usage ?? completed?.usage ?? null, client_estimated_cost_usd: result?.total_cost_usd ?? null,
         model_usage: result?.modelUsage ?? null, qualification_authority: false };
       await writeFile(join(destination, 'summary.json'), JSON.stringify(summary, null, 2));
+      if(cleanup!=='complete')throw Error('PROCESS_GROUP_CLEANUP_FAILED');
       resolveRun(summary);
       }catch(error){rejectRun(error);}
     });
