@@ -1,0 +1,11 @@
+{
+  "schema_version": "delegate_acceptance_preservation.v1",
+  "source_revision": "8b6a803",
+  "source_path": "data/routing/installed-acceptance.json",
+  "archived_path": "data/routing/archive/2026-09-11-pre-reliability/installed-acceptance.json",
+  "content_digest": "sha256:501ef35a1cddadf79595ffa36d18020f1888c90f109aa44bdcceba109cfebe13",
+  "git_blob": "7e9e9d0a5f9f5f2ecd103f72e2b7751d03810bf1",
+  "recorded_at": "2026-09-11T05:13:05.049Z",
+  "status": "preserved",
+  "case_count": 11
+}

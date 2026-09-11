@@ -1,0 +1,3811 @@
+{
+  "schema_version": "delegate_reliability_followup.v1",
+  "published_at": "2026-09-11T05:23:08.718Z",
+  "plan": "docs/delegate-reliability-followup-plan.md",
+  "offline_commit": "8b6a80321f8df62c5eda1d088af864d9e47029b1",
+  "qualification_authority": false,
+  "scope": "Three targeted reliability follow-ups only. Existing routes, reviewer admissions and narrow medium scope retained.",
+  "cases": [
+    {
+      "run_id": "reliability-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "verdict": "PASS",
+      "executions": 2,
+      "failed_launches": 0,
+      "reason": "Haiku wrote only index.html and completed at 04:55:19.872Z before coordinator final Reads at 04:55:40.776Z and 04:56:48.659Z. Source, captured structural checks, valid matched receipt, and fresh actual image review all pass.",
+      "limitations": [
+        "Configured effort is not served-effort attestation.",
+        "Separate ephemeral Claude session files unavailable; full native Agent tool events and nested worker writes are preserved in coordinator stdout.",
+        "Fresh screenshots show input focus; coordinator additionally inspected checkbox-focus screenshot. No dynamic add-task behavior is required."
+      ],
+      "folder_digest": "sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391",
+      "pack_digest": "sha256:0dc26099e7ead306d8dd499ef6ecec324a8d163df2b50971ee16bef42f60fb57",
+      "artifact_digests": {
+        "index.html": "sha256:0f9eb6f2d56ce28d5490d64c1876feb11801601512936cc8007506706874f0f2"
+      },
+      "receipt_digests": [
+        "sha256:cca878b026e7257bdbeb58555fbacc6f0ac0553e209791282b80e8618b98f6dc"
+      ],
+      "attempts": [
+        {
+          "attempt_id": "coordinator",
+          "role": "coordinator",
+          "configured": {
+            "model": "claude-opus-5",
+            "effort": "high"
+          },
+          "observed": {
+            "model": null,
+            "effort": null
+          },
+          "outcome": "accepted"
+        },
+        {
+          "attempt_id": "worker-1",
+          "role": "worker",
+          "configured": {
+            "model": "claude-haiku-4-5-20251001",
+            "effort": "not_applicable"
+          },
+          "observed": {
+            "model": null,
+            "effort": null
+          },
+          "outcome": "accepted"
+        }
+      ],
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": "not_applicable",
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "index.html"
+          ],
+          "launch_tool_id": "toolu_018CHwHdmV5rJqMGQzLg8691",
+          "patch_or_launch_proof": [
+            "toolu_01Kixtdddjvn65AfpagVwmFt"
+          ],
+          "completion_at": "2026-09-11T04:55:19.872Z",
+          "configuration_source": "Native Agent requested model alias haiku, no effort control. Canonical identity is observed directly in nested worker message.model, not configured as an exact canonical CLI model."
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5"
+        ]
+      },
+      "inspection_tool_ids": [
+        "toolu_01KTCwy4JxN9GT9ux1PUBS7v",
+        "toolu_01VtvSYbS62oQ2ccZJBmQ8hJ"
+      ],
+      "external_grader_passed": true,
+      "original_process": {
+        "code": 0,
+        "signal": null,
+        "timed_out": false,
+        "started_at": "2026-09-11T04:53:46.645Z",
+        "completed_at": "2026-09-11T04:57:41.606Z",
+        "duration_ms": 234961,
+        "stdout_sha256": "7dee64b8706ce1e4436093b1f29262fa9f1290c95a6375ccbfe94a9213018fe8",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_models": [
+          "claude-opus-5",
+          "claude-haiku-4-5-20251001"
+        ],
+        "observed_effort": null,
+        "usage": {
+          "input_tokens": 354,
+          "cache_creation_input_tokens": 50797,
+          "cache_read_input_tokens": 465011,
+          "output_tokens": 17278,
+          "output_tokens_details": {
+            "thinking_tokens": 6222
+          },
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 50797,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 32,
+              "output_tokens": 890,
+              "cache_read_input_tokens": 56407,
+              "cache_creation_input_tokens": 643,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 643
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 1.2169653999999996,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 354,
+            "outputTokens": 17278,
+            "cacheReadInputTokens": 465011,
+            "cacheCreationInputTokens": 50797,
+            "webSearchRequests": 0,
+            "costUSD": 1.1741955,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 6222,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 26,
+            "outputTokens": 3855,
+            "cacheReadInputTokens": 26914,
+            "cacheCreationInputTokens": 16622,
+            "webSearchRequests": 0,
+            "costUSD": 0.0427699,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "thinkingTokens": 2130,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "qualification_authority": false
+      },
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T04:53:46.645Z",
+            "ended_at": "2026-09-11T04:57:41.606Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 354,
+              "outputTokens": 17278,
+              "cacheReadInputTokens": 465011,
+              "cacheCreationInputTokens": 50797,
+              "webSearchRequests": 0,
+              "costUSD": 1.1741955,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 6222,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured_usage_key",
+            "ended_at": "2026-09-11T04:55:19.872Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 26,
+              "outputTokens": 3855,
+              "cacheReadInputTokens": 26914,
+              "cacheCreationInputTokens": 16622,
+              "webSearchRequests": 0,
+              "costUSD": 0.0427699,
+              "contextWindow": 200000,
+              "maxOutputTokens": 32000,
+              "thinkingTokens": 2130,
+              "canonicalModel": "claude-haiku-4-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_018CHwHdmV5rJqMGQzLg8691",
+            "mechanism": "Agent",
+            "started_at": "2026-09-11T04:54:53.270Z",
+            "prompt_digest": "sha256:e0c48df56161beaef221c2b5e3e1aa2a0c0378495cb3bb64f49d1037dcd44bbd",
+            "completion_status": "completed",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_01WWjppb4WFZ9658FoeCvkAc",
+            "command": "start",
+            "at": "2026-09-11T04:54:04.816Z"
+          },
+          {
+            "id": "toolu_01EpvCxaPbRzjLtrjrrJc9An",
+            "command": "lookup",
+            "at": "2026-09-11T04:54:07.242Z"
+          },
+          {
+            "id": "toolu_01QkrEpWNUsBLwSoDyfRBRjw",
+            "command": "capture",
+            "at": "2026-09-11T04:56:19.598Z"
+          },
+          {
+            "id": "toolu_01CXe1ScqEXqHzuM7HTbWCY7",
+            "command": "finish",
+            "at": "2026-09-11T04:57:23.023Z"
+          }
+        ],
+        "task_wall_clock_ms": 216378,
+        "helper_tail_ms": 18583,
+        "duration_ms": 234961,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 354,
+            "outputTokens": 17278,
+            "cacheReadInputTokens": 465011,
+            "cacheCreationInputTokens": 50797,
+            "webSearchRequests": 0,
+            "costUSD": 1.1741955,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 6222,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          },
+          "claude-haiku-4-5-20251001": {
+            "inputTokens": 26,
+            "outputTokens": 3855,
+            "cacheReadInputTokens": 26914,
+            "cacheCreationInputTokens": 16622,
+            "webSearchRequests": 0,
+            "costUSD": 0.0427699,
+            "contextWindow": 200000,
+            "maxOutputTokens": 32000,
+            "thinkingTokens": 2130,
+            "canonicalModel": "claude-haiku-4-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "review": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/maintainer-review-final.json",
+        "digest": "sha256:4686ec36649dc06be26b87ab50404ab72006cce1238d5f14a965023bef6d391f"
+      },
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/result.json",
+        "digest": "sha256:23d854aa566e0806324486f5007ea0ad04ea8bdf398dd680b1fe0a544d284ba8"
+      },
+      "trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:7dee64b8706ce1e4436093b1f29262fa9f1290c95a6375ccbfe94a9213018fe8"
+      },
+      "timed_trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/coordinator/stdout.timed.jsonl",
+        "digest": "sha256:85973f2c270fe81f001343bbcb5b643ead2b2ee60721518a5daae601fa3d5c93"
+      },
+      "stderr": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/coordinator/stderr.log",
+        "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "request": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/coordinator/request.json",
+        "digest": "sha256:a50d8767e30eff33a4fe18d0d7db346eab2b818fc1439ee2695e21e48adf2475"
+      },
+      "accounting": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/accounting-reconciliation.json",
+        "digest": "sha256:8985865ab6dcc4cf3726c65110226dbc0073f0f7f7dd6b5be32a6d08c5023cdd"
+      },
+      "learning_state": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/preserved/learning-state-manifest.json",
+        "digest": "sha256:d9f2ca041b87015096aa60370a06982181b4bb51097dee79fd414af15fd92bdb"
+      },
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:0f9eb6f2d56ce28d5490d64c1876feb11801601512936cc8007506706874f0f2",
+        "current_artifact_matches": true,
+        "reviewer": "Fresh Claude Opus 5/high image reviewer; maintainer independently viewed both screenshots",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "source structure and associated labels",
+          "visible keyboard focus",
+          "readable layout without clipping or overlap",
+          "no horizontal overflow at 320 and 1280"
+        ],
+        "capture_digest": "sha256:6c3b7bc3f53d2c2583baf0637caea464691ebe05325e3a89709fe65390786e50",
+        "images": [
+          {
+            "path": "320.png",
+            "digest": "sha256:2cadf173682323a69736fd03d337eb89df260ecc46b51a33a8a3a00f6976bcf4"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:20c5403b92599ed80e68c2fc6f3da9ebae364ac425a4ade1d92db1553a7bcc7a"
+          }
+        ],
+        "image_read_tool_ids": [
+          "toolu_01FbQptZryqiPTq8kSdyyf2D",
+          "toolu_015fpebkcxEbzYmo9xViZYwQ"
+        ],
+        "separate_reviewer_stdout_digest": "sha256:925892d4c1661949119b98947821bb4058b9674bbe437f7c6e78492844f1474f",
+        "inspected_at": "2026-09-11T05:00:19.778Z"
+      },
+      "native_sessions": [],
+      "whole_project_route_authority": false
+    },
+    {
+      "run_id": "reliability-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "verdict": "PASS",
+      "executions": 3,
+      "failed_launches": 0,
+      "reason": "Both disjoint workers completed before coordinator app integration. Coordinator inspected all final modules, captured checks and finished a valid matched receipt. Maintainer source inspection confirms store isolation/validation, escaped labelled HTML, and app wiring; external grader passes.",
+      "limitations": [
+        "Worker file attribution is inferred from disjoint packets, successful child CLI results and no coordinator store/view edits; child JSON summaries omit Edit events.",
+        "CLI requests explicitly disabled session persistence; preserved stdout and worker JSON are native evidence.",
+        "Full-project acceptance proves coordinator decomposition and integration only, never a whole-project worker route.",
+        "Configured effort remains distinct from provider-served effort."
+      ],
+      "folder_digest": "sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391",
+      "pack_digest": "sha256:0dc26099e7ead306d8dd499ef6ecec324a8d163df2b50971ee16bef42f60fb57",
+      "artifact_digests": {
+        "store.mjs": "sha256:958fec504c388042cea4ad67addbcd969b6569107ee79d5d07754e8123f1278f",
+        "view.mjs": "sha256:b8735d4e14d742522df9e15597ceccf40132c95d3168356589b986cf888ad175",
+        "app.mjs": "sha256:9e89bd20d2f899fa7e59cb3e4f554c145093d502ea20c1131891c2b17c55bbdd"
+      },
+      "receipt_digests": [
+        "sha256:1624b14cc46ec13069af05c90adc0517e0e89f6ff62392b774dce08b3a25b470"
+      ],
+      "attempts": [
+        {
+          "attempt_id": "coordinator",
+          "role": "coordinator",
+          "configured": {
+            "model": "claude-opus-5",
+            "effort": "high"
+          },
+          "observed": {
+            "model": null,
+            "effort": null
+          },
+          "outcome": "accepted"
+        },
+        {
+          "attempt_id": "worker-store",
+          "role": "worker",
+          "configured": {
+            "model": "claude-haiku-4-5-20251001",
+            "effort": "not_applicable"
+          },
+          "observed": {
+            "model": "claude-haiku-4-5-20251001",
+            "effort": null
+          },
+          "outcome": "accepted"
+        },
+        {
+          "attempt_id": "worker-view",
+          "role": "worker",
+          "configured": {
+            "model": "claude-haiku-4-5-20251001",
+            "effort": "not_applicable"
+          },
+          "observed": {
+            "model": "claude-haiku-4-5-20251001",
+            "effort": null
+          },
+          "outcome": "accepted"
+        }
+      ],
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "claude-haiku-4-5-20251001",
+          "requested_effort": "not_applicable",
+          "configured_model_effort": [
+            {
+              "model": "claude-haiku-4-5-20251001",
+              "effort": "not_applicable"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_usage_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "store.mjs"
+          ],
+          "launch_tool_id": "toolu_01CJhUgM4iRkXpUX58eA8mLx",
+          "completion_at": "2026-09-11T05:02:38.807Z",
+          "output": {
+            "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/preserved/runs/worker-store.json",
+            "digest": "sha256:1a5e9c62475740f201f01103af0afe771c252ef84df4e3cb2d5f5e6022c234ec"
+          },
+          "attribution": "Disjoint ownership packet, successful isolated CLI result, changed owned module, and no coordinator edits to store/view; child summary does not export Edit events."
+        },
+        {
+          "requested_model": "claude-haiku-4-5-20251001",
+          "requested_effort": "not_applicable",
+          "configured_model_effort": [
+            {
+              "model": "claude-haiku-4-5-20251001",
+              "effort": "not_applicable"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_usage_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "view.mjs"
+          ],
+          "launch_tool_id": "toolu_01J6hYkGek5UAxT8zd2J8kgr",
+          "completion_at": "2026-09-11T05:03:24.001Z",
+          "output": {
+            "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/preserved/runs/worker-view.json",
+            "digest": "sha256:a254af5d8a390f2f5ad8035ae11e078fcbc6764a963af7b9a64fa3c5bfc6404b"
+          },
+          "attribution": "Disjoint ownership packet, successful isolated CLI result, changed owned module, and no coordinator edits to store/view; child summary does not export Edit events."
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5"
+        ]
+      },
+      "inspection_tool_ids": [
+        "toolu_01D99HgHY2SUXf4tvwa45158",
+        "toolu_01NA1SjRyQece5NguoKrbStQ",
+        "toolu_011qV5Lwo33iNbS725xHeG7u"
+      ],
+      "external_grader_passed": true,
+      "original_process": {
+        "code": 0,
+        "signal": null,
+        "timed_out": false,
+        "started_at": "2026-09-11T05:00:20.129Z",
+        "completed_at": "2026-09-11T05:05:11.087Z",
+        "duration_ms": 290958,
+        "stdout_sha256": "e33df224978709afbea7f8c9837f142519d506981e9597b5bca5847c16820e6d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_models": [
+          "claude-opus-5"
+        ],
+        "observed_effort": null,
+        "usage": {
+          "input_tokens": 386,
+          "cache_creation_input_tokens": 52498,
+          "cache_read_input_tokens": 543058,
+          "output_tokens": 21897,
+          "output_tokens_details": {
+            "thinking_tokens": 8588
+          },
+          "server_tool_use": {
+            "web_search_requests": 0,
+            "web_fetch_requests": 0
+          },
+          "service_tier": "standard",
+          "cache_creation": {
+            "ephemeral_1h_input_tokens": 52498,
+            "ephemeral_5m_input_tokens": 0
+          },
+          "inference_geo": "not_available",
+          "iterations": [
+            {
+              "input_tokens": 32,
+              "output_tokens": 1238,
+              "cache_read_input_tokens": 58163,
+              "cache_creation_input_tokens": 588,
+              "cache_creation": {
+                "ephemeral_5m_input_tokens": 0,
+                "ephemeral_1h_input_tokens": 588
+              },
+              "type": "message"
+            }
+          ],
+          "speed": "standard"
+        },
+        "client_estimated_cost_usd": 1.3458640000000002,
+        "model_usage": {
+          "claude-opus-5": {
+            "inputTokens": 386,
+            "outputTokens": 21897,
+            "cacheReadInputTokens": 543058,
+            "cacheCreationInputTokens": 52498,
+            "webSearchRequests": 0,
+            "costUSD": 1.3458640000000002,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 8588,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "qualification_authority": false
+      },
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": "claude-opus-5",
+            "model_source": "host_reported",
+            "started_at": "2026-09-11T05:00:20.129Z",
+            "ended_at": "2026-09-11T05:05:11.087Z",
+            "failed_launch": false,
+            "usage": {
+              "inputTokens": 386,
+              "outputTokens": 21897,
+              "cacheReadInputTokens": 543058,
+              "cacheCreationInputTokens": 52498,
+              "webSearchRequests": 0,
+              "costUSD": 1.3458640000000002,
+              "contextWindow": 1000000,
+              "maxOutputTokens": 64000,
+              "thinkingTokens": 8588,
+              "canonicalModel": "claude-opus-5",
+              "provider": "firstParty",
+              "costBasis": "list"
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "model_total",
+            "costBasis": "list"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T05:02:38.807Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01CJhUgM4iRkXpUX58eA8mLx",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T05:02:10.974Z",
+            "command_digest": "sha256:98a0f964c1706ab372d0f4d164f263e4864790d6e2fd6d34e0e549db602ac36b",
+            "completion_status": "completed"
+          },
+          {
+            "index": 2,
+            "role": "worker",
+            "model": "claude-haiku-4-5-20251001",
+            "model_source": "launch_configured",
+            "ended_at": "2026-09-11T05:03:24.001Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "toolu_01J6hYkGek5UAxT8zd2J8kgr",
+            "mechanism": "child_cli",
+            "started_at": "2026-09-11T05:02:21.597Z",
+            "command_digest": "sha256:f8bb36668f3cf920411a9b49167c4430e155747c0aabbe322fbe788d46705a6d",
+            "completion_status": "completed"
+          }
+        ],
+        "executions": 3,
+        "reported_execution_lower_bound": 3,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "toolu_01Bif6VLNZTCWmA3DHmxFUBw",
+            "command": "start",
+            "at": "2026-09-11T05:00:39.117Z"
+          },
+          {
+            "id": "toolu_01Rm9yKqDuWDAvoyCZdCfg8C",
+            "command": "lookup",
+            "at": "2026-09-11T05:00:49.912Z"
+          },
+          {
+            "id": "toolu_01PPMFEfjU4HptetDtz1XUbN",
+            "command": "lookup",
+            "at": "2026-09-11T05:00:52.405Z"
+          },
+          {
+            "id": "toolu_01SuAZvw9hyNsvbatSLNX8nq",
+            "command": "capture",
+            "at": "2026-09-11T05:03:50.346Z"
+          },
+          {
+            "id": "toolu_01TrMhbhQKcxvmPnvxssrXQn",
+            "command": "finish",
+            "at": "2026-09-11T05:04:48.863Z"
+          }
+        ],
+        "task_wall_clock_ms": 268734,
+        "helper_tail_ms": 22224,
+        "duration_ms": 290958,
+        "model_counters": {
+          "claude-opus-5": {
+            "inputTokens": 386,
+            "outputTokens": 21897,
+            "cacheReadInputTokens": 543058,
+            "cacheCreationInputTokens": 52498,
+            "webSearchRequests": 0,
+            "costUSD": 1.3458640000000002,
+            "contextWindow": 1000000,
+            "maxOutputTokens": 64000,
+            "thinkingTokens": 8588,
+            "canonicalModel": "claude-opus-5",
+            "provider": "firstParty",
+            "costBasis": "list"
+          }
+        },
+        "limitations": []
+      },
+      "review": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/maintainer-review.json",
+        "digest": "sha256:c17b383b4684703b597efed9f28d88e280df1ac7469ed22acae6fd62858c9a11"
+      },
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/result.json",
+        "digest": "sha256:4ca8d0b429a561ae22e63d3620e605a9bccdc6b1e7682d778bb03b69c4673186"
+      },
+      "trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:e33df224978709afbea7f8c9837f142519d506981e9597b5bca5847c16820e6d"
+      },
+      "timed_trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/coordinator/stdout.timed.jsonl",
+        "digest": "sha256:55d830bd74b9884ec534457b1648a6af44aee55430cb5a9f2b8e28ea2753a35b"
+      },
+      "stderr": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/coordinator/stderr.log",
+        "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "request": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/coordinator/request.json",
+        "digest": "sha256:e657c588d01b42a9c4349691093fa48618d76f1f406cafe34febe8b843868c54"
+      },
+      "accounting": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/accounting-reconciliation.json",
+        "digest": "sha256:78a1c94be74abbf09f5410f881af911b9ec6b771b4a176190d791334127b7a1c"
+      },
+      "learning_state": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/preserved/learning-state-manifest.json",
+        "digest": "sha256:a553fc8231bd0868d0618431db86e7ece8c68df694f11b313017bd2e0437f3a4"
+      },
+      "browser": null,
+      "native_sessions": [],
+      "whole_project_route_authority": false
+    },
+    {
+      "run_id": "reliability-codex-multicomponent",
+      "host": "codex",
+      "case": "multicomponent",
+      "verdict": "PASS",
+      "executions": 2,
+      "failed_launches": 0,
+      "reason": "Native worker completed at item_27 before final coordinator reads item_29/30/31. Child patch implements all modules, external grader and captured behavioral checks pass; finish succeeds with a valid matched receipt. Native parent/child sessions contain one worker launch, no failed launches or fallback executions.",
+      "limitations": [
+        "No live unavailable alias was needed in this run; saved unavailable-plus-fallback input is covered by offline regression.",
+        "Native configuration is distinct from served model/effort attestation; receipt unknown observed fields remain null.",
+        "Ledger ended_at reflects later close_agent observation of the already completed worker. First terminal wait event item_27 establishes ordering.",
+        "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+      ],
+      "folder_digest": "sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391",
+      "pack_digest": "sha256:0dc26099e7ead306d8dd499ef6ecec324a8d163df2b50971ee16bef42f60fb57",
+      "artifact_digests": {
+        "task.mjs": "sha256:01665a7b3b279eca532fe950b28325eb61a9810543f4aa03e0999faf8776e7cf",
+        "service.mjs": "sha256:5ed74a701372711d8fed33d14f98caf83caf2b360f1a1a64436cb849d1bbf5b5",
+        "view.mjs": "sha256:867885c1f805a52daaf3cb2a79ee60e54c6ed7aade0974b5c78b530d147918f5"
+      },
+      "receipt_digests": [
+        "sha256:f0c33b79854f8dfd13da2adbb05853970929fccdde93741b556140375cf56fea"
+      ],
+      "attempts": [
+        {
+          "attempt_id": "coordinator",
+          "role": "coordinator",
+          "configured": {
+            "model": "gpt-5.5",
+            "effort": "high"
+          },
+          "observed": {
+            "model": null,
+            "effort": null
+          },
+          "outcome": "accepted"
+        },
+        {
+          "attempt_id": "worker-1",
+          "role": "worker",
+          "configured": {
+            "model": "gpt-5.5",
+            "effort": "low"
+          },
+          "observed": {
+            "model": null,
+            "effort": null
+          },
+          "outcome": "accepted"
+        }
+      ],
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-5.5",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-5.5",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ],
+          "session_uuid": "01a08edd-a366-79a0-8b28-127fa469a49d",
+          "patch_or_launch_proof": [
+            "call_wbhqFE9CmDjnzpBaqIZRGg9s",
+            "call_C5NUI7nvfCrnRpp3QpGWkKPX"
+          ],
+          "first_completion_tool_id": "item_27",
+          "first_completion_at": "2026-09-11T05:08:37.563Z",
+          "configuration_source": "Native spawn model/effort and child turn_context agree."
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-5.5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "configuration_source": "Coordinator request and native turn_context agree."
+      },
+      "inspection_tool_ids": [
+        "item_29",
+        "item_30",
+        "item_31"
+      ],
+      "external_grader_passed": true,
+      "original_process": {
+        "code": 0,
+        "signal": null,
+        "timed_out": false,
+        "started_at": "2026-09-11T05:06:22.744Z",
+        "completed_at": "2026-09-11T05:10:34.175Z",
+        "duration_ms": 251431,
+        "stdout_sha256": "c8313ec93a5c72599b7c6c033148d4a27133ceec6e90957c29fc97136940d6ce",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "observed_models": [],
+        "observed_effort": null,
+        "usage": {
+          "input_tokens": 776030,
+          "cached_input_tokens": 728064,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 10356,
+          "reasoning_output_tokens": 2586
+        },
+        "client_estimated_cost_usd": null,
+        "model_usage": null,
+        "qualification_authority": false
+      },
+      "ledger": {
+        "rows": [
+          {
+            "index": 0,
+            "role": "coordinator",
+            "mechanism": "host_process",
+            "model": null,
+            "model_source": "unknown",
+            "started_at": "2026-09-11T05:06:22.744Z",
+            "ended_at": "2026-09-11T05:10:34.175Z",
+            "failed_launch": false,
+            "usage": {
+              "input_tokens": 776030,
+              "cached_input_tokens": 728064,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 10356,
+              "reasoning_output_tokens": 2586
+            },
+            "counter_kind": "host_reported_counter",
+            "usage_scope": "thread_total_child_inclusion_unknown"
+          },
+          {
+            "index": 1,
+            "role": "worker",
+            "model": "gpt-5.5",
+            "model_source": "receipt_configured",
+            "ended_at": "2026-09-11T05:09:21.098Z",
+            "failed_launch": false,
+            "usage": null,
+            "counter_kind": "host_reported_counter",
+            "id": "item_25",
+            "mechanism": "spawn_agent",
+            "started_at": "2026-09-11T05:08:05.091Z",
+            "receiver_thread_ids": [
+              "01a08edd-a366-79a0-8b28-127fa469a49d"
+            ],
+            "prompt_digest": "sha256:d2eae3d0bab375f6b42fa328884e21904a6d20aa2133650ab7cca02a2d1847cc",
+            "usage_scope": "thread_total_child_inclusion_unknown",
+            "completion_status": "completed",
+            "receipt_binding": "single_child_and_single_attempt_in_matched_run",
+            "receipt_role": "worker"
+          }
+        ],
+        "executions": 2,
+        "reported_execution_lower_bound": 2,
+        "failed_launches": 0,
+        "rework_heuristic": 0,
+        "receipt_repair_attempts": 0,
+        "routing_reads": [],
+        "helper_calls": [
+          {
+            "id": "item_14",
+            "command": "start",
+            "at": "2026-09-11T05:07:11.854Z"
+          },
+          {
+            "id": "item_18",
+            "command": "lookup",
+            "at": "2026-09-11T05:07:30.065Z"
+          },
+          {
+            "id": "item_35",
+            "command": "capture",
+            "at": "2026-09-11T05:09:15.339Z"
+          },
+          {
+            "id": "item_41",
+            "command": "finish",
+            "at": "2026-09-11T05:09:56.292Z"
+          }
+        ],
+        "task_wall_clock_ms": 213548,
+        "helper_tail_ms": 37883,
+        "duration_ms": 251431,
+        "model_counters": null,
+        "limitations": [
+          "Codex child usage is unavailable; coordinator thread-total child inclusion is unknown. No counters are summed."
+        ]
+      },
+      "review": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/maintainer-review.json",
+        "digest": "sha256:cdee4510733b20f4425fa068691475f1c0aa8f18c9e8ace128ee60a13e0ed1d5"
+      },
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/result.json",
+        "digest": "sha256:3a3a428c5532bb32152797f162434037aea3a370d960ad3a95ca6a4fa8e6ef3c"
+      },
+      "trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:c8313ec93a5c72599b7c6c033148d4a27133ceec6e90957c29fc97136940d6ce"
+      },
+      "timed_trace": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/coordinator/stdout.timed.jsonl",
+        "digest": "sha256:6209bb5b57e89c892562ac806b423339af600350d18d2e6a9b0dac5079212545"
+      },
+      "stderr": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/coordinator/stderr.log",
+        "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "request": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/coordinator/request.json",
+        "digest": "sha256:c4e342089f940b7d11085e2b48f2f981f78bfe9921bba67d454c92b6fb301c27"
+      },
+      "accounting": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/accounting-reconciliation.json",
+        "digest": "sha256:a06e7e71066acbb74d8f2d217f992853eb9d72759caa1a7e6d68dd6ebf8c4344"
+      },
+      "learning_state": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/preserved/learning-state-manifest.json",
+        "digest": "sha256:ea67f0dde5b23a6dab7ab0d1aea5b5b2835fa6a5c3de4e244f268397b03d49a8"
+      },
+      "browser": null,
+      "native_sessions": [
+        {
+          "source": "/Users/gregpro/.codex/sessions/2026/09/11/rollout-2026-09-11T00-06-23-01a08edc-1590-7ba2-9c03-d9d7da774342.jsonl",
+          "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/preserved/native/rollout-2026-09-11T00-06-23-01a08edc-1590-7ba2-9c03-d9d7da774342.jsonl",
+          "digest": "sha256:8eb8c1d062ce657059bc27817f540deed24155f5ee86ad09f65d4141e2717d1b"
+        },
+        {
+          "source": "/Users/gregpro/.codex/sessions/2026/09/11/rollout-2026-09-11T00-08-05-01a08edd-a366-79a0-8b28-127fa469a49d.jsonl",
+          "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/preserved/native/rollout-2026-09-11T00-08-05-01a08edd-a366-79a0-8b28-127fa469a49d.jsonl",
+          "digest": "sha256:a232b4eead1548d808b896511d37d7c1c0a3c92efb7acc0c46d640d80c70edc4"
+        }
+      ],
+      "whole_project_route_authority": false
+    }
+  ],
+  "budget": {
+    "schema_version": "completion_budget.v1",
+    "ceiling": 17,
+    "executions": 10,
+    "reserved": 0,
+    "halted": false,
+    "stopped_hosts": [],
+    "authorization": "User explicitly requested implementation of the Close three delegate reliability gaps plan, authorizing a 17-execution ceiling and three follow-up cases on 2026-09-11; cumulative ceiling 118 including prior 101. No extra implementation agents, probes, or replacement trials.",
+    "entries": [
+      {
+        "id": "reliability-code-review-1",
+        "purpose": "independent_code_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-reliability-followup-2026-09-11/code-review-1.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "reliability-claude-ui",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "reliability-browser-review-claude",
+        "purpose": "reliability_rendered_frontier_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/browser/frontier-review/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "reliability-claude-fullproject",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 6,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "reliability-codex-multicomponent",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "reliability-code-review-2",
+        "purpose": "independent_publication_followup_review",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/delegate-reliability-followup-2026-09-11/code-review-2.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      }
+    ],
+    "qualification_authority": false
+  },
+  "prior_executions": 101,
+  "cumulative_executions": 111,
+  "cumulative_ceiling": 118,
+  "remaining_followup_executions": 7,
+  "execution_index": [
+    {
+      "id": "reliability-code-review-1",
+      "host": "codex",
+      "purpose": "independent_code_review",
+      "executions": 1,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/code-review-1.json"
+    },
+    {
+      "id": "reliability-claude-ui",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/result.json"
+    },
+    {
+      "id": "reliability-browser-review-claude",
+      "host": "claude",
+      "purpose": "reliability_rendered_frontier_review",
+      "executions": 1,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/browser/frontier-review/accounting.json"
+    },
+    {
+      "id": "reliability-claude-fullproject",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/result.json"
+    },
+    {
+      "id": "reliability-codex-multicomponent",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/result.json"
+    },
+    {
+      "id": "reliability-code-review-2",
+      "host": "codex",
+      "purpose": "independent_publication_followup_review",
+      "executions": 1,
+      "source": "artifacts/delegate-reliability-followup-2026-09-11/code-review-2.json"
+    }
+  ],
+  "code_reviews": [
+    {
+      "path": "artifacts/delegate-reliability-followup-2026-09-11/code-review-1.json",
+      "digest": "sha256:f891a081bc79971f8d74092b58ad5d57b80a5a6231105c7e9a5e7a0dc4a1bbef"
+    },
+    {
+      "path": "artifacts/delegate-reliability-followup-2026-09-11/code-review-2.json",
+      "digest": "sha256:0d831ba99fe2536b8eb70203f22979482f57032e5bd6469266319ded1b1456ed"
+    }
+  ],
+  "metadata_corrections": [
+    {
+      "run_id": "reliability-claude-ui",
+      "original_review": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/maintainer-review.json",
+        "digest": "sha256:43878466ea48728cb475ee1a1324b2c3e20ee4381d30d1c708bec114d41c94a4"
+      },
+      "corrected_review": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/maintainer-review-final.json",
+        "digest": "sha256:4686ec36649dc06be26b87ab50404ab72006cce1238d5f14a965023bef6d391f"
+      },
+      "reason": "Native haiku alias retained; canonical worker model bound from message.model, not invented exact configuration. No raw trial, artifact, receipt or verdict changed."
+    }
+  ],
+  "approval": {
+    "path": "artifacts/delegate-reliability-followup-2026-09-11/budget.json.approval.json",
+    "digest": "sha256:4ae5769ba5616a8389a866a649c9379efaef0071e7e9bc5959992632ee694183"
+  },
+  "preflight": {
+    "path": "artifacts/delegate-reliability-followup-2026-09-11/preflight.json",
+    "digest": "sha256:c1dc47ab24c4f272b9b8522f58d3319acaa6ecaf6b1e6c50bcf574bb1eb5bda0"
+  },
+  "freeze": {
+    "recorded_at": "2026-09-11T04:53:46.320Z",
+    "commit": "8b6a80321f8df62c5eda1d088af864d9e47029b1",
+    "skill_folder_digest": "sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391",
+    "guidance_digest": "sha256:f78d3f7e5cee1370e75dfd469db9c85ae49a38244c839f8255d78a02439759d1",
+    "harness": {
+      "scripts/verify/assemble-evidence.mjs": "sha256:342541a6f5ce2ac610253042653985cfdd0335bcf91a2eb68c8c27568f108eca",
+      "scripts/verify/browser-acceptance.mjs": "sha256:08247c6990da71df5f581dcb2cf7bb3447f2667c66c50f35f579a15a058d9b0f",
+      "scripts/verify/budgeted-frontier.mjs": "sha256:c188fc5de109a8d03569b375459132940c7ff256c8335fbb2c951788c7e91ceb",
+      "scripts/verify/campaign-budget.mjs": "sha256:78d6c5b66be2cd71554db4fe9192de2a0114dfdb29dd656dc51ba07d236a84b7",
+      "scripts/verify/completion-campaign.mjs": "sha256:aa5257aa3c4d1e26693b9b932f3b88ff32b69be6455b98d726120c4c07c8f64b",
+      "scripts/verify/direct-vs-delegated.mjs": "sha256:8317082a95ca9cd51ec7e803902ce09eeff35ad9f79b8031237f5214becd4cad",
+      "scripts/verify/foundation.mjs": "sha256:78d581b46449a41b47ae534a6cc02030c349f1da175e7ba9d70fcf9be080a238",
+      "scripts/verify/frontier-host.mjs": "sha256:6eb138c29671a5469cae4ac94cb5e02a0575b2b70123b00569964e3469340dbd",
+      "scripts/verify/host-evidence.mjs": "sha256:bdb3b46be5274dd1e87992ae0297404d109d713f07b1c8050b9bc360ff57e7d4",
+      "scripts/verify/installed-delegate.mjs": "sha256:899fe7ce420aac370f66faa2b160c42421a607ec58300535962ba3af66326b81",
+      "scripts/verify/live-smoke.mjs": "sha256:fc118638eb235e37f5f595179b59bcc1ba4bf2dfce2ce803c15a01bbe669fe2a",
+      "scripts/verify/portable-cases.mjs": "sha256:184b9adb562a285c542da799f7b870903f3adcb65fd29ca9933d53f1c58b891a",
+      "scripts/verify/real-fixtures.mjs": "sha256:df843f9e5556a54f5d10c4245643259e1bb080df5cd1b5dacfa66538e6b1d6bf",
+      "scripts/verify/renewal-campaign.mjs": "sha256:884d55d1e2df9bda7f0667b07e66e79c640739f77be9a5b1e5dc4e1caf9bd8bd",
+      "scripts/verify/scaffold.mjs": "sha256:9c8b5935ee3690ce4e5953f07727d3ce655666a23c13c94b9f96185d5eaa2590",
+      "scripts/verify/shared-schemas.mjs": "sha256:971276e65254a333e4e61bc3993ec6997d095ced86e102af9ba5e6707e26ae51",
+      "scripts/verify/skills.mjs": "sha256:b2df8d9c6cbdf860cb62810736512dfa39042ca518c85aa2babb27bb0431f1fc",
+      "scripts/verify/trace-ledger.mjs": "sha256:b9a3a7456a4c5cdc9b16da37a5ffddf670e2657f3ec52cf5b008bbb6d06c4b5f",
+      "scripts/verify/v1-live.mjs": "sha256:48071a0c72a538325d0b6415223dfc2f3989579bac42d2cdc7d2ec8f7428e0ca",
+      "scripts/verify/v1.mjs": "sha256:43dd3f5144f95024959eacf1992e7bf0807065b9a84e3df99eb8ce47edecd793",
+      "scripts/verify/v5.mjs": "sha256:a5c8f4d09ed40293a5b094b676d809a0ba2529a6b32bd5692a552b61864bf0d4",
+      "scripts/verify/validation-report.mjs": "sha256:1bb28d368bb9feabf61012339cc7b8cdb1882bab156e4f42979b1ef29d262737",
+      "scripts/verify/workflow.mjs": "sha256:c08f83f768510756e7edeba6c877bbd6217e1b15c50e69a1433253390459a453",
+      "src/adapters/claude.ts": "sha256:ed737e5bc77f1c8fd3365e4fe586e174341b6a881a2638b43972794bb4f53a37",
+      "src/adapters/codex.ts": "sha256:0115a3f3e338e7dfbb75323ee0846900273d0aba251eb4aa604e8793e39fe187",
+      "src/adapters/index.ts": "sha256:00f6af927454320c824b20e14960b17025e4a7973f1c0972cb1c24381d2825b0",
+      "src/adapters/shared.ts": "sha256:a5f2120ae335fc8aa60c2deba540b421a3fe351c6b4934772cfd68962978dfcf",
+      "src/cli/index.ts": "sha256:fb0d8ccb56db80f9529f8d1e2a4e14c54fd349fc8ef0b47b0bc21d4582afc783",
+      "src/cli/json-command.ts": "sha256:b8dc85bf18278d4a608cea028dcabc478301b4ad050c3c872b0d9afd6bcbf2bb",
+      "src/cli/registry/decisions.ts": "sha256:f2da0809095b4e943d3db9d4ac800f07825a4b9c80eab124f0f3beb17ca48452",
+      "src/cli/registry/discovery.ts": "sha256:492d16ad2abc11ad66377c583b3abe6e9b2e42e64452f3414355057ff44a1dab",
+      "src/cli/registry/execution.ts": "sha256:43388e71652311e9d8f0112b71d6c75bdfb877caeac802c7c1266876ac2b3933",
+      "src/cli/registry/foundation.ts": "sha256:7476b5195a946f49fd45d5a8f478e5bd35ed0359c827a09055640256b2df0e9a",
+      "src/cli/registry/ledger.ts": "sha256:3db2ff584e32ce37df1ee7ea580d33df2a47dae265f7996780e124eb4b3ad4e6",
+      "src/cli/registry/proof.ts": "sha256:d8e71c6248e286d5155a2a73944b045d6d6ed4ef35c990836f7d91e18e66fd5c",
+      "src/cli/registry/receipts.ts": "sha256:97e0fb23058c27fe24f7fb59485944ea98141539962008c23f961dafb16e252a",
+      "src/cli/registry/refresh.ts": "sha256:fd897ce74c1e60da18cc30401243fe059e7f4f91ef3265ec02c63306e334383c",
+      "src/cli/registry/routing.ts": "sha256:1a5cd2b19e470513cba8489d8d9e4b0a1b83ce47572339ff439c6c2a711f7286",
+      "src/cli/router.ts": "sha256:1d89ed1b78b3ba543de27fbf211a6a14e7ae4ae0b4fa982d6a4fad0453bdb64c",
+      "src/core/canonical.ts": "sha256:6e1dc8c713b8be77ce5cb9ef941dcbe50d561bc817011a2feb1180d8cfc75bc3",
+      "src/delegation/README.md": "sha256:1beb2d846e01083ad631c5aa9d504015b0f12dde6aa7b2134203ab39672a7745",
+      "src/delegation/contracts.ts": "sha256:8323a0669fe1f0194a8145819a347b4b17d4923463c7459238194137e43b0960",
+      "src/delegation/index.ts": "sha256:96a4f70ed37687989e1bb1f6b01aa41e6c3f725c224c265c5f7a4703b6cf399d",
+      "src/delegation/scope.ts": "sha256:c739ed7124543d44aed468f47e2a5e0e218fe6c29b65bd99531778d7760087ea",
+      "src/discovery/index.ts": "sha256:5e76c309d6c24fd302312afe656039d38ee918f65b321525116a504bf6c52581",
+      "src/evaluation/README.md": "sha256:6e0a4a3865c1a6df45305482877c2612f77958e93d4fd529532c51952a79e89b",
+      "src/evaluation/index.ts": "sha256:5340b98e087b66b53a297db25fdc364cc998af3fcd11371752e1c8d79ae91e8f",
+      "src/evaluation/runner.ts": "sha256:0c4e9177304ea308b8fc18352461b4780306fa180073fb542c2c14a80584142d",
+      "src/evidence/index.ts": "sha256:49c9ce3664f82fce343a42ef9aa2f401981fca37360e321305c874701b112968",
+      "src/evidence/sources.ts": "sha256:ea0771589e8481a12090a1f75c662515757d15212fb9d868da61bcb401eeacdb",
+      "src/governance/bindings.ts": "sha256:95b3753e95bcee593454e57e6bba1e10edff69ad7131e31289fc71c719192e25",
+      "src/governance/economics.ts": "sha256:b867ea6c45fd799058f003b4eeacac75d72df690a185c31b93433bbd331256cc",
+      "src/governance/index.ts": "sha256:d6d372294e39679a0605d158f0cbf2132471d2e1b42eac8b551b4acb306a1c07",
+      "src/governance/policy.ts": "sha256:f8972c84a810696e3056f1c7b3bac9b0e2aee8f87fb1c941012b840c4c620b06",
+      "src/governance/qualification.ts": "sha256:031e9e934da3b8a436f647ab1ce4ba03f18639aa74601c85e0452746de4b2271",
+      "src/governance/risk-review.ts": "sha256:c0784420b85a4cf0dd5d6bee1bddc624403a662295ed089fd154b20aaba31e97",
+      "src/governance/selection.ts": "sha256:bff8b91eeedbd2f69ddba54c68c7bb80920b69b93ea21849bea4236fff4c90c1",
+      "src/index.ts": "sha256:1a966cd7a9a859c1bd24b11ff13306963f3d0efc8b60edb72ba3bdc03f96fa20",
+      "src/ledger/index.ts": "sha256:aa9dfdaa9cfff568b68db5a8d0fc38286d8e238cf7171bd8063d72bcfd97594a",
+      "src/ledger/receipts.ts": "sha256:7d5129a1d9ec95117cbdc053a9518b7239c187411934f566c20bcf1162400352",
+      "src/proof/index.ts": "sha256:84d6927a336912f26153365fa787fe341d4eae0a2bc1cfe7ef4b8b71d7c34071",
+      "src/refresh/index.ts": "sha256:f13b4a5ef4e63a4e128ccddd5dbe44a53f6b058fa08e0b8ed9446fdc6b5091a2",
+      "src/registry/index.ts": "sha256:cced0774e8b7f0ae6211e7a398049c98a333c38f23512b72daa5ac30d0fbccae",
+      "src/routing/acceptance.ts": "sha256:9ed862b998b02aaa48e2ab5d67d901de94602e23934615e125ec2e133c2c2013",
+      "src/routing/compiler.ts": "sha256:7d3f8ac5ca7fec3df3ccd5f59f54cc637b27d3abf75c1dc3b95e618aeb3ddb6d",
+      "src/routing/contracts.ts": "sha256:e1b3ada21b7cbedb0bb04e95ad872b1138355aa6ce134c22395977142b3a00d0",
+      "src/routing/frontier-refresh.ts": "sha256:db5c40942ce8ef6618cf9badda624b89aa54c0a335f6451f6f3654810be27f59",
+      "src/routing/index.ts": "sha256:16ea019400bd67bca8ce487e340b0c7c1e01116408979c73248584876b3e54ec",
+      "src/routing/provisional.ts": "sha256:fb2fb0362e02c530c4dc5e51715250bac70d7417e5c5d33767df54e95ab4dc24",
+      "src/routing/resolver.ts": "sha256:9503ef961a537d12214d5e18030f0f266444720751eacd5c9d5e66fadd8bac61",
+      "src/routing/reviewer-calibration.ts": "sha256:635df587d3fc58da285306e87bdf057f11ded251fbd4f61f9bf02c8db7f627ac",
+      "src/runtime/identity-assurance.ts": "sha256:87861d01f0c86708f26fe1422c8b1036ab4ccfab149df24ab6101f2af692de36",
+      "src/runtime/index.ts": "sha256:b8daaad891ad93f4eb098370b4a9c4d3d54521c2cf9b62ce9078ecebc637b8b8",
+      "src/runtime/native.ts": "sha256:f357f64e12b6b1be8015b8306888abdb4cc22d19d1e5ca16c69d018675f7f3e1",
+      "src/runtime/process.ts": "sha256:d56b2351d3097b4af310b428f020a3312f26f51bb8079d73a06a9ed996ea96d9",
+      "src/runtime/telemetry.ts": "sha256:b979a2d346474f0473e86a77a35dcf69cd8ffe5e5313a12b16b2107cb969701a",
+      "src/schema/index.ts": "sha256:db8d73534285a2a4da9506c598c99b45a42fcff0b96e3d73a64e37ea3b78f803",
+      "src/schema/shared.ts": "sha256:10d5622f47397b891b280493d5e6e1a0e4651f2ecf4f0b2fa51638abedfbc7f3",
+      "src/schema/work-order.ts": "sha256:3c87eb60dea25df330c390fe11b9c70bce940bdedaa8e32f3dfc52365fcad773",
+      "src/shadow/README.md": "sha256:376cb434417c1b24574fae5d072a1d193e7695587835d72e10b59e6883308102",
+      "src/shadow/check-file.ts": "sha256:1f70891a4c705d8ab961493074015fe18d28f50e151473c42d7f323fa4be9a0b",
+      "src/shadow/index.ts": "sha256:b1f53e30729f75357a2acc7cff37d51a40f7dfd6c8a7f22790a6ecb45d38fae7",
+      "src/statistics/README.md": "sha256:ec0a0836ff91aaa090f9393c6393f054ab4ef5ffe3f2e53ad0c35009f7b91eb3",
+      "src/statistics/index.ts": "sha256:c89bbf3b1a5f518c41d103c5a9e11e1fb4ccc31d99ce8dc527ee4d8a265382d2",
+      "src/types/shared.ts": "sha256:8cec8c81709e1aadc2b1af0c8471b682ade4645ddddf8f15b34f1d5b8d12d6c1",
+      "artifacts/delegate-reliability-followup-2026-09-11/run-case.mjs": "sha256:9c426cc593cd59d7e6e783890931712330d8d1ae73ca060d6f20f34adcc5c3d9",
+      "artifacts/delegate-reliability-followup-2026-09-11/run-browser-review.mjs": "sha256:203d6b8f38416473552f8153320c785cb404003da69ced967ccc389e7a03cf30"
+    }
+  },
+  "archive": "data/routing/archive/2026-09-11-pre-reliability/preservation.json",
+  "preserved_files": [
+    {
+      "path": "data/routing/archive/2026-09-10/frontier-identity-evidence.json",
+      "digest": "sha256:ae1cbae45b2a4b5348ad095c6e787fe8f85db94efded0d00728589b313e4495d"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/frontier-probe-reviews.json",
+      "digest": "sha256:cd83ed61b934ec2fb99457302f30b1949b18acb0d9fd5898f5fc144f04dc92e8"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/frontier-probes.json",
+      "digest": "sha256:d277a7eb5ff71ae613fa68251c1716ae56c3dc9fa7f8c1d1f5cefe3dba525b30"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/frontier-reviewer-evaluations.json",
+      "digest": "sha256:93855e6177026fb3283302925bb81e484188873e40339353b1f7813eab985228"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/frontier-targets.json",
+      "digest": "sha256:122cacd1e305a96405897a9a86e6f8f1c74d2f7c227b4e93ed1c2ea87bb69b26"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/host-observations.json",
+      "digest": "sha256:6bb0bdcb3f2582d8f2840cb2d9321f86508918b163e6273e18ab84ec40bb63ef"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/installed-acceptance.json",
+      "digest": "sha256:d3b7b497fc47f804c0d513dc3061bfc3499453c6185387ab6db81e92ee72da74"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/medium-smoke-audit.json",
+      "digest": "sha256:9c63bf80d9ccded85c0229413f3639a051aae946d8c8fab5e91644bb5cc3ee69"
+    },
+    {
+      "path": "data/routing/archive/2026-09-10/preservation.json",
+      "digest": "sha256:7be396c37a5430a17f730e678790757cf9900aabcee53c692cdde1e25a95830c"
+    },
+    {
+      "path": "data/routing/compile-request.json",
+      "digest": "sha256:7d85aea5eeef04b41c9df83622a389d9bd308ade4ad45227c99363e326030091"
+    },
+    {
+      "path": "data/routing/frontier-identity-evidence.json",
+      "digest": "sha256:634a115cdf55a8cc2f79b1236fa01eaa765060804702c7ac6f83c2143dc7a6de"
+    },
+    {
+      "path": "data/routing/frontier-ownership-acceptance.json",
+      "digest": "sha256:5eca953e35c588c7819d52deb04a8983526e5346b02fe9ccee494e2058e919ec"
+    },
+    {
+      "path": "data/routing/frontier-probe-reviews.json",
+      "digest": "sha256:3e04ea40de0e527b25574949cb8e3b9e0e84e54d7d6363978d16f484c77ca739"
+    },
+    {
+      "path": "data/routing/frontier-probes-pre-v5.json",
+      "digest": "sha256:d6d2f59f092f4b71885b3599b202b52c2c1f6bdf37ad5bf2a3c967927bd61bd2"
+    },
+    {
+      "path": "data/routing/frontier-probes.json",
+      "digest": "sha256:9bf6ed15a21e19364b69082760242e5f83d399d67f2c1ab81679480f4884160b"
+    },
+    {
+      "path": "data/routing/frontier-targets.json",
+      "digest": "sha256:55438b90ffaf31a1e08b856c1588792cf07bfca48d026a01f1dc2b525d8c89d0"
+    },
+    {
+      "path": "data/routing/host-observations.json",
+      "digest": "sha256:0757f0bba7abb9c8066caa6a9fffb4de9e631d1343c6a7daa2d12f7fa71a6cde"
+    },
+    {
+      "path": "data/routing/medium-smoke-audit.json",
+      "digest": "sha256:ff77614e1a4212b2522ec6e55a0101bdbfe4618349dee28e8ed1ec009094502b"
+    },
+    {
+      "path": "data/routing/receipt-ingestion-validation.json",
+      "digest": "sha256:e2ad5f5e982442775fa9b727c8f95bd588ba4d1efe6884f9297308853f0dba2b"
+    },
+    {
+      "path": "data/routing/reviewer-calibration/admissions.json",
+      "digest": "sha256:d93535568973c856ce30c095c4b55ed8f3e362e178cdc4fdf75451299ad196ff"
+    },
+    {
+      "path": "data/routing/reviewer-calibration/claude.json",
+      "digest": "sha256:ad5e2736b73122e94277534c0bb7539e0bdaf84ee5c3d48b5209cd130ba92470"
+    },
+    {
+      "path": "data/routing/reviewer-calibration/codex.json",
+      "digest": "sha256:d2e0c0dbdf08eec26509a59b3e272ef9df75822b525a58d9fde8afb00ee6ace7"
+    },
+    {
+      "path": "data/routing/v4-validation.json",
+      "digest": "sha256:f0d09485ba985f11197d765301a0bda15868568006563343ac785d975ba45207"
+    },
+    {
+      "path": "data/routing/v5-frontier-history.json",
+      "digest": "sha256:c163af129e3c5fc835e00700e59eba203bea12fdb20b258067dbb8750da57efa"
+    },
+    {
+      "path": "data/routing/v5-validation.json",
+      "digest": "sha256:13526aa3eee184ec162d30659fd203a2d993a54e666aa2066549de1e109231ef"
+    },
+    {
+      "path": "policy/README.md",
+      "digest": "sha256:f7091ba425b54d0bd07dc1b8e4f3894fe67178562232950a5bdb8a5cd0867617"
+    },
+    {
+      "path": "policy/constitution-v3.json",
+      "digest": "sha256:4b99cb9b6ec46547eca97eee8b50e88077ccdb2a1fc1151682db0ba40eba5f87"
+    },
+    {
+      "path": "policy/constitution-v4.json",
+      "digest": "sha256:2f2ba7be3d18392f1dc3f97015d8e8c21ed24bd242e1bbe03e614cb5eebaa051"
+    },
+    {
+      "path": "policy/constitution.json",
+      "digest": "sha256:71b75090d5ca2c5cb6d520a64eb928ea6013a6a5a2a46db83140e55df2c1417a"
+    },
+    {
+      "path": "policy/simulation-v1.json",
+      "digest": "sha256:9afb41ee00acd850c27f2b27ccc80d0a4303aa57f99a449c50e3e39f1e41161a"
+    },
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/budget.json",
+      "digest": "sha256:733731677718df79de639f20a33a8779b3b502c62f5530ef108eebff4bb52615"
+    }
+  ],
+  "previous_accepted_case_ids": [
+    "renewal-installed-claude-tinybug",
+    "renewal-installed-claude-mechanical",
+    "renewal-installed-claude-backend",
+    "renewal-installed-claude-hardbug",
+    "renewal-installed-claude-multicomponent",
+    "renewal-installed-codex-tinybug",
+    "renewal-installed-codex-mechanical",
+    "renewal-installed-codex-backend",
+    "renewal-installed-codex-ui",
+    "renewal-installed-codex-hardbug",
+    "renewal-installed-codex-fullproject"
+  ],
+  "accepted_case_ids": [
+    "renewal-installed-claude-tinybug",
+    "renewal-installed-claude-mechanical",
+    "renewal-installed-claude-backend",
+    "renewal-installed-claude-hardbug",
+    "renewal-installed-claude-multicomponent",
+    "renewal-installed-codex-tinybug",
+    "renewal-installed-codex-mechanical",
+    "renewal-installed-codex-backend",
+    "renewal-installed-codex-ui",
+    "renewal-installed-codex-hardbug",
+    "renewal-installed-codex-fullproject",
+    "reliability-claude-ui",
+    "reliability-claude-fullproject",
+    "reliability-codex-multicomponent"
+  ],
+  "original_failed_case_ids": [
+    "renewal-installed-claude-ui",
+    "renewal-installed-claude-fullproject",
+    "renewal-installed-codex-multicomponent"
+  ],
+  "original_failures": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+  "route_scope_before": [
+    {
+      "public_task_class": "bounded_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "bounded_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Contained local JavaScript functions with settled interfaces and executable checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "bounded_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "bounded_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Contained local JavaScript functions with settled interfaces and executable checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "complex_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Small multi-file JavaScript features with settled contracts and integration checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "complex_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Small multi-file JavaScript features with settled contracts and integration checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "hard_debugging",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "hard_debugging"
+          ]
+        },
+        "provisional_scope": "claude pilot: Local JavaScript logic and asynchronous ordering bugs with a deterministic reproduction. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "hard_debugging",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "hard_debugging"
+          ]
+        },
+        "provisional_scope": "codex pilot: Local JavaScript logic and asynchronous ordering bugs with a deterministic reproduction. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "claude pilot: Specified local JavaScript API renames, nullish-default fixes and equivalent mechanical changes. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:d0f71a7d830c44459874eecf45079f74dcd58b4b7beae22c5afce499cacc952b",
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "codex pilot: Specified local JavaScript API renames, nullish-default fixes and equivalent mechanical changes. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651",
+        "sha256:d61c6ac876286dfe541a213d291bddc860610d5df38308063727062c4f7dbf1d"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "medium",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:26399877115220e367eddb9c03121c3fa08b3e3e80269740c82082db0209a44d",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": true,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "medium",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:26399877115220e367eddb9c03121c3fa08b3e3e80269740c82082db0209a44d",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": true,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "claude medium pilot: Zero/nullish quantity-default fixes in local plain JavaScript only. Separate fresh artifact-only frontier verification is mandatory. Existing native smoke only; no medium installed task acceptance or governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": true,
+        "different_family": false,
+        "fresh_context": true,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "repo_exploration",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "repo_exploration"
+          ]
+        },
+        "provisional_scope": "claude pilot: Read and explain a small local JavaScript/HTML codebase with file evidence. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "repo_exploration",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "repo_exploration"
+          ]
+        },
+        "provisional_scope": "codex pilot: Read and explain a small local JavaScript/HTML codebase with file evidence. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "research",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "research"
+          ]
+        },
+        "provisional_scope": "claude pilot: Analysis of supplied local source files or supplied facts with frontier verification; no web-research evaluation. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "research",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "research"
+          ]
+        },
+        "provisional_scope": "codex pilot: Analysis of supplied local source files or supplied facts with frontier verification; no web-research evaluation. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "ui_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "ui_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Small plain HTML/CSS interfaces with a frontier-provided specification and rendered acceptance. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "ui_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "ui_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Small plain HTML/CSS interfaces with a frontier-provided specification and rendered acceptance. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    }
+  ],
+  "route_scope_after": [
+    {
+      "public_task_class": "bounded_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "bounded_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Contained local JavaScript functions with settled interfaces and executable checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "bounded_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "bounded_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "bounded_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Contained local JavaScript functions with settled interfaces and executable checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "complex_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Small multi-file JavaScript features with settled contracts and integration checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "complex_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "complex_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "complex_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Small multi-file JavaScript features with settled contracts and integration checks. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "hard_debugging",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "hard_debugging"
+          ]
+        },
+        "provisional_scope": "claude pilot: Local JavaScript logic and asynchronous ordering bugs with a deterministic reproduction. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "hard_debugging",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "hard_debugging",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "hard_debugging"
+          ]
+        },
+        "provisional_scope": "codex pilot: Local JavaScript logic and asynchronous ordering bugs with a deterministic reproduction. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "claude pilot: Specified local JavaScript API renames, nullish-default fixes and equivalent mechanical changes. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:d0f71a7d830c44459874eecf45079f74dcd58b4b7beae22c5afce499cacc952b",
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "codex pilot: Specified local JavaScript API renames, nullish-default fixes and equivalent mechanical changes. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651",
+        "sha256:d61c6ac876286dfe541a213d291bddc860610d5df38308063727062c4f7dbf1d"
+      ]
+    },
+    {
+      "public_task_class": "mechanical_work",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "mechanical_work",
+          "risk": "medium",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:26399877115220e367eddb9c03121c3fa08b3e3e80269740c82082db0209a44d",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": true,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "mechanical_work",
+          "risk": "medium",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:26399877115220e367eddb9c03121c3fa08b3e3e80269740c82082db0209a44d",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": true,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "mechanical_work"
+          ]
+        },
+        "provisional_scope": "claude medium pilot: Zero/nullish quantity-default fixes in local plain JavaScript only. Separate fresh artifact-only frontier verification is mandatory. Existing native smoke only; no medium installed task acceptance or governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": true,
+        "different_family": false,
+        "fresh_context": true,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "repo_exploration",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "repo_exploration"
+          ]
+        },
+        "provisional_scope": "claude pilot: Read and explain a small local JavaScript/HTML codebase with file evidence. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "repo_exploration",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "repo_exploration",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "repo_exploration"
+          ]
+        },
+        "provisional_scope": "codex pilot: Read and explain a small local JavaScript/HTML codebase with file evidence. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "research",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "research"
+          ]
+        },
+        "provisional_scope": "claude pilot: Analysis of supplied local source files or supplied facts with frontier verification; no web-research evaluation. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "research",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "research",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "research"
+          ]
+        },
+        "provisional_scope": "codex pilot: Analysis of supplied local source files or supplied facts with frontier verification; no web-research evaluation. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    },
+    {
+      "public_task_class": "ui_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "ui_implementation"
+          ]
+        },
+        "provisional_scope": "claude pilot: Small plain HTML/CSS interfaces with a frontier-provided specification and rendered acceptance. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:9d834e3eefb8daf5540243f092977f84347ee7632d7faf9504696aea8e50f348",
+        "sha256:b9b5c1a3f474c28d6196af9a93265ffa35dd72c89b825edb9a5a5731e8ddd324"
+      ],
+      "reviewers": [
+        "sha256:fe42b7a4efd4c7b45aa429545a03b78790a9e313dfb3061d5e9a638c18b6b057"
+      ]
+    },
+    {
+      "public_task_class": "ui_implementation",
+      "stratum": {
+        "worker_request": {
+          "role_id": "implementer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "reviewer_request": {
+          "role_id": "reviewer",
+          "task_class_id": "ui_implementation",
+          "risk": "low",
+          "cohort_id": "provisional_host_smoke",
+          "constraints_digest": "sha256:69fbbf405ea9c7e1ad12b489000d2a8d3eaeedaf41ac9c0ac6f290a7d6513568",
+          "constraints": {
+            "schema_version": "constraint_set.v1",
+            "constraint_id": "provisional_scope",
+            "version": 1,
+            "allowed_tools": [
+              "terminal"
+            ],
+            "required_tools": [
+              "terminal"
+            ],
+            "forbidden_paths": [],
+            "requires_fresh_context": false,
+            "requires_local_execution": false
+          },
+          "required_capabilities": [
+            "terminal"
+          ]
+        },
+        "task_required_capabilities": [
+          "terminal"
+        ],
+        "eval_bucket": {
+          "suite_id": "provisional_host_smoke",
+          "suite_version": 1,
+          "harness_version": "native_host_v1",
+          "grader_version": "frontier_review_v1",
+          "fixture_ids": [
+            "ui_implementation"
+          ]
+        },
+        "provisional_scope": "codex pilot: Small plain HTML/CSS interfaces with a frontier-provided specification and rendered acceptance. Each treatment identifies matching installed acceptance or explicit smoke extrapolation. Neither tier is governor qualification."
+      },
+      "review_rule": {
+        "required": true,
+        "different_model": false,
+        "different_family": false,
+        "fresh_context": false,
+        "frontier": true
+      },
+      "workers": [
+        "sha256:25a4b1aa333adf10febe05242fd70a9618bf1b16026e76fddc31444d9158c99e",
+        "sha256:f0773ee9877ae0f78f9dde670aa1e8c1d00f8dae1ce572d3c6f11c63d5ebbe8e"
+      ],
+      "reviewers": [
+        "sha256:66aa8630b14c4056d7f00a4e2888bb7abcaf25aeacba3147bfb1f6276c705651"
+      ]
+    }
+  ],
+  "current": {
+    "pack_content_digest": "sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619",
+    "generated_at": "2026-09-11T05:16:44.956Z",
+    "refresh_after": "2026-09-18T05:16:44.956Z",
+    "expires_at": "2026-10-11T05:16:44.956Z",
+    "skill_folder_digest": "sha256:603f405245b835466650a577657805970a2b0ae0da1c6792f00588cd6b3e0725",
+    "guidance_digest": "sha256:f78d3f7e5cee1370e75dfd469db9c85ae49a38244c839f8255d78a02439759d1",
+    "acceptance": {
+      "path": "data/routing/installed-acceptance.json",
+      "digest": "sha256:9b348613d949ea6f772c2dc77c5bead2bb7a16fb01761bdb87fbdfc7500a1beb"
+    }
+  },
+  "limitations": [
+    "Fourteen accepted cases are evidence from multiple consumer iterations: eleven preserved original records plus three fresh runs of the repaired folder.",
+    "The repaired folder was frozen for all three runs; recompilation changes only its routing-pack bytes afterward. No exact-published-folder live run is claimed.",
+    "Original failures remain excluded and preserved, with no replacement relabeling.",
+    "No model probes, calibration, additional implementation agents, provider setting changes, or global installation occurred.",
+    "No measured subscription savings are claimed."
+  ]
+}

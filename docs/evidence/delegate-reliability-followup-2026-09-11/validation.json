@@ -1,0 +1,155 @@
+{
+  "schema_version": "delegate_reliability_validation.v1",
+  "validated_at": "2026-09-11T05:23:46.654Z",
+  "status": "PASS",
+  "offline_commit": "8b6a803",
+  "checks": [
+    {
+      "command": "npm test (dist absent)",
+      "passed": 734,
+      "skipped": 2,
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-tests-before-build.log",
+        "digest": "sha256:46e76434b006ed3e85660f27a2841215ae9c9ef398f487cc7dc1a01454fe99f0"
+      }
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-typecheck.log",
+        "digest": "sha256:e34f5fa67f3292c509bdc1835d120f41aa0641c79f37eff3ffd04bff60b9431e"
+      }
+    },
+    {
+      "command": "npm run build",
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-build.log",
+        "digest": "sha256:d5a456cc364120c12db850e9be6e9aab0c03ed2cd88258663a7bf81e02d9e482"
+      }
+    },
+    {
+      "command": "node scripts/verify/skills.mjs",
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-skills.log",
+        "digest": "sha256:cbe025314c94f1a7251500a7f68f923be7b1e73a6aa6d2d84d8946804806e35f"
+      }
+    },
+    {
+      "command": "npm test (built artifacts)",
+      "passed": 736,
+      "skipped": 0,
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-tests-built.log",
+        "digest": "sha256:529d56c58d05d3aa7f0f7b976b4bb22f6642dfeeebea07f3c0e375ca8eaefe6c"
+      }
+    },
+    {
+      "command": "CI validateRoutingPackPublication check",
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-ci-publication.log",
+        "digest": "sha256:20fb9b42d0ec2659d760023c30d6795c2d68242af640e79e68e709a10173532a"
+      }
+    },
+    {
+      "command": "npm test -- test/routing/reliability-publication.test.ts test/routing/renewal-publication.test.ts (settled index)",
+      "passed": 9,
+      "skipped": 0,
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-settled-publication-tests.log",
+        "digest": "sha256:96fc22cc76be9eef543c25ca7212647de21ac371aae9097c198a3c62803487b2"
+      }
+    },
+    {
+      "command": "node scripts/verify/skills.mjs (final status)",
+      "status": "PASS",
+      "exit_code": 0,
+      "output": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/final-settled-skills.log",
+        "digest": "sha256:cbe025314c94f1a7251500a7f68f923be7b1e73a6aa6d2d84d8946804806e35f"
+      }
+    }
+  ],
+  "code_reviews": [
+    {
+      "path": "artifacts/delegate-reliability-followup-2026-09-11/code-review-1.json",
+      "digest": "sha256:f891a081bc79971f8d74092b58ad5d57b80a5a6231105c7e9a5e7a0dc4a1bbef"
+    },
+    {
+      "path": "artifacts/delegate-reliability-followup-2026-09-11/code-review-2.json",
+      "digest": "sha256:0d831ba99fe2536b8eb70203f22979482f57032e5bd6469266319ded1b1456ed"
+    }
+  ],
+  "evidence_index": {
+    "path": "docs/evidence/delegate-reliability-followup-2026-09-11/evidence.json",
+    "digest": "sha256:d0f074fc295183022276460e08162eaf32764a5af77ddd7f87533c1d98b68ec0"
+  },
+  "budget": {
+    "executions": 10,
+    "ceiling": 17,
+    "remaining": 7,
+    "prior": 101,
+    "cumulative": 111,
+    "cumulative_ceiling": 118,
+    "reserved": 0,
+    "halted": false
+  },
+  "case_verdicts": [
+    {
+      "id": "reliability-claude-ui",
+      "verdict": "PASS",
+      "executions": 2
+    },
+    {
+      "id": "reliability-claude-fullproject",
+      "verdict": "PASS",
+      "executions": 3
+    },
+    {
+      "id": "reliability-codex-multicomponent",
+      "verdict": "PASS",
+      "executions": 2
+    }
+  ],
+  "pack": {
+    "pack_content_digest": "sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619",
+    "generated_at": "2026-09-11T05:16:44.956Z",
+    "refresh_after": "2026-09-18T05:16:44.956Z",
+    "expires_at": "2026-10-11T05:16:44.956Z",
+    "skill_folder_digest": "sha256:603f405245b835466650a577657805970a2b0ae0da1c6792f00588cd6b3e0725",
+    "guidance_digest": "sha256:f78d3f7e5cee1370e75dfd469db9c85ae49a38244c839f8255d78a02439759d1",
+    "acceptance": {
+      "path": "data/routing/installed-acceptance.json",
+      "digest": "sha256:9b348613d949ea6f772c2dc77c5bead2bb7a16fb01761bdb87fbdfc7500a1beb"
+    }
+  },
+  "archive": {
+    "schema_version": "delegate_acceptance_preservation.v1",
+    "source_revision": "8b6a803",
+    "source_path": "data/routing/installed-acceptance.json",
+    "archived_path": "data/routing/archive/2026-09-11-pre-reliability/installed-acceptance.json",
+    "content_digest": "sha256:501ef35a1cddadf79595ffa36d18020f1888c90f109aa44bdcceba109cfebe13",
+    "git_blob": "7e9e9d0a5f9f5f2ecd103f72e2b7751d03810bf1",
+    "recorded_at": "2026-09-11T05:13:05.049Z",
+    "status": "preserved",
+    "case_count": 11
+  },
+  "qualification_authority": false,
+  "limitations": [
+    "Two pre-build tests intentionally skip without dist; both pass in the built suite.",
+    "Model execution and subscription usage are different measures; no savings or qualification claimed."
+  ]
+}

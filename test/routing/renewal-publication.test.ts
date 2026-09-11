@@ -45,7 +45,7 @@ describe('September renewal publication',()=>{
 
  it('publishes only reviewed completed cases while retaining every attempted case in the index',()=>{
   const index=read('docs/evidence/delegate-renewal-2026-09-11/evidence.json');
-  const acceptance=read('data/routing/installed-acceptance.json');
+  const acceptance=read('data/routing/archive/2026-09-11-pre-reliability/installed-acceptance.json');
   expect(index.cases).toHaveLength(14);
   expect(acceptance.cases.map((c:any)=>c.id).sort()).toEqual(index.cases.filter((c:any)=>c.verdict==='PASS').map((c:any)=>c.run_id).sort());
   for(const id of ['renewal-installed-claude-ui','renewal-installed-codex-multicomponent']){
