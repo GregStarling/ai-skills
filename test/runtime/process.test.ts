@@ -38,3 +38,21 @@ it('recognizes already-reaped process groups across JavaScript contexts',async()
     expect(output).toMatchObject({exit_code:0,cleanup:'complete'});
   }finally{kill.mockRestore();}
 });
+it('waits for exiting process-group members that report EPERM before declaring cleanup complete',async()=>{
+  const real=process.kill.bind(process);let eperm=2;
+  const kill=vi.spyOn(process,'kill').mockImplementation(((pid:number,signal?:string|number)=>{
+    if(pid<0){if(eperm-->0)throw Object.assign(new Error('exiting'),{code:'EPERM'});throw Object.assign(new Error('gone'),{code:'ESRCH'});}
+    return real(pid,signal);
+  }) as typeof process.kill);
+  try{
+    const output=await runProcess({executable:process.execPath,args:['-e','process.stdout.write("done")'],cwd:process.cwd(),timeoutMs:2000,outputDirectory:directory()});
+    expect(output).toMatchObject({exit_code:0,cleanup:'complete'});expect(eperm).toBeLessThan(0);
+  }finally{kill.mockRestore();}
+});
+it('still reports failed cleanup when a process group never settles',async()=>{
+  const kill=vi.spyOn(process,'kill').mockImplementation((()=>{throw Object.assign(new Error('denied'),{code:'EPERM'});}) as typeof process.kill);
+  try{
+    const output=await runProcess({executable:process.execPath,args:['-e','process.stdout.write("done")'],cwd:process.cwd(),timeoutMs:2000,outputDirectory:directory()});
+    expect(output.cleanup).toBe('failed');
+  }finally{kill.mockRestore();}
+});

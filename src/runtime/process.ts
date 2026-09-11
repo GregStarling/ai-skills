@@ -5,6 +5,19 @@ import { hashBytes } from "../core/canonical.js";
 
 export type ProcessInput = { executable: string; args: readonly string[]; cwd: string; timeoutMs: number; outputDirectory: string; stdin?: string; env?: NodeJS.ProcessEnv; maxOutputBytes?: number };
 export type ProcessResult = { started_at: string; completed_at: string; exit_code: number | null; signal: string | null; timed_out: boolean; output_limited: boolean; spawn_error: string | null; stdout_path: string; stderr_path: string; stdout_digest: string; stderr_digest: string; cleanup: "complete" | "failed" };
+// Checks `code` structurally so errors from other JavaScript contexts are recognized too.
+const errorCode = (error: unknown) => (typeof error === "object" && error !== null && "code" in error ? error.code : undefined);
+// macOS reports EPERM for a process group whose killed members are exiting but not yet reaped.
+// ponytail: fixed 2s settle bound; make it an input if slow hosts legitimately need longer.
+async function settleGroup(pgid: number): Promise<"complete" | "failed"> {
+  const deadline = Date.now() + 2000;
+  while (Date.now() < deadline) {
+    try { process.kill(-pgid, "SIGKILL"); }
+    catch (error) { const code = errorCode(error); if (code === "ESRCH") return "complete"; if (code !== "EPERM") return "failed"; }
+    await new Promise((resolve) => setTimeout(resolve, 25));
+  }
+  return "failed";
+}
 /** Real process execution with no shell and bounded group cleanup; no model mocks. */
 export async function runProcess(input: ProcessInput): Promise<ProcessResult> {
   if (!Number.isSafeInteger(input.timeoutMs) || input.timeoutMs <= 0 || input.timeoutMs > 3_600_000) throw new Error("INVALID_PROCESS_TIMEOUT");
@@ -22,10 +35,11 @@ export async function runProcess(input: ProcessInput): Promise<ProcessResult> {
   try { child = spawn(input.executable, [...input.args], { cwd: input.cwd, env: input.env ?? process.env, detached: process.platform !== "win32", stdio: ["pipe", "pipe", "pipe"], shell: false }); }
   catch (error) { closeSync(stdoutFd); closeSync(stderrFd); throw error; }
   let killTimer: NodeJS.Timeout | undefined;
+  let groupExiting = false as boolean;
   const kill = (signal: NodeJS.Signals) => {
     if (child.pid === undefined) return;
     try { if (process.platform === "win32") child.kill(signal); else process.kill(-child.pid, signal); }
-    catch (error) { if (!(typeof error === 'object' && error !== null && "code" in error && error.code === "ESRCH")) cleanup = "failed"; }
+    catch (error) { const code = errorCode(error); if (code === "EPERM" && process.platform !== "win32") groupExiting = true; else if (code !== "ESRCH") cleanup = "failed"; }
   };
   const stop = () => { kill("SIGTERM"); killTimer ??= setTimeout(() => kill("SIGKILL"), 250); };
   const timer = setTimeout(() => { timedOut = true; stop(); }, input.timeoutMs);
@@ -44,6 +58,7 @@ export async function runProcess(input: ProcessInput): Promise<ProcessResult> {
   // The leader can exit before grandchildren. Always terminate its remaining group.
   kill("SIGKILL");
   if (killTimer) clearTimeout(killTimer);
+  if (groupExiting && cleanup === "complete" && child.pid !== undefined) cleanup = await settleGroup(child.pid);
   closeSync(stdoutFd); closeSync(stderrFd);
   return { started_at: started, completed_at: new Date().toISOString(), exit_code: result.code, signal: result.signal, timed_out: timedOut, output_limited: outputLimited, spawn_error: spawnError, stdout_path: stdoutPath, stderr_path: stderrPath, stdout_digest: hashBytes(readFileSync(stdoutPath)), stderr_digest: hashBytes(readFileSync(stderrPath)), cleanup };
 }
