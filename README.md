@@ -1,54 +1,48 @@
 # Delegate
 
-**Make your best model's usage go further.**
+**Your strongest model, with cheaper help only where it pays.**
 
-Delegate is a portable skill for Claude Code and Codex that puts suitable lower-usage models to work and brings important decisions back to your strongest model. Its north star: **the requested quality while preserving as much subscription allowance as possible.**
+Delegate is a portable skill for Claude Code and Codex that decides whether to do a task directly or hand bounded parts to cheaper models, while your strongest model keeps the decisions, verification and final result. **Direct execution is the default.**
 
-Your strongest model is valuable when the answer requires judgment. Finding the relevant files, tracing a value through a codebase, extracting facts and applying a settled change often need less of that intelligence. Delegate gives bounded assignments to suitable available workers, while the frontier model stays responsible for decisions and the final result.
+## What the evidence says so far
 
-You describe the outcome. Delegate organizes the work.
+Six matched comparisons on two bounded TypeScript tasks, across Claude Code and Codex, all favored direct execution. The workers themselves were inexpensive, but the coordinator still had to read the code, write briefs, check the worker's sources and integrate the result, and that outweighed what the workers saved. In the latest two, delegating cost about twice and over three times the estimated direct cost, and the coordinator had to correct a worker's invalid proposal before implementation. See the [ordinary comparison](docs/delegate-ordinary-results-2026-09-11.md).
 
-## Let the investigation leave your desk
+So Delegate stays direct unless one of these holds:
 
-You shouldn't have to solve a problem before you can hand it off.
+- **A large investigation:** answering needs reading across several packages or a large unfamiliar area, far more than a brief plus checking the decisive sources.
+- **Independent parallel work:** two or more workstreams with settled interfaces and separate ownership can run at once.
+- **You ask for it:** you request a worker or a specific model.
 
-Give Delegate a question such as “Where does this value get its default?” A worker can investigate within the assignment's boundaries and return the relevant source locations, an explanation and anything still unresolved. The frontier checks the decisive evidence, resolves the specific decision and sends the next assignment back to a suitable worker.
+The first two are untested hypotheses, not proven savings.
+
+## When it does delegate
 
 ```text
-Your question
+Direct search sizes the work
     ↓
 Worker investigates → evidence + unresolved decision
     ↓
 Frontier decides
     ↓
-Eligible worker continues → frontier verifies → done
+Worker continues → frontier verifies → done
 ```
 
-The answer can be unknown when the investigation starts. What needs to be clear is the question, the scope, the permitted actions and where the worker should stop. That gives workers room to find useful answers without making consequential choices on your behalf.
+A worker gets a bounded question or change: the scope, the permitted actions and where to stop. It returns source locations, checks and anything still unresolved. The frontier checks the decisive evidence, settles the decision and sends a bounded follow-up, reusing the worker's context when useful.
 
-Useful context can stay with the same worker through follow-ups. A change from investigation to implementation gets a fresh eligibility check. The frontier can build on the evidence already gathered instead of repeating the entire search.
+Every delegated result gets frontier verification: the sources, changed artifact, relevant tests or rendered interface that support acceptance. Concrete defects go back for targeted repair. A worker that needs repeated repairs isn't cheap, so repeated failure falls back to a stronger worker or direct execution. Work stops when the requested result is complete.
 
-## Spend intelligence where it earns its place
-
-An inexpensive worker can become expensive if it needs repeated repairs or a second model to redo its work. Delegate considers the whole path: coordination, execution, integration, verification and failed attempts.
-
-Direct execution can win at any task size when a handoff would consume more. Larger work can move through bounded assignments, with stronger reasoning reserved for conflicting evidence, architecture, product decisions and acceptance. Parallel workers are useful when they reduce expected allowance consumption; finishing sooner alone isn't enough.
-
-Every delegated result gets frontier verification. That means checking the sources, changed artifact, relevant tests or rendered interface that support acceptance. The coordinator verifies when eligible; otherwise an eligible reviewer does. Concrete defects go back for targeted repair. Work stops when the requested result is complete and no material defect remains.
-
-The aim is to leave more of your allowance available for the decisions that benefit from your best model.
-
-An MVP and a large TypeScript monorepo use the same principle: bound the assignment, not the repository. Start with a symbol, symptom or feature. Find its owner, trace the relevant dependencies, then assign a coherent change. Reading can cross package boundaries while write ownership stays explicit. Integration checks follow affected consumers and contracts; a green test in one package isn't the whole result. You don't have to map the entire codebase before asking for help.
+An MVP and a large TypeScript monorepo use the same principle: bound the assignment, not the repository. Start with a symbol, symptom or feature. Find its owner, trace the relevant dependencies, then make or assign a coherent change. Reading can cross package boundaries while write ownership stays explicit. Integration checks follow affected consumers and contracts; a green test in one package isn't the whole result. Delegate searches directly first and never maps the whole codebase up front.
 
 ## Keep the experience small
 
 Delegate fits the coding environment you already use. Install one folder and invoke it with an ordinary task. Your existing authentication and available models supply the execution.
 
-Routine investigations use a short brief and one compact outcome record: result, checks and repairs. They still return evidence and receive verification, without a receipt-writing sequence. You can explicitly request a worker, a model or independent review when that matters to the job.
+Delegated investigations use a short brief and one compact outcome record: result, checks and repairs. They still return evidence and receive verification, without a receipt-writing sequence. You can explicitly request a worker, a model or independent review when that matters to the job.
 
 There is no service to host, daemon to supervise or extra API key to manage. The routing helper uses an existing Node runtime and built-in libraries. Model Governor, the tooling maintained in this repository, is not required to use the installed skill.
 
-**Delegate is designed to save usage. Measured subscription savings for this revised workflow have not yet been established.**
+**No measured savings have been established for any delegation workflow here; its delegation conditions are hypotheses until matched evidence shows otherwise.**
 
 ## Install and use
 
