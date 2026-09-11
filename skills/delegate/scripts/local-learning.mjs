@@ -427,12 +427,15 @@ export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_S
     const expanded=references=>references.map(x=>({...pack.treatments[x.candidate_identity],candidate_id:x.candidate_id,candidate_identity:x.candidate_identity,evidence_tier:x.evidence_tier}));
     const attempts=(input.attempts??[]).map((a,i)=>{
       if(!a||!one('worker','reviewer','repair')(a.role))fail('ATTEMPT_ROLE_INVALID');
+      const compact=a.candidate_id===undefined;
+      const outcome=compact?(a.outcome==='unavailable'?'blocked':(a.outcome===undefined?input.acceptance:a.outcome)):a.outcome;
+      if(!outcomes(outcome))fail('ATTEMPT_OUTCOME_INVALID');
       if(a.candidate_id!==undefined)return a;
       const code=a.role==='reviewer'?'REVIEWER_NOT_IN_ROUTE':'WORKER_NOT_IN_ROUTE';
       const matches=route?expanded(a.role==='reviewer'?route.reviewers:route.workers).filter(r=>(r.snapshot_id??r.model_id)===a.model&&r.effort===a.effort):[];
       if(matches.length!==1)fail(code);
       const [m]=matches;
-      return {attempt_id:a.attempt_id??`${a.role}-${i+1}`,role:a.role,candidate_id:m.candidate_id,candidate_identity:m.candidate_identity,evidence_tier:m.evidence_tier,configured:{model:a.model,effort:a.effort},observed:{model:a.observed?.model??null,effort:a.observed?.effort??null},outcome:a.outcome??input.acceptance,started_at:a.started_at??null,completed_at:a.completed_at??null,evidence:a.evidence??[]};
+      return {attempt_id:a.attempt_id??`${a.role}-${i+1}`,role:a.role,candidate_id:m.candidate_id,candidate_identity:m.candidate_identity,evidence_tier:m.evidence_tier,configured:{model:a.model,effort:a.effort},observed:{model:a.observed?.model??null,effort:a.observed?.effort??null},outcome,started_at:a.started_at??null,completed_at:a.completed_at??null,evidence:a.evidence??[]};
     });
     const verifier=route?expanded(route.reviewers).find(r=>(r.snapshot_id??r.model_id)===coordinator.model&&r.effort===(coordinator.effort??null)):undefined;
     const snapshot=await snapshotArtifact(base,directory,input.artifact_cwd??input.cwd,input.run_id,now);

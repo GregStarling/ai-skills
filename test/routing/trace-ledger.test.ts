@@ -95,3 +95,11 @@ it('counts locally declared helper aliases and finds the legacy record boundary'
  expect(ledger.helper_calls.map((c:any)=>c.command)).toEqual(['record','advise']);
  expect(ledger.task_wall_clock_ms).toBe(1000);expect(ledger.helper_tail_ms).toBe(3000);
 });
+
+it.each(['completed','errored','shutdown'])('preserves native worker terminal status %s',status=>{
+ const spawn={type:'item.completed',item:{id:'spawn',type:'collab_tool_call',tool:'spawn_agent',receiver_thread_ids:['worker'],status:'completed'}};
+ const wait={type:'item.completed',item:{id:'wait',type:'collab_tool_call',tool:'wait',agents_states:{worker:{status}}}};
+ const ledger=executionLedger('codex',timed([spawn,wait]));
+ expect(ledger.rows[1]).toMatchObject({ended_at:at(1),completion_status:status});
+ expect(executionLedger('codex',timed([spawn])).rows[1].ended_at).toBeNull();
+});

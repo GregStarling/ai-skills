@@ -78,7 +78,8 @@ export function executionLedger(host,timedJsonlText,{fixtureRoot='',allowedPaths
     if(row.failed_launch){row.ended_at=at;row._endPosition=position;}
    }
    if(e.type==='item.completed'&&item.type==='collab_tool_call')for(const row of rows.slice(1)){
-    if(row.receiver_thread_ids?.some(id=>['completed','errored','shutdown'].includes(item.agents_states?.[id]?.status))){row.ended_at=at;row._endPosition=position;}
+    const states=row.receiver_thread_ids?.map(id=>item.agents_states?.[id]?.status);
+    if(states?.length&&states.every(status=>['completed','errored','shutdown'].includes(status))){row.ended_at=at;row._endPosition=position;row.completion_status=states.find(status=>status!=='completed')??'completed';}
    }
   }
  }

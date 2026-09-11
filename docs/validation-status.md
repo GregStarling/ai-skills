@@ -17,12 +17,12 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
-`skills/delegate/`, 14 files, renewed 2026-09-11. M1 guidance is unchanged; the routing pack now binds fresh evidence.
+`skills/delegate/`, 14 files. Reliability repairs added 2026-09-11: explicit worker-completion waits and compact finish outcome normalization. **Awaiting live verification** under the [follow-up checklist](delegate-reliability-followup-plan.md); the published routing pack is unchanged.
 
 | Digest | Value |
 | --- | --- |
-| Helper `folderDigest` (skill_folder_digest) | `sha256:e797626848d489bb3a14fca1dece3072ca650a62bd9a03825c454a6d08d3ee91` |
-| `guidance_digest` (folder without `routing-pack.json`) | `sha256:522f5a0e7e8d661fb374ba3fbffe01da40cf37bd1f52d9522ce767382dfccae0` |
+| Helper `folderDigest` (skill_folder_digest) | `sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391` |
+| `guidance_digest` (folder without `routing-pack.json`) | `sha256:f78d3f7e5cee1370e75dfd469db9c85ae49a38244c839f8255d78a02439759d1` |
 
 **Renewal acceptance: 11/14 cases passed; 3 incomplete cases are withheld.** Live captures used the prior pack iteration with unchanged guidance. The resulting published pack was checked offline; no exact-folder live run is claimed. [Renewal results](delegate-renewal-results.md) identify every case and limitation. M4's four current-folder matched pairs passed quality checks, with direct execution faster in all four.
 

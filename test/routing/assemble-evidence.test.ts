@@ -145,6 +145,15 @@ async function acceptanceResult(){
 }
 
 describe('assemble acceptance evidence',()=>{
+  it.each(['completed','stopped','missing','errored','shutdown'])('requires actual worker delivery: %s',async status=>{
+    const row=await acceptanceResult(),result=JSON.parse(await readFile(row.resultPath,'utf8'));
+    result.ledger={rows:[{role:'worker',ended_at:status==='missing'?null:'2026-09-11T00:00:01Z',...(status==='missing'?{}:{completion_status:status})}]};
+    await writeFile(row.resultPath,JSON.stringify(result));
+    const review=JSON.parse(await readFile(row.reviewPath,'utf8'));review.result_digest=sha(await readFile(row.resultPath));await writeFile(row.reviewPath,JSON.stringify(review));
+    const assembled=assembler.assembleAcceptanceEvidence({results:[row],validatedAt:'2026-09-11T00:00:00.000Z',folderDigest:sha('folder'),hostVersions:{codex:'test',claude:'test'}});
+    if(status==='completed')await expect(assembled).resolves.toHaveProperty('cases');
+    else await expect(assembled).rejects.toThrow('WORKER_DELIVERY_INCOMPLETE');
+  });
   it('builds accepted rows only from grader result and maintainer trace review',async()=>{
     const row=await acceptanceResult();
     const result=await assembler.assembleAcceptanceEvidence({results:[row],validatedAt:'2026-09-11T00:00:00.000Z',folderDigest:sha('folder'),hostVersions:{codex:'0.1',claude:'2.1'}});

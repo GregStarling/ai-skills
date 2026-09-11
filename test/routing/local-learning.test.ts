@@ -212,6 +212,29 @@ describe('lookup',()=>{
 describe('finish',()=>{
  const exit=(code:number)=>[process.execPath,'-e',`process.exit(${code})`];
  const direct={mode:'direct',relevant_checks_complete:true,coordinator:{model:'claude-opus-5',effort:null,observed:null}};
+ it('records an unavailable compact attempt as blocked while preserving a successful fallback',async()=>{const f=await fixture();try{
+  await f.call('start',{run_id:'a'});
+  const captured=await f.call('capture',{run_id:'a',command:exit(0)});
+  const input={run_id:'a',...f.delegated,coordinator:{...f.coordinator,evidence:[captured.reference]},relevant_checks_complete:true,acceptance:'accepted',checks:[{name:'tests',kind:'test',reference:captured.reference}],inspected:[{name:'final source review',kind:'review',outcome:'passed'}],attempts:[
+   {role:'worker',model:'gpt-5.3-codex-spark',effort:'low',outcome:'unavailable',observed:null,evidence:[captured.reference]},
+   {role:'worker',model:'gpt-5.5',effort:'low',outcome:'accepted',observed:null,evidence:[captured.reference]},
+  ]};
+  const result=await f.call('finish',input);
+  expect(result.receipt.attempts.map((a:any)=>a.outcome)).toEqual(['accepted','blocked','accepted']);
+  expect(result.receipt.attempts.slice(1).map((a:any)=>a.observed)).toEqual([{model:null,effort:null},{model:null,effort:null}]);
+  expect(result.evidence_supported).toBe(true);
+  const events=await f.events();expect((await f.call('finish',input)).receipt).toEqual(result.receipt);expect(await f.events()).toEqual(events);
+  const bad=structuredClone(result.receipt);bad.attempts[1].outcome='unavailable';
+  expect(()=>normalizeReceipt(bad)).toThrow('RECEIPT_V3_MALFORMED');
+  await f.call('start',{run_id:'canonical'});
+  await expect(f.call('record',{...bad,...f.delegated,run_id:'canonical',auto_capture:false})).rejects.toThrow('RECEIPT_V3_MALFORMED');
+ }finally{await f.cleanup();}});
+ it.each(['compact','full','null'])('rejects invalid %s attempt outcomes before writing any evidence',async shape=>{const f=await fixture({git:true});try{
+  await f.call('start',{run_id:'a'});const events=await f.events(),files=await f.evidenceFiles();
+  const a=shape!=='full'?{role:'worker',model:'gpt-5.5',effort:'low',outcome:shape==='null'?null:'invented'}:{...f.attempt('worker'),outcome:'unavailable'};
+  await expect(f.call('finish',{run_id:'a',...f.delegated,coordinator:f.coordinator,acceptance:'accepted',relevant_checks_complete:true,attempts:[a],checks:[{name:'must not run',kind:'test',command:exit(0)}]})).rejects.toThrow('ATTEMPT_OUTCOME_INVALID');
+  expect(await f.events()).toEqual(events);expect(await f.evidenceFiles()).toBe(files);
+ }finally{await f.cleanup();}});
  it('runs commands once, snapshots the artifact, and derives support from captures and the clock',async()=>{const f=await fixture({git:true});try{
   await f.call('start',{run_id:'a'});
   const r=await f.call('finish',{run_id:'a',...direct,acceptance:'failed',checks:[{name:'ok',kind:'test',command:exit(0)},{name:'bad',kind:'test',command:exit(1)}]},at(5000));

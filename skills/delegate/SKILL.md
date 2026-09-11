@@ -49,6 +49,8 @@ Give one worker a compact [work order](delegation-contract.md) with settled deci
 
 Record what the host actually launched; configured and observed settings stay separate, and unknown effort stays unknown. If a worker is unavailable or fails repeatedly without progress, re-run `lookup` with `failed_candidate_ids` naming it and take the new `workers` and `reviewers`; say why. Keep bounded repairs with the original worker; return architectural ambiguity to yourself. Do not quietly become the implementation worker or drop required independence.
 
+Wait for every launched worker to reach a terminal state and collect its result before integration, final artifact inspection, or delivery. A launch acknowledgement is not completion. Never finish while workers remain active; failed or stopped workers require a truthful incomplete outcome unless an eligible replacement completes the work and verification.
+
 ## 6. Verify
 
 Apply [verification-policy.md](verification-policy.md). Frontier verification is mandatory for every delegated task. Verify it yourself only when lookup returned `coordinator_may_verify: true` for your own model and effort; otherwise launch a reviewer from `reviewers`, in a fresh process when `review_rule.fresh_context` is true. Inspect actual artifacts: the diff and tests, rendered UI and interactions, sources and calculations. Re-verify after every repair and after integration. Stop when acceptance is met and no material defect remains; no speculative polish or repeated review without new evidence.

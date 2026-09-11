@@ -204,6 +204,7 @@ export async function assembleAcceptanceEvidence({results,validatedAt,folderDige
     const stdout=await readFile(join(root,'coordinator','stdout.jsonl'));
     const artifactNames=await verifiedArtifacts(root,result.artifact_digests);
     const review=await checkedMaintainerReview(reviewPath,resultPath,result,stdout,artifactNames);
+    if(result.ledger?.rows.some(row=>row.role!=='coordinator'&&!row.budget_only&&!row.failed_launch&&(row.ended_at==null||['failed','killed','stopped','errored','shutdown'].includes(row.completion_status))))fail('WORKER_DELIVERY_INCOMPLETE');
     if(['blocked_provider_limit','blocked_cap','HOST_STOPPED'].includes(result.acceptance)||!['PASS','PASS_WITH_HARNESS_RECOVERY','pending_frontier_trace_review'].includes(result.acceptance)||result.execution?.code!==0||result.execution?.timed_out||result.after?.passed!==true||result.instructions_unchanged!==true)fail('ACCEPTANCE_REJECTED');
     if(result.copied_skill_folder_digest_after&&result.skill_folder_digest&&result.copied_skill_folder_digest_after!==result.skill_folder_digest)fail('ACCEPTANCE_REJECTED');
     if(review.workers.some(w=>!w.observed_written_files?.length))fail('ACCEPTANCE_REJECTED');

@@ -8,4 +8,6 @@ If Agent cannot express the selected effort, an already-installed authenticated 
 
 For a noninteractive child, provide task-scoped `--allowedTools` for already-authorized reads, edits and verification commands; `--permission-mode acceptEdits` alone does not authorize Bash checks. Preserve the host's permission boundary and report denied checks instead of retrying them repeatedly or claiming they ran.
 
+Run a single CLI worker in the foreground. For parallel workers, wait for every child and collect each exit status and output before returning from the coordinating shell. If the host backgrounds a command, use its completion tool and wait until that task finishes; a background task ID is only a launch acknowledgement. Never deliver or end the coordinator turn while child work is still active. For a full project, keep store and view ownership disjoint, then integrate and inspect the combined artifacts after both workers complete.
+
 Sources checked 2026-09-10: [Claude skills](https://code.claude.com/docs/en/skills), [native subagents and effective model/effort controls](https://code.claude.com/docs/en/sub-agents). Follow the active host's schema when its capabilities differ from current documentation.
