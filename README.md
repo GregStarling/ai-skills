@@ -38,6 +38,12 @@ Every delegated result gets frontier verification: the sources, changed artifact
 
 An MVP and a large TypeScript monorepo use the same principle: bound the assignment, not the repository. Start with a symbol, symptom or feature. Find its owner, trace the relevant dependencies, then make or assign a coherent change. Reading can cross package boundaries while write ownership stays explicit. Integration checks follow affected consumers and contracts; a green test in one package isn't the whole result. Delegate searches directly first and never maps the whole codebase up front.
 
+## See the system
+
+![Delegate system map](docs/delegate-system.png)
+
+The map shows the direct default, ordinary bounded delegation, evidence-required route, frontier acceptance boundary and local feedback loop.
+
 ## Keep the experience small
 
 Delegate fits the coding environment you already use. Install one folder and invoke it with an ordinary task. Your existing authentication and available models supply the execution.
