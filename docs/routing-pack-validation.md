@@ -4,7 +4,7 @@ Validated 2026-09-10 UTC. This update connects class-specific acceptance evidenc
 
 ## Repository and compiler checks
 
-All **214 tests across 24 files passed**, including 17 routing tests, 16 acceptance-evidence tests, two frontier-refresh tests and three routing CLI tests. Type checking, build, built-CLI publication validation, and the eight-file copied-folder/reference-closure check passed. All 14 real pack routes resolve and fall back correctly against a constructed inventory; actual host dispatch is checked separately. The source checkout remains uninstalled.
+All **214 tests across 24 files passed**, including 17 routing tests, 16 acceptance-evidence tests, two frontier-refresh tests and three routing CLI tests. Type checking, build, built-CLI publication validation, and the eight-file copied-folder/reference-closure check passed. All 14 real pack routes resolve and fall back correctly against a constructed inventory; actual host dispatch is checked separately. The source checkout is intentionally inert. Installed copies are exercised separately below.
 
 Coverage includes mandatory frontier review at every risk, qualified preference, provisional admission, known-failure exclusion, provider restrictions, host capability/identity/effort intersection, reviewer independence, retained incumbents, evidence expiry, publication clock checks, simulation rejection, tampering and full-project decomposition. The final audit also fixed a non-frontier economic winner hiding an eligible frontier reviewer, and provisional alternatives bypassing a governed provider restriction.
 

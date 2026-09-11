@@ -10,4 +10,4 @@ Skills are discovered under `.claude/skills/delegate/` for a project or `~/.clau
 
 Codex discovers project skills under `.agents/skills/delegate/` and personal skills under `~/.agents/skills/delegate/`. In CLI/IDE, invoke `$delegate <task>` or select it through `/skills`; in the desktop app, use its skill selector. If an older skill has the same name, select this project's skill explicitly.
 
-Exact copy commands for a fresh installation are in the [README](../README.md#claude-code). Host-specific execution guidance lives inside the installed folder at `hosts/claude-code.md` and `hosts/codex.md`.
+Exact copy commands for a fresh installation are in the [README](../README.md#install). Host-specific execution guidance lives inside the installed folder at `hosts/claude-code.md` and `hosts/codex.md`.

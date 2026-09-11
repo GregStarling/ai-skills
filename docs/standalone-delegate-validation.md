@@ -1,6 +1,6 @@
-# Standalone skill validation history
+# Historical Standalone Validation
 
-These trials concern the standalone skill before the portable routing-pack refactor. They do not qualify routes in the current pack. See [routing-pack validation](routing-pack-validation.md) for the current implementation; installation and host slash-command discovery remain untested.
+This is a pre-refactor trial record, not the current installation or host-support status. The trial did not test installation or slash-command discovery at the time. For the current install path, use the [README](../README.md#install) and [install guide](install.md). These trials do not qualify routes in the current pack; see [routing-pack validation](routing-pack-validation.md) for that implementation.
 
 ## Pre-refactor routing trial
 
@@ -18,4 +18,4 @@ The superseded draft was exercised on a local bug, supplied-facts plan compariso
 
 All 176 existing library tests, type checking and build passed. The Node/YAML source validator passed; the bundled Python validator could not run because that interpreter lacks PyYAML. Source validation is explicitly structural and requires no built governor CLI.
 
-The routed trial covers one bounded task with native Codex subagent tools and explicitly supplied skill source. It does not establish automatic cheapest-model selection across accounts, a large project's complete repair/integration cycle, Claude-host execution, installed slash-command invocation, or measured token savings. Those claims require their own observations.
+The routed trial covers one bounded task with native Codex subagent tools and explicitly supplied skill source. It did not establish automatic cheapest-model selection across accounts, a large project's complete repair/integration cycle, Claude-host execution, installed slash-command invocation, or measured token savings. Those claims require their own observations.
