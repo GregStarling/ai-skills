@@ -1,0 +1,382 @@
+{
+  "schema_version": "delegate_closeout_reconciliation.v1",
+  "recorded_at": "2026-09-11T05:35:12.415Z",
+  "qualification_authority": false,
+  "new_model_executions": 0,
+  "reviewed_revision": "dd2a890",
+  "scope": "Retrospective accounting of the separate review pasted by the user, plus direct manifest references. No historical ledger or acceptance rewrite.",
+  "external_review": {
+    "executions": 5,
+    "attempts": [
+      {
+        "id": "external-review-coordinator-fable",
+        "role": "coordinator",
+        "model": "claude-fable-5-1",
+        "outcome": "blocked_provider_limit",
+        "executions": 1,
+        "started_at": "2026-09-11T04:26:57.312Z",
+        "completed_at": "2026-09-11T04:32:22.873Z",
+        "request_uuid": "e07c6cdb-0ca2-43e2-911e-5f1b06fd837a",
+        "error_uuid": "0128812f-8821-4397-9ff9-21e3c217acda",
+        "evidence": {
+          "path": "artifacts/delegate-closeout-2026-09-11/parent-review.jsonl",
+          "digest": "sha256:8269403b15e7fd5d43d739d6d067738ee85919861d4f247336f8dd9c1d2dadad",
+          "source_digest": "sha256:cfdaa4aa1116d41f6b38d45129eb87b2aab4e6d61d93c6b2d67ab724a336ac3b",
+          "source_lines": {
+            "first": 927,
+            "last": 1112
+          },
+          "session_id": "663d42c5-25e2-4719-b34f-c81baf8165c1"
+        }
+      },
+      {
+        "id": "external-review-af188a8932efb4293",
+        "role": "reviewer",
+        "description": "Review compiler and scripts invariants",
+        "model": "claude-fable-5-1",
+        "outcome": "blocked_provider_limit",
+        "executions": 1,
+        "started_at": "2026-09-11T04:29:12.473Z",
+        "completed_at": "2026-09-11T04:32:22.214Z",
+        "launch_tool_id": "toolu_015phj7459XJvAJwCQQy4nst",
+        "evidence": {
+          "path": "artifacts/delegate-closeout-2026-09-11/reviewer-af188a8932efb4293.jsonl",
+          "digest": "sha256:107ea8aa8753697a47b42a1f166d79b3f873170718e21fe5522294a88c623a41"
+        }
+      },
+      {
+        "id": "external-review-a95fb74bb189de57b",
+        "role": "reviewer",
+        "description": "Review evidence and docs consistency",
+        "model": "claude-fable-5-1",
+        "outcome": "blocked_provider_limit",
+        "executions": 1,
+        "started_at": "2026-09-11T04:29:33.869Z",
+        "completed_at": "2026-09-11T04:33:44.469Z",
+        "launch_tool_id": "toolu_01HMNGyJoBbE5cVVD4bSfrdg",
+        "evidence": {
+          "path": "artifacts/delegate-closeout-2026-09-11/reviewer-a95fb74bb189de57b.jsonl",
+          "digest": "sha256:a339247f8d54be84f9cc82589550cf6175e602adb2f233241a85144c4cce16c3"
+        }
+      },
+      {
+        "id": "external-review-abd453ee99bc785d0",
+        "role": "reviewer",
+        "description": "Review harness and consumer code",
+        "model": "claude-fable-5-1",
+        "outcome": "blocked_provider_limit",
+        "executions": 1,
+        "started_at": "2026-09-11T04:29:50.402Z",
+        "completed_at": "2026-09-11T04:35:53.446Z",
+        "launch_tool_id": "toolu_01VxHXSqoaU3NAgtAqMDviet",
+        "evidence": {
+          "path": "artifacts/delegate-closeout-2026-09-11/reviewer-abd453ee99bc785d0.jsonl",
+          "digest": "sha256:90dfd61bbce13f40078d840797ae8e8f6a5c79d361f6602b2c0f0023d711bb3b"
+        }
+      },
+      {
+        "id": "external-review-coordinator-opus",
+        "role": "coordinator_continuation",
+        "model": "claude-opus-5",
+        "outcome": "completed",
+        "verdict": "APPROVE",
+        "executions": 1,
+        "started_at": "2026-09-11T04:33:43.803Z",
+        "completed_at": "2026-09-11T04:37:17.391Z",
+        "request_uuid": "d22281de-4c9d-4110-b6c8-854b8fb34422",
+        "final_uuid": "4226d1fd-0a49-4b31-898e-fdf7992dbc7b",
+        "evidence": {
+          "path": "artifacts/delegate-closeout-2026-09-11/parent-review.jsonl",
+          "digest": "sha256:8269403b15e7fd5d43d739d6d067738ee85919861d4f247336f8dd9c1d2dadad",
+          "source_digest": "sha256:cfdaa4aa1116d41f6b38d45129eb87b2aab4e6d61d93c6b2d67ab724a336ac3b",
+          "source_lines": {
+            "first": 927,
+            "last": 1112
+          },
+          "session_id": "663d42c5-25e2-4719-b34f-c81baf8165c1"
+        }
+      }
+    ],
+    "accounting_basis": "One initial coordinator review turn, three launched reviewer agents, and one user-requested coordinator continuation after switching models. All four Fable executions hit a provider limit; Opus completed the review. Per-message API calls/retries inside each turn are not separate launches.",
+    "synthetic_only_command": {
+      "tool_id": "toolu_01CbpFQ16mVmnZ5jz6AvZZ36",
+      "note": "Node executionLedger fixture test contains claude/codex command strings as data; it does not launch models and adds zero executions."
+    }
+  },
+  "closed_campaigns": [
+    {
+      "path": "artifacts/delegate-completion-2026-09-11/budget.json",
+      "digest": "sha256:733731677718df79de639f20a33a8779b3b502c62f5530ef108eebff4bb52615",
+      "executions": 101,
+      "reserved": 0,
+      "halted": false
+    },
+    {
+      "path": "artifacts/delegate-reliability-followup-2026-09-11/budget.json",
+      "digest": "sha256:8f2d956f5995b2609a68877983faca9db7c7fd7e40a8985765bfb5df467f9f87",
+      "executions": 10,
+      "reserved": 0,
+      "halted": false
+    }
+  ],
+  "totals": {
+    "original_campaign": 101,
+    "reliability_followup": 10,
+    "recorded_campaign_sum": 111,
+    "separate_external_review": 5,
+    "reconciled_observed_total": 116
+  },
+  "authorization_note": "The external review ran at 04:26–04:37 UTC before the reliability campaign. Its executions are disclosed separately, not retroactively reserved or charged to a completed ledger. The recorded follow-up used 10 of 17; unused reservations are not a new authorization or instruction to spend. This closeout launches no models.",
+  "manifests": [
+    {
+      "run_id": "renewal-installed-claude-tinybug",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/result.json",
+        "digest": "sha256:d6d2cc6a69737963c0afbea406019915c4cab262340ec473442db3f7d770c1b4"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-tinybug/run-manifest.json",
+        "digest": "sha256:08218ad807a8c2e7fa7e47ff78c8bea0a72d2a7b3649e8a9f6a1bb91fd502768"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-mechanical",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/result.json",
+        "digest": "sha256:43d60f3ea141caa44af5c96ca0c5110d5b080cbab577944d3ca7f2b233e6f108"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-mechanical/run-manifest.json",
+        "digest": "sha256:e390aa16db7b0587cd4e773aa56613146a315281172524d86488d734147fccbf"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-backend",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/result.json",
+        "digest": "sha256:f922e3f9d6e4a8e369cd42775898050d6216a761079545c13cb333e8fca1ce87"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-backend/run-manifest.json",
+        "digest": "sha256:502edc9f6a4ff8a5b3564ef04942818889b9b2aad249252add0272e4ab7f9b0e"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-ui",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/result.json",
+        "digest": "sha256:4246bffab19443761d505b60dde1d5c8aaac1b2c2a427980a76a3b9aad1cb346"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-ui/run-manifest.json",
+        "digest": "sha256:5cf848f15e3a45d4b3e01f6d6b645ff4e0f473bcbc8b79f4c18bbc8621f27414"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-hardbug",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/result.json",
+        "digest": "sha256:e5bc1d7926615cd8a11e9fc1119d92a6cd926455c799e951f930ad2d00404141"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-hardbug/run-manifest.json",
+        "digest": "sha256:7763c6d36fa98543cf5c1dd93d25d2919c5cfdf70e98eac60f19443ed4ba3b75"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-multicomponent",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/result.json",
+        "digest": "sha256:b749457523fe0995e6259e30c560ad2b86a9dc37516d79d973a4c45abe345885"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-multicomponent/run-manifest.json",
+        "digest": "sha256:8ef40220e72a2239662a30de6d6cec576f9d7604eb555efc363f9a887868c472"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-claude-fullproject",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/result.json",
+        "digest": "sha256:78948d90ea33e92a301f25e474c47c3728fc0ae41754763958260586d2843e2c"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-claude-fullproject/run-manifest.json",
+        "digest": "sha256:e9e04c0d1107c5475a2aeccc13ce8e864970966669415962ad92f5257d67febd"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "renewal-installed-codex-tinybug",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/result.json",
+        "digest": "sha256:0f5288ed4ba21fe39cb3c1921f072b6b7d69b6188e4ed5b293394f2b1d8af96c"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-tinybug/run-manifest.json",
+        "digest": "sha256:823340e376e38e641e0e86bc1189cd73be1e87ac15e517f880db80c145e942cd"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-mechanical",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/result.json",
+        "digest": "sha256:88b27b549716de0418ac26300265a54bf98b3a60791134792cd6d9e2d7b3920e"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-mechanical/run-manifest.json",
+        "digest": "sha256:0c0c8f10babf942a066cb1c0af6488f087bb4f8f49f2bc1389cda4b49bc72181"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-backend",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/result.json",
+        "digest": "sha256:f70a4df6b457fff0d8f43029a65769ca8e27a1adb6ccb19441cebce787a941e9"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-backend/run-manifest.json",
+        "digest": "sha256:055d6fa4e7d1fdae8981415121ca427940e3012d30b2b1ea809a9f7f873fbf1a"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-ui",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/result.json",
+        "digest": "sha256:a38a1468baf6d5781920f2234a450b014f01a6ce4bf15199de0a2bf1c11796e6"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-ui/run-manifest.json",
+        "digest": "sha256:49fafcf014c9de5fd097f58113d3849646a4113c7a706829315fa654dbd68722"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-hardbug",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/result.json",
+        "digest": "sha256:bfb61ca37987bbfade38030d5912d59dc3a25c7a1d0ff0083a2587a497c8b656"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-hardbug/run-manifest.json",
+        "digest": "sha256:66e93f04daccb2d84df85f0a8bda648d02586a4f5d2918e9423f9ba40c0f0371"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-multicomponent",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/result.json",
+        "digest": "sha256:33b33a5480dd2c8510a12199963f4cf38a4e11cdb022bb47aa74c4ea51921c5d"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-multicomponent/run-manifest.json",
+        "digest": "sha256:82695589e5d2f425982f9e517029598a9acc3037da4c7d868edca4135708996e"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "renewal-installed-codex-fullproject",
+      "source_index": "docs/evidence/delegate-renewal-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/result.json",
+        "digest": "sha256:b4f38b0f72fb143b6522f6d74b850d9d4a7854ce029b9eb4f97f77b080872e89"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-completion-2026-09-11/renewal-installed-codex-fullproject/run-manifest.json",
+        "digest": "sha256:ecddd5649d2d05f5092727778a740de5b53cd20b8da19a83957512e4c2b19b26"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    },
+    {
+      "run_id": "reliability-claude-ui",
+      "source_index": "docs/evidence/delegate-reliability-followup-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/result.json",
+        "digest": "sha256:23d854aa566e0806324486f5007ea0ad04ea8bdf398dd680b1fe0a544d284ba8"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-ui/run-manifest.json",
+        "digest": "sha256:dd27ad4292b020a9b3f15f8ff1b47231d20879a1ad5d7351a497195efb63a987"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "reliability-claude-fullproject",
+      "source_index": "docs/evidence/delegate-reliability-followup-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/result.json",
+        "digest": "sha256:4ca8d0b429a561ae22e63d3620e605a9bccdc6b1e7682d778bb03b69c4673186"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-claude-fullproject/run-manifest.json",
+        "digest": "sha256:cf6efa25b9b30e49b7074ebde9700b8c55ae991c7379d29ea21d1dce4626dd3f"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 48
+    },
+    {
+      "run_id": "reliability-codex-multicomponent",
+      "source_index": "docs/evidence/delegate-reliability-followup-2026-09-11/evidence.json",
+      "result": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/result.json",
+        "digest": "sha256:3a3a428c5532bb32152797f162434037aea3a370d960ad3a95ca6a4fa8e6ef3c"
+      },
+      "manifest": {
+        "path": "artifacts/delegate-reliability-followup-2026-09-11/reliability-codex-multicomponent/run-manifest.json",
+        "digest": "sha256:6bcde9ae269f02bf997eebaeb052f758ab388caf53321cae25794f7fdd343caf"
+      },
+      "environment_matches_result": true,
+      "override_names_count": 46
+    }
+  ],
+  "validation": {
+    "direct_manifest_bindings": 17,
+    "result_environment_match_count": 17,
+    "closed_ledger_bytes_preserved": true
+  },
+  "integration": {
+    "base": "dd2a890",
+    "repairs": "8b6a803",
+    "evidence": "9166c00",
+    "method": "local fast-forward",
+    "push": false
+  }
+}

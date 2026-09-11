@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "validated_at": "2026-09-11T05:37:04.146Z",
+  "checks": [
+    {
+      "command": "npm test",
+      "passed": 736,
+      "files": 43,
+      "output": {
+        "path": "artifacts/delegate-closeout-2026-09-11/tests.log",
+        "digest": "sha256:50538764ec91909bb287e3d3a62b8c80fed6a0f9417b385ec8aac86550825451"
+      }
+    },
+    {
+      "check": "typecheck",
+      "status": "PASS",
+      "output": {
+        "path": "artifacts/delegate-closeout-2026-09-11/typecheck.log",
+        "digest": "sha256:e34f5fa67f3292c509bdc1835d120f41aa0641c79f37eff3ffd04bff60b9431e"
+      }
+    },
+    {
+      "check": "build",
+      "status": "PASS",
+      "output": {
+        "path": "artifacts/delegate-closeout-2026-09-11/build.log",
+        "digest": "sha256:d5a456cc364120c12db850e9be6e9aab0c03ed2cd88258663a7bf81e02d9e482"
+      }
+    },
+    {
+      "check": "skills",
+      "status": "PASS",
+      "output": {
+        "path": "artifacts/delegate-closeout-2026-09-11/skills.log",
+        "digest": "sha256:cbe025314c94f1a7251500a7f68f923be7b1e73a6aa6d2d84d8946804806e35f"
+      }
+    },
+    {
+      "check": "CI publication",
+      "status": "VALID",
+      "content_digest": "sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619",
+      "routes": 15,
+      "qualified": 0,
+      "output": {
+        "path": "artifacts/delegate-closeout-2026-09-11/publication.json",
+        "digest": "sha256:0763b417160ce11285e2d5d94b1ca7d7f6cb479cdabb1045400c72e4b764433e"
+      }
+    }
+  ],
+  "reconciliation": {
+    "path": "docs/evidence/delegate-closeout-2026-09-11/reconciliation.json",
+    "digest": "sha256:52ed7db01c92bdc57289c5be0c36a671b60fb4583bdb9e2fc8c711443b8e296a"
+  },
+  "new_model_executions": 0,
+  "code_and_routing_unchanged_since": "9166c00",
+  "closed_ledgers_preserved": true,
+  "manifest_bindings_verified": 17,
+  "external_review_executions_verified": 5
+}
