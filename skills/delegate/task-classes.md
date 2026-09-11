@@ -1,6 +1,6 @@
 # Classify the work
 
-Use these eight labels. Classify each workstream separately. A label is not permission to extend a route beyond its scope, risk, tools or evidence. `lookup` returns the same `shape` with the route.
+These legacy classes describe workstream shapes; ordinary dispatch uses the assignment table in `SKILL.md`. A label never grants extra permissions. Evidence-required routes remain bound to their literal scopes; ordinary dispatch bounds the assignment independent of repository size or language.
 
 | Class | Shape | Work | Typical acceptance evidence |
 | --- | --- | --- | --- |
@@ -17,8 +17,8 @@ Shapes:
 
 - single worker: one worker, then frontier verification.
 - specify-then-delegate: the frontier establishes layout, hierarchy, interaction and responsive requirements; a worker implements; the frontier inspects the rendered result.
-- diagnose-then-delegate: a worker may gather reproduction evidence and propose a diagnosis through a separately eligible investigation route. The frontier checks that evidence and settles the cause and fix before implementation. Source reading alone is insufficient; resolve or report a blocked reproduction before assigning implementation.
+- diagnose-then-delegate: an ordinary `reproduce_failure` worker may run authorized local checks and propose a diagnosis. The frontier checks the evidence and settles the cause and fix before implementation. Under evidence-required routing, standalone reproduction remains a gap. Source reading alone is insufficient; resolve or report a blocked reproduction before assigning implementation.
 - plan-then-delegate: the frontier settles architecture, interfaces and the implementation plan; workers implement bounded assignments.
 - decompose: the frontier coordinator owns planning, interfaces and acceptance; capability comes from eligible routes for the required workstreams, never a full-project worker.
 
-Classify the current assignment: locating behavior may fit `repo_exploration` even when the eventual task is debugging or architecture. Check its literal route scope; source-reading coverage alone does not authorize reproduction, edits or broader diagnosis. If only source investigation fits, delegate that portion and return the remaining decisions to the frontier. Before resuming an investigator as an implementer, look up and confirm the implementation route and model/effort eligibility; reuse its context only when eligible.
+Classify the current assignment, not the entire repository: locating behavior is investigation even when the eventual task is debugging or architecture. Read scope may cross package boundaries; write ownership stays explicit. Before resuming an investigator as an implementer, confirm the new assignment's permissions, suitable model/effort and acceptance checks. For evidence-required routing also recheck the implementation route. Reuse useful context when the controls permit it.

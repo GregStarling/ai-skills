@@ -1,65 +1,62 @@
 ---
 name: delegate
-description: Minimize total model usage by completing tiny work directly and routing bounded execution to the cheapest eligible worker without sacrificing required quality. Use when the user invokes delegate or asks for usage-efficient delegation. Worker and reviewer packets do not reactivate it.
+description: Save subscription allowance by assigning bounded investigation and implementation to suitable lower-usage workers, from MVPs to large repositories. Use when the user invokes delegate or asks for usage-efficient delegation. Worker and reviewer packets do not reactivate it.
 ---
 
-Achieve the requested quality with the least total model usage. Count coordinator, worker, reviewer, retry and repair usage. Prefer observed subscription counters; otherwise use model calls, prompt size and lookup economics as conservative proxies. Never claim measured savings from a proxy. Change no user configuration.
+Optimize the complete path to the requested quality: coordinator, workers, integration, verification and repairs. Subscription allowance is the goal, not the smallest raw token total. Prefer attributable allowance measurements; model-specific cost estimates are provisional proxies, never bills. Missing usage stays unknown. Change no user configuration.
 
-If you received a bounded worker or reviewer packet, execute it and return to the coordinator; do not invoke this skill again. The coordinator owns routing and the final receipt.
+If given a worker or reviewer packet, execute it and return; do not reactivate this skill.
 
-## 1. Choose the lowest-usage path
+## 1. Choose the path
 
-Do tiny work directly only when one short frontier pass plus proportionate verification is expected to use less than dispatch, worker execution, integration and verification. Ordinary direct work uses host and project checks; do not classify it, inspect routing files, call the helper or write a receipt.
+Direct execution is valid at any size when the complete delegated path is unlikely to save allowance. Tiny work usually stays direct without helper calls. Do not pre-solve an investigation merely to decide whether to delegate it. When evidence is missing, use the bounded workflow below as a declared heuristic, not a proven saving. Honor explicit worker/model/review requests and disclose material tradeoffs once.
 
-Otherwise consider delegation. Delegate when all three hold:
+Repository size and language do not determine eligibility. Bound the current assignment, not the whole repository. For unfamiliar or large repositories, cross-package features and bugs, read [context-discipline.md](context-discipline.md) before investigation. Keep frontier work for consequential decisions and acceptance; use workers for useful investigation and settled changes when the expected whole-task cost is lower.
 
-- the work can be bounded by a question and permitted sources/actions, or by settled implementation interfaces;
-- a cheaper eligible worker is likely to repay the usage of its work order, integration, required verification and a reasonable repair allowance;
-- lookup returns a route.
+## 2. Ordinary host dispatch
 
-Delegate investigation before solving the problem yourself when the route fits. An unknown answer is allowed: bound the question, sources, actions and stopping point. Workers gather evidence and propose explanations; bring consequential decisions, conflicting evidence or stalled progress back to the frontier. Resolve the specific decision, then return bounded work to the same eligible worker. Spend no model usage merely to measure usage.
+Ordinary delegation uses the actual host's available models and task permissions. It does not require a qualification-pack entry. This is an explicit product policy, not new evidence about model capability. If the user or project requires evidence-qualified routing, use step 3 instead; never silently fall back from that policy.
 
-Honour explicit requests for a worker, exact model or independent review. Say once when that choice is not the lowest-usage path.
+Read the [Codex](hosts/codex.md) or [Claude Code](hosts/claude-code.md) host guide. Once per session, bind two slots from the actual selectable model/effort controls: `economy` for straightforward search/extraction/precise edits, `standard` for reproduction and implementation. Choose the least expected allowance cost capable of each role using current host descriptions and available economic evidence. No extra model call, invented model roster, or universal price assumptions. Omit an unsupported slot; never silently downgrade standard work to economy. Explicit user model choices override this heuristic.
 
-## 2. Select the assignment
+| Assignment | Starting slot | Boundary before dispatch |
+| --- | --- | --- |
+| `locate_behavior` | economy | Question, search anchors and permitted source area; read-only |
+| `summarize_sources` | economy | Supplied sources and question; live discovery is a different task |
+| `specified_edit` | economy; standard at medium risk | Exact transformation and regression checks |
+| `reproduce_failure` | standard | Symptom and authorized local checks; no production side effects |
+| `implement_feature` | standard | Behavior, owned change area, interfaces and acceptance checks |
+| `implement_fix` | standard | Frontier-accepted reproduction and diagnosis |
+| `implement_ui` | standard | Agreed interface and rendered/interaction acceptance |
+| `implement_plan` | standard | Settled cross-component contracts and dependency order |
+| `frontier_decision` | frontier | Conflicting evidence, architecture, product or consequential choices |
 
-Use the concrete assignment below; do not run a model to choose another model. Decompose larger tasks into these assignments. Read [task-classes.md](task-classes.md) only for complex work or legacy `lookup` calls.
+Run `node <skill-folder>/scripts/local-learning.mjs dispatch -` with `{host, assignment, risk, bounded:true, workers:{economy:{model,effort},standard:{model,effort}}, cwd}`. Use an absolute project working directory; the helper derives repository identity, shared across Git worktrees. No matching scope label is needed; the brief defines ownership. Use exact host controls, null for genuinely unavailable effort. Add `diagnosis_accepted:true` for fixes or `plan_settled:true` for plans only after those conditions hold. The helper selects one slot and returns a verification choice, not a savings claim.
 
-| Assignment | Use for |
-| --- | --- |
-| `locate_behavior` | Find files, trace behavior and explain dependencies |
-| `summarize_sources` | Extract or analyze supplied local material |
-| `specified_edit` | Apply a precise mechanical change |
-| `implement_feature` | Implement a contained feature with settled interfaces |
-| `implement_fix` | Apply a fix after reproduction and diagnosis are accepted |
-| `implement_ui` | Implement a specified interface |
-| `implement_plan` | Execute a settled plan across files |
-| `reproduce_failure` | Check coverage for reproduction investigation; currently a gap |
-| `frontier_decision` | Resolve conflicting evidence, architecture or product choices |
+Assess risk from the actual actions and blast radius, not the repository's size. A read-only investigation inside a critical system can be low risk, but secrets, production access and consequential writes retain their real restrictions. High/critical assignments return to frontier risk review; narrow safe fact-finding can be dispatched separately without relabeling risky actions. Medium-risk bounded changes need not be tiny or JavaScript.
 
-## 3. Look up a route
+For required independent review, pass `independent_review:true` and an available frontier `reviewer:{model,effort}` satisfying project independence rules; use a fresh context. Otherwise the frontier coordinator verifies, without requiring membership in a historical pack lane. Confirm tool access and configurable controls before launch; compare observations afterward when the host exposes them. Unknown served settings stay unknown. A substitution rejects the selected treatment; never relabel it eligible.
 
-Run `node <skill-folder>/scripts/local-learning.mjs route -` with `{host, assignment, risk, coordinator:{model,effort}}`. Omitting `assignment` returns actual coverage and scope for that host and risk. The helper returns one worker and a verification choice using the existing evidence order. Check literal scope and actual host availability, then dispatch the returned worker; do not deliberate over the roster. A gap ends routing: report it briefly and perform the uncovered portion on the frontier unless the user requires a worker. Read [research.md](research.md) for research; pass `research_kind: "live_web"` for live discovery, which has no supported route.
+## 3. Evidence-required dispatch only
 
-For provisional selections, summarize material limitations once. Confirm model, exact effort and review controls using the [Claude Code](hosts/claude-code.md) or [Codex](hosts/codex.md) guide. Do not open the full pack unless the helper is unavailable; then use [pack-format.md](pack-format.md). `lookup` remains available for full lanes and diagnostics. A refresh reminder does not invalidate unexpired entries.
+When required, use `route` with `{host, assignment, risk, coordinator:{model,effort}}` and read [pack-format.md](pack-format.md). `lookup` remains diagnostic. The task must fit route.scope as returned by lookup, read literally. Preserve expiry, host, reviewer and independence requirements. A gap ends this path: report it and perform only authorized frontier work or ask for direction. Do not switch to ordinary dispatch to bypass policy. The old pack's narrow fixture scopes and missing TypeScript/reproduction/live-web evidence remain unchanged.
 
-Safety rules:
+## 4. Execute and verify
 
-- The task must fit route.scope as returned by lookup, read literally; a task outside that scope is a gap even when class, risk and host match.
-- A host-reported substitution or an observed model or effort that contradicts the configured treatment rejects that treatment for this task; record the contradiction, never relabel it eligible.
+Use the five-field investigation brief or bounded implementation [work order](delegation-contract.md). Workers return decisive evidence, checks and the specific unresolved decision, not raw search dumps. The frontier resolves that decision and returns a bounded follow-up; preserve useful worker context and recheck controls when changing roles. See [task-classes.md](task-classes.md) for coupled work and [swarm-policy.md](swarm-policy.md) only for independent workstreams.
 
-## 4. Delegate and integrate
+Keep targeted repairs with the same worker. On repeated failure without progress, exclude its model via `failed_models` in ordinary dispatch (or candidate via `failed_candidate_ids` in evidence routing), then use a suitable stronger worker or direct execution. Do not pay for repeated failed attempts merely to preserve delegation.
 
-For investigation, send only question, scope, permitted actions, stopping point and expected return. Model controls come from the routing result, outside the prose brief. Read-only investigations skip `start`, `capture`, `finish` and receipt authoring unless the user or evaluation requires tracking. Keep evidence references and verify the findings normally. For implementation or tracked investigations, use the [work order](delegation-contract.md) and [local learning](local-learning.md), calling `start` before dispatch. Workers investigate and implement within their assignments; you own consequential decisions and integration.
+Wait for every launched worker to reach a terminal state. Inspect actual sources, diffs, tests and rendered UI as appropriate under [verification-policy.md](verification-policy.md). Reverify repairs and integrated changes, then stop when acceptance is met. A launch acknowledgement or worker summary is not completion.
 
-Keep configured and observed settings separate; unknown effort stays unknown. On unavailable workers or repeated failure without progress, rerun `route` with `failed_candidate_ids`; use its next worker and verification choice. Keep bounded repairs with the same worker. Recheck the route before changing an investigator into an implementer. For parallel work read [swarm-policy.md](swarm-policy.md).
+## 5. Small feedback and delivery
 
-Wait for every launched worker to reach a terminal state and collect its result before integration, final artifact inspection, or delivery. A launch acknowledgement is not completion. Never finish while workers remain active; failed or stopped workers require a truthful incomplete outcome unless an eligible replacement completes the work and verification.
+After verification of an ordinary delegated assignment, including investigation, run `node <skill-folder>/scripts/local-learning.mjs observe -` with this JSON shape on stdin:
 
-## 5. Verify
+`{cwd,host,task_id,assignment,mode:"delegated",worker:{model,effort},acceptance,checks,repairs,usage:null}`
 
-Apply [verification-policy.md](verification-policy.md). Frontier verification is mandatory, including untracked investigations. Use `verification.mode` from `route`: review yourself for `coordinator`; otherwise dispatch its reviewer, in a fresh process when required. Check decisive sources and actual artifacts; expand review when gaps or contradictions warrant it. Re-verify repairs and integration, then stop when acceptance is met.
+Use a unique task id, unchanged across retries; record once when they end. Include all worker repair attempts. Acceptance is `accepted`, `failed`, `blocked` or `rejected`; checks are `passed`, `failed` or `unverified`. **Frontier inspection confirming the decisive sources counts as `passed` for an investigation; no check command is required.** A worker's assertion alone is not verification. Accepted requires passed checks; missing verification stays unverified, never a manufactured success.
 
-## 6. Finish and report
+No start/capture/finish sequence, new evidence file or extra model call. `scope` is optional descriptive metadata, not a matching key. Feedback groups by repository, host, assignment and model/effort over 30 days, surviving guidance edits. Counts are project-level failure/repair warnings, not like-for-like performance or savings evidence. Recording failure does not block delivery. Direct samples are for explicit comparisons only.
 
-For tracked work, call `finish` once with checks and all attempts as described in [local learning](local-learning.md); run each verification command only when due. Otherwise report concise findings and evidence, models/efforts, checks and material limits. Disclose provisional status and fallbacks. Unknown usage remains unknown; a requested model does not prove the served model.
+Read [local-learning.md](local-learning.md) only for evidence receipts, optional telemetry or history controls—not routine observation. Report concise results, checks, actual models/efforts and material limitations; unknown usage stays unknown.

@@ -150,7 +150,7 @@ function preference(rows,option) {
   const groups=new Map();
   for(const r of rows){const key=option(r); if(key===null)continue; if(!groups.has(key))groups.set(key,[]); groups.get(key).push(r);}
   if(groups.size<2||[...groups.values()].some(g=>g.length<5))return null;
-  const all=[...groups.values()].flat(), comparable=all.every(r=>r.usage?.complete && ['allowance','attributable_cost','tokens'].includes(r.usage.metric) && r.usage.metric===all[0].usage?.metric && r.usage.unit===all[0].usage?.unit);
+  const all=[...groups.values()].flat(), comparable=all.every(r=>r.usage?.complete && ['allowance','attributable_cost'].includes(r.usage.metric) && r.usage.metric===all[0].usage?.metric && r.usage.unit===all[0].usage?.unit);
   const scored=[...groups].map(([key,g])=>({key,count:g.length,quality:g.filter(r=>r.acceptance!=='accepted'||r.corrected).length/g.length,repairs:g.filter(r=>r.attempts.some(a=>a.role==='repair'||(a.role==='worker'&&a.outcome!=='accepted'))||r.attempts.filter(a=>a.role==='worker').length>1).length/g.length,metric:comparable?median(g.map(r=>r.usage.value)):null}));
   scored.sort((a,b)=>a.quality-b.quality||a.repairs-b.repairs||(a.metric??0)-(b.metric??0));
   const [first,second]=scored;
@@ -208,6 +208,31 @@ const expandReference=(pack,reference)=>{const {task_evidence,...evidence}=refer
 const routeHosts=(pack,route)=>{const found=new Set([...route.workers,...route.reviewers].map(x=>pack.treatments[x.candidate_identity]?.provisional?.host).filter(Boolean));const env=route.stratum.worker_request.execution_environment;if(env)found.add(env==='claude_code'?'claude':env);return found;};
 // Assignment aliases select existing evidence; they never widen a route's scope.
 const assignments={locate_behavior:'repo_exploration',summarize_sources:'research',specified_edit:'mechanical_work',implement_feature:'bounded_implementation',implement_fix:'hard_debugging',implement_ui:'ui_implementation',implement_plan:'complex_implementation',reproduce_failure:null,frontier_decision:null};
+// Ordinary host delegation is a declared heuristic, NOT an expansion of pack evidence.
+// Slots are supplied from the actual host, once per session; no model names or prices are invented here.
+export function dispatchAssignment(input) {
+  if(!input||!hosts(input.host)||!risks(input.risk)||!Object.hasOwn(assignments,input.assignment))fail('DISPATCH_INPUT_INVALID');
+  for(const key of ['evidence_required','bounded','diagnosis_accepted','plan_settled','independent_review'])if(input[key]!==undefined&&!bool(input[key]))fail('DISPATCH_INPUT_INVALID');
+  const result={assignment:input.assignment,policy:'ordinary',qualification_authority:false,worker:null,verification:null,gap:null};
+  const gap=code=>({...result,gap:code});
+  if(input.evidence_required===true)return gap('USE_EVIDENCE_ROUTE');
+  if(input.assignment==='frontier_decision')return gap('FRONTIER_DECISION_REQUIRED');
+  if(input.research_kind==='live_web')return gap('LIVE_DISCOVERY_REQUIRES_SCOPED_HOST_ASSIGNMENT');
+  if(['high','critical'].includes(input.risk))return gap('FRONTIER_RISK_REVIEW_REQUIRED');
+  if(input.bounded!==true)return gap('BOUND_ASSIGNMENT_FIRST');
+  if(input.assignment==='implement_fix'&&input.diagnosis_accepted!==true)return gap('ACCEPT_DIAGNOSIS_FIRST');
+  if(input.assignment==='implement_plan'&&input.plan_settled!==true)return gap('SETTLE_INTERFACES_FIRST');
+  const slots=input.workers??{},valid=v=>object({model:text,effort:nullable(text)})(v);
+  if(!Object.entries(slots).every(([k,v])=>['economy','standard'].includes(k)&&valid(v)))fail('WORKER_SLOTS_INVALID');
+  const failed=input.failed_models??[];
+  if(!list(text)(failed))fail('FAILED_MODELS_INVALID');
+  const tier=['locate_behavior','summarize_sources'].includes(input.assignment)||(input.assignment==='specified_edit'&&input.risk==='low')?'economy':'standard';
+  const selected=(tier==='economy'?['economy','standard']:['standard']).find(k=>slots[k]&&!failed.includes(slots[k].model));
+  if(!selected)return gap('NO_AVAILABLE_WORKER');
+  if(input.independent_review===true&&!valid(input.reviewer))return gap('INDEPENDENT_REVIEWER_REQUIRED');
+  if(input.independent_review===true&&input.reviewer.model===slots[selected].model)return gap('INDEPENDENT_REVIEWER_REQUIRED');
+  return {...result,worker:slots[selected],worker_tier:selected,verification:input.independent_review===true?{mode:'separate',reviewer:input.reviewer,fresh_context:true}:{mode:'coordinator'},ranking_basis:'declared_host_slots_not_measured_savings'};
+}
 export async function routeAssignment(input,options={}) {
   if(!input||!hosts(input.host)||!risks(input.risk))fail('ROUTE_INPUT_INVALID');
   if(input.assignment===undefined) {
@@ -336,11 +361,13 @@ async function lookupWithState(input,{stateRoot=process.env.DELEGATE_STATE_HOME 
   return advice.localPreferences?lookup({...input,localPreferences:advice.localPreferences},{skillRoot,now}):first;
 }
 export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_STATE_HOME || (process.env.XDG_STATE_HOME?join(process.env.XDG_STATE_HOME,'delegate'):join(homedir(),'.local/state/delegate')),skillRoot=skillDirectory,now=new Date().toISOString(),hostCommand=process.env.DELEGATE_HOST_COMMAND}={}) {
+  const dispatch=command==='dispatch'?dispatchAssignment(input):null;
+  if(dispatch&&(!input.cwd||dispatch.gap))return dispatch;
   if(command==='route')return routeAssignment(input,{stateRoot,skillRoot,now});
   if(command==='lookup')return lookupWithState(input??{},{stateRoot,skillRoot,now});
   if(!input || !text(input.cwd))fail('CWD_REQUIRED');
   const identity=await projectIdentity(input.cwd,input.host), base=join(resolve(stateRoot),identity.project_id.slice(7),identity.host), directory=join(base,'events');
-  await mkdir(base,{recursive:true,mode:0o700});
+  if(!dispatch)await mkdir(base,{recursive:true,mode:0o700});
   if(command==='reset'||command==='disable') {
     // Only destructive and configuration writes take the lock; a stale lock never blocks reads or appends.
     const lock=join(base,'.lock');
@@ -355,8 +382,24 @@ export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_S
     } finally { await rm(lock,{recursive:true,force:true}); }
   }
   const history=await events(directory), settings=settingsOf(history), ctx={skillRoot,now};
+  if(dispatch) {
+    // The event directory already binds canonical project identity and host (including shared worktrees).
+    // Ordinary feedback is a project-level warning, not a like-for-like economic comparison.
+    const rows=settings.learning?history.filter(e=>e.kind==='observation').map(e=>e.data).filter(r=>r.assignment===input.assignment&&r.worker?.model===dispatch.worker.model&&r.worker?.effort===dispatch.worker.effort&&Date.parse(r.at)<=Date.parse(now)&&Date.parse(r.at)>Date.parse(now)-30*86400000):[];
+    return {...dispatch,recent_outcomes:{tasks:rows.length,failures:rows.filter(r=>r.acceptance!=='accepted'||r.checks!=='passed').length,repairs:rows.reduce((n,r)=>n+r.repairs,0),basis:'caller_reported_not_economic_preference'}};
+  }
+  if(command==='observe') {
+    if(!settings.learning)return {status:'disabled'};
+    if(!text(input.task_id)||!Object.hasOwn(assignments,input.assignment)||!nullable(text)(input.scope??null)||!one('direct','delegated')(input.mode)||!outcomes(input.acceptance)||!one('passed','failed','unverified')(input.checks)||!Number.isSafeInteger(input.repairs)||input.repairs<0||!usage(input.usage??null)||!(input.mode==='direct'?input.worker==null:object({model:text,effort:nullable(text)})(input.worker)))fail('OBSERVATION_INVALID');
+    // Passed means the relevant verification succeeded, including frontier source inspection; no command is required.
+    if(input.acceptance==='accepted'&&input.checks!=='passed')fail('ACCEPTANCE_REQUIRES_CHECKS');
+    const previous=history.find(e=>e.id===`observation:${input.task_id}`);
+    const data={task_id:input.task_id,assignment:input.assignment,scope:input.scope??null,mode:input.mode,worker:input.worker??null,acceptance:input.acceptance,checks:input.checks,repairs:input.repairs,usage:input.usage??null,guidance_digest:previous?.data.guidance_digest??await folderDigest(skillRoot,['routing-pack.json']),at:previous?.data.at??now};
+    await atomicEvent(directory,`observation:${input.task_id}`,'observation',data);
+    return {status:'observed',qualification_authority:false};
+  }
   const startOf=run_id=>history.find(e=>e.kind==='start'&&e.data.run_id===run_id)?.data??fail('RUN_NOT_STARTED');
-  if(command==='status')return {status:'ok',...identity,settings,records:history.filter(e=>e.kind==='receipt').length,corrections:history.filter(e=>e.kind==='correction').length,reminders:history.filter(e=>e.kind==='reminder').length};
+  if(command==='status')return {status:'ok',...identity,settings,records:history.filter(e=>e.kind==='receipt').length,observations:history.filter(e=>e.kind==='observation').length,corrections:history.filter(e=>e.kind==='correction').length,reminders:history.filter(e=>e.kind==='reminder').length};
   if(command==='advise' && input.reminder) {
     const start=startOf(input.run_id);
     const request={...input.reminder,session_id:start.session_id,session_started_at:start.started_at,now,enabled:settings.reminders,max_per_session:settings.reminder_limit};

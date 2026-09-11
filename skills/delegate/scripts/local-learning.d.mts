@@ -12,4 +12,5 @@ export type LookupCoverage = {pack:LookupPack;host:string;coverage:{low:string[]
 /** Pure: reads the pack only; `now` is an option, never read from the input. Returns LookupCoverage when task_class is omitted, else LookupRoute. */
 export function lookup(input: LookupInput | Record<string, any>, options?: {skillRoot?:string;now?:string}): Promise<any>;
 export function routeAssignment(input: Record<string, any>, options?: {stateRoot?:string;skillRoot?:string;now?:string}): Promise<any>;
+export function dispatchAssignment(input: Record<string, any>): any;
 export function runCommand(command: string, input: any, options?: {stateRoot?:string;skillRoot?:string;now?:string;hostCommand?:string}): Promise<any>;

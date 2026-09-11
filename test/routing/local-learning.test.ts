@@ -387,7 +387,7 @@ describe('usage-based learning',()=>{
     await f.call('record',{run_id,...f.record,...(delegated?{...f.delegated,attempts:[f.attempt(),f.attempt('worker','w')],checks:[...f.record.checks,{...f.record.checks[0],kind:'review'}]}:{}),usage},delegated?at(10000):at(1000));
    }
    await f.call('start',{run_id:'next'});const advice=await f.call('advise',{run_id:'next'},at(60000));
-   if(['allowance','tokens','attributable_cost'].includes(metric))expect(advice.modePreference).toMatchObject({preferred:'delegated',basis:`${metric}:units`});else expect(advice.modePreference).toBeNull();
+   if(['allowance','attributable_cost'].includes(metric))expect(advice.modePreference).toMatchObject({preferred:'delegated',basis:`${metric}:units`});else expect(advice.modePreference).toBeNull();
    if(metric==='allowance'){await rm(path);expect((await f.call('advise',{run_id:'next'},at(60000))).modePreference).toBeNull();}
   }finally{await f.cleanup();}
  });

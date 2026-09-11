@@ -2,9 +2,9 @@
 
 **Make your best model's usage go further.**
 
-Delegate is a portable skill for Claude Code and Codex that puts cheaper eligible models to work and brings important decisions back to your strongest model. Its north star: **the requested quality with the least total tokens or subscription usage.**
+Delegate is a portable skill for Claude Code and Codex that puts suitable lower-usage models to work and brings important decisions back to your strongest model. Its north star: **the requested quality while preserving as much subscription allowance as possible.**
 
-Your strongest model is valuable when the answer requires judgment. Finding the relevant files, tracing a value through a codebase, extracting facts and applying a settled change often need less of that intelligence. Delegate gives those assignments to workers with supporting evidence for the task, while the frontier model stays responsible for decisions and the final result.
+Your strongest model is valuable when the answer requires judgment. Finding the relevant files, tracing a value through a codebase, extracting facts and applying a settled change often need less of that intelligence. Delegate gives bounded assignments to suitable available workers, while the frontier model stays responsible for decisions and the final result.
 
 You describe the outcome. Delegate organizes the work.
 
@@ -12,7 +12,7 @@ You describe the outcome. Delegate organizes the work.
 
 You shouldn't have to solve a problem before you can hand it off.
 
-Give Delegate a question such as “Where does this value get its default?” A worker can investigate within the available route's boundaries and return the relevant source locations, an explanation and anything still unresolved. The frontier checks the decisive evidence, resolves the specific decision and sends the next assignment back to an eligible worker.
+Give Delegate a question such as “Where does this value get its default?” A worker can investigate within the assignment's boundaries and return the relevant source locations, an explanation and anything still unresolved. The frontier checks the decisive evidence, resolves the specific decision and sends the next assignment back to a suitable worker.
 
 ```text
 Your question
@@ -32,17 +32,19 @@ Useful context can stay with the same worker through follow-ups. A change from i
 
 An inexpensive worker can become expensive if it needs repeated repairs or a second model to redo its work. Delegate considers the whole path: coordination, execution, integration, verification and failed attempts.
 
-Tiny tasks can finish directly when a handoff would consume more. Larger work can move through bounded assignments, with stronger reasoning reserved for conflicting evidence, architecture, product decisions and acceptance. Parallel workers are useful when they reduce expected total usage; finishing sooner alone isn't enough.
+Direct execution can win at any task size when a handoff would consume more. Larger work can move through bounded assignments, with stronger reasoning reserved for conflicting evidence, architecture, product decisions and acceptance. Parallel workers are useful when they reduce expected allowance consumption; finishing sooner alone isn't enough.
 
 Every delegated result gets frontier verification. That means checking the sources, changed artifact, relevant tests or rendered interface that support acceptance. The coordinator verifies when eligible; otherwise an eligible reviewer does. Concrete defects go back for targeted repair. Work stops when the requested result is complete and no material defect remains.
 
 The aim is to leave more of your allowance available for the decisions that benefit from your best model.
 
+An MVP and a large TypeScript monorepo use the same principle: bound the assignment, not the repository. Start with a symbol, symptom or feature. Find its owner, trace the relevant dependencies, then assign a coherent change. Reading can cross package boundaries while write ownership stays explicit. Integration checks follow affected consumers and contracts; a green test in one package isn't the whole result. You don't have to map the entire codebase before asking for help.
+
 ## Keep the experience small
 
 Delegate fits the coding environment you already use. Install one folder and invoke it with an ordinary task. Your existing authentication and available models supply the execution.
 
-Routine read-only investigations use a short brief and skip receipt-writing ceremony. They still return evidence and receive verification. You can explicitly request a worker, a model or independent review when that matters to the job.
+Routine investigations use a short brief and one compact outcome record: result, checks and repairs. They still return evidence and receive verification, without a receipt-writing sequence. You can explicitly request a worker, a model or independent review when that matters to the job.
 
 There is no service to host, daemon to supervise or extra API key to manage. The routing helper uses an existing Node runtime and built-in libraries. Model Governor, the tooling maintained in this repository, is not required to use the installed skill.
 
@@ -81,28 +83,28 @@ In Codex:
 ```text
 $delegate trace where this setting is read and explain its default
 $delegate summarize these local documents and flag contradictions
-$delegate apply this API rename across the affected JavaScript modules
+$delegate apply this API rename across the affected TypeScript packages
 ```
 
-In Claude Code, use `/delegate` with the same requests. You describe the job; the coordinator prepares worker briefs and checks route coverage. Work outside supported routes stays with the frontier unless you explicitly require a worker.
+In Claude Code, use `/delegate` with the same requests. You describe the job; the coordinator bounds the assignments and checks available workers, permissions and verification needs. Your repository's language and size aren't dispatch gates. Stricter project routing policies still apply.
 
 To update, pull the repository and replace the complete installed folder. Keep rollback copies **outside skill-discovery directories** to avoid duplicate skills. Personal learning state survives replacement.
 
 ## What makes the routing predictable
 
-The helper maps seven concrete assignments—locating behavior, analyzing supplied sources, mechanical edits, features, fixes, UI and settled plans—to existing evidence routes. It returns one eligible worker and a verification choice. No additional model call ranks the roster.
+Ordinary dispatch maps concrete assignments to two host-supplied slots: economy for search, source analysis and low-risk precise edits; standard for reproduction, features, fixes, UI and settled plans. The helper returns one worker and a verification choice. No additional model call ranks the roster. These are declared starting heuristics, not measured savings or universal model-capability claims.
 
-Selection respects task evidence before economics, then checks availability, exact effort, expiry and reviewer requirements. Failed candidates are excluded on retry. The coordinator must still confirm literal scope and actual host controls. A missing route returns an explicit gap.
+The coordinator confirms actual model/effort controls, task boundaries and tools. Unsettled fix diagnoses or interfaces, missing workers and high-risk actions return for frontier attention. Required independent review stays independent. Recent same-project/assignment/model failures and repairs inform reconsideration; direct execution remains an option.
 
-The current pack contains **15 provisional routes and zero fully qualified entries** across both hosts. Coverage centers on low-risk local JavaScript/HTML work and supplied local material. Standalone reproduction investigation and live-web discovery lack supported routes. Most higher-risk work also remains outside coverage. See the [coverage audit](docs/delegate-routing-coverage.md) for the exact boundaries.
+For projects requiring evidence-qualified routing, the separate pack contains **15 provisional routes and zero fully qualified entries**. Its narrow JavaScript/HTML fixture scopes remain unchanged; they do not qualify TypeScript or large-repository work. A qualification requirement cannot be bypassed by switching to ordinary dispatch. See the [coverage audit](docs/delegate-routing-coverage.md) for both paths.
 
 ## Learning that follows the usage goal
 
-Implementation and explicitly tracked work can record outcomes locally. Preferences require at least five supported, comparable tasks per option. Quality and repair burden come first; complete observations of the same usage metric and unit can then break ties. **Elapsed time never changes a learned preference.**
+Ordinary delegated work records a small local outcome, including investigations. Missing usage doesn't prevent failure/repair feedback. Evidence-routed, fully tracked preferences require at least five supported comparable tasks per option. Quality and repair burden come first; complete comparable allowance or attributable-cost observations can then break ties. **Neither elapsed time nor raw token totals select learned winners.**
 
-Missing or partial usage remains unknown. Token comparisons establish token differences, not subscription charges. Baseline API-price proxies are labeled separately from observed usage. Personal history stays on your machine and cannot broaden route authority or weaken verification.
+Missing or partial usage remains unknown. A cheap-model token and a frontier token aren't interchangeable subscription units. Model-specific, cache-aware price estimates are labeled separately from observed spending. Personal history stays on your machine and cannot broaden evidence authority or weaken verification. Earlier paired trials did not establish a delegation advantage; the revised workflow still needs matched usage evidence.
 
-Routing packs carry refresh and expiry dates; this pack calls for refresh after seven days and expires after thirty. Individual entries may expire sooner. Updating a pack doesn't renew its underlying evidence. Details: [local learning](skills/delegate/local-learning.md), [routing maintenance](docs/routing-pack-maintenance.md), and [validation status](docs/validation-status.md).
+Evidence packs carry refresh and expiry dates; this pack calls for refresh after seven days and expires after thirty. Updating a pack doesn't renew its evidence. Ordinary host dispatch doesn't depend on that pack. Details: [local learning](skills/delegate/local-learning.md), [routing maintenance](docs/routing-pack-maintenance.md), and [validation status](docs/validation-status.md).
 
 ## For maintainers
 

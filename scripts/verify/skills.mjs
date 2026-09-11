@@ -16,6 +16,7 @@ const files=[];
 try{
  cpSync(resolve(root,'skills/delegate'),copy,{recursive:true});
  const inside=path=>{const rel=relative(copy,path);return rel!=='..'&&!rel.startsWith('../')&&!isAbsolute(rel);};
+ const links=new Map();
  function inspect(directory){for(const name of readdirSync(directory)){
   const path=join(directory,name),stat=lstatSync(path);assert.equal(stat.isSymbolicLink(),false,'Consumer pack cannot depend on external symlinks');
   if(stat.isDirectory()){inspect(path);continue;}assert.ok(stat.isFile());files.push(relative(copy,path));
@@ -23,17 +24,24 @@ try{
   // The consumer folder ships without package.json: only node: builtins and relative files may be imported.
   if(/\.(mjs|d\.mts)$/.test(path))for(const [,specifier] of source.matchAll(/(?:\bfrom\s*|\bimport\s*\(?\s*)['"]([^'"]+)['"]/g))assert.ok(/^(node:|\.)/.test(specifier),`Consumer helper must import only node: or relative modules: ${file} imports '${specifier}'`);
   if(!path.endsWith('.md'))continue;
+  links.set(path,[]);
   for(const match of source.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)){
    const target=match[1];if(/^(https?:|#)/.test(target))continue;
    const linked=resolve(dirname(path),target.split('#')[0]);
    assert.ok(inside(linked),`External consumer dependency: ${target}`);assert.ok(existsSync(linked),`Missing copied reference: ${target}`);
+   links.get(path).push(linked);
   }
   // Backtick-quoted .md/.mjs paths are references too: try the containing directory, then the folder root.
   for(const [,quoted] of source.matchAll(/`([^`\n]+)`/g)){
    if(!/^[A-Za-z0-9_./-]+\.(md|mjs)$/.test(quoted)||quoted.includes('http'))continue;
-   assert.ok([resolve(dirname(path),quoted),resolve(copy,quoted)].some(candidate=>inside(candidate)&&existsSync(candidate)),`Backtick path must resolve inside the consumer folder: \`${quoted}\` in ${file}`);
+   const linked=[resolve(dirname(path),quoted),resolve(copy,quoted)].find(candidate=>inside(candidate)&&existsSync(candidate));
+   assert.ok(linked,`Backtick path must resolve inside the consumer folder: \`${quoted}\` in ${file}`);
+   links.get(path).push(linked);
   }
  }}inspect(copy);
+ const reachable=new Set(), pending=[join(copy,'SKILL.md')];
+ while(pending.length){const path=pending.pop();if(reachable.has(path))continue;reachable.add(path);pending.push(...(links.get(path)??[]));}
+ for(const path of links.keys())assert.ok(reachable.has(path),`Unreachable consumer guidance: ${relative(copy,path)}`);
  const skill=readFileSync(join(copy,'SKILL.md'),'utf8'),problems=[];
  for(const word of new Set([...skill.matchAll(/stratum|cohort|identity assurance|smoke extrapolation|retained incumbent|API-equivalent|Foreman|governor/gi)].map(match=>match[0])))problems.push(`banned vocabulary '${word}'`);
  // The route.scope sentence is quoted verbatim in the plan with backticks around route.scope; accept both spellings.

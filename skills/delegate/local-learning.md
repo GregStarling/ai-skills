@@ -1,12 +1,12 @@
-# Delegated-run learning and session advice
+# Tracked evidence and history controls
 
-Use recording for implementation, explicitly tracked investigations, comparisons and evaluations. Ordinary direct work and read-only investigations skip recording. Untracked investigations still use `route` and frontier verification; their results do not train local preferences. The coordinator runs the helper, using the existing Node runtime and built-ins; never install a runtime for it. It launches no models and uploads nothing. If unavailable, preserve useful work and disclose the recording gap once.
+Read this only for evidence-routed work, explicit tracked evaluations, optional telemetry or history controls. Routine `observe` instructions are complete in [SKILL.md](SKILL.md); ordinary delegation does not need this file. The helper uses existing Node built-ins, launches no models and uploads nothing. Recording failure must not block delivery.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.
 
-## Normal delegated path
+## Evidence-routed / explicitly tracked path
 
-Run `route` before loading this file. For tracked work, run `start` with the returned `task_class`, `capture` for real verification when due, then `finish` once. If start returns a worker preference, rerun `route` with `cwd` and `run_id` to apply it within eligible evidence. Direct recording remains available for explicit comparisons or evaluations.
+For evidence-routed work, run `route`, then `start` with its `task_class`, `capture` for real verification when due, and `finish` once. If start returns a worker preference, rerun `route` with `cwd` and `run_id` to apply it within eligible evidence. Direct recording remains available for explicit comparisons. An ordinary host assignment cannot become a routed receipt just because its class name matches. Explicit out-of-route evaluations preserve their separate harness artifacts and disclosed scope; they do not widen pack authority.
 
 ### route
 
@@ -48,17 +48,20 @@ Input shape (replace the illustrative values):
 - Every `worker`, `reviewer` and `repair` attempt needs at least one `evidence` reference `{path, digest}` to a file that still verifies (a `capture` reference of this run, or the returned artifact with its `sha256:` digest); the git snapshot is attached only to the coordinator attempt and inspected verdicts, so an attempt without evidence leaves the receipt unsupported.
 - `mode` `delegated` requires `pack_path` and `stratum_digest`. A direct finish omits `attempts`, `pack_path` and `stratum_digest`: the helper binds attempts to a route only, and a `worker` or `repair` attempt on a direct receipt is `RECEIPT_MODE_CONFLICT`.
 - `usage` is null unless observed: `{metric, unit, value, source:{path,digest}, complete}` with metric `attributable_cost`, `allowance`, `api_equivalent` or `tokens`; `complete` true only when all coordinator, worker, review, failure and repair work is included. No observation means null, never zero.
+- The same optional usage shape is accepted by `observe`; mark partial counters incomplete. Tokens remain diagnostic; model-specific, cache-aware estimates are provisional judgments, not learned subscription savings. Never launch a model to obtain telemetry.
 - CLI output is compact: `status`, `evidence_supported`, `receipt_path` and `reason`. The full `delegate_receipt.v3` is stored at `receipt_path`. Report that path. If recording fails, preserve the artifacts and state the gap. Older v2 receipts still load.
 
 `record` and `advise` remain for compatibility; `start` already returns advice.
 
 ## What counts (explicit measurements only; not qualification)
 
-A positive preference needs at least five evidence-supported tasks per option in 30 days on the same project, host/version and comparable scope. Direct rows require explicit comparison; delegated rows stay bound to the pack digest. Incomplete or unverified work prevents advice. Quality and repair burden take precedence; usage comparison requires complete, valid observations with the same metric and unit across all rows (`allowance`, `attributable_cost` or `tokens`). Missing, mixed, partial or estimated usage cannot break a tie. Elapsed time never changes preferences. Token comparisons are token savings only; quality/repair preferences make no savings claim. Lookup's baseline price proxies remain separate from learned usage.
+A positive preference needs at least five evidence-supported tasks per option in 30 days on the same project, host/version and comparable scope. Direct rows require explicit comparison; delegated rows stay bound to the pack digest. Incomplete or unverified work prevents advice. Quality and repair burden take precedence; economic comparison requires complete, valid observations with the same metric and unit across all rows (`allowance` or `attributable_cost`). Missing, mixed, partial or estimated usage and raw token counts cannot break a tie. Elapsed time never changes preferences. Quality/repair preferences make no savings claim. Lookup's baseline price proxies remain separate from learned usage. Ordinary observations never enter this qualified-receipt comparison.
 
 ## Corrections, settings, reset
 
 `correct`: `cwd`, `host`, stable `event_id`, `run_id`, short `reason`, optional evidence references; corrections append without rewriting originals. `status` reports counts and settings. `disable` takes `target` (`learning` or `reminders`) and `enabled` (default false; true re-enables); the reminders target also accepts a positive `max_per_session` (default 1). `reset` clears this project's host-specific learning, captures and exported receipts only when the user asks; never reset to improve apparent performance.
+
+Ordinary observations are caller-reported feedback, not qualified receipts. `status` counts them, disabled learning suppresses them and their history, and `reset` removes them too. Their stored guidance digest is provenance only: editing the skill does not hide prior outcomes. Old free-text scope labels remain stored but do not filter ordinary history. Strict receipt comparability above is unchanged.
 
 ## Session reminders
 

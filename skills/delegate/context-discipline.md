@@ -1,32 +1,22 @@
-# Keep useful context
+# Bound the assignment, not the repository
 
-At a meaningful delivery boundary, a fresh task can start from a short handoff:
-objective, constraints, decisions, checkout/change state, completed checks,
-evidence locations, remaining work, and unresolved risks. Keep a coherent
-investigation together when restarting would cause rediscovery. A full-history
-fork is not a compact handoff. Follow the host's available context controls.
+Use this for unfamiliar or large repositories, cross-package changes, investigation and visual inspection. There is no language, repository-size or fixed file-count ceiling. A useful assignment has a question or outcome, a discoverable source area, permitted actions, a stopping point and a checkable return.
 
-Use bounded searches and reads. For structural interface questions, prefer
-targeted text or DOM inspection; use screenshots when the judgment is visual.
-Avoid redundant captures and large repeated output. Preserve complete artifacts
-by reference. Saving or deleting an image file does not remove it from the
-conversation. A worker's visual verdict cannot replace the frontier's inspection
-of the evidence needed for acceptance.
+## Locate → trace → change → integrate
 
-Give file, log, or documentation investigations to a focused worker before
-performing the same search yourself, when expected total usage and route scope
-justify it. Inspect only enough upfront to define the question and boundaries.
-Request findings, exact sources, uncertainties and the decision needed from the
-frontier. Review decisive evidence; expand inspection when gaps or contradictions
-warrant it. A single targeted search may stay direct under step 1 of `SKILL.md`.
-Use the [existing packet](delegation-contract.md) and preserve useful worker
-context for follow-ups, with a new route check when the assignment changes.
+- **Locate:** Start from the user's symbol, symptom, endpoint, screen or feature. Use repository guidance, manifests, workspace/package maps and filename/symbol search to identify the likely owner. If the owner is unknown, delegate finding it as a read-only assignment; do not first map the whole repository yourself.
+- **Trace:** Follow the relevant call/data path across package boundaries. Return the owner, callers, shared types/contracts, configuration or generated-code source, nearby tests and exact evidence locations. Distinguish verified dependencies from unresolved ones. Widen search progressively when evidence requires it; do not repeatedly scan everything or arbitrarily stop at one package.
+- **Change:** Give one worker a coherent behavior change with explicit write ownership and acceptance checks. Read scope can be broader than write scope. Settle interfaces before dividing dependent changes. Do not split by file count: a shared-function change and its callers may belong together. A discovery outside write ownership returns a proposed scope adjustment, not an unauthorized edit.
+- **Integrate:** Check affected consumers, shared contracts, exports, build targets and critical flows. Run focused tests during iteration, then repository-required and affected integration checks before acceptance. If impact is unclear, widen dependency inspection and testing. Never infer safety from one package's green test.
 
-Judge the whole workflow by accepted quality and observable total model usage,
-including exploration, coordination, failed attempts, repairs and verification.
-Completion time matters only when the user prioritizes it. Smaller coordinator
-context alone does not establish lower total usage. Do not infer savings from
-screenshot counts or cumulative transcript size, or introduce arbitrary
-session-size alarms.
+A feature may begin with finding an existing pattern, then defining the interface and assigning implementation. A tweak may go straight to a precise edit when the affected callers are known. A bug may start with source location, then authorized local reproduction, frontier acceptance of the cause, a fix and regression verification. Unknown answers are expected; unresolved consequential choices return to the frontier with evidence.
 
-At meaningful milestones in an already tracked run, use the [local reminder helper](local-learning.md) for an optional fresh-session suggestion and compact handoff. Do not start recording just to trigger a reminder. Reliable host signals or clearly labeled qualitative judgment can support a reminder; neither proves measured savings. Defer during coupled investigations, unsettled worker activity, or costly rediscovery. Default to once per session and never restart automatically.
+## Keep context useful
+
+Give the worker paths, symbols, commands, constraints and the smallest necessary history, not a repository dump or full conversation. Bound search output and page through decisive matches. Exclude dependencies/build outputs unless relevant. Follow applicable repository instructions; an assignment cannot loosen permissions.
+
+Stop an investigator when the question is answered, a consequential decision is needed, access is blocked or searching no longer produces new evidence. Return findings with source locations, checks, uncertainties and the smallest next step. Preserve its useful context for follow-ups; do not restart the search at the frontier. Increase model strength when reasoning—not missing access or an unclear task—is the constraint.
+
+Prefer text/DOM inspection for structure, screenshots for visual judgment. Preserve artifacts by reference and avoid redundant captures. A worker's screenshot verdict cannot replace frontier inspection needed for acceptance. Read [research.md](research.md) for source-based research.
+
+At a meaningful delivery boundary, use a short handoff containing objective, constraints, decisions, checkout state, completed checks, evidence and remaining risks. Keep a coherent investigation together when restarting would cause rediscovery; a full-history fork is not a compact handoff. Do not create recording just to trigger session reminders.
