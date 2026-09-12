@@ -1,8 +1,82 @@
 # Tracked evidence and history controls
 
-Read this only for evidence-routed work, explicit tracked evaluations, optional telemetry or history controls. Routine `observe` instructions are complete in [SKILL.md](SKILL.md); ordinary delegation does not need this file. The helper uses existing Node built-ins, launches no models and uploads nothing. Recording failure must not block delivery.
+Read Ordinary completion below for every eligible task; later receipt and history sections apply only when relevant. The helper uses existing Node built-ins, launches no models and uploads nothing. A successful required v3 observation is part of completion. Repair recording errors locally; if recording remains blocked, report the limitation and do not claim accepted completion.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.
+
+## Ordinary completion (v3)
+
+Use one final `complete` call for every eligible accepted direct or delegated task with
+`observation_version:3` and `acceptance:"accepted"`. It reuses v3 observation validation and atomic
+persistence, returning `status:"completed"`, `task_id` and `artifact_digest` only after success.
+Missing evidence, persistence errors and disabled recording fail; they never report completion.
+Retries preserve task-ID idempotency. `observe` remains available for non-accepted outcomes and
+existing callers; v1/v2 inputs and interpretation remain historical compatibility only.
+Include `cwd`, `host`, stable `task_id`, `assignment`, `work_type`, `risk`, `bounded:true`,
+`mode`, `worker` (null for direct), `acceptance`, `checks`, `repairs`, `coordinator`,
+`artifact_files`, `artifact_digest`, `check_evidence`, `attempts`, `elapsed_ms`, and `usage`.
+Include selected `frontier` or `cheap_reviewer` only where needed. Use `implemented_behavior:true`
+for mixed decision-and-implementation segments; preserve actual classification through repairs.
+
+Dispatch accepts only `phase:"execute"` or `phase:"complete"`. Use the latter to determine review
+requirements; `review` and `escalate` are outcomes, not phases. Supply the exact selected `frontier`
+whenever a frontier decision, execution or review is required. Resolve any blocked dispatch before
+claiming that stage is complete. Dispatch only selects a route; a reviewer PASS does not replace
+the final `complete` command. Do not run a separate final dispatch-then-observe sequence.
+
+Save actual check results to a task-relative evidence file. `check_evidence` is a nonempty array
+of `{path,digest}` with each digest the SHA256 of that file's bytes. All evidence paths are relative
+to `cwd` and may not escape it. The aggregate `artifact_digest` comes from the helper `artifacts`
+command over `artifact_files`; it is not a raw single-file digest. Accepted observations verify
+these bytes. Preserve every owned final deliverable and do not modify it after review.
+
+`checks` is exactly `passed`, `failed` or `unverified`; there is no `partially_verified` value.
+For fixes, include `diagnosis_accepted:true` after establishing the cause, in dispatch and the
+`complete` payload. For implementation of an accepted plan, carry `plan_settled:true`
+and `decision_evidence`. Copy the selected `frontier` identity into observations even when the
+coordinator executed the fix. The review's model field does not replace `frontier`.
+
+Choose one evidence workspace `cwd` at intake and use it for artifact hashing, reviewers and `complete`.
+When host session metadata supplies `cwd` and `artifact_files`, use them verbatim. Nested source
+repositories do not change this base. Save checks under the evidence workspace's `.delegate/`.
+Hash final artifacts before requesting review and never recompute a different-base digest afterward.
+
+Fix completion payload for `node <skill-folder>/scripts/local-learning.mjs complete -`
+(replace paths/hashes and attempts with executed evidence):
+
+```json
+{"observation_version":3,"cwd":"/absolute/session-workspace","host":"codex","task_id":"stable-task-id","assignment":"implement_fix","work_type":"routine_fix","risk":"medium","bounded":true,"diagnosis_accepted":true,"implemented_behavior":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-5.6-terra","effort":"medium"},"frontier":{"model":"gpt-6-astra","effort":"high"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["nested-repo/src/fix.ts"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":".delegate/checks.txt","digest":"sha256:<file-bytes>"}],"review":{"verdict":"PASS","fresh_context":true,"model":"gpt-6-astra","effort":"high","artifact_digest":"sha256:<same-aggregate>"},"attempts":[{"role":"reviewer","model":"gpt-6-astra","effort":"high","status":"accepted","observed_model":null}],"elapsed_ms":null,"usage":null}
+```
+
+For required frontier decision/execution, include an accepted `frontier` attempt and
+`execution_evidence:[{path,digest}]` referencing the saved agent response/decision. Planning uses
+`assignment:"frontier_decision",work_type:"planning"`; record the frontier execution even though
+no second reviewer is needed. Accepted implementation uses `decision_evidence:{path,digest}`;
+a hard-bug handoff uses `hard_bug_handoff:{reproduction,root_cause,correction,regression_check}`,
+each a verified `{path,digest}`. Keep the concrete reason in `routing_reason`/`escalation`.
+
+`review` is null or `{verdict:"PASS"|"REPAIR"|"BLOCKED",fresh_context:true,model,effort,artifact_digest}`.
+A required review must match the selected role: frontier for implemented behavior, cheaper for
+sampled research/PDF/source audits. No frontier is required for ordinary source checks. A review
+PASS needs an accepted reviewer attempt. Each attempt is `{role,model,effort,status,observed_model}`
+with role coordinator/worker/frontier/reviewer/repair and status accepted/failed/blocked/rejected.
+Unknown observed model is null, not an invented identity. Include children and continuations.
+
+Example unsampled research payload for the same `complete` command (replace task ID and all placeholder hashes with real values;
+run dispatch first to determine whether a cheap audit is required):
+
+```json
+{"observation_version":3,"cwd":"/absolute/project","host":"codex","task_id":"stable-task-id","assignment":"summarize_sources","work_type":"research","risk":"low","bounded":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-5.6-terra","effort":"medium"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["findings.json"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":"checks.txt","digest":"sha256:<file-bytes>"}],"attempts":[],"elapsed_ms":null,"usage":null}
+```
+
+Scoped explicit model requests use `user_model_override:{scope:"execution"|"review"|"both",model,effort,instruction}`
+with the actual user instruction. They never weaken host permissions. Observations distinguish
+exceptions from standard policy acceptance. Do not invent an override to pass a gate.
+
+Clear resolved signals only with evidence, retaining the escalation and attempts in the observation.
+Research failures remain cheap tool/worker recovery or explicit limitations. V3 stores normalized
+`policy_input`, `rule_id` and `review_requirement`; validators recompute, not trust those labels.
+Observations are feedback, not proof of native agent launches, qualification or savings.
 
 ## Evidence-routed / explicitly tracked path
 

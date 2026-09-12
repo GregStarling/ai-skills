@@ -1,6 +1,6 @@
 import {mkdir, readFile, rm, rename, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {dirname} from 'node:path';
+import {dirname,join} from 'node:path';
 
 const schema_version='completion_budget.v1';
 const approval_schema_version='completion_budget_approval.v1';
@@ -42,6 +42,12 @@ function validateBudgetShape(budget){
   if(typeof budget.halted!=='boolean'||!Array.isArray(budget.stopped_hosts)||!Array.isArray(budget.entries))throw error('BUDGET_MALFORMED');
   if(typeof budget.authorization!=='string'||budget.authorization.length===0)throw error('BUDGET_MALFORMED');
 
+  const corrections=budget.provider_limit_corrections??[];
+  if(!Array.isArray(corrections)||new Set(corrections.map(c=>c.id)).size!==corrections.length||corrections.some(c=>!c||typeof c.id!=='string'||!/^sha256:[a-f0-9]{64}$/.test(c.trace_digest)||c.reason!=='quoted_tool_output_false_positive'))throw error('BUDGET_MALFORMED');
+  const corrected=new Set(corrections.map(c=>c.id));
+  const executionCorrections=budget.execution_corrections??[];
+  if(!Array.isArray(executionCorrections)||new Set(executionCorrections.map(c=>c.id)).size!==executionCorrections.length)throw error('BUDGET_MALFORMED');
+  for(const c of executionCorrections){const entry=budget.entries.find(e=>e.id===c.id);if(!entry||entry.status!=='completed'||!Number.isSafeInteger(c.executions)||c.executions<=entry.executions||c.executions>entry.worst_case||!/^sha256:[a-f0-9]{64}$/.test(c.sha256)||typeof c.path!=='string')throw error('BUDGET_TAMPERED');}
   let executions=0,reserved=0,mustHalt=false;
   const ids=new Set(),hosts=new Set(budget.stopped_hosts);
   if(hosts.size!==budget.stopped_hosts.length||[...hosts].some(host=>typeof host!=='string'||host.length===0))throw error('BUDGET_MALFORMED');
@@ -57,9 +63,9 @@ function validateBudgetShape(budget){
       assertCleanString(entry.source,'source');
       if(typeof entry.providerLimit!=='boolean'||typeof entry.uncertain!=='boolean'||typeof entry.unbudgeted!=='boolean')throw error('BUDGET_MALFORMED');
       if(entry.unbudgeted!==(entry.executions>entry.worst_case))throw error('BUDGET_TAMPERED');
-      if(entry.providerLimit&&!hosts.has(entry.host))throw error('BUDGET_TAMPERED');
+      if(entry.providerLimit&&!corrected.has(entry.id)&&!hosts.has(entry.host))throw error('BUDGET_TAMPERED');
       if(entry.uncertain||entry.unbudgeted)mustHalt=true;
-      executions+=entry.executions;
+      executions+=executionCorrections.find(c=>c.id===entry.id)?.executions??entry.executions;
     }else throw error('BUDGET_MALFORMED');
   }
   if(executions!==budget.executions||reserved!==budget.reserved)throw error('BUDGET_TAMPERED');
@@ -83,7 +89,9 @@ async function validateBudget(path,budget){
     throw cause;
   }
   if(!approval||typeof approval!=='object'||Array.isArray(approval)||approval.schema_version!==approval_schema_version)throw error('BUDGET_MALFORMED');
-  if(approval.ceiling!==budget.ceiling||approval.authorization!==budget.authorization)throw error('BUDGET_TAMPERED');
+  let approvedCeiling=approval.ceiling;
+  for(const amendment of budget.amendments??[]){const original=await readJson(amendment.path);if(JSON.stringify(original)!==JSON.stringify(amendment)||amendment.from!==approvedCeiling||!Number.isSafeInteger(amendment.to)||amendment.to<=amendment.from||!amendment.authorization)throw error('BUDGET_TAMPERED');approvedCeiling=amendment.to;}
+  if(approvedCeiling!==budget.ceiling||approval.authorization!==budget.authorization)throw error('BUDGET_TAMPERED');
   for(const entry of budget.entries){
     let original;
     try{original=await readJson(reservationPath(path,entry.id));}
@@ -93,6 +101,12 @@ async function validateBudget(path,budget){
     }
     assertOriginalReservation(entry,original);
   }
+  for(const correction of budget.provider_limit_corrections??[]){
+    const entry=budget.entries.find(e=>e.id===correction.id);
+    if(!entry?.providerLimit||entry.status!=='completed')throw error('BUDGET_TAMPERED');
+    await verifyFalseLimit(entry,correction.trace_digest);
+  }
+  for(const correction of budget.execution_corrections??[]){const bytes=await readFile(correction.path);if('sha256:'+createHash('sha256').update(bytes).digest('hex')!==correction.sha256)throw error('BUDGET_TAMPERED');const proof=JSON.parse(bytes);const count=await countNativeExecutions(proof.traces);const entry=budget.entries.find(e=>e.id===correction.id);const stdout=(await readFile(join(dirname(entry.source),'stdout.jsonl'),'utf8')).split('\n').filter(Boolean).map(l=>JSON.parse(l));if(count.uncertain||count.executions!==correction.executions||count.root_id!==stdout.find(e=>e.type==='thread.started')?.thread_id)throw error('BUDGET_TAMPERED');}
   return budget;
 }
 
@@ -192,4 +206,55 @@ export async function settleBudget(path,id,{executions,source,providerLimit=fals
     await save(path,budget);
     return budget;
   });
+}
+
+// Append-only repair of a demonstrated parser false positive; never clears a real limit.
+async function verifyFalseLimit(entry,expectedDigest){
+ const summary=await readJson(entry.source),bytes=await readFile(join(dirname(entry.source),'stdout.jsonl'));
+ const digest='sha256:'+createHash('sha256').update(bytes).digest('hex');
+ if(expectedDigest&&digest!==expectedDigest)throw error('BUDGET_TAMPERED');
+ const events=bytes.toString().split('\n').filter(Boolean).map(l=>JSON.parse(l));
+ if(summary.code!==0||summary.timed_out||events.some(e=>['error','turn.failed'].includes(e.type)||(e.type==='rate_limit_event'&&e.rate_limit_info?.status==='rejected'))||!events.some(e=>e.type==='turn.completed'||(e.type==='result'&&!e.is_error&&e.subtype==='success')))throw error('ACTUAL_PROVIDER_FAILURE');
+ return digest;
+}
+export async function correctFalseProviderLimit(path,id){
+ return withLock(path,async()=>{
+  const budget=await load(path),entry=budget.entries.find(e=>e.id===id);
+  if(!entry?.providerLimit||entry.status!=='completed'||budget.provider_limit_corrections?.some(c=>c.id===id))throw error('INVALID_LIMIT_CORRECTION');
+  const trace_digest=await verifyFalseLimit(entry);
+  budget.provider_limit_corrections=[...(budget.provider_limit_corrections??[]),{id,trace_digest,reason:'quoted_tool_output_false_positive'}];
+  const corrected=new Set(budget.provider_limit_corrections.map(c=>c.id));
+  budget.stopped_hosts=budget.stopped_hosts.filter(host=>budget.entries.some(e=>e.host===host&&e.providerLimit&&!corrected.has(e.id)));
+  await save(path,budget);return budget;
+ });
+}
+
+// Native rollouts contain launches omitted by some CLI stdout protocols.
+export async function countNativeExecutions(traces){
+ if(!Array.isArray(traces)||!traces.length)throw error('NATIVE_TRACES_REQUIRED');
+ let root_id=null;const turns=new Set(),launches=new Set(),ids=new Set(),parents=[];
+ for(const ref of traces){const bytes=await readFile(ref.path);if('sha256:'+createHash('sha256').update(bytes).digest('hex')!==ref.sha256)throw error('NATIVE_TRACE_TAMPERED');
+  const ev=bytes.toString().split('\n').filter(Boolean).map(l=>JSON.parse(l)),meta=ev.find(e=>e.type==='session_meta')?.payload;
+  if(!meta?.id||ids.has(meta.id))throw error('NATIVE_TRACE_ID_INVALID');ids.add(meta.id);parents.push(meta.source?.subagent?.thread_spawn?.parent_thread_id??null);if(!meta.source?.subagent?.thread_spawn?.parent_thread_id)root_id=meta.id;
+  const starts=ev.filter(e=>e.type==='event_msg'&&e.payload?.type==='task_started');if(!starts.length||starts.some(e=>!e.payload.turn_id))throw error('NATIVE_START_REQUIRED');for(const e of starts)turns.add(e.payload.turn_id);
+  for(const e of ev.filter(e=>e.type==='response_item'&&e.payload?.type==='function_call'&&e.payload?.name?.endsWith('spawn_agent'))){if(!e.payload.call_id)throw error('NATIVE_LAUNCH_ID_REQUIRED');launches.add(e.payload.call_id);}
+ }
+ if(parents.filter(p=>p===null).length!==1||parents.some(p=>p!==null&&!ids.has(p)))throw error('NATIVE_TREE_INCOMPLETE');
+ return {executions:turns.size,root_id,uncertain:launches.size!==traces.length-1};
+}
+export async function reconcileNativeCount(path,id,evidencePath){
+ return withLock(path,async()=>{const budget=await load(path),entry=budget.entries.find(e=>e.id===id);if(!entry||entry.status!=='completed'||budget.execution_corrections?.some(c=>c.id===id))throw error('INVALID_COUNT_CORRECTION');
+  const bytes=await readFile(evidencePath),proof=JSON.parse(bytes),count=await countNativeExecutions(proof.traces);
+  const stdout=(await readFile(join(dirname(entry.source),'stdout.jsonl'),'utf8')).split('\n').filter(Boolean).map(l=>JSON.parse(l));
+  if(count.root_id!==stdout.find(e=>e.type==='thread.started')?.thread_id||count.uncertain||count.executions<=entry.executions||count.executions>entry.worst_case)throw error('COUNT_NOT_WITHIN_ORIGINAL_RESERVATION');
+  budget.execution_corrections=[...(budget.execution_corrections??[]),{id,executions:count.executions,path:evidencePath,sha256:'sha256:'+createHash('sha256').update(bytes).digest('hex')}];budget.executions+=count.executions-entry.executions;await save(path,budget);return budget;
+ });
+}
+
+// A new explicit authorization appends to the original approval; history is never reset.
+export async function amendBudget(path,{ceiling,authorization}){
+ positiveInteger(ceiling,'ceiling');assertCleanString(authorization,'authorization');
+ return withLock(path,async()=>{const budget=await load(path);if(ceiling<=budget.ceiling)throw error('INVALID_BUDGET_AMENDMENT');
+ const amendment={path:`${path}.amendment-${ceiling}.json`,from:budget.ceiling,to:ceiling,authorization};
+ await writeImmutableJson(amendment.path,amendment);budget.amendments=[...(budget.amendments??[]),amendment];budget.ceiling=ceiling;await save(path,budget);return budget;});
 }

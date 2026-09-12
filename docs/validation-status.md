@@ -17,6 +17,19 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
+The current canonical source uses Terra/medium or Sonnet coordination, prescribed frontier decisions and fresh implemented-behavior review. Research/PDF execution and source checks remain economical. `complete` validates and persists accepted v3 observations. Explicitly requested independent review also applies to planning and diagnosis; only automatic second review is exempted. Campaign completion now binds each accepted host run and exercise to its budget entry and native execution count.
+
+| Current source digest | Value |
+| --- | --- |
+| Helper `folderDigest` (14 consumer files) | `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7` |
+| Guidance without `routing-pack.json` | `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730` |
+
+Personal installation/default activation remains incomplete. The [targeted live checks](completion-remediation-live.md) apply to their recorded earlier source; the release review repairs require renewed final-source host acceptance before activation. The following entries preserve the earlier consumer and installation history.
+
+Release verification (2026-09-12 UTC): all 885 tests passed on source `sha256:5988b0fcaacc0b338832bcf9d9fd3b4055e5b9295fb64ff1f1ca7633c43fc3ee`, with typecheck, build, portable packaging and routing-pack publication checks. Fresh Astra/high review found two issues—explicit review precedence and disconnected campaign accounting—which were repaired and passed re-review. The earlier test/build concurrency collision and successful affected-file retest remain in local evidence; the final full suite ran without a concurrent build. The Archify diagram passed nine showcase checks, four desktop viewport checks and visual inspection in both themes. Two review executions bring the cumulative ledger to 86/100, with no reservations. No new live pilots, personal installations or default changes were performed. Publication is authorized by the subsequent explicit ship request; personal activation remains gated. Detailed logs and native review traces are retained locally under `artifacts/ship-deterministic-routing/`.
+
+### Earlier consumer revisions
+
 Automatic-scope follow-up (2026-09-11): Delegate now activates for substantive implementation, investigation, research, analysis, planning and review, with direct execution still the default. Casual conversation, simple factual answers, creative drafting, voice-sensitive editing and worker/reviewer packets are excluded from automatic activation. Explicit creative delegation remains opt-in; bounded background research, factual checks and continuity checks can be considered separately without transferring prose or creative decisions. Source-based investigation uses the existing research guidance; no helper routes, qualification scopes or configuration changed. All 792 tests across 46 files and portable packaging/reachability checks passed. The Python quick validator remains unavailable without PyYAML. No live activation or model-usage claims are made. Both installed copies match the current digests below; backups are under `/Users/gregpro/.agents/skill-backups/delegate-auto-jDz5ub`.
 
 Local review fixes (2026-09-11): the guidance now distinguishes two ordinary-workflow cost-proxy wins from older elapsed-time verdicts, without changing direct-default policy or historical results. The benchmark executor now terminates remaining same-group processes after normal or timed-out leader exit, waits up to 2 s for disappearance (including transient EPERM), and preserves its summary before rejecting unresolved cleanup so the campaign cannot advance. Six new offline regression cases cover both exit paths, transient/persistent EPERM, unexpected signal failure and failed spawn. Validation: 792 tests across 46 files, typecheck, build, portable packaging/reachability and routing-pack publication validation passed. Skill Creator's Python quick validator still lacks PyYAML; repository frontmatter checks passed without adding a dependency. No model trials, routing-pack changes or commits were made. On the user's subsequent request, both installed Delegate copies were backed up under `/Users/gregpro/.agents/skill-backups/delegate-review-WkFOet`, synchronized with this source and verified equal by recursive diff and folder digest.
@@ -90,3 +103,29 @@ Immutable except dated append-only addenda.
 - [delegate-usability-results.md](delegate-usability-results.md) with [its evidence metadata](evidence/delegate-usability-2026-09-10/evidence.json).
 - [delegate-local-learning-validation.md](delegate-local-learning-validation.md) with the 2026-09-10 addendum.
 - [standalone-delegate-validation.md](standalone-delegate-validation.md), [production-evidence-validation.md](production-evidence-validation.md).
+
+Cheaper-coordination implementation under validation (not activated): consumer folder sha256:27ef2fa7be21439e2a7bb351c6cc5230e908b62cddecf75dbb4132e8752a98ff. Historical pack is unchanged.
+
+Repaired cheaper-coordination consumer under validation: sha256:b48b3377ac711d4d97d2c52331ccabe7611a680adadbbaf75796ac1371bf88e1. Not yet activated.
+
+Cheaper-coordination deterministic routing consumer candidate (pending live acceptance): sha256:58e23082a09abf836400c0193c031b208d10f7522aaf9aeeef385fbd698e82d5.
+
+Native-review and assignment-floor candidate (pending live acceptance): sha256:ba400ade751efe1851a57b7fdb1f7151c91131773e986e4c6d2171059a11efed.
+
+Mechanical-discovery and ordinary-prompt candidate (pending complete final-revision pilot): sha256:fd5e67878454b8595f423ce1030eb050f3d540b7bfa5159648b6d761897279a1.
+
+Final cheaper-coordination source review and offline verification: 817 tests, typecheck, build, packaging passed; source digest `sha256:98b6b8c413f0444a5b65722d40003534f8fe4e283b13f9bd70d5ec98936bceb9`. Rollout blocked: final-revision matched host campaigns incomplete, Fable provider limit, 40/50 executions used. Personal skills/defaults unchanged. See [results](cheaper-coordination-results.md) and [19-item checklist](cheaper-coordination-plan.md).
+
+Revised deterministic routing candidate consumer folder: `sha256:664ea87312cc598a34702a3fc002733f79f251e9ff001070015ef1e1ac2796c5`. Pending fresh source review and final-source host trials.
+
+Repaired refinement consumer folder: `sha256:1379bb027c27f5a1985a412365220529d6913eadfbdfd629df1eed81be792b74`; final checks and live acceptance pending.
+
+Refinement after pilot preflight/evidence-path repair: `sha256:f25846c5acdf3d59d2ac59035b9a6a6fe537533c85b851ad1554d9f3ceeb5ecb`; source must be revalidated before activation.
+
+Final refinement completion wording retains discovery guard: `sha256:dc2f97957410ccdb0c5b79c4e70d747c0ee5956f5abb1686a71ab1fbf0978dce`.
+
+Refinement with explicit complete-fix observation and stable workspace metadata: `sha256:8e173fa298a58122bd85a090035f8c40ff8462c32a6d7e6578ad99535b0c5305`; source revalidation pending.
+
+Completion reliability repair consumer folder digest: `sha256:78dadbf273fbf6f65de28a370a4fd97b220f39d1bbe00dfe49d5bef33f78db87`. Final acceptance requires fresh source-bound trials.
+
+Completion remediation consumer folder digest: `sha256:8a7394be267258bbda3e609d280bbf46f45c3cea3640d7ebae62d1912e49dcd4`. Local focused verification only; earlier live evidence is historical for prior source revisions. Personal installation and activation remain incomplete.

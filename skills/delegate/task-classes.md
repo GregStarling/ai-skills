@@ -1,6 +1,6 @@
 # Classify the work
 
-These legacy classes describe workstream shapes; ordinary dispatch uses the assignment table in `SKILL.md`. A label never grants extra permissions. Evidence-required routes remain bound to their literal scopes; ordinary dispatch bounds the assignment independent of repository size or language.
+These legacy classes describe evidence-route workstream shapes; ordinary coordination follows the decision and review rules in `SKILL.md`, including direct execution. A label never grants extra permissions. Evidence-required routes remain bound to their literal scopes; ordinary dispatch bounds the assignment independent of repository size or language.
 
 | Class | Shape | Work | Typical acceptance evidence |
 | --- | --- | --- | --- |
@@ -15,10 +15,10 @@ These legacy classes describe workstream shapes; ordinary dispatch uses the assi
 
 Shapes:
 
-- single worker: one worker, then frontier verification.
+- single worker: verify by deliverable; research/PDF checks stay cheap, implemented behavior receives fresh frontier review.
 - specify-then-delegate: the frontier establishes layout, hierarchy, interaction and responsive requirements; a worker implements; the frontier inspects the rendered result.
 - diagnose-then-delegate: an ordinary `reproduce_failure` worker may run authorized local checks and propose a diagnosis. The frontier checks the evidence and settles the cause and fix before implementation. Under evidence-required routing, standalone reproduction remains a gap. Source reading alone is insufficient; resolve or report a blocked reproduction before assigning implementation.
 - plan-then-delegate: the frontier settles architecture, interfaces and the implementation plan; workers implement bounded assignments.
-- decompose: the frontier coordinator owns planning, interfaces and acceptance; capability comes from eligible routes for the required workstreams, never a full-project worker.
+- decompose: the coordinator gathers constraints and owns execution/integration; frontier makes plans/interfaces and reviews implemented behavior; capability comes from eligible routes for the required workstreams, never a full-project worker.
 
 Classify the current assignment, not the entire repository: locating behavior is investigation even when the eventual task is debugging or architecture. Read scope may cross package boundaries; write ownership stays explicit. Before resuming an investigator as an implementer, confirm the new assignment's permissions, suitable model/effort and acceptance checks. For evidence-required routing also recheck the implementation route. Reuse useful context when the controls permit it.

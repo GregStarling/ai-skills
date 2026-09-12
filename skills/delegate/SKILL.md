@@ -1,74 +1,153 @@
 ---
 name: delegate
-description: Use automatically for substantive implementation, investigation, research, analysis, planning and review to choose direct execution or bounded delegation with minimal total allowance and preserved quality. Also use when explicitly requested. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker or reviewer packets.
+description: Use automatically for implementation, bug fixes, planning, critical decisions, research, PDF analysis, source synthesis, mechanical edits and review. Choose direct execution or bounded agents using prescribed execution and verification rules. Research and document processing stay economical; plans, consequential decisions and implemented-behavior reviews use frontier. Simple edits still receive a routing/audit decision. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker/reviewer packets.
 ---
 
-Deliver the requested quality along the cheapest complete path, counting coordination, workers, integration, verification and repairs. Prefer attributable allowance measurements; cost estimates are proxies, never bills, and missing usage stays unknown. Change no user configuration.
+Choose the least expensive complete path that preserves the requested quality, including
+coordination, execution, checks and repairs. Unknown usage stays unknown. Ordinary routing
+never changes saved models, permissions or configuration. If given a worker, decision or
+reviewer packet, execute it and return without reactivating coordination.
 
-If given a worker or reviewer packet, execute it and return; do not reactivate this skill.
+## 1. Automatic coordination and authority
 
-Automatic activation means considering the least-expensive complete path, not automatically launching workers. Keep creative drafting and voice-sensitive editing with the primary model unless the user explicitly requests delegation. Bounded background research, factual checks or continuity checks for creative work can be considered separately; do not use them to hand off the prose or creative decisions.
+For tasks covered by this skill, proactively launch bounded agents when required for execution,
+escalation, or review. This skill explicitly requests that delegation. Do not ask for confirmation
+for routine agent launches within the user's authorized task. Preserve host permissions, task
+boundaries, and any explicit restriction on delegation.
 
-## 1. Choose the path
+Activation chooses a path, not a mandatory worker. Direct execution is normal. Run intake dispatch and
+final `complete` even for simple mechanical tasks so stable audits remain visible. Use bounded
+workers for useful independent investigations or settled workstreams. Respect creative/voice exclusions.
 
-Direct execution is the default. On two bounded TypeScript tasks, the ordinary Claude workflow had higher whole-task cost estimates than direct execution; its coordinator alone cost more than the entire direct arm. Older comparisons favored direct on elapsed time, not a comparable usage verdict. These results do not establish subscription savings or generalize to large investigations. Direct work makes no helper calls.
+Inspect actual host controls. For a genuine permission block, name the blocked action, controlling
+tool/instruction and smallest needed permission change; ask once and retain the answer. Continue
+independent authorized preparation. Missing tools/models and provider limits are availability
+failures, not permission requests. Do not substitute or skip a required frontier decision/review.
 
-Delegate only when one of these holds:
+Read the [Codex](hosts/codex.md) or [Claude](hosts/claude-code.md) guide. Bind the actual coordinator
+and selected available roles as `{model,effort}` from host session metadata, not generic model
+self-description. Null effort means unknown or uncontrollable. Preserve requested versus observed
+identity. An observed substitution rejects the treatment; never relabel it eligible. Research can finish without any frontier access. Explicit user model choices apply only
+to their stated execution/review scope; record exceptions without calling them ordinary-policy acceptance.
 
-- **Large investigation (untested):** answering requires reading across several packages, source collections or a large unfamiliar subject area, far more than a brief plus verifying the decisive sources.
-- **Parallel workstreams (untested):** two or more independent workstreams with settled interfaces or clear deliverables and disjoint ownership can run at once.
-- **Explicit request:** the user asks for a worker or a specific model. Honor it and disclose material tradeoffs once.
+## 2. Classify the work, then apply the rule
 
-Size the work with a few direct searches; if it is contained, finish it directly and skip the remaining dispatch/feedback steps and their references. When unsure, stay direct. Honor explicit independent-review requests on either path.
+Execution destination and review requirement are separate. Classify before routing and reclassify
+when evidence changes. Work size, document length, file type and source count never independently
+trigger frontier. A known prescribed rule overrides coordinator preference; unmatched work needs a
+concrete routing reason after brief inspection. Unresolved classification goes to frontier unless
+it is clearly information collection/processing, which stays economical.
 
-Size and language never decide eligibility; bound the assignment, not the repository. For unfamiliar or large repositories, cross-package features and bugs, read [context-discipline.md](context-discipline.md) before investigating. Keep frontier work for consequential decisions and acceptance.
+| Work type | Execution and completion |
+| --- | --- |
+| `planning` | Frontier creates or materially revises plans. Check sources, constraints and acceptance criteria. Do not launch a second frontier solely because a plan was produced. Routine next-step bookkeeping is not planning. |
+| `architecture`, `critical_ui_ux`, `accessibility_decision`, `security_decision`, `data_migration_design`, `public_contract_design`, `consequential_decision` | Frontier makes the consequential decision. Routine implementation may return to the coordinator; implemented behavior requires fresh frontier review. |
+| `conflicting_evidence` | Compare source authority and report unresolved facts economically. A consequential choice arising from the conflict is a separate `consequential_decision` assignment. |
+| `hard_bug`, `concurrency_bug`, `incident_diagnosis`, `performance_diagnosis` | Strong frontier default for uncertain causes and difficult fixes. Frontier may finish execution when handoff would lose context or duplicate work. Behavior-changing fixes receive fresh frontier review. |
+| `approved_execution` | Coordinator follows a recorded accepted decision. New unresolved choices return to their prescribed route. Implemented behavior receives fresh frontier review. |
+| `routine_implementation`, `routine_fix`, `substantial_refactor`, `regression_test` | Coordinator handles settled behavior; fresh frontier review is mandatory. A small diff cannot waive it. |
+| `research`, `pdf_analysis`, `source_synthesis`, `source_lookup` | Coordinator or bounded cheaper workers gather, extract, compare, calculate and synthesize. Verify sources, citations, extraction and completeness. No automatic frontier execution/review, even when substantial or sources conflict. |
+| `mechanical_edit`, `format_conversion`, `documentation_sync`, `cosmetic_ui`, `dependency_inventory`, `test_execution` | Coordinator performs exact edits, settled cosmetic changes, inventories or existing checks. Use proportionate checks and stable audits. Inventing behavior is not mechanical. |
+| `other` | Provide `fallback_route` and a concrete `routing_reason`; uncertainty after inspection defaults to frontier. |
 
-## 2. Ordinary host dispatch
+A request to read PDFs and create a plan has separate assignments: economical document analysis,
+then a focused frontier planning packet with decisive passages and source paths. Frontier must not
+repeat bulk collection. Contradictions alone, failed extraction, source access failures and two
+unsuccessful research attempts do not authorize frontier; use suitable cheaper tools/workers or
+report the limitation. Consequential decisions arising from findings are separate frontier work.
 
-Ordinary delegation uses the actual host's available models and task permissions. It does not require a qualification-pack entry; this is product policy, not evidence about model capability. If the user or project requires evidence-qualified routing, use step 3 instead; never silently fall back from that policy.
+Before a cheaper hard-bug handoff, preserve evidence of reproduction, root cause, bounded correction
+and regression check in `hard_bug_handoff`, each `{path,digest}` under the task directory. An
+accepted plan/decision uses `decision_evidence:{path,digest}`. The helper verifies these referenced
+bytes; unsupported flags or model confidence do not establish settled work. Record why the handoff
+helps. Do not force a handoff when frontier can finish the difficult segment more effectively.
 
-For delegated source research, analysis or planning support, read [research.md](research.md). Workers can gather facts and map constraints; the frontier verifies decisive sources, resolves conflicting evidence and makes consequential planning choices. Do not pay for duplicate full-source reading.
+Two attempts without new evidence or measurable progress trigger frontier escalation for eligible
+execution, sooner for decisive limitations. Keep bounded repairs with the executor, retest, and
+obtain required frontier re-review of the new artifact digest. Two unsuccessful repair attempts
+move difficult execution to frontier. User authorization remains separate from frontier judgment.
 
-Read the [Codex](hosts/codex.md) or [Claude Code](hosts/claude-code.md) host guide. Once per session, bind two slots from the actual selectable model/effort controls: `economy` for straightforward search/extraction/precise edits, `standard` for reproduction and implementation. Choose the cheapest model capable of each role from current host descriptions, without extra model calls, invented rosters or universal price assumptions. Omit an unsupported slot; never silently downgrade standard work to economy. Explicit user model choices override this heuristic.
+## 3. Dispatch and agent packets
 
-| Assignment | Starting slot | Boundary before dispatch |
-| --- | --- | --- |
-| `locate_behavior` | economy | Question, search anchors and permitted source area; read-only |
-| `summarize_sources` | economy | Supplied sources and question; live discovery is a different task |
-| `specified_edit` | economy; standard at medium risk | Exact transformation and regression checks |
-| `reproduce_failure` | standard | Symptom and authorized local checks; no production side effects |
-| `implement_feature` | standard | Behavior, owned change area, interfaces and acceptance checks |
-| `implement_fix` | standard | Frontier-accepted reproduction and diagnosis |
-| `implement_ui` | standard | Agreed interface and rendered/interaction acceptance |
-| `implement_plan` | standard | Settled cross-component contracts and dependency order |
-| `frontier_decision` | frontier | Conflicting evidence, architecture, product or consequential choices |
+Run `node <skill-folder>/scripts/local-learning.mjs dispatch -` at intake, when signals change and
+to determine required review. Use a stable `task_id` through every retry. Read [local learning](local-learning.md)
+for current v3 fields; never use historical compatibility modes for new observations.
+The only dispatch phases are `execute` and `complete`; use `phase:"complete"` to determine required review.
+`review` and `escalate` are outcomes, not valid phases. Supply the selected `frontier` identity whenever
+its decision, execution or review is required, and resolve blocked dispatches before proceeding.
+Inspect the returned JSON outcome; shell exit zero alone does not mean the dispatch was accepted.
 
-Run `node <skill-folder>/scripts/local-learning.mjs dispatch -` with `{host, assignment, risk, bounded:true, workers:{economy:{model,effort},standard:{model,effort}}, cwd}`, using an absolute project directory. Use exact host controls, null for genuinely unavailable effort. Add `diagnosis_accepted:true` for fixes or `plan_settled:true` for plans only after those conditions hold. The helper selects one slot and returns a verification choice, not a savings claim.
+Example research input (substitute actual identity and paths):
 
-Assess risk from the actual actions and blast radius, not repository size. A read-only investigation inside a critical system can be low risk, but secrets, production access and consequential writes keep their real restrictions. High/critical assignments return to frontier risk review; narrow safe fact-finding can be dispatched separately without relabeling risky actions.
+```json
+{"host":"codex","cwd":"/absolute/project","task_id":"stable-task-id","assignment":"summarize_sources","work_type":"research","risk":"low","bounded":true,"phase":"execute","coordinator":{"model":"gpt-5.6-terra","effort":"medium"}}
+```
 
-For required independent review, pass `independent_review:true` and an available frontier `reviewer:{model,effort}` satisfying project independence rules; use a fresh context. Otherwise the frontier coordinator verifies. Confirm tool access and configurable controls before launch; compare observations afterward when the host exposes them. Unknown served settings stay unknown. A substitution rejects the selected treatment; never relabel it eligible.
+Assignments are `locate_behavior`, `summarize_sources`, `specified_edit`, `reproduce_failure`,
+`implement_feature`, `implement_fix`, `implement_ui`, `implement_plan`, and `frontier_decision`.
+Use `specified_edit` for mechanical changes; do not invent assignment names.
 
-## 3. Evidence-required dispatch only
+For fixes, carry `diagnosis_accepted:true` after verifying the cause, including final observation.
+Preserve the same workspace `cwd` and artifact paths from intake through review and observation;
+use host session metadata for these paths when supplied. See complete fix example in local learning.
 
-When required, use `route` with `{host, assignment, risk, coordinator:{model,effort}}` and read [pack-format.md](pack-format.md). `lookup` remains diagnostic. The task must fit route.scope as returned by lookup, read literally. Preserve expiry, host, reviewer and independence requirements. A gap ends this path: report it and perform only authorized frontier work or ask for direction. Do not switch to ordinary dispatch to bypass policy.
+For a plan-only assignment use `assignment:"frontier_decision",work_type:"planning"`. Implementing
+an accepted plan is `assignment:"implement_plan",work_type:"approved_execution"` with verified
+decision evidence. Mixed decision-and-implementation segments set `implemented_behavior:true`;
+implementation assignments cannot be relabeled as research to evade review.
 
-## 4. Execute and verify
+Follow `outcome`: direct, delegate, escalate, review or blocked. Keep actual permission, tool and
+limit signals separate. Supply `cheap_reviewer` for sampled research/document audits; this must be
+an independent fresh cheaper context, never frontier. Stable 10% auditing remains keyed to task ID.
+A research task is not escalated if no suitable independent cheap reviewer is available: report the
+audit blocker. Other simple-task audits retain their frontier review requirement.
 
-Use the five-field investigation brief or bounded implementation [work order](delegation-contract.md). Workers return decisive evidence, checks and the specific unresolved decision, not raw search dumps. The frontier resolves that decision and returns a bounded follow-up; preserve useful worker context and recheck controls when changing roles. See [task-classes.md](task-classes.md) for coupled work and [swarm-policy.md](swarm-policy.md) only for independent workstreams.
+Use compact [work orders](delegation-contract.md) containing the original request, ownership,
+permitted actions, sources, checks and stopping point. Reuse context for related decision/execution
+follow-ups, but independent reviewers receive no inherited conversation. Read [context discipline](context-discipline.md),
+[research](research.md), [task classes](task-classes.md) and [parallel work](swarm-policy.md) only when relevant.
 
-Keep targeted repairs with the same worker. On repeated failure without progress, exclude its model via `failed_models` in ordinary dispatch (or candidate via `failed_candidate_ids` in evidence routing), then use a suitable stronger worker or direct execution. Do not pay for repeated failed attempts merely to preserve delegation.
+For a frontier planning/decision child, name it beginning `decision`, select the frontier model and
+supported effort explicitly, and require it to save the decision artifact. Its final response must
+include `{ "role":"decision", "verdict":"PASS", "artifact_digest":"sha256:..." }` after checking
+sources and acceptance criteria. Compute the digest with the helper's `artifacts` command over the
+final owned files, not by hashing just their text. The coordinator verifies returned evidence.
 
-Wait for every launched worker to reach a terminal state. Inspect actual sources, diffs, tests and rendered UI as appropriate under [verification-policy.md](verification-policy.md). Reverify repairs and integrated changes, then stop when acceptance is met. A launch acknowledgement or worker summary is not completion.
+## 4. Verify the completed deliverable
 
-## 5. Small feedback and delivery
+Fresh frontier review is mandatory for implemented features, behavior-changing fixes, substantial
+refactors and other implemented behavior, regardless of who executed it. Planning or research alone
+does not imply a second frontier review. For research/document outputs, directly inspect decisive
+source locations, verify extracted values and citations, reproduce calculations and disclose gaps.
 
-After verification of an ordinary delegated assignment, including investigation, run `node <skill-folder>/scripts/local-learning.mjs observe -` with this JSON shape on stdin:
+Compute `artifact_digest` with `node <skill-folder>/scripts/local-learning.mjs artifacts -` and
+`{"cwd":"/absolute/project","files":["relative-owned-file"]}`. Include every final owned artifact.
+Pass the digest to the required reviewer with original requirements, artifact paths, decisive sources
+and actual checks. On Codex use `fork_turns:"none"`, explicit model/effort and a task name beginning
+`review`. Never inherit execution history for independent review. Require terminal JSON with
+`role:"reviewer"`, `verdict:"PASS"|"REPAIR"|"BLOCKED"`, and the matching `artifact_digest`, plus findings.
+Use the same fresh-context protocol for a cheaper research audit. Any subsequent edit invalidates review.
 
-`{cwd,host,task_id,assignment,mode:"delegated",worker:{model,effort},acceptance,checks,repairs,usage:null}`
+Wait for every launched agent to reach a terminal state. Missing checks remain unverified. A partial
+summary, launch acknowledgment or self-attested boolean never proves independent completion.
+See [verification policy](verification-policy.md) for checks by artifact type.
 
-Use a unique task id, unchanged across retries; record once when they end. Include all worker repair attempts. Acceptance is `accepted`, `failed`, `blocked` or `rejected`; checks are `passed`, `failed` or `unverified`. **Frontier inspection confirming the decisive sources counts as `passed` for an investigation; no check command is required.** A worker's assertion alone is not verification. Accepted requires passed checks; missing verification stays unverified, never a manufactured success.
+## 5. Complete and deliver
 
-No start/capture/finish sequence, new evidence file or extra model call. `scope` is optional descriptive metadata, not a matching key. Feedback groups by repository, host, assignment and model/effort over 30 days, surviving guidance edits. Counts are project-level failure/repair warnings, not performance or savings evidence. Recording failure does not block delivery. Direct samples are for explicit comparisons only.
+After saving check evidence, hashing final artifacts and obtaining required review, call
+`node <skill-folder>/scripts/local-learning.mjs complete -` once with the accepted v3 observation
+payload. It validates and persists the observation before returning `status:"completed"`.
+Only then deliver accepted completion. `dispatch` selects a route; even `phase:"complete"` with a
+direct outcome does not record completion. A reviewer PASS alone does not complete the assignment.
+If `complete` fails, repair the input using the documented assignment names and retry locally;
+do not silently skip it. If file restrictions prevent required evidence, report the concrete blocker.
+Record direct and delegated tasks, including all attempts, applicable
+rules, handoff/escalation evidence, review role/result, actual identities, elapsed time and usage.
+Honor an existing `DELEGATE_STATE_HOME`; never redirect evaluation observations to personal learning.
+Pass JSON through a file or quoted heredoc. Accepted requires checks and the review required by the
+shared policy; explicit user exceptions are recorded separately from normal acceptance.
 
-Read [local-learning.md](local-learning.md) only for evidence receipts, optional telemetry or history controls—not routine observation. Report concise results, checks, actual models/efforts and material limitations; unknown usage stays unknown.
+Report results and material limitations. Unknown usage is not zero, qualification, or a savings claim.
+Historical observations remain immutable. When evidence-qualified routing is required, use `route`
+and [pack format](pack-format.md); preserve exact scope, identity, expiry and reviewer requirements.
+The assignment must fit route.scope literally. Never switch to ordinary routing to bypass a qualification gap.

@@ -8,7 +8,7 @@ For investigation, five fields suffice:
 - **Stopping point:** answered, a consequential decision is needed, or progress stalls.
 - **Expected return:** concise findings, exact evidence references, checks and the specific unresolved decision.
 
-The coordinator supplies selected model/effort through host controls; workers need no hashes, receipt instructions or copied routing policy. Keep explicit tool constraints in the brief when the host cannot encode them. All investigations still receive frontier verification and a compact outcome observation.
+The coordinator supplies selected model/effort through host controls; workers need no hashes, receipt instructions or copied routing policy. Keep explicit tool constraints in the brief when the host cannot encode them. Research/PDF source checks stay economical, including independent cheap sampled audits. Implemented behavior and other simple-task audits receive required frontier review; every eligible task receives a v3 outcome observation.
 
 For implementation, supply a compact work order:
 
@@ -21,7 +21,7 @@ For implementation, supply a compact work order:
 
 For investigation, specify permitted sources and commands, whether edits are allowed (default read-only), and a stopping point: evidence answers the question, a consequential decision is needed, or progress stalls. Example: “Trace where this value gets its default in these modules; return source locations, a supported explanation, alternatives still open, and the smallest proposed next step. Do not edit.” A supported finding that isolates the next decision may complete the investigation while the overall task remains open; incomplete investigation stays incomplete.
 
-Escalate conflicting evidence, an architectural or product choice, a required action outside the assignment, or repeated investigation without new evidence. Return the exact question, relevant evidence references, attempted checks and their results, and a proposed next step. Avoid raw logs and reasoning transcripts. The frontier checks decisive evidence, answers that question and returns a bounded follow-up; it does not repeat the entire search by default.
+Return source conflicts and stalled research as findings or limitations without automatic frontier escalation. Escalate a separate consequential architectural or product choice; an action outside the assignment needs authorization. Return the exact question, relevant evidence references, attempted checks and their results, and a proposed next step. Avoid raw logs and reasoning transcripts. The frontier checks decisive evidence, answers that question and returns a bounded follow-up; it does not repeat the entire search by default.
 
 Send only necessary history. Keep worker reasoning transcripts out of the verifier package. Reuse a worker's useful context for targeted repairs and keep its route explicit on resume if the host supports that control.
 

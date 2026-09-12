@@ -2,178 +2,268 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "Delegate System Map",
-    "subtitle": "Direct by default; bounded delegation only when the complete path merits it.",
+    "title": "Delegate \u00b7 Coordinate cheaply. Escalate deliberately.",
     "quality_profile": "showcase",
-    "repository": {
-      "url": "https://github.com/GregStarling/ai-skills",
-      "provider": "github",
-      "link_mode": "web",
-      "revision": "4bbe7682b4d756068e61849db865c98f6ec4c3c0"
-    },
-    "views": [
-      {
-        "id": "direct-path",
-        "label": "Direct path",
-        "focus": ["request", "delegate", "path-choice", "direct-work", "frontier", "accepted-result"],
-        "note": "Contained or uncertain work stays with the frontier and makes no helper calls."
-      },
-      {
-        "id": "ordinary-delegation",
-        "label": "Ordinary delegation",
-        "focus": ["path-choice", "ordinary-dispatch", "ordinary-worker", "frontier", "local-feedback"],
-        "note": "A bounded worker helps only after host controls are chosen and the coordinator verifies the result."
-      },
-      {
-        "id": "evidence-required",
-        "label": "Evidence-required routing",
-        "focus": ["path-choice", "evidence-route", "routing-pack", "eligible-worker", "frontier"],
-        "note": "Projects requiring qualification use literal pack scope and stop at a gap."
-      }
-    ]
+    "locale": "en"
   },
   "components": [
     {
-      "id": "request",
+      "id": "conversation",
       "type": "external",
-      "label": "Substantive request",
-      "sublabel": "code, research and analysis",
-      "pos": [20, 170],
-      "size": [150, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 3, "end_line": 10, "label": "activation scope" }]
+      "label": "Your conversation",
+      "sublabel": "Terra / medium \u00b7 Sonnet",
+      "pos": [
+        38,
+        290
+      ],
+      "size": [
+        190,
+        82
+      ],
+      "tag": "coordinator stays here"
     },
     {
-      "id": "delegate",
+      "id": "policy",
+      "type": "backend",
+      "label": "Prescribed routing",
+      "sublabel": "Classify execution + review",
+      "pos": [
+        294,
+        290
+      ],
+      "size": [
+        190,
+        82
+      ]
+    },
+    {
+      "id": "economical",
+      "type": "backend",
+      "label": "Execute or integrate",
+      "sublabel": "Settled work \u00b7 research \u00b7 PDFs",
+      "pos": [
+        570,
+        290
+      ],
+      "size": [
+        190,
+        82
+      ]
+    },
+    {
+      "id": "checks",
       "type": "security",
-      "label": "Delegate entrypoint",
-      "sublabel": "quality and allowance guardrail",
-      "tag": "automatic consideration",
-      "pos": [200, 170],
-      "size": [150, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 6, "end_line": 10, "label": "purpose" }]
+      "label": "Verify artifacts",
+      "sublabel": "Tests \u00b7 sources \u00b7 hashes",
+      "pos": [
+        846,
+        290
+      ],
+      "size": [
+        190,
+        82
+      ]
     },
     {
-      "id": "path-choice",
-      "type": "backend",
-      "label": "Choose path",
-      "sublabel": "scope with direct searches",
-      "pos": [380, 170],
-      "size": [140, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 12, "end_line": 24, "label": "path policy" }]
+      "id": "completion",
+      "type": "database",
+      "label": "Complete + record",
+      "sublabel": "Validate, then persist once",
+      "pos": [
+        1130,
+        290
+      ],
+      "size": [
+        190,
+        82
+      ]
     },
     {
-      "id": "direct-work",
-      "type": "backend",
-      "label": "Work directly",
-      "sublabel": "default; no helper calls",
-      "tag": "default",
-      "pos": [550, 170],
-      "size": [130, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 14, "end_line": 22, "label": "direct default" }]
-    },
-    {
-      "id": "ordinary-dispatch",
+      "id": "frontier-task",
       "type": "cloud",
-      "label": "Ordinary dispatch",
-      "sublabel": "bounded helper handoff",
-      "tag": "not qualification",
-      "pos": [380, 60],
-      "size": [180, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 26, "end_line": 50, "label": "ordinary policy" }]
+      "label": "Frontier assignment",
+      "sublabel": "Astra / high \u00b7 Fable",
+      "pos": [
+        570,
+        60
+      ],
+      "size": [
+        190,
+        82
+      ],
+      "tag": "plans \u00b7 decisions \u00b7 hard bugs"
     },
     {
-      "id": "ordinary-worker",
-      "type": "backend",
-      "label": "Bounded ordinary worker",
-      "sublabel": "owned investigation or implementation",
-      "pos": [590, 60],
-      "size": [180, 76],
-      "sources": [{ "path": "skills/delegate/delegation-contract.md", "line": 1, "end_line": 30, "label": "work order" }]
+      "id": "fresh-review",
+      "type": "cloud",
+      "label": "Fresh frontier review",
+      "sublabel": "Implemented behavior + audits",
+      "pos": [
+        988,
+        60
+      ],
+      "size": [
+        190,
+        82
+      ],
+      "tag": "independent context"
     },
     {
-      "id": "evidence-route",
+      "id": "blocker",
       "type": "security",
-      "label": "Evidence-required route",
-      "sublabel": "scope, expiry and review",
-      "pos": [380, 380],
-      "size": [180, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 52, "end_line": 54, "label": "strict route" }]
+      "label": "Blocked route",
+      "sublabel": "Permission, access or quota",
+      "pos": [
+        294,
+        520
+      ],
+      "size": [
+        190,
+        82
+      ]
     },
     {
-      "id": "routing-pack",
-      "type": "database",
-      "label": "Routing pack",
-      "sublabel": "routes, treatments and expiry",
-      "pos": [590, 380],
-      "size": [150, 76],
-      "sources": [{ "path": "skills/delegate/routing-pack.json", "line": 1, "end_line": 12, "label": "pack identity" }]
-    },
-    {
-      "id": "eligible-worker",
+      "id": "cheap-audit",
       "type": "backend",
-      "label": "Eligible worker",
-      "sublabel": "qualified work",
-      "pos": [900, 380],
-      "size": [100, 76],
-      "sources": [{ "path": "skills/delegate/pack-format.md", "line": 1, "end_line": 18, "label": "route contract" }]
+      "label": "Independent cheap audit",
+      "sublabel": "Sampled research / documents",
+      "pos": [
+        846,
+        520
+      ],
+      "size": [
+        190,
+        82
+      ]
     },
     {
-      "id": "frontier",
-      "type": "security",
-      "label": "Frontier coordinator",
-      "sublabel": "decide, verify and integrate",
-      "tag": "required verifier",
-      "pos": [710, 170],
-      "size": [160, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 56, "end_line": 62, "label": "verify and integrate" }]
-    },
-    {
-      "id": "accepted-result",
+      "id": "delivery",
       "type": "external",
-      "label": "Accepted result",
-      "sublabel": "checks and limitations reported",
-      "pos": [710, 270],
-      "size": [160, 76],
-      "sources": [{ "path": "skills/delegate/SKILL.md", "line": 62, "end_line": 74, "label": "delivery" }]
-    },
-    {
-      "id": "local-feedback",
-      "type": "database",
-      "label": "Local feedback",
-      "sublabel": "one observation; repair warnings",
-      "tag": "not savings evidence",
-      "pos": [900, 270],
-      "size": [160, 76],
-      "sources": [{ "path": "skills/delegate/scripts/local-learning.mjs", "line": 385, "end_line": 400, "label": "dispatch and observe" }]
-    }
-  ],
-  "boundaries": [
-    {
-      "kind": "region",
-      "label": "Delegate skill package",
-      "wraps": ["delegate", "path-choice", "direct-work", "ordinary-dispatch", "evidence-route", "routing-pack", "local-feedback"],
-      "pad": 36
-    },
-    {
-      "kind": "security-group",
-      "label": "Frontier-owned decision and acceptance boundary",
-      "wraps": ["frontier"],
-      "pad": 22
+      "label": "Deliver result",
+      "sublabel": "Only after completed status",
+      "pos": [
+        1130,
+        520
+      ],
+      "size": [
+        190,
+        82
+      ]
     }
   ],
   "connections": [
-    { "id": "activate", "from": "request", "to": "delegate", "variant": "emphasis" },
-    { "id": "choose", "from": "delegate", "to": "path-choice" },
-    { "id": "direct", "from": "path-choice", "to": "direct-work", "variant": "emphasis" },
-    { "id": "direct-verify", "from": "direct-work", "to": "frontier", "variant": "emphasis" },
-    { "id": "ordinary", "from": "path-choice", "to": "ordinary-dispatch", "fromSide": "top", "toSide": "bottom" },
-    { "id": "ordinary-worker", "from": "ordinary-dispatch", "to": "ordinary-worker" },
-    { "id": "ordinary-evidence", "from": "ordinary-worker", "to": "frontier", "fromSide": "bottom", "toSide": "top", "via": [[680, 155], [790, 155]] },
-    { "id": "strict", "from": "path-choice", "to": "evidence-route", "fromSide": "bottom", "toSide": "top", "via": [[450, 260], [650, 260], [650, 350], [470, 350]] },
-    { "id": "pack", "from": "evidence-route", "to": "routing-pack" },
-    { "id": "eligible", "from": "routing-pack", "to": "eligible-worker" },
-    { "id": "strict-evidence", "from": "eligible-worker", "to": "frontier", "fromSide": "right", "toSide": "right", "via": [[1090, 418], [1090, 208]] },
-    { "id": "accept", "from": "frontier", "to": "accepted-result", "variant": "emphasis" },
-    { "id": "observe", "from": "accepted-result", "to": "local-feedback", "fromSide": "right", "toSide": "left" }
+    {
+      "id": "intake",
+      "from": "conversation",
+      "to": "policy",
+      "variant": "emphasis"
+    },
+    {
+      "id": "settled-work",
+      "from": "policy",
+      "to": "economical",
+      "variant": "emphasis"
+    },
+    {
+      "id": "check-output",
+      "from": "economical",
+      "to": "checks",
+      "variant": "emphasis"
+    },
+    {
+      "id": "record-checked",
+      "from": "checks",
+      "to": "completion",
+      "variant": "emphasis"
+    },
+    {
+      "id": "prescribed-escalation",
+      "from": "policy",
+      "to": "frontier-task",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "Escalate"
+    },
+    {
+      "id": "return-settled",
+      "from": "frontier-task",
+      "to": "economical",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Return result",
+      "labelDy": 78
+    },
+    {
+      "id": "required-review",
+      "from": "checks",
+      "to": "fresh-review",
+      "fromSide": "top",
+      "toSide": "left",
+      "label": "When required"
+    },
+    {
+      "id": "review-pass",
+      "from": "fresh-review",
+      "to": "completion",
+      "fromSide": "right",
+      "toSide": "top",
+      "label": "PASS"
+    },
+    {
+      "id": "blocked",
+      "from": "policy",
+      "to": "blocker",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "sampled-audit",
+      "from": "checks",
+      "to": "cheap-audit",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "cheap-audit-pass",
+      "from": "cheap-audit",
+      "to": "completion",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "label": "PASS"
+    },
+    {
+      "id": "deliver",
+      "from": "completion",
+      "to": "delivery",
+      "variant": "emphasis",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Conversation ownership",
+      "items": [
+        "The coordinator launches bounded agents automatically within your permissions.",
+        "The parent conversation keeps its model; agent results return to it."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Separate execution from review",
+      "items": [
+        "Frontier plans and decides; a plan alone needs no second frontier call.",
+        "Features and behavior-changing fixes always receive fresh frontier review."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Checked completion",
+      "items": [
+        "Research and PDFs stay economical, including sampled audits.",
+        "Repairs return to the executor, then receive new checks and required review."
+      ]
+    }
   ]
 }

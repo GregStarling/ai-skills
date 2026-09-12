@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Portable route lookup, local evidence and advice. No dependencies or network; the helper never launches a model. */
 import {createHash, randomUUID} from 'node:crypto';
+import {readFileSync, realpathSync} from 'node:fs';
 import {readFile, writeFile, mkdir, readdir, realpath, open, link, unlink, rm} from 'node:fs/promises';
 import {resolve, join, relative, dirname} from 'node:path';
 import {homedir} from 'node:os';
@@ -68,6 +69,16 @@ export async function folderDigest(directory,exclude=[]) {
     }
   }
   await visit(directory); return digest(files);
+}
+export async function artifactDigest(cwd,files){
+ if(!text(cwd)||!list(text)(files)||!files.length||new Set(files).size!==files.length)fail('ARTIFACT_FILES_REQUIRED');
+ const root=await realpath(cwd),hashes={};
+ for(const file of [...files].sort()){
+  const path=await realpath(resolve(root,file)),rel=relative(root,path);
+  if(rel==='..'||rel.startsWith('../')||file!==rel)fail('ARTIFACT_PATH_INVALID');
+  hashes[rel]=bytesDigest(await readFile(path));
+ }
+ return {artifact_digest:digest(hashes),files:hashes};
 }
 export async function projectIdentity(cwd,host) {
   if (!hosts(host)) fail('HOST_REQUIRED');
@@ -210,7 +221,7 @@ const routeHosts=(pack,route)=>{const found=new Set([...route.workers,...route.r
 const assignments={locate_behavior:'repo_exploration',summarize_sources:'research',specified_edit:'mechanical_work',implement_feature:'bounded_implementation',implement_fix:'hard_debugging',implement_ui:'ui_implementation',implement_plan:'complex_implementation',reproduce_failure:null,frontier_decision:null};
 // Ordinary host delegation is a declared heuristic, NOT an expansion of pack evidence.
 // Slots are supplied from the actual host, once per session; no model names or prices are invented here.
-export function dispatchAssignment(input) {
+function legacyDispatch(input) {
   if(!input||!hosts(input.host)||!risks(input.risk)||!Object.hasOwn(assignments,input.assignment))fail('DISPATCH_INPUT_INVALID');
   for(const key of ['evidence_required','bounded','diagnosis_accepted','plan_settled','independent_review'])if(input[key]!==undefined&&!bool(input[key]))fail('DISPATCH_INPUT_INVALID');
   const result={assignment:input.assignment,policy:'ordinary',qualification_authority:false,worker:null,verification:null,gap:null};
@@ -232,6 +243,162 @@ export function dispatchAssignment(input) {
   if(input.independent_review===true&&!valid(input.reviewer))return gap('INDEPENDENT_REVIEWER_REQUIRED');
   if(input.independent_review===true&&input.reviewer.model===slots[selected].model)return gap('INDEPENDENT_REVIEWER_REQUIRED');
   return {...result,worker:slots[selected],worker_tier:selected,verification:input.independent_review===true?{mode:'separate',reviewer:input.reviewer,fresh_context:true}:{mode:'coordinator'},ranking_basis:'declared_host_slots_not_measured_savings'};
+}
+
+const actualModel=v=>object({model:text,effort:nullable(text)})(v);
+export const auditTask=taskId=>text(taskId)?parseInt(createHash('sha256').update(taskId).digest('hex').slice(0,8),16)%10===0:fail('TASK_ID_REQUIRED');
+const reviewRecord=v=>object({verdict:one('PASS','REPAIR','BLOCKED'),fresh_context:bool,model:text,effort:nullable(text),artifact_digest:sha})(v);
+const reviewMatches=(input)=>reviewRecord(input.review)&&input.review.verdict==='PASS'&&input.review.fresh_context===true&&actualModel(input.frontier)&&input.review.model===input.frontier.model&&input.review.effort===input.frontier.effort&&sha(input.artifact_digest)&&input.review.artifact_digest===input.artifact_digest;
+// Task classes are host-neutral; host guidance binds coordinator/frontier model IDs.
+const workRoutesV2=Object.freeze({
+ planning:'frontier',architecture:'frontier',critical_ui_ux:'frontier',accessibility_decision:'frontier',
+ hard_bug:'frontier',concurrency_bug:'frontier',security_decision:'frontier',data_migration_design:'frontier',
+ public_contract_design:'frontier',conflicting_evidence:'frontier',incident_diagnosis:'frontier',
+ consequential_decision:'frontier',performance_diagnosis:'frontier',
+ approved_execution:'coordinator',routine_implementation:'coordinator',routine_fix:'coordinator',
+ mechanical_edit:'coordinator',source_lookup:'coordinator',source_synthesis:'coordinator',
+ test_execution:'coordinator',regression_test:'coordinator',documentation_sync:'coordinator',
+ cosmetic_ui:'coordinator',format_conversion:'coordinator',dependency_inventory:'coordinator'
+});
+const simpleWork=new Set(['mechanical_edit','source_lookup','test_execution','documentation_sync','cosmetic_ui','format_conversion','dependency_inventory']);
+const substantialTaskV2=input=>['implement_feature','implement_fix','implement_ui','implement_plan','reproduce_failure','frontier_decision'].includes(input.assignment)||!simpleWork.has(classifyRouteV2(input).work_type)||(input.substantial??true);
+function classifyRouteV2(input){
+ const inferred={locate_behavior:'source_lookup',summarize_sources:'source_synthesis',specified_edit:'mechanical_edit',implement_feature:'routine_implementation',implement_fix:'routine_fix',implement_ui:input.plan_settled?'approved_execution':'critical_ui_ux',implement_plan:input.plan_settled?'approved_execution':'planning',reproduce_failure:'hard_bug',frontier_decision:'other'};
+ const work_type=input.work_type??inferred[input.assignment]??'other';
+ if(Object.hasOwn(workRoutesV2,work_type))return {work_type,destination:workRoutesV2[work_type],rule:'WORK_TYPE_'+work_type.toUpperCase(),basis:'prescribed'};
+ if(work_type!=='other')fail('WORK_TYPE_INVALID');
+ if(input.fallback_route!==undefined&&!one('coordinator','frontier','worker')(input.fallback_route))fail('FALLBACK_ROUTE_INVALID');
+ if(input.fallback_route&&text(input.routing_reason))return {work_type,destination:input.fallback_route,rule:'EXPLICIT_FALLBACK',basis:'coordinator_choice',reason:input.routing_reason};
+ return {work_type,destination:'frontier',rule:'UNCLASSIFIED_REQUIRES_FRONTIER',basis:'conservative_default'};
+}
+// v2 is frozen above: replaying historical observations must not reinterpret review policy.
+export const workRoutes=Object.freeze({...workRoutesV2,conflicting_evidence:'coordinator',research:'coordinator',pdf_analysis:'coordinator',substantial_refactor:'coordinator'});
+const informationWork=new Set(['research','pdf_analysis','source_lookup','source_synthesis','conflicting_evidence']);
+const decisionWork=new Set(['planning','architecture','critical_ui_ux','accessibility_decision','security_decision','data_migration_design','public_contract_design','consequential_decision']);
+const hardBugWork=new Set(['hard_bug','concurrency_bug','incident_diagnosis','performance_diagnosis']);
+const implementationWork=new Set(['approved_execution','routine_implementation','routine_fix','substantial_refactor','regression_test']);
+const implementationAssignments=new Set(['implement_feature','implement_fix','implement_ui','implement_plan']);
+export const substantialTask=input=>implementationAssignments.has(input.assignment)||!simpleWork.has(classifyRoute(input).work_type)||(input.substantial??true);
+export function classifyRoute(input){
+ const inferred={locate_behavior:'source_lookup',summarize_sources:'source_synthesis',specified_edit:'mechanical_edit',implement_feature:'routine_implementation',implement_fix:'routine_fix',implement_ui:input.plan_settled?'approved_execution':'critical_ui_ux',implement_plan:input.plan_settled?'approved_execution':'planning',reproduce_failure:'hard_bug',frontier_decision:'other'};
+ const work_type=input.work_type??inferred[input.assignment]??'other';
+ if(Object.hasOwn(workRoutes,work_type))return {work_type,destination:workRoutes[work_type],rule:'WORK_TYPE_'+work_type.toUpperCase(),basis:'prescribed'};
+ if(work_type!=='other')fail('WORK_TYPE_INVALID');
+ if(input.fallback_route!==undefined&&!one('coordinator','frontier','worker')(input.fallback_route))fail('FALLBACK_ROUTE_INVALID');
+ if(input.fallback_route&&text(input.routing_reason))return {work_type,destination:input.fallback_route,rule:'EXPLICIT_FALLBACK',basis:'coordinator_choice',reason:input.routing_reason};
+ return {work_type,destination:'frontier',rule:'UNCLASSIFIED_REQUIRES_FRONTIER',basis:'conservative_default'};
+}
+const userOverride=v=>object({scope:one('execution','review','both'),model:text,effort:nullable(text),instruction:text})(v);
+const overrideSelection=input=>input.user_model_override?{model:input.user_model_override.model,effort:input.user_model_override.effort}:null;
+const overrides=(input,phase)=>!!input.user_model_override&&[phase,'both'].includes(input.user_model_override.scope);
+/** Shared policy: source work is verified cheaply; frontier decisions do not imply a second frontier call. */
+export function reviewRequirement(input){
+ const {work_type}=classifyRoute(input),required=(role,reason)=>({role,required:role!=='none',reason});
+ // Assignment floor prevents relabeling implemented behavior as a cheap document task.
+ if(input.implemented_behavior===true||implementationAssignments.has(input.assignment)||implementationWork.has(work_type))return required('frontier','IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER');
+ if(informationWork.has(work_type))return auditTask(input.task_id)||input.independent_review===true?required('economy','INDEPENDENT_INFORMATION_AUDIT'):required('none','SOURCE_CHECKS');
+ if(input.independent_review===true)return required('frontier','EXPLICIT_INDEPENDENT_REVIEW');
+ if(decisionWork.has(work_type)||hardBugWork.has(work_type))return required('none','FRONTIER_EXECUTION_CHECKS');
+ if(auditTask(input.task_id))return required('frontier','STABLE_SIMPLE_AUDIT');
+ if(work_type==='other'&&substantialTask(input))return required('frontier','UNCLASSIFIED_SUBSTANTIAL_REVIEW');
+ return required('none','ORDINARY_CHECKS');
+}
+/** Persist only policy inputs; reviewers derive requirements independently from these fields. */
+export function reviewPolicyInput(input){
+ const keys=['assignment','risk','task_id','substantial','implemented_behavior','independent_review','decision_evidence','hard_bug_handoff','user_model_override','fallback_route','routing_reason','plan_settled','diagnosis_accepted','delegation_forbidden','coordinator','frontier','cheap_reviewer','signals'];
+ return {work_type:classifyRoute(input).work_type,...Object.fromEntries(keys.filter(k=>input[k]!==undefined).map(k=>[k,structuredClone(input[k])]))};
+}
+const handoffRecord=object({reproduction:ref,root_cause:ref,correction:ref,regression_check:ref});
+/** Evidence paths are relative to the task checkout and cannot escape via symlinks. */
+export function verifyPolicyEvidence(cwd,references){
+ if(!text(cwd)||!list(ref)(references))fail('POLICY_EVIDENCE_REQUIRED');
+ const root=realpathSync(cwd);
+ for(const evidence of references){
+  const path=realpathSync(resolve(root,evidence.path)),rel=relative(root,path);
+  if(rel==='..'||rel.startsWith('../')||rel!==evidence.path)fail('POLICY_EVIDENCE_PATH_INVALID');
+  if(bytesDigest(readFileSync(path))!==evidence.digest)fail('POLICY_EVIDENCE_DIGEST_MISMATCH');
+ }
+ return true;
+}
+const reviewerFor=(input,requirement)=>overrides(input,'review')?overrideSelection(input):requirement.role==='economy'?input.cheap_reviewer:input.frontier;
+const selectedReviewMatches=(input,reviewer)=>reviewRecord(input.review)&&input.review.verdict==='PASS'&&input.review.fresh_context===true&&actualModel(reviewer)&&input.review.model===reviewer.model&&input.review.effort===reviewer.effort&&sha(input.artifact_digest)&&input.review.artifact_digest===input.artifact_digest;
+function policyEvidenceGap(input){
+ const route=classifyRoute(input);
+ if(input.decision_evidence!==undefined&&!ref(input.decision_evidence))return 'ACCEPTED_DECISION_EVIDENCE_REQUIRED';
+ if(input.hard_bug_handoff!==undefined&&!handoffRecord(input.hard_bug_handoff))return 'HARD_BUG_HANDOFF_EVIDENCE_REQUIRED';
+ if(route.work_type==='approved_execution'&&!ref(input.decision_evidence))return 'ACCEPTED_DECISION_EVIDENCE_REQUIRED';
+ if(input.hard_bug_handoff!==undefined&&!hardBugWork.has(route.work_type))return 'HARD_BUG_HANDOFF_TYPE_CONFLICT';
+ try{const refs=[...(input.decision_evidence?[input.decision_evidence]:[]),...Object.values(input.hard_bug_handoff??{})];if(refs.length)verifyPolicyEvidence(input.cwd,refs);}catch{return 'POLICY_EVIDENCE_INVALID';}
+ return null;
+}
+export function dispatchAssignment(input) {
+ if(input?.legacy===true)return legacyDispatch(input);
+ if(!input||!hosts(input.host)||!risks(input.risk)||!Object.hasOwn(assignments,input.assignment))fail('DISPATCH_INPUT_INVALID');
+ for(const key of ['evidence_required','bounded','decision_bounded','diagnosis_accepted','plan_settled','independent_review','delegation_forbidden','legacy','substantial','implemented_behavior'])if(input[key]!==undefined&&!bool(input[key]))fail('DISPATCH_INPUT_INVALID');
+ if(input.user_model_override!==undefined&&!userOverride(input.user_model_override))fail('USER_MODEL_OVERRIDE_INVALID');
+ const signals=input.signals??{};
+ const fields=['delegation_requested','conflicting_evidence','architecture','consequential_action','capability_failure','no_progress_attempts','repair_attempts','host_available','permission_granted','limit_available'];
+ if(!signals||Array.isArray(signals)||typeof signals!=='object'||!Object.entries(signals).every(([k,v])=>fields.includes(k)&&(['no_progress_attempts','repair_attempts'].includes(k)?Number.isSafeInteger(v)&&v>=0:bool(v))))fail('DISPATCH_INPUT_INVALID');
+ const route=classifyRoute(input),result={route,rule_id:route.rule,assignment:input.assignment,policy:'ordinary',policy_version:3,qualification_authority:false,outcome:'blocked',coordinator:input.coordinator??null,frontier:input.frontier??null,worker:null,verification:null,gap:null,audit:{required:false,percent:10},review_requirement:null,standard_policy_acceptance:true};
+ const gap=code=>({...result,gap:code,reason:code});
+ if(input.evidence_required===true)return gap('USE_EVIDENCE_ROUTE');
+ if(!actualModel(input.coordinator))return gap('COORDINATOR_REQUIRED');
+ if(!text(input.task_id))return gap('TASK_ID_REQUIRED');
+ const requirement=reviewRequirement(input),reviewer=reviewerFor(input,requirement),information=informationWork.has(route.work_type);
+ result.review_requirement=requirement;result.audit.required=auditTask(input.task_id);
+ result.standard_policy_acceptance=!input.user_model_override;
+ if(input.user_model_override)result.user_model_override=input.user_model_override;
+ const phase=input.phase??'execute';if(!one('execute','complete')(phase))return gap('PHASE_REQUIRED');
+ if(information&&(implementationAssignments.has(input.assignment)||input.implemented_behavior===true))return gap('ASSIGNMENT_WORK_TYPE_CONFLICT');
+ const evidenceGap=policyEvidenceGap(input);if(evidenceGap)return gap(evidenceGap);
+ const launch=(outcome,reason,selection,role='frontier')=>{
+  if(input.delegation_forbidden===true)return gap('DELEGATION_FORBIDDEN');
+  if(signals.host_available===false)return gap('HOST_UNAVAILABLE');
+  if(signals.permission_granted===false)return gap('PERMISSION_REQUIRED');
+  if(signals.limit_available===false)return gap('HOST_LIMIT_REACHED');
+  if(!actualModel(selection))return gap(role==='economy'?'CHEAP_REVIEWER_REQUIRED':role==='worker'?'NO_AVAILABLE_WORKER':'FRONTIER_REQUIRED');
+  return {...result,outcome,gap:reason,reason:reason??route.rule,verification:outcome==='review'?{mode:'separate',reviewer:selection,fresh_context:true}:null,worker:outcome==='delegate'?selection:null,execution:outcome==='review'?null:selection};
+ };
+ if(!(input.bounded===true||input.decision_bounded===true))return gap('BOUND_ASSIGNMENT_FIRST');
+ if(phase==='complete'){
+  if(route.destination==='frontier'&&!input.hard_bug_handoff&&!overrides(input,'execution')&&!actualModel(input.frontier))return gap('FRONTIER_REQUIRED');
+  if(requirement.required){
+   if(requirement.role==='economy'&&!overrides(input,'review')&&actualModel(input.frontier)&&actualModel(reviewer)&&reviewer.model===input.frontier.model)return gap('CHEAP_REVIEWER_MUST_NOT_BE_FRONTIER');
+   if(selectedReviewMatches(input,reviewer))return {...result,outcome:'direct',review_verified:true,reason:requirement.reason};
+   return launch('review',input.review?(input.review.artifact_digest!==input.artifact_digest?'REVIEW_ARTIFACT_MISMATCH':requirement.role==='economy'?'FRESH_ECONOMY_REVIEW_REQUIRED':'FRESH_FRONTIER_REVIEW_REQUIRED'):null,reviewer,requirement.role);
+  }
+  return {...result,outcome:'direct',reason:requirement.reason};
+ }
+ if(overrides(input,'execution')){
+  const selection=overrideSelection(input);
+  if(canonical(selection)===canonical(input.coordinator))return {...result,outcome:'direct',rule_id:'USER_MODEL_OVERRIDE',reason:'USER_MODEL_OVERRIDE'};
+  return {...launch('delegate','USER_MODEL_OVERRIDE',selection,'worker'),rule_id:'USER_MODEL_OVERRIDE'};
+ }
+ let reason=null;
+ if(!information){
+  if(route.destination==='frontier'&&!input.hard_bug_handoff)reason=route.rule;
+  else if(signals.architecture)reason='ARCHITECTURE_DECISION_REQUIRED';
+  else if(signals.consequential_action)reason='CONSEQUENTIAL_ACTION_REQUIRES_FRONTIER';
+  else if(signals.conflicting_evidence)reason='CONFLICTING_EVIDENCE';
+  else if(signals.capability_failure)reason='CAPABILITY_FAILURE_REQUIRES_FRONTIER';
+  else if(signals.repair_attempts>=2)reason='REPEATED_REPAIR_REQUIRES_FRONTIER';
+  else if(signals.no_progress_attempts>=2)reason='NO_PROGRESS_ESCALATION_REQUIRED';
+  else if(['high','critical'].includes(input.risk)&&!input.hard_bug_handoff)reason='FRONTIER_RISK_REVIEW_REQUIRED';
+ }
+ if(reason)return launch('escalate',reason,input.frontier);
+ if(information&&(signals.architecture||signals.consequential_action))return gap('SEPARATE_CONSEQUENTIAL_DECISION');
+ if(information&&(signals.capability_failure||signals.no_progress_attempts>=2)&&signals.delegation_requested!==true)return gap('INFORMATION_TOOLS_OR_CHEAP_WORKER_REQUIRED');
+ if(input.assignment==='implement_fix'&&input.diagnosis_accepted!==true&&!input.hard_bug_handoff)return gap('ACCEPT_DIAGNOSIS_FIRST');
+ if((signals.delegation_requested!==true&&route.destination!=='worker')||input.delegation_forbidden===true)return {...result,outcome:'direct',reason:input.hard_bug_handoff?'EVIDENCED_HARD_BUG_HANDOFF':input.delegation_forbidden?'DELEGATION_FORBIDDEN':'DIRECT_DEFAULT'};
+ const slots=input.workers??{};
+ if(!Object.entries(slots).every(([k,v])=>['economy','standard'].includes(k)&&actualModel(v)))fail('WORKER_SLOTS_INVALID');
+ const failed=input.failed_models??[];if(!list(text)(failed))fail('FAILED_MODELS_INVALID');
+ const tier=information||(input.assignment==='specified_edit'&&input.risk==='low')?'economy':'standard';
+ const selected=(tier==='economy'?['economy','standard']:['standard']).find(k=>slots[k]&&!failed.includes(slots[k].model)&&(!information||!actualModel(input.frontier)||slots[k].model!==input.frontier.model));
+ if(!selected)return gap('NO_AVAILABLE_WORKER');
+ const available=launch('delegate',null,slots[selected],'worker');if(available.outcome==='blocked')return available;
+ if(requirement.required&&actualModel(reviewer))available.verification={mode:'separate',reviewer,fresh_context:true};
+ return {...available,worker_tier:selected,ranking_basis:'declared_host_slots_not_measured_savings'};
 }
 export async function routeAssignment(input,options={}) {
   if(!input||!hosts(input.host)||!risks(input.risk))fail('ROUTE_INPUT_INVALID');
@@ -361,6 +528,13 @@ async function lookupWithState(input,{stateRoot=process.env.DELEGATE_STATE_HOME 
   return advice.localPreferences?lookup({...input,localPreferences:advice.localPreferences},{skillRoot,now}):first;
 }
 export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_STATE_HOME || (process.env.XDG_STATE_HOME?join(process.env.XDG_STATE_HOME,'delegate'):join(homedir(),'.local/state/delegate')),skillRoot=skillDirectory,now=new Date().toISOString(),hostCommand=process.env.DELEGATE_HOST_COMMAND}={}) {
+  if(command==='complete') {
+    if(!input||(input.observation_version!==3&&input.schema_version!=='delegate_observation.v3')||input.acceptance!=='accepted')fail('COMPLETION_INPUT_INVALID');
+    const result=await runCommand('observe',input,{stateRoot,skillRoot,now,hostCommand});
+    if(result.status!=='observed')fail('COMPLETION_RECORDING_DISABLED');
+    return {status:'completed',task_id:input.task_id,artifact_digest:input.artifact_digest,qualification_authority:false};
+  }
+  if(command==='artifacts')return artifactDigest(input?.cwd,input?.files);
   const dispatch=command==='dispatch'?dispatchAssignment(input):null;
   if(dispatch&&(!input.cwd||dispatch.gap))return dispatch;
   if(command==='route')return routeAssignment(input,{stateRoot,skillRoot,now});
@@ -385,7 +559,7 @@ export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_S
   if(dispatch) {
     // The event directory already binds canonical project identity and host (including shared worktrees).
     // Ordinary feedback is a project-level warning, not a like-for-like economic comparison.
-    const rows=settings.learning?history.filter(e=>e.kind==='observation').map(e=>e.data).filter(r=>r.assignment===input.assignment&&r.worker?.model===dispatch.worker.model&&r.worker?.effort===dispatch.worker.effort&&Date.parse(r.at)<=Date.parse(now)&&Date.parse(r.at)>Date.parse(now)-30*86400000):[];
+    const rows=settings.learning&&dispatch.worker?history.filter(e=>e.kind==='observation').map(e=>e.data).filter(r=>r.assignment===input.assignment&&r.worker?.model===dispatch.worker.model&&r.worker?.effort===dispatch.worker.effort&&Date.parse(r.at)<=Date.parse(now)&&Date.parse(r.at)>Date.parse(now)-30*86400000):[];
     return {...dispatch,recent_outcomes:{tasks:rows.length,failures:rows.filter(r=>r.acceptance!=='accepted'||r.checks!=='passed').length,repairs:rows.reduce((n,r)=>n+r.repairs,0),basis:'caller_reported_not_economic_preference'}};
   }
   if(command==='observe') {
@@ -394,7 +568,38 @@ export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_S
     // Passed means the relevant verification succeeded, including frontier source inspection; no command is required.
     if(input.acceptance==='accepted'&&input.checks!=='passed')fail('ACCEPTANCE_REQUIRES_CHECKS');
     const previous=history.find(e=>e.id===`observation:${input.task_id}`);
-    const data={task_id:input.task_id,assignment:input.assignment,scope:input.scope??null,mode:input.mode,worker:input.worker??null,acceptance:input.acceptance,checks:input.checks,repairs:input.repairs,usage:input.usage??null,guidance_digest:previous?.data.guidance_digest??await folderDigest(skillRoot,['routing-pack.json']),at:previous?.data.at??now};
+    const v2=input.observation_version===2||input.schema_version==='delegate_observation.v2',v3=input.observation_version===3||input.schema_version==='delegate_observation.v3';
+    if((input.observation_version!==undefined&&![2,3].includes(input.observation_version))||(input.schema_version!==undefined&&!['delegate_observation.v2','delegate_observation.v3'].includes(input.schema_version))||(v2&&v3))fail('OBSERVATION_INVALID');
+    const observationAttempt=object({role:one('coordinator','worker','frontier','reviewer','repair'),model:text,effort:nullable(text),status:outcomes,observed_model:nullable(text)});
+    const escalation=v=>v===null||text(v)||list(text)(v);
+    if((v2||v3)&&(!bool(input.substantial??true)||!actualModel(input.coordinator)||!nullable(actualModel)(input.frontier??null)||!escalation(input.escalation??null)||!(input.review==null||reviewRecord(input.review))||!nullable(sha)(input.artifact_digest??null)||!list(observationAttempt)(input.attempts??[])||!nullable(nonnegative)(input.elapsed_ms??null)))fail('OBSERVATION_INVALID');
+    const required=v2&&(substantialTaskV2(input)||auditTask(input.task_id)||input.independent_review===true);
+    if(v2&&input.acceptance==='accepted'&&required&&(!reviewMatches(input)||!(input.attempts??[]).some(a=>a.role==='reviewer'&&a.status==='accepted'&&a.model===input.frontier.model&&a.effort===input.frontier.effort&&(a.observed_model===null||a.observed_model===a.model))))fail('FRESH_FRONTIER_REVIEW_REQUIRED');
+    const common={task_id:input.task_id,assignment:input.assignment,scope:input.scope??null,mode:input.mode,worker:input.worker??null,acceptance:input.acceptance,checks:input.checks,repairs:input.repairs,usage:input.usage??null,guidance_digest:previous?.data.guidance_digest??await folderDigest(skillRoot,['routing-pack.json']),at:previous?.data.at??now};
+    let data=v2?{...common,schema_version:'delegate_observation.v2',routing:classifyRouteV2(input),coordinator:input.coordinator,frontier:input.frontier??null,escalation:input.escalation??null,review:input.review??null,artifact_digest:input.artifact_digest??null,attempts:input.attempts??[],elapsed_ms:input.elapsed_ms??null,substantial:substantialTaskV2(input),audit_required:auditTask(input.task_id)}:common;
+    if(v3){
+      const policy_input=reviewPolicyInput(input),requirement=reviewRequirement(policy_input);
+      const dispatch=dispatchAssignment({...input,phase:'complete'});
+      if(input.acceptance==='accepted'){
+        if(dispatch.outcome!=='direct')fail(dispatch.gap??'REVIEW_REQUIRED');
+        if(!list(ref)(input.check_evidence)||!input.check_evidence.length)fail('CHECK_EVIDENCE_REQUIRED');
+        verifyPolicyEvidence(input.cwd,input.check_evidence);
+        const artifacts=await artifactDigest(input.cwd,input.artifact_files);
+        if(artifacts.artifact_digest!==input.artifact_digest)fail('OBSERVATION_ARTIFACT_MISMATCH');
+        if(requirement.required){
+          const selection=reviewerFor(input,requirement);
+          if(!(input.attempts??[]).some(a=>a.role==='reviewer'&&a.status==='accepted'&&a.model===selection.model&&a.effort===selection.effort&&(a.observed_model===null||a.observed_model===a.model)))fail('REVIEW_ATTEMPT_REQUIRED');
+        }
+        const execution=dispatchAssignment({...input,phase:'execute',signals:{...input.signals,delegation_requested:false}});
+        if(execution.outcome==='escalate'||(overrides(input,'execution')&&execution.outcome==='delegate')){
+          const selection=overrides(input,'execution')?overrideSelection(input):input.frontier;
+          if(!actualModel(selection)||!(input.attempts??[]).some(a=>['frontier','worker'].includes(a.role)&&a.status==='accepted'&&a.model===selection.model&&a.effort===selection.effort&&(a.observed_model===null||a.observed_model===a.model)))fail('EXECUTION_ATTEMPT_REQUIRED');
+          if(!list(ref)(input.execution_evidence)||!input.execution_evidence.length)fail('EXECUTION_EVIDENCE_REQUIRED');
+          verifyPolicyEvidence(input.cwd,input.execution_evidence);
+        }else if(execution.outcome==='blocked')fail(execution.gap);
+      }
+      data={...common,schema_version:'delegate_observation.v3',policy_input,routing:dispatch.route,rule_id:dispatch.rule_id,review_requirement:requirement,standard_policy_acceptance:dispatch.standard_policy_acceptance,coordinator:input.coordinator,frontier:input.frontier??null,cheap_reviewer:input.cheap_reviewer??null,escalation:input.escalation??null,review:input.review??null,artifact_digest:input.artifact_digest??null,artifact_files:input.artifact_files??[],check_evidence:input.check_evidence??[],execution_evidence:input.execution_evidence??[],attempts:input.attempts??[],elapsed_ms:input.elapsed_ms??null,substantial:substantialTask(input),audit_required:auditTask(input.task_id)};
+    }
     await atomicEvent(directory,`observation:${input.task_id}`,'observation',data);
     return {status:'observed',qualification_authority:false};
   }
