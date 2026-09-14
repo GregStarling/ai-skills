@@ -55,10 +55,21 @@ describe('deterministic execution and review policy',()=>{
   expect(dispatchAssignment({...packet,phase:'complete',frontier:undefined})).toMatchObject({gap:'FRONTIER_REQUIRED'});
   expect(reviewRequirement({...packet,implemented_behavior:true})).toMatchObject({role:'frontier',required:true});
  });
- it.each(['routine_implementation','routine_fix','substantial_refactor'])('%s requires fresh frontier review even when marked simple',work_type=>{
-  const packet={...base,work_type,substantial:false,phase:'complete'};
-  expect(dispatchAssignment(packet)).toMatchObject({outcome:'review',review_requirement:{role:'frontier'}});
-  expect(dispatchAssignment({...packet,frontier:undefined})).toMatchObject({outcome:'blocked',gap:'FRONTIER_REQUIRED'});
+ it.each(['routine_implementation','routine_fix','substantial_refactor','regression_test'])('%s requires fresh frontier review at medium risk and above even when marked simple',work_type=>{
+  for(const risk of ['medium','high','critical']){
+   const packet={...base,work_type,risk,substantial:false,phase:'complete'};
+   expect(dispatchAssignment(packet)).toMatchObject({outcome:'review',review_requirement:{role:'frontier',reason:'IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER'}});
+   expect(dispatchAssignment({...packet,frontier:undefined})).toMatchObject({outcome:'blocked',gap:'FRONTIER_REQUIRED'});
+  }
+  expect(reviewRequirement({...base,work_type,risk:undefined})).toMatchObject({role:'frontier'}); // unknown risk is medium
+ });
+ it.each(['routine_implementation','routine_fix','substantial_refactor','regression_test'])('%s at declared low risk completes on coordinator checks with a stable frontier audit sample',work_type=>{
+  const packet={...base,work_type,risk:'low',substantial:false,phase:'complete'};
+  expect(dispatchAssignment(packet)).toMatchObject({outcome:'direct',review_requirement:{role:'none',required:false,reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
+  expect(dispatchAssignment({...packet,frontier:undefined})).toMatchObject({outcome:'direct'});
+  expect(dispatchAssignment({...packet,task_id:auditId})).toMatchObject({outcome:'review',review_requirement:{role:'frontier',reason:'STABLE_LOW_RISK_AUDIT'}});
+  expect(dispatchAssignment({...packet,independent_review:true})).toMatchObject({outcome:'review',review_requirement:{role:'frontier',reason:'EXPLICIT_INDEPENDENT_REVIEW'}});
+  expect(dispatchAssignment({...packet,implemented_behavior:true,risk:'medium'})).toMatchObject({outcome:'review'});
  });
  it.each(['planning','architecture','hard_bug','concurrency_bug'])('%s honors explicit independent review without making a second review automatic',work_type=>{
   const packet={...base,assignment:'frontier_decision',work_type,phase:'complete'};
@@ -73,8 +84,10 @@ describe('deterministic execution and review policy',()=>{
  it('rejects information labels on real implementation assignments',()=>{
   for(const assignment of ['implement_feature','implement_fix','implement_ui','implement_plan']){
    const packet={...base,assignment,phase:'complete',substantial:false};
-   expect(reviewRequirement(packet)).toMatchObject({role:'frontier'});
+   expect(reviewRequirement({...packet,risk:'medium'})).toMatchObject({role:'frontier'});
+   expect(reviewRequirement(packet).reason).not.toBe('SOURCE_CHECKS'); // low risk still takes the implementation branch
    expect(dispatchAssignment(packet)).toMatchObject({gap:'ASSIGNMENT_WORK_TYPE_CONFLICT'});
+   expect(dispatchAssignment({...packet,risk:'medium'})).toMatchObject({gap:'ASSIGNMENT_WORK_TYPE_CONFLICT'});
   }
  });
  it.each(['hard_bug','concurrency_bug','incident_diagnosis','performance_diagnosis'])('%s stays with frontier unless the evidence supports a handoff',async work_type=>fixture(async(root,evidence)=>{
@@ -91,7 +104,8 @@ describe('deterministic execution and review policy',()=>{
   const packet={...base,cwd:root,assignment:'implement_plan',work_type:'approved_execution',plan_settled:true};
   expect(dispatchAssignment(packet)).toMatchObject({gap:'ACCEPTED_DECISION_EVIDENCE_REQUIRED'});
   expect(dispatchAssignment({...packet,decision_evidence:evidence})).toMatchObject({outcome:'direct'});
-  expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete'})).toMatchObject({outcome:'review'});
+  expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete'})).toMatchObject({outcome:'direct',review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
+  expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete',risk:'medium'})).toMatchObject({outcome:'review'});
   await symlink('/etc/hosts',join(root,'outside'));
   expect(dispatchAssignment({...packet,decision_evidence:{...evidence,path:'outside'}})).toMatchObject({gap:'POLICY_EVIDENCE_INVALID'});
  }));
@@ -100,14 +114,14 @@ describe('deterministic execution and review policy',()=>{
   expect(dispatchAssignment({...packet,signals:{repair_attempts:1}})).toMatchObject({outcome:'direct'});
   expect(dispatchAssignment({...packet,signals:{repair_attempts:2}})).toMatchObject({outcome:'escalate',gap:'REPEATED_REPAIR_REQUIRES_FRONTIER'});
   expect(dispatchAssignment({...packet,signals:{no_progress_attempts:2}})).toMatchObject({outcome:'escalate',gap:'NO_PROGRESS_ESCALATION_REQUIRED'});
-  expect(dispatchAssignment({...packet,phase:'complete',review:{verdict:'REPAIR',fresh_context:true,...frontier,artifact_digest:'sha256:'+'a'.repeat(64)}})).toMatchObject({outcome:'review'});
+  expect(dispatchAssignment({...packet,risk:'medium',phase:'complete',review:{verdict:'REPAIR',fresh_context:true,...frontier,artifact_digest:'sha256:'+'a'.repeat(64)}})).toMatchObject({outcome:'review'});
  });
  it('records explicit scoped model instructions without standard-acceptance claims for review exceptions',()=>{
   const override={scope:'execution',...frontier,instruction:'Use the frontier model for this research task.'};
   expect(dispatchAssignment({...base,user_model_override:override})).toMatchObject({outcome:'delegate',worker:frontier,rule_id:'USER_MODEL_OVERRIDE'});
   const plan={...base,assignment:'frontier_decision',work_type:'planning',user_model_override:{scope:'execution',...coordinator,instruction:'Use this model for the plan.'}};
   expect(dispatchAssignment(plan)).toMatchObject({outcome:'direct',rule_id:'USER_MODEL_OVERRIDE'});
-  const feature={...base,assignment:'implement_feature',work_type:'routine_implementation',phase:'complete',user_model_override:{scope:'review',...coordinator,instruction:'Use the coordinator model in a fresh context for review.'}};
+  const feature={...base,assignment:'implement_feature',work_type:'routine_implementation',risk:'medium',phase:'complete',user_model_override:{scope:'review',...coordinator,instruction:'Use the coordinator model in a fresh context for review.'}};
   expect(dispatchAssignment(feature)).toMatchObject({outcome:'review',standard_policy_acceptance:false,verification:{reviewer:coordinator}});
   expect(()=>dispatchAssignment({...base,user_model_override:{scope:'execution',...frontier}})).toThrow('USER_MODEL_OVERRIDE_INVALID');
  });
@@ -136,8 +150,8 @@ describe('v3 evidence and historical interpretation',()=>{
   await expect(runCommand('observe',{...packet,attempts:[attempt('frontier')],execution_evidence:[evidence]},options)).resolves.toMatchObject({status:'observed'});
  }));
  it('requires matching fresh review attempts for behavior and economy audits',async()=>fixture(async(root,evidence,artifacts)=>{
-  for(const [work_type,task_id,selection] of [['routine_implementation','ordinary-fixture',frontier],['pdf_analysis',auditId,coordinator]] as const){
-   const packet={...base,cwd:root,work_type,task_id,cheap_reviewer:coordinator,observation_version:3,mode:'direct',worker:null,acceptance:'accepted',checks:'passed',repairs:0,...artifacts,artifact_files:['answer.txt'],check_evidence:[evidence],review:pass(artifacts.artifact_digest,selection)},options={stateRoot:join(root,'state')};
+  for(const [work_type,task_id,risk,selection] of [['routine_implementation','ordinary-fixture','medium',frontier],['pdf_analysis',auditId,'low',coordinator]] as const){
+   const packet={...base,cwd:root,work_type,task_id,risk,cheap_reviewer:coordinator,observation_version:3,mode:'direct',worker:null,acceptance:'accepted',checks:'passed',repairs:0,...artifacts,artifact_files:['answer.txt'],check_evidence:[evidence],review:pass(artifacts.artifact_digest,selection)},options={stateRoot:join(root,'state')};
    await expect(runCommand('observe',packet,options)).rejects.toThrow('REVIEW_ATTEMPT_REQUIRED');
    await expect(runCommand('observe',{...packet,attempts:[attempt('reviewer',selection)]},options)).resolves.toMatchObject({status:'observed'});
   }
@@ -157,7 +171,7 @@ it('records execution-scoped model overrides as policy exceptions',()=>{
 describe('single-operation completion',()=>{
  const packetFor=(root:string,evidence:{path:string;digest:string},artifacts:{artifact_digest:string})=>({...base,cwd:root,observation_version:3,mode:'direct',worker:null,acceptance:'accepted',checks:'passed',repairs:0,...artifacts,artifact_files:['answer.txt'],check_evidence:[evidence]});
  it('persists reviewed completion once, including identical retries, without changing observe',async()=>fixture(async(root,evidence,artifacts)=>{
-  const packet={...packetFor(root,evidence,artifacts),assignment:'implement_fix',work_type:'routine_fix',diagnosis_accepted:true,review:pass(artifacts.artifact_digest),attempts:[attempt('reviewer')]},options={stateRoot:join(root,'state')};
+  const packet={...packetFor(root,evidence,artifacts),assignment:'implement_fix',work_type:'routine_fix',risk:'medium',diagnosis_accepted:true,review:pass(artifacts.artifact_digest),attempts:[attempt('reviewer')]},options={stateRoot:join(root,'state')};
   const expected={status:'completed',task_id:packet.task_id,artifact_digest:artifacts.artifact_digest,qualification_authority:false};
   expect(await runCommand('complete',packet,options)).toEqual(expected);
   expect(await runCommand('complete',packet,{...options,now:'2030-01-01T00:00:00Z'})).toEqual(expected);
@@ -168,7 +182,7 @@ describe('single-operation completion',()=>{
   await expect(runCommand('complete',{...packet,repairs:1},options)).rejects.toThrow('EVENT_CONFLICT');
  }));
  it('rejects missing review, checks, mismatched artifacts and substituted review identity',async()=>fixture(async(root,evidence,artifacts)=>{
-  const packet={...packetFor(root,evidence,artifacts),assignment:'implement_feature',work_type:'routine_implementation'},options={stateRoot:join(root,'state')};
+  const packet={...packetFor(root,evidence,artifacts),assignment:'implement_feature',work_type:'routine_implementation',risk:'medium'},options={stateRoot:join(root,'state')};
   await expect(runCommand('complete',packet,options)).rejects.toThrow('REVIEW_REQUIRED');
   const reviewed={...packet,review:pass(artifacts.artifact_digest),attempts:[attempt('reviewer')]};
   await expect(runCommand('complete',{...reviewed,check_evidence:[]},options)).rejects.toThrow('CHECK_EVIDENCE_REQUIRED');
@@ -176,6 +190,16 @@ describe('single-operation completion',()=>{
   await expect(runCommand('complete',{...reviewed,artifact_digest:'sha256:'+'b'.repeat(64),review:pass('sha256:'+'b'.repeat(64))},options)).rejects.toThrow('OBSERVATION_ARTIFACT_MISMATCH');
   await expect(runCommand('complete',{...reviewed,review:pass(artifacts.artifact_digest,coordinator)},options)).rejects.toThrow('FRESH_FRONTIER_REVIEW_REQUIRED');
   expect((await runCommand('status',{cwd:root,host:'codex'},options)).observations).toBe(0);
+ }));
+ it('completes declared low-risk implementation on checks alone and records the tier',async()=>fixture(async(root,evidence,artifacts)=>{
+  const packet={...packetFor(root,evidence,artifacts),assignment:'implement_feature',work_type:'routine_implementation',risk:'low'},options={stateRoot:join(root,'state')};
+  await expect(runCommand('complete',packet,options)).resolves.toMatchObject({status:'completed'});
+  const project=(await readdir(options.stateRoot))[0]!,directory=join(options.stateRoot,project,'codex','events'),files=await readdir(directory);
+  expect(JSON.parse(await readFile(join(directory,files[0]!),'utf8')).data).toMatchObject({review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'},policy_input:{risk:'low'}});
+  await expect(runCommand('complete',{...packet,task_id:'low-medium',risk:'medium'},options)).rejects.toThrow('REVIEW_REQUIRED');
+  await expect(runCommand('complete',{...packet,task_id:auditId},options)).rejects.toThrow('REVIEW_REQUIRED');
+  await expect(runCommand('complete',{...packet,task_id:'low-fix',assignment:'implement_fix',work_type:'hard_bug',diagnosis_accepted:true},options)).rejects.toThrow('REVIEW_REQUIRED'); // hard-bug fixes keep frontier review at low risk
+  await expect(runCommand('complete',{...packet,task_id:'low-decision',implemented_behavior:true,work_type:'architecture',assignment:'frontier_decision',attempts:[attempt('frontier')],execution_evidence:[evidence]},options)).rejects.toThrow('REVIEW_REQUIRED'); // so does implementing a consequential decision
  }));
  it('requires execution evidence when frontier made the decision',async()=>fixture(async(root,evidence,artifacts)=>{
   const packet={...packetFor(root,evidence,artifacts),assignment:'frontier_decision',work_type:'planning',attempts:[attempt('frontier')]},options={stateRoot:join(root,'state')};

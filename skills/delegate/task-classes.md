@@ -15,7 +15,7 @@ These legacy classes describe evidence-route workstream shapes; ordinary coordin
 
 Shapes:
 
-- single worker: verify by deliverable; research/PDF checks stay cheap, implemented behavior receives fresh frontier review.
+- single worker: verify by deliverable; research/PDF checks stay cheap, implemented behavior follows the risk tiers in SKILL.md (frontier review at medium risk and above).
 - specify-then-delegate: the frontier establishes layout, hierarchy, interaction and responsive requirements; a worker implements; the frontier inspects the rendered result.
 - diagnose-then-delegate: an ordinary `reproduce_failure` worker may run authorized local checks and propose a diagnosis. The frontier checks the evidence and settles the cause and fix before implementation. Under evidence-required routing, standalone reproduction remains a gap. Source reading alone is insufficient; resolve or report a blocked reproduction before assigning implementation.
 - plan-then-delegate: the frontier settles architecture, interfaces and the implementation plan; workers implement bounded assignments.

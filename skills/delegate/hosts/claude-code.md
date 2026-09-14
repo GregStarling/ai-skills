@@ -1,25 +1,32 @@
 # Claude Code host
 
-Suggested saved starting model: `sonnet`; frontier slot: `fable`. Resolve aliases using the actual host/provider and preserve requested versus observed names. Explicitly select Fable for escalation/review; do not let it inherit Sonnet. Use supported effort controls (medium coordinator/high frontier when available), otherwise record effort null. A skill cannot retroactively change the starting model; only a separately authorized setup changes saved defaults.
+Read this only when running in Claude Code.
 
-This skill explicitly requests automatic bounded delegation and required fresh frontier review. Do not ask again for routine agent launches inside the authorized task. Respect explicit no-delegation instructions. A genuine launch-permission block needs immediate concise pushback naming its controlling tool/instruction; capacity, model access and tool availability are separate blockers.
+Saved starting model for the test period: `sonnet`. Frontier: `fable`. A skill cannot change the
+saved model; only the user does, in settings.
 
-After checks and required review, call the helper's `complete` command once with the accepted v3 observation payload from [local learning](../local-learning.md). Deliver accepted completion only after `status:"completed"`. A dispatch result or reviewer PASS alone does not persist completion; no separate final dispatch-then-observe sequence is needed.
+## Launch controls
 
-Use `host:"claude"` in helper inputs, not `"claude-code"`.
+- Use the Agent tool (named Task in some versions). Its `model` option selects the child: `haiku` / `sonnet` for workers, `fable` for frontier planning, decisions and review. Select `fable` explicitly; never let a frontier packet inherit the coordinator model.
+- Agents start with a fresh context and do not share the parent's cache. Give them paths and requirements, not the conversation.
+- The Agent tool has no effort option. Agent-definition frontmatter can set effort for a named agent, but that does not create an invocation-time control. Record effort as `null` when it is neither controlled nor observable. Do not start a CLI child merely to tune effort.
+- Do not assume `Explore` runs on a cheaper model; it can inherit the coordinator's model. Pass `model` explicitly when cost matters.
+- Wait for every launched agent to reach a terminal state before delivering. A background task ID is a launch acknowledgment, not a result.
+- Routine agent launches inside the user's authorized task need no extra confirmation. Honor explicit no-delegation instructions. Report missing models, quota stops and tool gaps as availability blockers, not permission requests.
 
-Read this file only when running in Claude Code. For ordinary dispatch, prefer the active Agent tool (named Task in some versions): bind economy to Haiku and standard to Sonnet when available, using its explicit `model` option (`haiku` / `sonnet`); select the explicit available `fable` option for frontier work. Honor explicit user choices. Do not assume Explore runs on a cheaper model; it can inherit the coordinator's model.
+## Fallback
 
-Check the active tool schema before launch. Agent-definition frontmatter can set effort; that does not imply an invocation-time effort option exists. Record effort as `null` when neither controlled nor observable, and omit unsupported invocation fields. Do not start a CLI child merely to tune ordinary worker effort or create custom agents/global settings just for these slots. Native Fable controls take precedence; an existing authenticated CLI may supply unavailable required model controls under the fallback rule below.
+If a required control cannot be expressed through the Agent tool, or an evidence-required treatment
+needs exact model and effort, an already authenticated `claude -p` child with `--model` and
+`--effort` is the fallback. Use a fresh process for independent review, task-scoped `--allowedTools`
+for already authorized reads, edits and checks, and the authorized workspace. Do not add
+`--fallback-model` or `--bare`, install another runtime, or introduce API keys.
 
-Check effective settings: native model precedence and substitution behavior vary by version. Available-model restrictions or environment overrides may change the requested route. Record substitutions and choose another eligible treatment. Do not alter global user configuration.
+## Helper inputs
 
-Record requested aliases and actual observed models separately; an alias is not a pinned qualified snapshot. For evidence-required routing, match the selected treatment using explicit controls or an existing matching agent definition; omit effort for `not_applicable` models. If a required native capability is unavailable, or an evidence-required treatment needs controls Agent cannot express, an already-installed authenticated `claude -p` child is a fallback. State that reason, pass `--model` and applicable `--effort`, and use the authorized workspace, compact packet and permissions. Preserve output/usage and inspect the result. Do not add `--fallback-model`. Use a fresh process for independent review; `--no-session-persistence` alone does not remove inherited project instructions. Do not use `--bare`, install another runtime, or introduce API keys. If neither path can express required controls, report the actual blocker and leave mandatory acceptance incomplete.
+When you use the optional helper, pass `host:"claude"`, not `"claude-code"`.
 
-For a noninteractive child, provide task-scoped `--allowedTools` for already-authorized reads, edits and verification commands; `--permission-mode acceptEdits` alone does not authorize Bash checks. Preserve the host's permission boundary and report denied checks instead of retrying them repeatedly or claiming they ran.
+## Activation
 
-Run a single CLI worker in the foreground. For parallel workers, wait for every child and collect each exit status and output before returning from the coordinating shell. If the host backgrounds a command, use its completion tool and wait until that task finishes; a background task ID is only a launch acknowledgement. Never deliver or end the coordinator turn while child work is still active. For a full project, keep store and view ownership disjoint, then integrate and inspect the combined artifacts after both workers complete.
-
-Sources checked 2026-09-11: [Claude skills](https://code.claude.com/docs/en/skills), [native subagents and effective model/effort controls](https://code.claude.com/docs/en/sub-agents). Follow the active host's schema when its capabilities differ from current documentation.
-
-For research/PDF sampled audits use a fresh independent economical reviewer: Terra/medium on Codex or Sonnet with supported effort on Claude. Bind `cheap_reviewer` separately from frontier. No frontier identity is needed for ordinary source checks. Frontier planning/decision work does not by itself require a second reviewer; implemented behavior does. Preserve exact execution/review-scoped user overrides.
+The skill description drives automatic discovery. For a guaranteed second path during a test
+period, add the [CLAUDE.md snippet](claude-md-snippet.md) to the user's global CLAUDE.md.

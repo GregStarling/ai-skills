@@ -1,5 +1,9 @@
 # Model Governor
 
+## Test-readiness simplification — 2026-09-13
+
+Branch `test-readiness`. Goal: make the Sonnet→Fable (Claude Code) and Terra→Astra (Codex) design measurable in long real sessions. Four changes: (1) implemented-behavior review is tiered by declared risk in `reviewRequirement`; declared low risk gets coordinator checks plus a stable 10% frontier audit, medium and above keep mandatory fresh frontier review, hard-bug fixes always take frontier review, unknown risk is medium. (2) The helper's `dispatch`/`complete` protocol is optional and not part of ordinary completion; usage is measured from host transcripts with `scripts/measure-usage.mjs`. (3) SKILL.md and the host guides are cut to about a page, with supporting docs as optional reads. (4) `skills/delegate/hosts/claude-md-snippet.md` provides a CLAUDE.md activation path for test periods. Historical evidence, the routing pack, the evidence-required `route` path and the engine are unchanged. Personal installation and saved-model changes remain the user's action. See docs/test-readiness-2026-09-13.md.
+
 ## Current product scope — standalone delegate
 
 The current user-authorized release uses capable economical coordinators with automatic frontier escalation and fresh review. Implement the approved checklist in docs/cheaper-coordination-plan.md. Personal skill installation and Terra/Sonnet saved-default activation are authorized only after host gates pass; no remote publication. The user amended the cumulative live campaign ceiling from 50 to 100 executions, preserving the first 40 and all original approvals/reservations. Count implementation agents, reviewers, continuations, failures and retries. Historical budgets do not add capacity.

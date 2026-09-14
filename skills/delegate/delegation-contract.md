@@ -8,7 +8,7 @@ For investigation, five fields suffice:
 - **Stopping point:** answered, a consequential decision is needed, or progress stalls.
 - **Expected return:** concise findings, exact evidence references, checks and the specific unresolved decision.
 
-The coordinator supplies selected model/effort through host controls; workers need no hashes, receipt instructions or copied routing policy. Keep explicit tool constraints in the brief when the host cannot encode them. Research/PDF source checks stay economical, including independent cheap sampled audits. Implemented behavior and other simple-task audits receive required frontier review; every eligible task receives a v3 outcome observation.
+The coordinator supplies selected model/effort through host controls; workers need no hashes, receipt instructions or copied routing policy. Keep explicit tool constraints in the brief when the host cannot encode them. Research/PDF source checks stay economical, including independent cheap sampled audits. Implemented behavior follows the risk tiers in SKILL.md: fresh frontier review at medium risk and above, coordinator checks plus a sampled frontier audit at declared low risk. Recording outcomes is optional and only for explicit evaluations.
 
 For implementation, supply a compact work order:
 

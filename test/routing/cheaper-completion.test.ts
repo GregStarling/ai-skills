@@ -79,7 +79,7 @@ it('rejects blockers, missing cases, zero tests, stale and incomplete source',as
   [(f:any)=>f.report.source_revision='b'.repeat(40),'SOURCE_REVISION_MISMATCH'],
   [(f:any)=>f.report.source_manifest.pop(),'SOURCE_MANIFEST_INCOMPLETE_OR_CHANGED']
  ] as const){const f=await fixture();modify(f);await expect(v.validateCompletionReport(f.report,{root:f.root,userRoot:f.userRoot,currentRevision:revision})).rejects.toThrow(error);}
-});
+},30000); // builds many temp fixtures; the default 5 s budget flaked under a parallel full run
 it('rejects arbitrary traces and failed grades even after their hashes are updated',async()=>{
  for(const badTrace of [true,false]){const f=await fixture();const gate=f.get('CODEX-LIVE'),ref=gate.objective.runs[0],r=JSON.parse(await readFile(join(f.root,ref.path),'utf8'));
   if(badTrace){const path=ref.path.replace('result.json','coordinator/stdout.jsonl');const trace=await f.put(path,'native trace\n','native_trace');r.execution.stdout_sha256=trace.sha256.slice(7);gate.evidence=gate.evidence.map((x:any)=>x.path===path?trace:x);}else r.after.passed=false;

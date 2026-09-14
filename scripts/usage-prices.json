@@ -1,0 +1,15 @@
+{
+  "note": "USD per million tokens at Anthropic first-party list rates, checked 2026-09-13 against the bundled Claude API reference. cache_write_5m is 1.25x input and cache_write_1h is 2x input. Claude Code transcripts report which TTL was used; default_cache_ttl applies only when that breakdown is absent. These are proxies for comparing sessions, not subscription billing.",
+  "default_cache_ttl": "1h",
+  "aliases": {
+    "claude-haiku-4-5-20251001": "claude-haiku-4-5"
+  },
+  "models": {
+    "claude-fable-5-1": { "input": 10, "output": 50, "cache_read": 0.25, "cache_write_5m": 12.5, "cache_write_1h": 20 },
+    "claude-fable-5":   { "input": 10, "output": 50, "cache_read": 1.0,  "cache_write_5m": 12.5, "cache_write_1h": 20 },
+    "claude-opus-5":    { "input": 5,  "output": 25, "cache_read": 0.5,  "cache_write_5m": 6.25, "cache_write_1h": 10 },
+    "claude-opus-4-8":  { "input": 5,  "output": 25, "cache_read": 0.5,  "cache_write_5m": 6.25, "cache_write_1h": 10 },
+    "claude-sonnet-5":  { "input": 2,  "output": 10, "cache_read": 0.2,  "cache_write_5m": 2.5,  "cache_write_1h": 4 },
+    "claude-haiku-4-5": { "input": 1,  "output": 5,  "cache_read": 0.1,  "cache_write_5m": 1.25, "cache_write_1h": 2 }
+  }
+}

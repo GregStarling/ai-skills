@@ -1,12 +1,12 @@
-# Tracked evidence and history controls
+# Optional recording and evidence controls
 
-Read Ordinary completion below for every eligible task; later receipt and history sections apply only when relevant. The helper uses existing Node built-ins, launches no models and uploads nothing. A successful required v3 observation is part of completion. Repair recording errors locally; if recording remains blocked, report the limitation and do not claim accepted completion.
+Recording is optional. Ordinary tasks need none of the commands below; usage is measured from host transcripts with the repository's measurement script. Use this file when an explicit evaluation asks for recorded outcomes, or for the narrow evidence-required routing path. The helper uses existing Node built-ins, launches no models and uploads nothing. When recording was requested and fails, repair the input locally; if it stays blocked, report the limitation rather than claiming a recorded result.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.
 
 ## Ordinary completion (v3)
 
-Use one final `complete` call for every eligible accepted direct or delegated task with
+When an evaluation requests recording, use one final `complete` call for the accepted direct or delegated task with
 `observation_version:3` and `acceptance:"accepted"`. It reuses v3 observation validation and atomic
 persistence, returning `status:"completed"`, `task_id` and `artifact_digest` only after success.
 Missing evidence, persistence errors and disabled recording fail; they never report completion.

@@ -1,13 +1,32 @@
 # Verification by deliverable
 
-Verification depth follows the assignment's risk and affected behavior, not repository size. Implemented features, behavior-changing fixes, substantial refactors and implemented behavior require fresh frontier review, including direct execution. Research/PDF/synthesis use source and artifact checks; their stable sampled audits use an independent cheaper reviewer. Plan-only and decision-only work uses a frontier decision plus evidence/criteria checks, without automatically adding a second frontier. Other simple-task audits retain frontier review. The coordinator's model does not exempt it from that rule; explicit no-delegation instructions remain binding and a required but unavailable review is blocked. This does not require a historical pack lane. For evidence-required routing only, honor the returned reviewer lane, exact controls and different-model/family/fresh-context rules.
+Verification depth follows the assignment's declared risk and affected behavior, not repository size.
 
-Inspect the actual artifact, not just the worker's verdict. For investigation, check decisive source locations and unresolved dependencies: this source inspection can establish passed checks without executing a test command. Unresolved consequential decisions may be the requested finding; unchecked evidence is still unverified. For a tweak or feature, inspect the diff, affected callers/contracts and regression evidence. For a bug, verify reproduction and corrected behavior. For UI, inspect rendering, interactions and relevant viewport sizes; a build alone is insufficient. Check integrated behavior and project-required gates after combining workstreams.
+| Deliverable | Verification |
+| --- | --- |
+| Implemented behavior at medium risk or above | Fresh frontier review of the final artifact, mandatory, including when the coordinator or the frontier executed it |
+| Implemented behavior at declared low risk | Coordinator runs the relevant checks and inspects the diff, callers and contracts. A stable 10% sample keyed to the task ID gets a fresh frontier review |
+| Hard-bug fixes, and implementation of a consequential decision | Fresh frontier review at any risk |
+| Plan-only or decision-only work | The frontier decision plus checks of sources, constraints and acceptance criteria; no automatic second frontier |
+| Research, PDF, synthesis | Source, extraction, citation and calculation checks; a stable 10% sample gets a fresh independent economical audit |
+| Mechanical and other simple work | Proportionate checks; a stable 10% sample gets a frontier audit |
 
-Give an independent reviewer requirements, final artifacts, checks and known constraints, never an implementer's reasoning transcript or prior verdict as authority. Missing access or checks remain explicit limitations.
+Explicitly requested independent review is always frontier. Explicit no-delegation instructions are
+binding; a required but unavailable review is blocked, not skipped.
 
-Return **PASS**, **REPAIR** with concrete findings, or **BLOCKED** with the actual cause. Send targeted repairs to the worker when useful; repeated failure can justify stronger execution or a direct fix. Reverify repairs and integration. Stop when acceptance is met; no speculative review loops.
+Inspect the actual artifact, not the worker's verdict. For investigation, check the decisive source
+locations and unresolved dependencies; source inspection can establish a passed check without running
+a command. For a tweak or feature, inspect the diff, affected callers and contracts, and regression
+evidence. For a bug, verify reproduction and corrected behavior. For UI, inspect rendering,
+interactions and relevant viewport sizes; a build alone is insufficient. Check integrated behavior and
+project-required gates after combining workstreams.
 
-Ordinary work uses a compact outcome observation, not a routed receipt. Evidence-routed implementation and explicit tracked evaluations use [local learning](local-learning.md): preserve every attempt, actual checks, configuration/observation distinctions and unknown usage. Never attach ordinary host execution to a pack route it does not fit. Observations and receipts are not proof of savings or new qualification.
+Give an independent reviewer the requirements, the final artifacts, the checks that ran and known
+constraints; never the implementer's reasoning transcript or prior verdict as authority. Reviewers
+return **PASS**, **REPAIR** with concrete findings, or **BLOCKED** with the actual cause. Send
+targeted repairs to the executor; repeated failure justifies stronger execution. Reverify repairs and
+integration. Any later edit invalidates a review. Stop when acceptance is met.
 
-Bind the reviewer PASS to the selected required reviewer model/effort and current final artifact digest. Any later edit invalidates that binding. A caller-supplied review record documents an inspection; native traces establish whether a fresh agent actually ran. Never treat a boolean or worker summary as independent proof.
+Ordinary work needs no recording. Explicit evaluations may record outcomes through
+[local learning](local-learning.md); observations and receipts are never proof of savings or
+qualification.

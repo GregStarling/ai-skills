@@ -17,12 +17,14 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
-The current canonical source uses Terra/medium or Sonnet coordination, prescribed frontier decisions and fresh implemented-behavior review. Research/PDF execution and source checks remain economical. `complete` validates and persists accepted v3 observations. Explicitly requested independent review also applies to planning and diagnosis; only automatic second review is exempted. Campaign completion now binds each accepted host run and exercise to its budget entry and native execution count.
+The current canonical source (test-readiness revision, 2026-09-13) uses Terra/medium or Sonnet coordination with prescribed frontier decisions. Fresh frontier review of implemented behavior is tiered by declared risk: mandatory at medium and above, for hard-bug fixes and implementations of consequential decisions at any risk, and for a stable 10% sample of declared low-risk tasks; other low-risk implementation completes on coordinator checks. Research/PDF execution and source checks remain economical. The helper's `dispatch` and `complete` commands are optional tools rather than steps in every task; usage is measured from host transcripts with `scripts/measure-usage.mjs`. SKILL.md and the host guides were cut to about a page, and `hosts/claude-md-snippet.md` was added for test-period activation. See [the change record](test-readiness-2026-09-13.md). The previous revision's digests are preserved below.
 
 | Current source digest | Value |
 | --- | --- |
-| Helper `folderDigest` (14 consumer files) | `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7` |
-| Guidance without `routing-pack.json` | `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730` |
+| Helper `folderDigest` (15 consumer files) | `sha256:3680fd617905a2ff8165d799d79f5c6204d5663859a41e816effa3d3074727b5` |
+| Guidance without `routing-pack.json` | `sha256:4f299777edcd3db7bb930da5d91503d0fd783518a79d821704bd340a1c2ba64d` |
+
+Previous revision (2026-09-12 release verification, 14 consumer files): folder `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7`, guidance `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730`.
 
 Personal installation/default activation remains incomplete. The [targeted live checks](completion-remediation-live.md) apply to their recorded earlier source; the release review repairs require renewed final-source host acceptance before activation. The following entries preserve the earlier consumer and installation history.
 

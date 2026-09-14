@@ -53,7 +53,8 @@ describe('ordinary bounded dispatch',()=>{
  it('keeps information direct and makes implemented-behavior review explicit',()=>{
   expect(dispatchAssignment({...input,signals:{}})).toMatchObject({outcome:'direct',worker:null,gap:null});
   expect(dispatchAssignment({...input,phase:'complete',substantial:true,signals:{}})).toMatchObject({outcome:'direct',review_requirement:{role:'none'}});
-  const packet={...input,assignment:'implement_feature',phase:'complete',signals:{}};
+  expect(dispatchAssignment({...input,assignment:'implement_feature',phase:'complete',signals:{}})).toMatchObject({outcome:'direct',review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
+  const packet={...input,assignment:'implement_feature',risk:'medium',phase:'complete',signals:{}};
   expect(dispatchAssignment(packet)).toMatchObject({outcome:'review',verification:{mode:'separate',reviewer:frontier,fresh_context:true}});
   const artifact_digest='sha256:'+'a'.repeat(64),review={verdict:'PASS',fresh_context:true,...frontier,artifact_digest};
   expect(dispatchAssignment({...packet,artifact_digest,review})).toMatchObject({outcome:'direct',review_verified:true});
@@ -205,7 +206,8 @@ it('covers every prescribed route, blocks unavailable frontier and prevents simp
  }
  for(const work_type of ['routine_fix','routine_implementation','substantial_refactor','regression_test']){
   expect(substantialTask({work_type,substantial:false})).toBe(true);
-  expect(dispatchAssignment({...input,work_type,substantial:false,signals:{},phase:'complete'})).toMatchObject({outcome:'review'});
+  expect(dispatchAssignment({...input,work_type,substantial:false,signals:{},phase:'complete'})).toMatchObject({outcome:'direct',review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
+  expect(dispatchAssignment({...input,work_type,risk:'medium',substantial:false,signals:{},phase:'complete'})).toMatchObject({outcome:'review',review_requirement:{role:'frontier'}});
  }
  expect(()=>dispatchAssignment({...input,work_type:'unrecognized'})).toThrow('WORK_TYPE_INVALID');
  expect(()=>dispatchAssignment({...input,work_type:'other',fallback_route:'guess'})).toThrow('FALLBACK_ROUTE_INVALID');
@@ -214,7 +216,8 @@ it('covers every prescribed route, blocks unavailable frontier and prevents simp
 
 it('keeps the assignment review floor even with a contradictory mechanical label',async()=>{
  const packet={...input,assignment:'implement_fix',work_type:'mechanical_edit',substantial:false,signals:{},phase:'complete'};
- expect(dispatchAssignment(packet)).toMatchObject({outcome:'review'});
+ expect(dispatchAssignment(packet)).toMatchObject({outcome:'direct',review_requirement:{reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}}); // implementation branch, not the mechanical-edit rule
+ expect(dispatchAssignment({...packet,risk:'medium'})).toMatchObject({outcome:'review',review_requirement:{role:'frontier'}});
  const root=await mkdtemp(join(tmpdir(),'delegate-fix-floor-'));
  try{await expect(runCommand('observe',{...packet,cwd:root,observation_version:2,mode:'direct',worker:null,acceptance:'accepted',checks:'passed',repairs:0},{stateRoot:join(root,'state')})).rejects.toThrow('FRESH_FRONTIER_REVIEW_REQUIRED');}finally{await rm(root,{recursive:true,force:true});}
 });

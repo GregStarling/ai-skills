@@ -21,7 +21,7 @@ These are the intended host settings. Installing the skill does not change saved
 
 [Open the interactive map](docs/delegate-system.html) · [Editable Archify source](docs/delegate-system.architecture.json)
 
-The main path stays with the economical coordinator. Frontier assignments and independent reviews branch from that path only when their rules apply. The `complete` operation validates artifacts, checks, identities, and required review, then persists one accepted observation before reporting completion. A routing decision alone is not completed work.
+The main path stays with the economical coordinator. Frontier assignments and independent reviews branch from that path only when their rules apply. Since 2026-09-13 the helper's `dispatch` and `complete` operations are optional tools for unclear cases and explicit evaluations rather than steps in every task; usage is measured from host transcripts with [scripts/measure-usage.mjs](scripts/measure-usage.mjs) instead of from inside the session. The map above predates that simplification.
 
 ## What Goes Where
 
@@ -29,8 +29,8 @@ The main path stays with the economical coordinator. Frontier assignments and in
 | --- | --- | --- |
 | Create or materially revise a plan | Frontier | Evidence, constraints, and acceptance checks; no second frontier call just for producing a plan |
 | Critical UI/UX, architecture, security, migration, or public-contract decisions | Frontier decides; settled implementation can return to the coordinator | Fresh frontier review of implemented behavior |
-| Hard bugs, races, unexplained failures, or uncertain root causes | Frontier by default | Fresh frontier review of behavior-changing fixes |
-| Features, understood fixes, and substantial refactors | Economical coordinator or bounded workers | Fresh frontier review every time |
+| Hard bugs, races, unexplained failures, or uncertain root causes | Frontier by default | Fresh frontier review of behavior-changing fixes, at any risk |
+| Features, understood fixes, and substantial refactors | Economical coordinator or bounded workers | Fresh frontier review at medium risk and above; declared low risk gets coordinator checks plus a stable 10% frontier audit |
 | Research, source comparison, synthesis, and PDF analysis | Economical coordinator or bounded workers | Source, extraction, citation, calculation, and completeness checks; sampled audits use an independent economical reviewer |
 | Exact edits, documentation sync, formatting, and settled cosmetic changes | Economical coordinator | Proportionate checks and stable audits |
 | Unmatched work | Brief inspection, then a recorded routing decision | The resulting category's review rule |
@@ -67,6 +67,8 @@ mkdir -p ~/.claude/skills
 cp -R ai-skills/skills/delegate ~/.claude/skills/delegate
 ```
 
+For a guaranteed second activation path during a test period, append the block from `skills/delegate/hosts/claude-md-snippet.md` to `~/.claude/CLAUDE.md`; remove it when the test ends.
+
 Start a new session with your chosen coordinator and write:
 
 ```text
@@ -95,6 +97,8 @@ Independent investigations and settled workstreams can use bounded workers when 
 
 ## Validation and Rollout Status
 
+**2026-09-13 test-readiness revision.** Review of implemented behavior is now tiered by declared risk, the recording protocol is optional, the skill text is about a page, and a CLAUDE.md activation snippet exists for test periods. These are design changes for a real-session test, not new evidence; see [the change record](docs/test-readiness-2026-09-13.md). The historical results below describe earlier revisions.
+
 The targeted Codex trials verified economical execution, automatic fresh frontier review, and persisted completion for a bug fix with 21 passing regression checks. A research trial completed on Terra with no frontier calls and passed the strict output checks. These trials precede the release-review fixes to explicit independent review and campaign accounting. Local regression tests cover those fixes, completion validation, persistence failures, and idempotent retries.
 
 Full rollout remains incomplete. Claude live validation is blocked by the recorded Fable quota failure, and final acceptance plus fresh installed-session/default checks remain outstanding. The revised skill has not been installed into the personal discovery locations, and saved defaults have not been changed as part of this rollout. These trials do not establish general model qualification or a broad savings claim.
@@ -106,6 +110,7 @@ See the [latest targeted results](docs/completion-remediation-live.md) and [loca
 Delegate is the skill you install. Model Governor is the maintainer tooling used to test and maintain it. The engine, benchmark notes, routing policy, and validation record live in the docs.
 
 - [Install details](docs/install.md)
+- [Test-readiness changes and measurement protocol](docs/test-readiness-2026-09-13.md)
 - [Skill instructions and routing policy](skills/delegate/SKILL.md)
 - [Interactive system map](docs/delegate-system.html)
 - [Deterministic routing policy and checklist](docs/deterministic-routing-refinement.md)

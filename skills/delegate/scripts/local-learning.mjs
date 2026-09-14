@@ -295,7 +295,15 @@ const overrides=(input,phase)=>!!input.user_model_override&&[phase,'both'].inclu
 export function reviewRequirement(input){
  const {work_type}=classifyRoute(input),required=(role,reason)=>({role,required:role!=='none',reason});
  // Assignment floor prevents relabeling implemented behavior as a cheap document task.
- if(input.implemented_behavior===true||implementationAssignments.has(input.assignment)||implementationWork.has(work_type))return required('frontier','IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER');
+ if(input.implemented_behavior===true||implementationAssignments.has(input.assignment)||implementationWork.has(work_type)){
+  // Review is tiered by declared risk (2026-09-13). Only an explicit `low` earns coordinator verification;
+  // unknown, medium, high and critical keep fresh frontier review. Hard-bug fixes and implementation
+  // of consequential decisions keep it at any risk.
+  if(input.risk!=='low'||hardBugWork.has(work_type)||decisionWork.has(work_type)||input.hard_bug_handoff!==undefined)return required('frontier','IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER');
+  if(input.independent_review===true)return required('frontier','EXPLICIT_INDEPENDENT_REVIEW');
+  if(auditTask(input.task_id))return required('frontier','STABLE_LOW_RISK_AUDIT');
+  return required('none','LOW_RISK_IMPLEMENTATION_CHECKS');
+ }
  if(informationWork.has(work_type))return auditTask(input.task_id)||input.independent_review===true?required('economy','INDEPENDENT_INFORMATION_AUDIT'):required('none','SOURCE_CHECKS');
  if(input.independent_review===true)return required('frontier','EXPLICIT_INDEPENDENT_REVIEW');
  if(decisionWork.has(work_type)||hardBugWork.has(work_type))return required('none','FRONTIER_EXECUTION_CHECKS');
