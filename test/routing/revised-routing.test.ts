@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {auditTask,artifactDigest,dispatchAssignment,reviewRequirement,reviewPolicyInput,runCommand} from '../../skills/delegate/scripts/local-learning.mjs';
+import {auditTask,artifactDigest,checkWork,dispatchAssignment,reviewRequirement,reviewPolicyInput,runCommand} from '../../skills/delegate/scripts/local-learning.mjs';
 
 const coordinator={model:'terra-test',effort:'medium'},frontier={model:'astra-test',effort:'high'};
 const base={host:'codex',assignment:'summarize_sources',work_type:'research',risk:'low',task_id:'ordinary-fixture',coordinator,frontier,bounded:true,substantial:true};
@@ -104,7 +104,8 @@ describe('deterministic execution and review policy',()=>{
   const packet={...base,cwd:root,assignment:'implement_plan',work_type:'approved_execution',plan_settled:true};
   expect(dispatchAssignment(packet)).toMatchObject({gap:'ACCEPTED_DECISION_EVIDENCE_REQUIRED'});
   expect(dispatchAssignment({...packet,decision_evidence:evidence})).toMatchObject({outcome:'direct'});
-  expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete'})).toMatchObject({outcome:'direct',review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
+  expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete'})).toMatchObject({outcome:'review',review_requirement:{role:'frontier',reason:'HANDOFF_ORIGIN_REQUIRES_FRONTIER_REVIEW'}});
+  expect(dispatchAssignment({...packet,decision_evidence:evidence,origin_work_type:'planning',phase:'complete'})).toMatchObject({outcome:'direct',review_requirement:{role:'none',reason:'LOW_RISK_IMPLEMENTATION_CHECKS'}});
   expect(dispatchAssignment({...packet,decision_evidence:evidence,phase:'complete',risk:'medium'})).toMatchObject({outcome:'review'});
   await symlink('/etc/hosts',join(root,'outside'));
   expect(dispatchAssignment({...packet,decision_evidence:{...evidence,path:'outside'}})).toMatchObject({gap:'POLICY_EVIDENCE_INVALID'});
@@ -128,6 +129,95 @@ describe('deterministic execution and review policy',()=>{
  it.each([[{host_available:false},'HOST_UNAVAILABLE'],[{permission_granted:false},'PERMISSION_REQUIRED'],[{limit_available:false},'HOST_LIMIT_REACHED']])('keeps actual launch-control failures distinct: %j',(signals,gap)=>{
   expect(dispatchAssignment({...base,work_type:'planning',assignment:'frontier_decision',signals})).toMatchObject({outcome:'blocked',gap});
  });
+});
+
+describe('lightweight ordinary review check',()=>{
+ const routine={task_id:'ordinary-fixture',assignment:'implement_feature',work_type:'routine_implementation' as const,risk:'low' as const};
+ it('selects the same audit on retry and after work/risk changes',()=>{
+  for(const task_id of [routine.task_id,auditId]){
+   const first=checkWork({...routine,task_id});
+   expect(checkWork({...routine,task_id})).toEqual(first);
+   expect(checkWork({...routine,task_id,risk:'medium'}).audit).toEqual(first.audit);
+   expect(checkWork({...routine,task_id,work_type:'routine_fix'}).audit).toEqual(first.audit);
+   expect(first.audit.selected).toBe(auditTask(task_id));
+  }
+  expect(checkWork(routine).review_requirement.role).toBe('none');
+  expect(checkWork({...routine,task_id:auditId}).review_requirement.reason).toBe('STABLE_LOW_RISK_AUDIT');
+ });
+ it.each(['medium','high','critical','unknown',undefined] as const)('requires implementation review at %s risk',risk=>{
+  expect(checkWork({...routine,risk})).toMatchObject({risk:risk===undefined||risk==='unknown'?'medium':risk,review_requirement:{role:'frontier'}});
+ });
+ it.each(['hard_bug','concurrency_bug','incident_diagnosis','performance_diagnosis','architecture','critical_ui_ux','accessibility_decision','security_decision','data_migration_design','public_contract_design','consequential_decision'] as const)('preserves %s review through a routine or approved handoff',origin_work_type=>{
+  for(const work_type of ['routine_fix','approved_execution'] as const){
+   const packet={...routine,assignment:'implement_fix',work_type,origin_work_type};
+   const expected={role:'frontier',required:true,reason:'ORIGIN_REQUIRES_FRONTIER_REVIEW'};
+   expect(checkWork(packet).review_requirement).toEqual(expected);
+   expect(reviewRequirement(packet)).toEqual(expected);
+   expect(reviewPolicyInput(packet)['origin_work_type']).toBe(origin_work_type);
+  }
+ });
+ it('reviews unknown handoffs but permits a known nonconsequential plan to use the low-risk tier',()=>{
+  for(const origin_work_type of [undefined,'unknown','other','approved_execution'] as const){
+   expect(checkWork({...routine,assignment:'implement_plan',origin_work_type}).review_requirement.role).toBe('frontier');
+   expect(checkWork({...routine,work_type:'approved_execution',origin_work_type}).review_requirement.role).toBe('frontier');
+  }
+  expect(checkWork({...routine,work_type:'approved_execution',origin_work_type:'planning'}).review_requirement.role).toBe('none');
+  expect(checkWork({...routine,work_type:'approved_execution',origin_work_type:'planning',task_id:auditId}).review_requirement.role).toBe('frontier');
+  expect(reviewRequirement({...routine,decision_evidence:ref('plan.md','plan')})).toMatchObject({role:'frontier'});
+ });
+ it('preserves direct decision, hard-bug and economical research rules',()=>{
+  expect(checkWork({...routine,work_type:'hard_bug'}).review_requirement.role).toBe('frontier');
+  expect(checkWork({...routine,assignment:'frontier_decision',work_type:'architecture',implemented_behavior:true}).review_requirement.role).toBe('frontier');
+  expect(checkWork({...routine,assignment:'frontier_decision',work_type:'planning'}).review_requirement.role).toBe('none');
+  expect(checkWork({...routine,independent_review:true}).review_requirement.role).toBe('frontier');
+  const research={...routine,assignment:'summarize_sources',work_type:'research' as const};
+  expect(checkWork(research).review_requirement.role).toBe('none');
+  expect(checkWork({...research,task_id:auditId}).review_requirement.role).toBe('economy');
+  expect(checkWork({...research,independent_review:true}).review_requirement.role).toBe('economy');
+ });
+ it('rejects invalid and conflicting inputs rather than silently bypassing review',()=>{
+  for(const invalid of [{...routine,task_id:''},{...routine,task_id:' '},{...routine,risk:'tiny'},{...routine,origin_work_type:'security-ish'},{...routine,independent_review:'true'},{...routine,origin_work_typo:'architecture'},{...routine,work_type:'misspelled'},{...routine,assignment:'unknown'}]){
+   expect(()=>checkWork(invalid as any)).toThrow();
+  }
+  expect(()=>checkWork({...routine,work_type:'research'})).toThrow('ASSIGNMENT_WORK_TYPE_CONFLICT');
+  expect(()=>dispatchAssignment({...base,origin_work_type:'misspelled'})).toThrow('ORIGIN_WORK_TYPE_INVALID');
+ });
+ it('runs from the CLI without host/models/evidence and without accessing project state',async()=>fixture(async root=>{
+  const stateRoot=join(root,'not-a-directory');await writeFile(stateRoot,'do not touch');
+  await expect(runCommand('check',routine,{stateRoot})).resolves.toEqual(checkWork(routine));
+  const helper=fileURLToPath(new URL('../../skills/delegate/scripts/local-learning.mjs',import.meta.url));
+  const cli=spawnSync(process.execPath,[helper,'check','-'],{cwd:root,input:JSON.stringify(routine),encoding:'utf8',env:{...process.env,DELEGATE_STATE_HOME:stateRoot}});
+  expect(cli.status,cli.stderr).toBe(0);expect(JSON.parse(cli.stdout)).toEqual(checkWork(routine));
+  expect(await readFile(stateRoot,'utf8')).toBe('do not touch');
+  expect((await readdir(root)).sort()).toEqual(['answer.txt','not-a-directory']);
+ }));
+ it('rejects array-valued origins before they can bypass consequential review',()=>{
+  const malformed={...routine,origin_work_type:['security_decision']};
+  expect(()=>checkWork(malformed as any)).toThrow('ORIGIN_WORK_TYPE_INVALID');
+  expect(()=>reviewRequirement(malformed)).toThrow('ORIGIN_WORK_TYPE_INVALID');
+  expect(()=>dispatchAssignment({...base,...malformed})).toThrow('ORIGIN_WORK_TYPE_INVALID');
+  const helper=fileURLToPath(new URL('../../skills/delegate/scripts/local-learning.mjs',import.meta.url));
+  const cli=spawnSync(process.execPath,[helper,'check','-'],{input:JSON.stringify(malformed),encoding:'utf8'});
+  expect(cli.status).toBe(1);expect(JSON.parse(cli.stdout)).toMatchObject({status:'unavailable',reason:'ORIGIN_WORK_TYPE_INVALID'});
+ });
+ it('rejects array-valued assignments before they can bypass the implementation floor',()=>{
+  const malformed={...routine,assignment:['implement_fix'],work_type:'mechanical_edit',risk:'medium'};
+  expect(()=>checkWork(malformed as any)).toThrow('CHECK_INPUT_INVALID');
+  expect(()=>dispatchAssignment({...base,...malformed})).toThrow('DISPATCH_INPUT_INVALID');
+  const helper=fileURLToPath(new URL('../../skills/delegate/scripts/local-learning.mjs',import.meta.url));
+  const cli=spawnSync(process.execPath,[helper,'check','-'],{input:JSON.stringify(malformed),encoding:'utf8'});
+  expect(cli.status).toBe(1);expect(JSON.parse(cli.stdout)).toMatchObject({status:'unavailable',reason:'CHECK_INPUT_INVALID'});
+ });
+ it('enforces and records inherited review in explicit completion',async()=>fixture(async(root,evidence,artifacts)=>{
+  const packet={...base,cwd:root,assignment:'implement_plan',work_type:'approved_execution',origin_work_type:'security_decision',decision_evidence:evidence,plan_settled:true,observation_version:3,mode:'direct',worker:null,acceptance:'accepted',checks:'passed',repairs:0,...artifacts,artifact_files:['answer.txt'],check_evidence:[evidence]},options={stateRoot:join(root,'state')};
+  expect(dispatchAssignment({...packet,phase:'complete'})).toMatchObject({outcome:'review',review_requirement:{role:'frontier',reason:'ORIGIN_REQUIRES_FRONTIER_REVIEW'}});
+  await expect(runCommand('complete',packet,options)).rejects.toThrow('REVIEW_REQUIRED');
+  await expect(runCommand('complete',{...packet,review:pass(artifacts.artifact_digest),attempts:[attempt('reviewer')]},options)).resolves.toMatchObject({status:'completed'});
+  const project=(await readdir(options.stateRoot))[0]!,directory=join(options.stateRoot,project,'codex','events');
+  const recorded=JSON.parse(await readFile(join(directory,(await readdir(directory))[0]!),'utf8')).data;
+  expect(recorded.policy_input.origin_work_type).toBe('security_decision');
+  expect(recorded.review_requirement.reason).toBe('ORIGIN_REQUIRES_FRONTIER_REVIEW');
+ }));
 });
 
 describe('v3 evidence and historical interpretation',()=>{

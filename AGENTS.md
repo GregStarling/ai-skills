@@ -1,5 +1,9 @@
 # Model Governor
 
+## Local middle-ground revision
+
+The current user request authorizes updating this local repository with GitHub's simpler workflow plus a mandatory lightweight review check. `check` selects audits using a stable task ID; `origin_work_type` preserves consequential-decision and hard-bug review through implementation handoffs, with unknown handoff origins requiring review. Detailed dispatch/completion recording stays optional for ordinary consumers. Keep source inert, preserve historical evidence and routing-pack bytes, and validate locally with independent review. No publication, personal installation or saved-model change is part of this request. This scoped revision supersedes the earlier ordinary-workflow instructions below. See docs/middle-ground.md.
+
 ## Test-readiness simplification — 2026-09-13
 
 Branch `test-readiness`. Goal: make the Sonnet→Fable (Claude Code) and Terra→Astra (Codex) design measurable in long real sessions. Four changes: (1) implemented-behavior review is tiered by declared risk in `reviewRequirement`; declared low risk gets coordinator checks plus a stable 10% frontier audit, medium and above keep mandatory fresh frontier review, hard-bug fixes always take frontier review, unknown risk is medium. (2) The helper's `dispatch`/`complete` protocol is optional and not part of ordinary completion; usage is measured from host transcripts with `scripts/measure-usage.mjs`. (3) SKILL.md and the host guides are cut to about a page, with supporting docs as optional reads. (4) `skills/delegate/hosts/claude-md-snippet.md` provides a CLAUDE.md activation path for test periods. Historical evidence, the routing pack, the evidence-required `route` path and the engine are unchanged. Personal installation and saved-model changes remain the user's action. See docs/test-readiness-2026-09-13.md.

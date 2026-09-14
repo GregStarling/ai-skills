@@ -1,6 +1,6 @@
 # Optional recording and evidence controls
 
-Recording is optional. Ordinary tasks need none of the commands below; usage is measured from host transcripts with the repository's measurement script. Use this file when an explicit evaluation asks for recorded outcomes, or for the narrow evidence-required routing path. The helper uses existing Node built-ins, launches no models and uploads nothing. When recording was requested and fails, repair the input locally; if it stays blocked, report the limitation rather than claiming a recorded result.
+Recording is optional. Ordinary tasks use the lightweight `check` described in [SKILL.md](SKILL.md); they do not need the recording protocol below; usage is measured from host transcripts with the repository's measurement script. Use this file when an explicit evaluation asks for recorded outcomes, or for the narrow evidence-required routing path. The helper uses existing Node built-ins, launches no models and uploads nothing. When recording was requested and fails, repair the input locally; if it stays blocked, report the limitation rather than claiming a recorded result.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.
 
@@ -33,7 +33,7 @@ these bytes. Preserve every owned final deliverable and do not modify it after r
 `checks` is exactly `passed`, `failed` or `unverified`; there is no `partially_verified` value.
 For fixes, include `diagnosis_accepted:true` after establishing the cause, in dispatch and the
 `complete` payload. For implementation of an accepted plan, carry `plan_settled:true`
-and `decision_evidence`. Copy the selected `frontier` identity into observations even when the
+and `decision_evidence`, plus `origin_work_type` from the accepted decision or hard-bug diagnosis. Missing/unknown origin on approved execution requires frontier review. Copy the selected `frontier` identity into observations even when the
 coordinator executed the fix. The review's model field does not replace `frontier`.
 
 Choose one evidence workspace `cwd` at intake and use it for artifact hashing, reviewers and `complete`.

@@ -21,7 +21,7 @@ These are the intended host settings. Installing the skill does not change saved
 
 [Open the interactive map](docs/delegate-system.html) · [Editable Archify source](docs/delegate-system.architecture.json)
 
-The main path stays with the economical coordinator. Frontier assignments and independent reviews branch from that path only when their rules apply. Since 2026-09-13 the helper's `dispatch` and `complete` operations are optional tools for unclear cases and explicit evaluations rather than steps in every task; usage is measured from host transcripts with [scripts/measure-usage.mjs](scripts/measure-usage.mjs) instead of from inside the session. The map above predates that simplification.
+The main path stays with the economical coordinator. Frontier assignments and independent reviews branch from that path only when their rules apply. Ordinary work uses one lightweight mandatory `check` at intake to select the risk tier and audit; it runs again only when inputs change. Task IDs and original work classifications carry through handoffs, so consequential decisions and hard bugs keep their review requirements. Detailed `dispatch`/`complete` evaluation records remain optional. [scripts/measure-usage.mjs](scripts/measure-usage.mjs) measures Claude Code transcript consumption as a cost proxy. The map above predates this simplification.
 
 ## What Goes Where
 
@@ -85,7 +85,7 @@ For a project-only install, copy the folder into that project's `.agents/skills/
 This OAuth error only happens in production. Trace the request from the route to the callback, show me the deciding code, and fix it if the cause is clear. Run the relevant checks.
 ```
 
-The coordinator inspects the symptom and routes an uncertain diagnosis to frontier. Once the correction is established, routine implementation can return to the coordinator. The fix gets regression checks and a fresh frontier review before completion is recorded.
+The coordinator inspects the symptom and routes an uncertain diagnosis to frontier. Once the correction is established, routine implementation can return to the coordinator. The fix gets regression checks and a fresh frontier review before reporting completion.
 
 For a request to compare policy documents, the coordinator gathers and checks the evidence economically. Conflicting sources alone do not trigger frontier. If the user also needs a consequential decision or a plan, that becomes a separate frontier assignment.
 
@@ -97,7 +97,9 @@ Independent investigations and settled workstreams can use bounded workers when 
 
 ## Validation and Rollout Status
 
-**2026-09-13 test-readiness revision.** Review of implemented behavior is now tiered by declared risk, the recording protocol is optional, the skill text is about a page, and a CLAUDE.md activation snippet exists for test periods. These are design changes for a real-session test, not new evidence; see [the change record](docs/test-readiness-2026-09-13.md). The historical results below describe earlier revisions.
+**Local middle-ground revision.** The lightweight `check` is mandatory, stable task IDs select audits, and `origin_work_type` preserves review requirements through implementation handoffs. Unknown handoff origins require review. Detailed outcome recording remains optional; see the [local implementation plan and validation](docs/middle-ground.md). This revision has not been installed or tested in live provider sessions.
+
+**2026-09-13 test-readiness revision (historical).** Review of implemented behavior is now tiered by declared risk, the recording protocol is optional, the skill text is about a page, and a CLAUDE.md activation snippet exists for test periods. These are design changes for a real-session test, not new evidence; see [the change record](docs/test-readiness-2026-09-13.md). The historical results below describe earlier revisions.
 
 The targeted Codex trials verified economical execution, automatic fresh frontier review, and persisted completion for a bug fix with 21 passing regression checks. A research trial completed on Terra with no frontier calls and passed the strict output checks. These trials precede the release-review fixes to explicit independent review and campaign accounting. Local regression tests cover those fixes, completion validation, persistence failures, and idempotent retries.
 

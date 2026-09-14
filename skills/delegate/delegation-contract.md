@@ -25,6 +25,8 @@ Return source conflicts and stalled research as findings or limitations without 
 
 Send only necessary history. Keep worker reasoning transcripts out of the verifier package. Reuse a worker's useful context for targeted repairs and keep its route explicit on resume if the host supports that control.
 
+Carry the original `task_id`, `origin_work_type`, and required review in every implementation or repair packet. Preserve consequential-decision and hard-bug origins through routine/approved execution; never reset them to evade review.
+
 The coordinator handles dependencies and integration while workers execute. Do not duplicate their assignments. Inspect completed artifacts, not only summaries. A repair packet includes the concrete failure, affected artifact, expected correction and relevant acceptance check. Simple defects go back to the same worker; repeated capability failure excludes `failed_models` in ordinary dispatch or `failed_candidate_ids` in evidence routing. Reassess stronger workers versus direct execution. Architectural ambiguity goes to frontier planning, then back to an appropriate worker.
 
 On interruption, preserve completed artifacts, current owners, unfinished work and relevant failures in the task's existing plan or status file. Resume from those facts. A worker crash or partial attempt is not a pass and its cost is not zero.

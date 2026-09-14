@@ -278,6 +278,7 @@ const decisionWork=new Set(['planning','architecture','critical_ui_ux','accessib
 const hardBugWork=new Set(['hard_bug','concurrency_bug','incident_diagnosis','performance_diagnosis']);
 const implementationWork=new Set(['approved_execution','routine_implementation','routine_fix','substantial_refactor','regression_test']);
 const implementationAssignments=new Set(['implement_feature','implement_fix','implement_ui','implement_plan']);
+const validOrigin=value=>text(value)&&(value==='unknown'||value==='other'||Object.hasOwn(workRoutes,value));
 export const substantialTask=input=>implementationAssignments.has(input.assignment)||!simpleWork.has(classifyRoute(input).work_type)||(input.substantial??true);
 export function classifyRoute(input){
  const inferred={locate_behavior:'source_lookup',summarize_sources:'source_synthesis',specified_edit:'mechanical_edit',implement_feature:'routine_implementation',implement_fix:'routine_fix',implement_ui:input.plan_settled?'approved_execution':'critical_ui_ux',implement_plan:input.plan_settled?'approved_execution':'planning',reproduce_failure:'hard_bug',frontier_decision:'other'};
@@ -293,6 +294,7 @@ const overrideSelection=input=>input.user_model_override?{model:input.user_model
 const overrides=(input,phase)=>!!input.user_model_override&&[phase,'both'].includes(input.user_model_override.scope);
 /** Shared policy: source work is verified cheaply; frontier decisions do not imply a second frontier call. */
 export function reviewRequirement(input){
+ if(input.origin_work_type!==undefined&&!validOrigin(input.origin_work_type))fail('ORIGIN_WORK_TYPE_INVALID');
  const {work_type}=classifyRoute(input),required=(role,reason)=>({role,required:role!=='none',reason});
  // Assignment floor prevents relabeling implemented behavior as a cheap document task.
  if(input.implemented_behavior===true||implementationAssignments.has(input.assignment)||implementationWork.has(work_type)){
@@ -300,6 +302,9 @@ export function reviewRequirement(input){
   // unknown, medium, high and critical keep fresh frontier review. Hard-bug fixes and implementation
   // of consequential decisions keep it at any risk.
   if(input.risk!=='low'||hardBugWork.has(work_type)||decisionWork.has(work_type)||input.hard_bug_handoff!==undefined)return required('frontier','IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER');
+  const origin=input.origin_work_type;
+  if(hardBugWork.has(origin)||(decisionWork.has(origin)&&origin!=='planning'))return required('frontier','ORIGIN_REQUIRES_FRONTIER_REVIEW');
+  if(origin==='unknown'||origin==='other'||origin==='approved_execution'||(origin===undefined&&(work_type==='approved_execution'||input.assignment==='implement_plan'||input.decision_evidence!==undefined)))return required('frontier','HANDOFF_ORIGIN_REQUIRES_FRONTIER_REVIEW');
   if(input.independent_review===true)return required('frontier','EXPLICIT_INDEPENDENT_REVIEW');
   if(auditTask(input.task_id))return required('frontier','STABLE_LOW_RISK_AUDIT');
   return required('none','LOW_RISK_IMPLEMENTATION_CHECKS');
@@ -311,9 +316,20 @@ export function reviewRequirement(input){
  if(work_type==='other'&&substantialTask(input))return required('frontier','UNCLASSIFIED_SUBSTANTIAL_REVIEW');
  return required('none','ORDINARY_CHECKS');
 }
+/** Ordinary review selection only: no state, model bindings, evidence files or completion claim. */
+export function checkWork(input){
+ const fields=['task_id','assignment','work_type','risk','origin_work_type','implemented_behavior','independent_review'];
+ if(!input||Array.isArray(input)||typeof input!=='object'||Object.keys(input).some(key=>!fields.includes(key))||!text(input.task_id)||!input.task_id.trim()||!text(input.assignment)||!Object.hasOwn(assignments,input.assignment))fail('CHECK_INPUT_INVALID');
+ for(const key of ['implemented_behavior','independent_review'])if(input[key]!==undefined&&!bool(input[key]))fail('CHECK_INPUT_INVALID');
+ const risk=input.risk===undefined||input.risk==='unknown'?'medium':input.risk;
+ if(!risks(risk))fail('CHECK_INPUT_INVALID');
+ const policy={...input,risk},route=classifyRoute(policy);
+ if(informationWork.has(route.work_type)&&(implementationAssignments.has(input.assignment)||input.implemented_behavior===true))fail('ASSIGNMENT_WORK_TYPE_CONFLICT');
+ return {status:'checked',task_id:input.task_id,work_type:route.work_type,risk,origin_work_type:input.origin_work_type??null,audit:{selected:auditTask(input.task_id),percent:10},review_requirement:reviewRequirement(policy)};
+}
 /** Persist only policy inputs; reviewers derive requirements independently from these fields. */
 export function reviewPolicyInput(input){
- const keys=['assignment','risk','task_id','substantial','implemented_behavior','independent_review','decision_evidence','hard_bug_handoff','user_model_override','fallback_route','routing_reason','plan_settled','diagnosis_accepted','delegation_forbidden','coordinator','frontier','cheap_reviewer','signals'];
+ const keys=['assignment','risk','task_id','substantial','implemented_behavior','independent_review','origin_work_type','decision_evidence','hard_bug_handoff','user_model_override','fallback_route','routing_reason','plan_settled','diagnosis_accepted','delegation_forbidden','coordinator','frontier','cheap_reviewer','signals'];
  return {work_type:classifyRoute(input).work_type,...Object.fromEntries(keys.filter(k=>input[k]!==undefined).map(k=>[k,structuredClone(input[k])]))};
 }
 const handoffRecord=object({reproduction:ref,root_cause:ref,correction:ref,regression_check:ref});
@@ -341,7 +357,7 @@ function policyEvidenceGap(input){
 }
 export function dispatchAssignment(input) {
  if(input?.legacy===true)return legacyDispatch(input);
- if(!input||!hosts(input.host)||!risks(input.risk)||!Object.hasOwn(assignments,input.assignment))fail('DISPATCH_INPUT_INVALID');
+ if(!input||!hosts(input.host)||!risks(input.risk)||!text(input.assignment)||!Object.hasOwn(assignments,input.assignment))fail('DISPATCH_INPUT_INVALID');
  for(const key of ['evidence_required','bounded','decision_bounded','diagnosis_accepted','plan_settled','independent_review','delegation_forbidden','legacy','substantial','implemented_behavior'])if(input[key]!==undefined&&!bool(input[key]))fail('DISPATCH_INPUT_INVALID');
  if(input.user_model_override!==undefined&&!userOverride(input.user_model_override))fail('USER_MODEL_OVERRIDE_INVALID');
  const signals=input.signals??{};
@@ -536,6 +552,7 @@ async function lookupWithState(input,{stateRoot=process.env.DELEGATE_STATE_HOME 
   return advice.localPreferences?lookup({...input,localPreferences:advice.localPreferences},{skillRoot,now}):first;
 }
 export async function runCommand(command,input,{stateRoot=process.env.DELEGATE_STATE_HOME || (process.env.XDG_STATE_HOME?join(process.env.XDG_STATE_HOME,'delegate'):join(homedir(),'.local/state/delegate')),skillRoot=skillDirectory,now=new Date().toISOString(),hostCommand=process.env.DELEGATE_HOST_COMMAND}={}) {
+  if(command==='check')return checkWork(input);
   if(command==='complete') {
     if(!input||(input.observation_version!==3&&input.schema_version!=='delegate_observation.v3')||input.acceptance!=='accepted')fail('COMPLETION_INPUT_INVALID');
     const result=await runCommand('observe',input,{stateRoot,skillRoot,now,hostCommand});

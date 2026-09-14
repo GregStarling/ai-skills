@@ -16,13 +16,15 @@ uncertain cause; and fresh review of implemented behavior at medium risk or abov
 analysis, source synthesis, mechanical edits and documentation stay with you. Conflicting sources or
 large documents never by themselves justify the frontier.
 
+Run the installed Delegate helper’s `check` command at intake with a stable task ID, assignment, work type and risk; follow [SKILL.md](../SKILL.md) for the JSON input. Carry the ID and `origin_work_type` through handoffs and retries, rerunning only when inputs change. Follow the returned review requirement, including low-risk audit selections; missing review blocks completion. Detailed recording stays optional.
+
 Declare risk before implementing. Low means reversible, covered by tests or a direct check, with no
-security, data, contract or critical UI surface; you verify it yourself. Medium or unknown means a
+security, data, contract or critical UI surface; you verify it yourself unless the deterministic 10% audit requires frontier review. Medium or unknown means a
 fresh `fable` review of the final diff before you report completion. High or critical means the
 frontier decides first and reviews after. Hard-bug fixes and implementation of a consequential
 decision always get the fresh `fable` review.
 
-Two attempts without progress: escalate to the frontier. Two failed repairs: the same. Workers get
+Two execution attempts without progress: escalate to the frontier. Two failed repairs: the same. Workers get
 compact packets with paths, ownership, constraints and acceptance checks, never the conversation.
 Reviewers get the requirements, the diff and the check results, and answer PASS, REPAIR or BLOCKED.
 Wait for every agent to finish. Explicit user model choices win. Never change saved models or

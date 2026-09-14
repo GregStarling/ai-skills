@@ -24,7 +24,7 @@ for already authorized reads, edits and checks, and the authorized workspace. Do
 
 ## Helper inputs
 
-When you use the optional helper, pass `host:"claude"`, not `"claude-code"`.
+The mandatory ordinary `check` needs no host/model fields or saved state; see [SKILL.md](../SKILL.md). For optional evaluation commands such as `dispatch` or `complete`, pass `host:"claude"`, not `"claude-code"`.
 
 ## Activation
 

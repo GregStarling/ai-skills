@@ -11,7 +11,9 @@ Verification depth follows the assignment's declared risk and affected behavior,
 | Research, PDF, synthesis | Source, extraction, citation and calculation checks; a stable 10% sample gets a fresh independent economical audit |
 | Mechanical and other simple work | Proportionate checks; a stable 10% sample gets a frontier audit |
 
-Explicitly requested independent review is always frontier. Explicit no-delegation instructions are
+Run the mandatory `check` described in [SKILL.md](SKILL.md) at intake and when inputs change; use its result before delivery. Carry the same task ID and `origin_work_type` through handoffs and repairs. Consequential/hard-bug origins keep frontier review even under `approved_execution`; unknown handoff origins also require review.
+
+Explicitly requested independent review follows the deliverable: economical for research/PDF/synthesis, frontier otherwise. Explicit no-delegation instructions are
 binding; a required but unavailable review is blocked, not skipped.
 
 Inspect the actual artifact, not the worker's verdict. For investigation, check the decisive source

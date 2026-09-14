@@ -41,6 +41,31 @@ length, file type and source count never by themselves send work to the frontier
 A consequential choice that surfaces during research or implementation becomes a separate frontier
 assignment with the decisive evidence attached. The frontier does not repeat bulk reading.
 
+## Required review check
+
+At intake, run `node <skill-folder>/scripts/local-learning.mjs check -` with JSON on stdin:
+
+```json
+{"task_id":"<host-task-id>:<assignment-id>","assignment":"implement_feature","work_type":"routine_implementation","risk":"low"}
+```
+
+Choose the ID once before checking, retain it in the conversation, and carry it through workers,
+repairs and retries. Never regenerate it to change the sample. Use `specified_edit` for exact edits, `summarize_sources` for research,
+`implement_fix` for fixes, `implement_feature` for features, or `frontier_decision` with its decision
+work type. Use `implement_plan` with `work_type:"approved_execution"` for an accepted plan; omit risk or use `"unknown"` when unsure (both mean medium). Rerun only when scope, risk or
+origin changes; consult the latest result before delivery. The command returns `review_requirement`
+and the stable 10% audit selection. Follow that requirement; a required but unavailable review
+blocks accepted completion. The command selects review, not execution or permission: the routing
+and escalation rules still apply. Explicit user restrictions remain authoritative; report conflicts.
+
+Carry `origin_work_type` in implementation handoffs: retain a consequential-decision or hard-bug
+classification through every later label and repair. For example, an `approved_execution` originating
+in `security_decision` still requires frontier review. Missing/unknown handoff origin requires review;
+a known `planning`-only origin may use the low-risk tier. Set `implemented_behavior:true` for mixed
+decision-and-implementation work and `independent_review:true` when explicitly requested. Never
+clear an already-required review by renaming work or dropping its origin. This check needs no host,
+model fields, artifact hashes, evidence files or saved outcome; its JSON stays in the conversation.
+
 ## Review tiers for implemented behavior
 
 Declare the risk before you start and keep it honest. A small diff does not lower risk.
@@ -51,8 +76,9 @@ Declare the risk before you start and keep it honest. A small diff does not lowe
 | Medium | User-visible behavior change or cross-module effect; partial coverage | Fresh frontier review, mandatory |
 | High or critical | Security, auth, payments, data migration, public contracts, irreversible operations, production incidents | Frontier executes or decides, then fresh frontier review |
 
-Unknown risk is medium. Hard-bug fixes, implementation of a consequential decision, and explicitly
-requested independent review are always frontier review.
+Unknown risk is medium. The 10% rate is a trial setting, not a proven quality threshold. Hard-bug
+fixes, implementation of a consequential decision, and explicitly requested independent review of
+implemented behavior always require frontier review.
 
 ## Escalate and repair
 
@@ -78,9 +104,9 @@ Inspect the actual artifact, not the summary. Run the repository's relevant chec
 done, which checks ran and their results, the review verdict when one was required, and any
 limitation. Unknown usage stays unknown; never claim measured savings from inside a session.
 
-## Optional tools
+## Optional evaluation tools
 
-- `node <skill-folder>/scripts/local-learning.mjs dispatch -` applies the routing and review rules deterministically when a case is unclear. Pass `host:"claude"` or `host:"codex"`. Reading the tables above is normally enough.
+- Full `dispatch` provides model/evidence-bound routing for explicit evaluations; pass `host:"claude"` or `host:"codex"`. It does not replace the ordinary `check`.
 - Outcome recording with `node <skill-folder>/scripts/local-learning.mjs complete -` is optional and only for explicit evaluations; see [local learning](local-learning.md). Usage is measured from host transcripts, not from inside the session.
 - Evidence-qualified routing (`route`) is narrow and optional; the assignment must fit `route.scope` literally. See [pack format](pack-format.md).
 
