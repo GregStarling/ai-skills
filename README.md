@@ -1,122 +1,78 @@
-# Delegate
+# AI Skills
 
-## Coordinate Cheaply. Bring in Frontier When It Matters.
+Reusable skills for AI coding agents. Install the ones you need and combine them
+when useful. Each skill keeps its instructions and supporting files in its own
+folder.
 
-Delegate keeps a capable, economical model in charge of the conversation. It does routine work directly and automatically brings in frontier agents for planning, consequential decisions, difficult bugs, and reviews of implemented behavior.
+## Skills
 
-The coordinator classifies the request, applies a prescribed routing rule, and records the reason. Execution and review are separate decisions. Research and PDF analysis stay economical, even when the documents are long or the sources disagree.
-
-| Host | Starting coordinator | Frontier agents |
+| Skill | What it does | Use it when |
 | --- | --- | --- |
-| Codex | Terra · medium reasoning | Astra · high reasoning |
-| Claude Code | Sonnet | Fable · supported effort controls |
+| [CTO](skills/cto/) | Owns a plan through implementation, verification, and authorized shipping, with a persistent execution ledger. | You want the whole plan implemented. |
+| [Delegate](skills/delegate/) | Routes work to appropriate agents and requires independent review where warranted. | You want routine work handled economically and harder decisions reviewed. |
 
-The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
-
-These are the intended host settings. Installing the skill does not change saved models or switch an existing session.
-
-## The Architecture
-
-[![Delegate architecture: economical coordinator, prescribed frontier assignments, independent review, and validated completion](docs/delegate-system.png)](docs/delegate-system.html)
-
-[Open the interactive map](docs/delegate-system.html) · [Editable Archify source](docs/delegate-system.architecture.json)
-
-The main path stays with the economical coordinator. Frontier assignments and independent reviews branch from that path only when their rules apply. Ordinary work uses one lightweight mandatory `check` at intake to select the risk tier and audit; it runs again only when inputs change. Task IDs and original work classifications carry through handoffs, so consequential decisions and hard bugs keep their review requirements. Detailed `dispatch`/`complete` evaluation records remain optional. [scripts/measure-usage.mjs](scripts/measure-usage.mjs) measures Claude Code transcript consumption as a cost proxy. The map above predates this simplification.
-
-## What Goes Where
-
-| Work | Execution | Verification |
-| --- | --- | --- |
-| Create or materially revise a plan | Frontier | Evidence, constraints, and acceptance checks; no second frontier call just for producing a plan |
-| Critical UI/UX, architecture, security, migration, or public-contract decisions | Frontier decides; settled implementation can return to the coordinator | Fresh frontier review of implemented behavior |
-| Hard bugs, races, unexplained failures, or uncertain root causes | Frontier by default | Fresh frontier review of behavior-changing fixes, at any risk |
-| Features, understood fixes, and substantial refactors | Economical coordinator or bounded workers | Fresh frontier review at medium risk and above; declared low risk gets coordinator checks plus a stable 10% frontier audit |
-| Research, source comparison, synthesis, and PDF analysis | Economical coordinator or bounded workers | Source, extraction, citation, calculation, and completeness checks; sampled audits use an independent economical reviewer |
-| Exact edits, documentation sync, formatting, and settled cosmetic changes | Economical coordinator | Proportionate checks and stable audits |
-| Unmatched work | Brief inspection, then a recorded routing decision | The resulting category's review rule |
-
-Following an accepted plan stays economical. A new consequential choice returns to frontier. A mixed request to read documents and create a plan separates economical evidence gathering from frontier planning.
-
-A hard bug can return to economical execution once there is evidence of the reproduction, root cause, bounded correction, and regression check. Two execution attempts without new evidence or measurable progress trigger escalation; research and PDF failures instead use appropriate economical tools or report the limitation.
-
-Reviewers return `PASS`, `REPAIR`, or `BLOCKED`. Repairs return to the executor for targeted fixes and retesting, followed by fresh review where required. Two unsuccessful repairs move difficult execution to frontier. Missing required review prevents accepted completion.
+CTO owns completion. Delegate handles routing and review. Both also work with
+[ponytail](https://github.com/DietrichGebert/ponytail) when installed, to keep
+implementation simple without removing requested behavior. Ponytail is a separate
+project and is not bundled here. Each skill can be installed on its own.
 
 ## Install
 
-Clone the repository, then copy one folder. There is no build step, service, API key, or second account.
-
-### Codex
-
-```sh
-git clone https://github.com/GregStarling/ai-skills.git
-mkdir -p ~/.agents/skills
-cp -R ai-skills/skills/delegate ~/.agents/skills/delegate
-```
-
-Start a new task with your chosen coordinator and write an ordinary request:
-
-```text
-Trace where this setting is read and explain its default.
-```
-
-### Claude Code
+Use the [open skills CLI](https://github.com/vercel-labs/skills) from the project
+where you want the skills. It supports Codex, Claude Code, and other agents that
+load the Agent Skills format. Node.js is required for the CLI and Delegate's
+lightweight review helper; CTO itself is instructions only.
 
 ```sh
-git clone https://github.com/GregStarling/ai-skills.git
-mkdir -p ~/.claude/skills
-cp -R ai-skills/skills/delegate ~/.claude/skills/delegate
+# Choose skills and agents interactively
+npx skills add GregStarling/ai-skills
+
+# Install either skill for Codex and Claude Code in the current project
+npx skills add GregStarling/ai-skills --skill cto --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill delegate --agent codex claude-code --copy
+
+# Install both together
+npx skills add GregStarling/ai-skills --skill cto delegate --agent codex claude-code --copy
 ```
 
-For a guaranteed second activation path during a test period, append the block from `skills/delegate/hosts/claude-md-snippet.md` to `~/.claude/CLAUDE.md`; remove it when the test ends.
+Add `--global` for personal use across projects. Run these from a consumer
+project, not this source checkout. Select `cto` and/or `delegate`;
+`refresh-models` is for maintainers only. You do not need to build this repository,
+configure API keys, or run its evaluation engine to use either consumer skill.
 
-Start a new session with your chosen coordinator and write:
+Prefer a manual installation? Copy a complete skill folder to the appropriate
+[discovery directory](docs/install.md). That guide also covers updates and removal.
 
-```text
-Trace where this setting is read and explain its default.
-```
+## Use
 
-The skill is designed for automatic discovery on covered tasks. You can also invoke it explicitly with `$delegate` in Codex or `/delegate` in Claude Code. Casual conversation, creative drafting, and voice-sensitive editing stay outside automatic delegation.
+| Agent | CTO | Delegate |
+| --- | --- | --- |
+| Codex | `$cto Implement the plan in PLAN.md` | `$delegate Fix this bug and run the relevant checks` |
+| Claude Code | `/cto Implement the plan in PLAN.md` | `/delegate Fix this bug and run the relevant checks` |
 
-For a project-only install, copy the folder into that project's `.agents/skills/` or `.claude/skills/` directory instead. To update, replace the complete installed `delegate` folder. Keep backups outside a skill-discovery directory. Keep the canonical repository's `skills/` source inert.
+Both support automatic selection for matching requests. CTO is for complete-plan
+execution, not ordinary coding questions. It resumes from `.cto/ledger.md` in your
+project. Skills respect your existing permissions and do not change your model
+settings. Start a fresh agent session if a new skill does not appear.
 
-## Try It on a Real Job
+## Contributing a skill
 
-```text
-This OAuth error only happens in production. Trace the request from the route to the callback, show me the deciding code, and fix it if the cause is clear. Run the relevant checks.
-```
+Add `skills/<name>/SKILL.md` with `name` and `description` frontmatter, a short
+README, and only the resources it needs. Keep consumer references inside that
+folder and installation paths out of portable behavior. Add it to the catalog,
+then run `node scripts/verify/skills.mjs` after `npm ci`. All consumer skills are
+checked from isolated copies; no central registration file is needed.
 
-The coordinator inspects the symptom and routes an uncertain diagnosis to frontier. Once the correction is established, routine implementation can return to the coordinator. The fix gets regression checks and a fresh frontier review before reporting completion.
+## Maintainer tools
 
-For a request to compare policy documents, the coordinator gathers and checks the evidence economically. Conflicting sources alone do not trigger frontier. If the user also needs a consequential decision or a plan, that becomes a separate frontier assignment.
+[refresh-models](skills/refresh-models/SKILL.md) maintains Delegate's routing pack
+and requires this repository. Model Governor, its tests, policy, fixtures, and
+historical evidence remain maintainer tooling; consumers do not install them.
 
-## One Rule for a Tiny App or a Monorepo
+- [Delegate architecture, routing, and historical validation](docs/delegate.md)
+- [Maintainer installation and measurement notes](docs/delegate-install.md)
+- [Collection changes and validation](docs/skills-collection.md)
+- [Delegate validation index](docs/validation-status.md)
 
-The assignment is the unit of work. A small change in a large codebase stays small when the owner, write boundary, and relevant checks are clear. Delegate starts from a symbol, symptom, or feature, then follows the dependencies needed to finish the job.
-
-Independent investigations and settled workstreams can use bounded workers when useful. Repository size, document length, file type, and source volume never independently require frontier.
-
-## Validation and Rollout Status
-
-**Local middle-ground revision.** The lightweight `check` is mandatory, stable task IDs select audits, and `origin_work_type` preserves review requirements through implementation handoffs. Unknown handoff origins require review. Detailed outcome recording remains optional; see the [local implementation plan and validation](docs/middle-ground.md). This revision has not been installed or tested in live provider sessions.
-
-**2026-09-13 test-readiness revision (historical).** Review of implemented behavior is now tiered by declared risk, the recording protocol is optional, the skill text is about a page, and a CLAUDE.md activation snippet exists for test periods. These are design changes for a real-session test, not new evidence; see [the change record](docs/test-readiness-2026-09-13.md). The historical results below describe earlier revisions.
-
-The targeted Codex trials verified economical execution, automatic fresh frontier review, and persisted completion for a bug fix with 21 passing regression checks. A research trial completed on Terra with no frontier calls and passed the strict output checks. These trials precede the release-review fixes to explicit independent review and campaign accounting. Local regression tests cover those fixes, completion validation, persistence failures, and idempotent retries.
-
-Full rollout remains incomplete. Claude live validation is blocked by the recorded Fable quota failure, and final acceptance plus fresh installed-session/default checks remain outstanding. The revised skill has not been installed into the personal discovery locations, and saved defaults have not been changed as part of this rollout. These trials do not establish general model qualification or a broad savings claim.
-
-See the [latest targeted results](docs/completion-remediation-live.md) and [local repair checks](docs/completion-remediation.md). Earlier campaign results remain historical evidence for their recorded source revisions.
-
-## The Details, If You Want Them
-
-Delegate is the skill you install. Model Governor is the maintainer tooling used to test and maintain it. The engine, benchmark notes, routing policy, and validation record live in the docs.
-
-- [Install details](docs/install.md)
-- [Test-readiness changes and measurement protocol](docs/test-readiness-2026-09-13.md)
-- [Skill instructions and routing policy](skills/delegate/SKILL.md)
-- [Interactive system map](docs/delegate-system.html)
-- [Deterministic routing policy and checklist](docs/deterministic-routing-refinement.md)
-- [Latest targeted live checks](docs/completion-remediation-live.md)
-- [Historical evaluation notes](docs/delegate-ordinary-results-2026-09-11.md)
-- [Validation record](docs/validation-status.md)
-- [Model Governor](docs/model-governor-spec.md)
+Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
+`node scripts/verify/skills.mjs`.

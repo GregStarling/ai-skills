@@ -1,4 +1,17 @@
-# Model Governor
+# AI Skills
+
+## Skill collection — 2026-09-19
+
+The current request turns this repository into a collection of independently
+installable skills: add CTO alongside Delegate, give each its own overview, and
+make the root README a catalog with installation instructions. Preserve Delegate
+behavior, routing-pack bytes, maintainer tooling and historical evidence. Generalize
+packaging checks to protect every consumer skill. Validate clean installs in
+disposable projects and obtain independent review. This request authorizes a
+GitHub branch and pull request for the collection; it does not change personal
+installations or saved model settings. Earlier phase restrictions below remain
+historical and do not expand this scope. See docs/skills-collection.md.
+
 
 ## Local middle-ground revision
 

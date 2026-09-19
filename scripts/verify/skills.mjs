@@ -5,20 +5,25 @@ import {tmpdir} from 'node:os';
 import {parse} from 'yaml';
 import {folderDigest} from '../../skills/delegate/scripts/local-learning.mjs';
 const root=resolve(process.env.SKILLS_ROOT||resolve(import.meta.dirname,'../..'));
-for(const name of ['delegate','refresh-models']){
+const skillNames=readdirSync(resolve(root,'skills'),{withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=>entry.name).sort();
+assert.ok(skillNames.length,'No skills found');
+for(const name of skillNames){
  const source=readFileSync(resolve(root,'skills',name,'SKILL.md'),'utf8'),match=/^---\n([\s\S]+?)\n---\n/.exec(source);assert.ok(match);
- const metadata=parse(match[1]);assert.deepEqual(Object.keys(metadata).sort(),['description','name']);assert.equal(metadata.name,name);assert.ok(metadata.description.length>30);assert.ok(!/TODO|\[INSERT|\[TODO/.test(source));
+ const metadata=parse(match[1]);assert.deepEqual(Object.keys(metadata).sort(),['description','name']);assert.equal(metadata.name,name);assert.ok(metadata.description.length>30);assert.ok(!/\[INSERT|\[TODO/.test(source));
 }
 for(const path of ['.claude/skills','.codex/skills','.agents/skills'])assert.equal(existsSync(resolve(root,path)),false,'Library source must stay inert in this checkout.');
 // Copy only the consumer directory, so a link cannot accidentally depend on the maintainer checkout.
-const temporary=mkdtempSync(join(tmpdir(),'delegate-package-')),copy=join(temporary,'delegate');
+const consumers=skillNames.filter(name=>name!=='refresh-models'),packages={};
+// refresh-models explicitly operates on the maintainer checkout; consumer skills must stand alone.
+for(const name of consumers){
+const temporary=mkdtempSync(join(tmpdir(),`${name}-package-`)),copy=join(temporary,name);
 const files=[];
 try{
- cpSync(resolve(root,'skills/delegate'),copy,{recursive:true});
+ cpSync(resolve(root,'skills',name),copy,{recursive:true});
  const inside=path=>{const rel=relative(copy,path);return rel!=='..'&&!rel.startsWith('../')&&!isAbsolute(rel);};
  const links=new Map();
- function inspect(directory){for(const name of readdirSync(directory)){
-  const path=join(directory,name),stat=lstatSync(path);assert.equal(stat.isSymbolicLink(),false,'Consumer pack cannot depend on external symlinks');
+ function inspect(directory){for(const entryName of readdirSync(directory)){
+  const path=join(directory,entryName),stat=lstatSync(path);assert.equal(stat.isSymbolicLink(),false,'Consumer pack cannot depend on external symlinks');
   if(stat.isDirectory()){inspect(path);continue;}assert.ok(stat.isFile());files.push(relative(copy,path));
   const source=readFileSync(path,'utf8'),file=relative(copy,path);
   // The consumer folder ships without package.json: only node: builtins and relative files may be imported.
@@ -32,16 +37,18 @@ try{
    links.get(path).push(linked);
   }
   // Backtick-quoted .md/.mjs paths are references too: try the containing directory, then the folder root.
-  for(const [,quoted] of source.matchAll(/`([^`\n]+)`/g)){
+  for(const [,quoted] of (name==='delegate'?source.matchAll(/`([^`\n]+)`/g):[])){
    if(!/^[A-Za-z0-9_./-]+\.(md|mjs)$/.test(quoted)||quoted.includes('http'))continue;
    const linked=[resolve(dirname(path),quoted),resolve(copy,quoted)].find(candidate=>inside(candidate)&&existsSync(candidate));
    assert.ok(linked,`Backtick path must resolve inside the consumer folder: \`${quoted}\` in ${file}`);
    links.get(path).push(linked);
   }
  }}inspect(copy);
- const reachable=new Set(), pending=[join(copy,'SKILL.md')];
+ const reachable=new Set(), pending=[join(copy,'SKILL.md'),...(existsSync(join(copy,'README.md'))?[join(copy,'README.md')]:[])];
  while(pending.length){const path=pending.pop();if(reachable.has(path))continue;reachable.add(path);pending.push(...(links.get(path)??[]));}
  for(const path of links.keys())assert.ok(reachable.has(path),`Unreachable consumer guidance: ${relative(copy,path)}`);
+ packages[name]=files.sort();
+ if(name!=='delegate')continue;
  const skill=readFileSync(join(copy,'SKILL.md'),'utf8'),problems=[];
  for(const word of new Set([...skill.matchAll(/stratum|cohort|identity assurance|smoke extrapolation|retained incumbent|API-equivalent|Foreman|governor/gi)].map(match=>match[0])))problems.push(`banned vocabulary '${word}'`);
  // The route.scope sentence is quoted verbatim in the plan with backticks around route.scope; accept both spellings.
@@ -52,5 +59,6 @@ try{
  // The status index must describe the pack and folder that actually ship; a recompile or any consumer edit without updating it fails here.
  const status=readFileSync(resolve(root,'docs/validation-status.md'),'utf8'),shipped=await folderDigest(copy);
  for(const [what,value] of [['pack content_digest',pack.content_digest],['consumer folder digest',shipped]])assert.ok(status.includes(value),`docs/validation-status.md must cite the current ${what} ${value}`);
- console.log(JSON.stringify({schema_version:'portable_skills_check.v1',status:'passed',skills:['delegate','refresh-models'],inert:true,copied_consumer_files:files.sort(),scope:'source_structure_and_reference_closure_only',behavioral_validation_required:true}));
 }finally{rmSync(temporary,{recursive:true,force:true});}
+}
+console.log(JSON.stringify({schema_version:'portable_skills_check.v1',status:'passed',skills:skillNames,inert:true,copied_consumer_files:packages,scope:'source_structure_and_reference_closure_only',behavioral_validation_required:true}));
