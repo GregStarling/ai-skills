@@ -7,21 +7,22 @@ comes next, and waits. You become the project manager: keeping track of unfinish
 work, asking it to continue, and deciding when a problem needs a stronger model.
 
 **CTO takes ownership of the plan. Delegate puts the right reasoning behind the
-work.** Together, they give your agent a process for building, checking, fixing,
-and continuing through to verified completion.
+work. Ship carries completed changes through a verified release.** Together,
+they give your agent a process for building, checking, fixing, and publishing.
 
-Two skills. Install either. Use both when you want the whole workflow.
+Three skills. Install the ones you need. Combine them for the full workflow.
 
 | Skill | The job you hand off | The standard it holds |
 | --- | --- | --- |
 | [**CTO**](skills/cto/) | Take this plan and implement it through shipping. | Every requirement needs evidence before the build is called done. |
 | [**Delegate**](skills/delegate/) | Decide which work needs stronger reasoning and independent review. | Routine work stays economical. Consequential work gets the attention it requires. |
+| [**Ship**](skills/ship/) | Take completed changes through release. | Verify the published revision, required checks, and the result people use. |
 
 Built for **Codex and Claude Code**, with portable skill files you can read,
 inspect, and adapt.
 
 ```sh
-npx skills add GregStarling/ai-skills --skill cto delegate --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill cto delegate ship --agent codex claude-code --copy
 ```
 
 ## CTO: Hand Over the Plan. Get Back to Your Work.
@@ -107,19 +108,44 @@ untested claims separate.
 
 [Explore Delegate →](skills/delegate/) · [Architecture and routing details](docs/delegate.md)
 
+## Ship: Close the Gap Between Done and Live.
+
+Your agent says the code is done. You still have to get it reviewed, merged,
+through CI, and into the hands of the people who need it. Ship owns that last
+stretch and brings back proof.
+
+It starts with the intended changes and the repository's release process. It
+runs the relevant checks, updates existing task records, and follows the required
+branch or pull-request workflow. It watches the checks for the actual released
+revision, diagnoses failures, and makes bounded repairs.
+
+### A Release You Can Check
+
+A green build is one piece of evidence. Ship also verifies the published result:
+changed behavior in a live app, a package installed from its registry, or the
+files people download from a repository. Its final proof names the revision,
+checks, publication evidence, and verification time.
+
+Required approvals remain required. Unrelated edits stay out of the release.
+Missing CI is reported as missing. If access or infrastructure blocks completion,
+you get the failed stage and the exact action needed to continue.
+
+[Explore Ship →](skills/ship/)
+
 ## Use Them Together. Keep Your Attention on the Outcome.
 
 CTO owns the plan, the ledger, and the decision that the whole build is finished.
 Delegate handles task routing, escalation, and required independent review. A
 worker can finish its assignment; CTO still has to prove the assignments fit
-together into the product you requested.
+together into the product you requested. Ship handles the authorized release
+step and returns its evidence to CTO for final acceptance.
 
 If you also use [ponytail](https://github.com/DietrichGebert/ponytail), it pushes
 each implementation toward the simplest correct solution. CTO preserves the
 approved scope. Delegate preserves required review. Ponytail keeps the code small.
 
-Ponytail is a separate project. CTO and Delegate each work on their own, and
-neither requires ponytail.
+Ponytail is a separate project. CTO, Delegate, and Ship each work on their own.
+None requires ponytail.
 
 ## Try Them on a Real Job
 
@@ -144,10 +170,20 @@ Delegate routes an uncertain diagnosis to stronger reasoning. Once the correctio
 is understood, routine implementation can return to the coordinator. The fix gets
 regression checks and fresh independent review.
 
+**Hand Ship the release:**
+
+```text
+Ship the current changes. Follow this repository's release process, chase
+required checks, and verify the published result.
+```
+
+Ship carries the completed work through release. Use it on its own or as the
+final step of a CTO build.
+
 ## Install
 
 Use the [open skills CLI](https://github.com/vercel-labs/skills) from the project
-where you use your agent. Choose either skill or install both:
+where you use your agent. Choose a skill or install all three:
 
 ```sh
 # CTO
@@ -156,25 +192,30 @@ npx skills add GregStarling/ai-skills --skill cto --agent codex claude-code --co
 # Delegate
 npx skills add GregStarling/ai-skills --skill delegate --agent codex claude-code --copy
 
-# Both
-npx skills add GregStarling/ai-skills --skill cto delegate --agent codex claude-code --copy
+# Ship
+npx skills add GregStarling/ai-skills --skill ship --agent codex claude-code --copy
+
+# All three
+npx skills add GregStarling/ai-skills --skill cto delegate ship --agent codex claude-code --copy
 ```
 
 Add `--global` to make them available across projects. Omit an agent name if you
 only use the other. Node.js is needed for the installer and Delegate's review
-helper; CTO itself is instructions only. There is no repository build, service,
-or separate API key to configure for either consumer skill.
+helper; CTO and Ship are instructions only. The consumer skills need no
+repository build or separate service. Ship uses your existing release tools
+and authorized access to your hosting and deployment providers.
 
 Prefer to copy the files yourself? Follow the [manual installation guide](docs/install.md),
 which also covers updates and removal.
 
-| Agent | Invoke CTO | Invoke Delegate |
-| --- | --- | --- |
-| Codex | `$cto` | `$delegate` |
-| Claude Code | `/cto` | `/delegate` |
+| Agent | Invoke CTO | Invoke Delegate | Invoke Ship |
+| --- | --- | --- | --- |
+| Codex | `$cto` | `$delegate` | `$ship` |
+| Claude Code | `/cto` | `/delegate` | `/ship` |
 
-Both can activate automatically for matching requests. CTO is for complete-plan
-execution; ordinary coding questions don't launch CTO mode. Start a fresh session
+Skills can activate automatically for matching requests. CTO is for complete-plan
+execution; Ship is for an authorized release of completed work. Ordinary coding
+questions don't launch CTO mode or authorize publishing. Start a fresh session
 if a newly installed skill doesn't appear.
 
 These skills run inside your existing agent session. They preserve your permissions
@@ -189,7 +230,7 @@ behavioral checks include a small build taken from failing tests through repair
 and verified completion. Those checks are bounded evidence, not a guarantee for
 every project.
 
-[Collection validation](docs/skills-collection.md) · [Delegate validation history](docs/validation-status.md)
+[Collection validation](docs/skills-collection.md) · [Ship validation](docs/ship-skill.md) · [Delegate validation history](docs/validation-status.md)
 
 <details>
 <summary><strong>For Skill Authors and Maintainers</strong></summary>
@@ -203,7 +244,7 @@ library checkout inert by installing into your own projects or personal director
 
 [refresh-models](skills/refresh-models/SKILL.md) is a maintainer workflow for
 Delegate's routing pack. Model Governor, policy, fixtures, and evaluation history
-remain maintainer tooling. Consumers install CTO and/or Delegate.
+remain maintainer tooling. Consumers install CTO, Delegate, and Ship independently.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
 `node scripts/verify/skills.mjs`.

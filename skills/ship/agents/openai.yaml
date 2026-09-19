@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship"
+  short_description: "Take completed work through a verified release"
+  default_prompt: "Use $ship to release the current changes and verify the published result."

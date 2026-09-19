@@ -1,5 +1,14 @@
 # AI Skills
 
+## Ship skill migration — 2026-09-19
+
+Add an improved portable Ship skill from claude-commands and the personal Ship
+variant. Keep its release instructions self-contained, update the catalog and
+installation guide, and validate disposable installs plus release behavior.
+Preserve CTO, Delegate, routing packs, and historical evidence. Publish this scoped
+addition as a branch and pull request; no retirement of claude-commands or change
+to personal installations is part of the migration. See docs/ship-skill.md.
+
 ## Skill collection — 2026-09-19
 
 The current request turns this repository into a collection of independently
