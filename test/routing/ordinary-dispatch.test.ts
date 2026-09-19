@@ -169,6 +169,29 @@ it('packaging rejects orphaned guidance, including unreachable cycles',async()=>
  }finally{await rm(root,{recursive:true,force:true});}
 });
 
+it('discovers new skills and rejects missing or escaped references in any consumer package',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'skill-collection-'));
+ try{
+  await cp(resolve('skills'),join(root,'skills'),{recursive:true});
+  await mkdir(join(root,'docs'));
+  await cp(resolve('docs/validation-status.md'),join(root,'docs/validation-status.md'));
+  const added=join(root,'skills/example');await mkdir(added);
+  const entry='---\nname: example\ndescription: A portable example skill used to verify collection discovery.\n---\n\nDo the requested example task.\n';
+  await writeFile(join(added,'SKILL.md'),entry);
+  const run=()=>spawnSync(process.execPath,['scripts/verify/skills.mjs'],{cwd:resolve('.'),encoding:'utf8',env:{...process.env,SKILLS_ROOT:root}});
+  const valid=run();expect(valid.status,valid.stderr).toBe(0);
+  expect(JSON.parse(valid.stdout).skills).toContain('example');
+  expect(JSON.parse(valid.stdout).copied_consumer_files.example).toEqual(['SKILL.md']);
+  await writeFile(join(added,'SKILL.md'),entry+'\n[Missing](missing.md)\n');
+  expect(run().stderr).toContain('Missing copied reference: missing.md');
+  await writeFile(join(added,'SKILL.md'),entry+'\n[Outside](../../docs/validation-status.md)\n');
+  expect(run().stderr).toContain('External consumer dependency: ../../docs/validation-status.md');
+  await writeFile(join(added,'SKILL.md'),entry);
+  await rm(join(root,'skills/cto/references/escalation.md'));
+  expect(run().stderr).toContain('Missing copied reference: references/escalation.md');
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+
 it('enforces simple audits and user restrictions before any required launch',()=>{
  let task_id=''; for(let i=0;i<100;i++)if(auditTask('audit-'+i)){task_id='audit-'+i;break;}
  expect(task_id).not.toBe('');

@@ -17,12 +17,14 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
+Collection packaging (2026-09-19) adds a consumer README only; Delegate instructions, helper, host guidance and routing pack are byte-for-byte unchanged. Previous 15-file source: folder `sha256:e1bac3d1f0dd79bdf5918cd8b547a2d013e9748ac49e9822f3a7ddcb85003d5e`, guidance `sha256:56c521954b5aa1767c2806b4d12ae1e7011e22071b4b1ec742316906a9842460`. See [collection validation](skills-collection.md).
+
 The current canonical source uses a mandatory stateless `check` at intake and whenever inputs change. A stable task ID selects the 10% trial audit, while `origin_work_type` preserves consequential-decision and hard-bug review through handoffs. Unknown handoff origins require frontier review; known low-risk planning-only implementation can use the sampled tier. Medium/unknown risk implementation still requires fresh frontier review. Detailed dispatch/completion recording stays optional. See [the local plan and validation](middle-ground.md). Personal installation, saved defaults, the routing pack and historical evidence are unchanged.
 
 | Current source digest | Value |
 | --- | --- |
-| Helper `folderDigest` (15 consumer files) | `sha256:e1bac3d1f0dd79bdf5918cd8b547a2d013e9748ac49e9822f3a7ddcb85003d5e` |
-| Guidance without `routing-pack.json` | `sha256:56c521954b5aa1767c2806b4d12ae1e7011e22071b4b1ec742316906a9842460` |
+| Helper `folderDigest` (16 consumer files) | `sha256:7c041044ccd1350bc0a7a6bb13c00c5811a76f7f822e682e2a055e200c036097` |
+| Guidance without `routing-pack.json` | `sha256:26d6452b13de0989c088bd01430a6b561ed246685785998db1393d934d726dcc` |
 
 Previous revision (2026-09-12 release verification, 14 consumer files): folder `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7`, guidance `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730`.
 

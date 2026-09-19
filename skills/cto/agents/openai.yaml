@@ -1,0 +1,4 @@
+interface:
+  display_name: "CTO"
+  short_description: "Own an implementation plan through verified shipping"
+  default_prompt: "Use $cto to implement this plan through verified shipping, keeping a persistent ledger."
