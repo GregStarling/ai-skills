@@ -1,5 +1,32 @@
 # AI Skills
 
+## Design Director import — 2026-09-19
+
+Bring the standalone Design Director bundle into the collection with its MIT
+license and source lineage. Preserve its validator, references, and design rules;
+clarify invocation paths and use the collection installation workflow. Extend the
+existing PR and six-skill catalog. Validate contract cases and disposable installs
+without changing personal installations or the upstream repository. See
+docs/design-director-import.md.
+
+## Catchup and Debug — 2026-09-19
+
+Add portable Catchup and Debug (renamed from Repro) skills and update the catalog
+and install guide. Catchup must remain read-only; Debug must establish failure
+evidence and verify scoped repairs. Extend the existing collection PR, preserving
+other skills and historical evidence. Validate disposable installs and independent
+behavioral exercises; do not alter personal installations or the old command repo.
+See docs/catchup-debug.md.
+
+## Ship skill migration — 2026-09-19
+
+Add an improved portable Ship skill from claude-commands and the personal Ship
+variant. Keep its release instructions self-contained, update the catalog and
+installation guide, and validate disposable installs plus release behavior.
+Preserve CTO, Delegate, routing packs, and historical evidence. Publish this scoped
+addition as a branch and pull request; no retirement of claude-commands or change
+to personal installations is part of the migration. See docs/ship-skill.md.
+
 ## Skill collection — 2026-09-19
 
 The current request turns this repository into a collection of independently

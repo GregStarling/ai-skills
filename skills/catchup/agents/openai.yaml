@@ -1,0 +1,4 @@
+interface:
+  display_name: "Catchup"
+  short_description: "Get a concise briefing on the current project"
+  default_prompt: "Use $catchup to brief me on this project, unfinished work, and next steps without changing anything."

@@ -1,20 +1,21 @@
 # Install skills
 
-CTO and Delegate are independent consumer skills. Install either or both. Copy the
-complete folder, including references, metadata and any scripts. Neither needs
-the repository's build or Model Governor engine. Delegate's helper needs Node.js;
-CTO has no runtime dependency. refresh-models is a repository maintenance workflow,
-not a standalone consumer skill.
+Catchup, CTO, Delegate, Design Director, Debug, and Ship are independent skills.
+Install any combination. Copy the complete folder, including references, metadata
+and any scripts. None needs the repository's build or Model Governor engine.
+Delegate's helper and Design Director's validator need Node.js; the other four
+skills are instructions only. Ship uses the project's existing release tools. refresh-models is a repository maintenance workflow, not a
+standalone consumer skill.
 
 ## Skills CLI
 
 From the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill cto delegate --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
-Choose one skill or one agent by omitting the other name. Add `--global` for a
+Choose skills and agents by omitting the names you do not need. Add `--global` for a
 personal install. The CLI's `--list` option lists skills without installing.
 `--copy` installs complete copies rather than links into the source checkout.
 See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents.
@@ -42,9 +43,9 @@ mkdir -p ~/.claude/skills
 test ! -e ~/.claude/skills/cto && test ! -L ~/.claude/skills/cto && cp -R skills/cto ~/.claude/skills/cto
 ```
 
-Replace each `cto` with `delegate` for Delegate. The guards refuse an existing
-file, folder or symlink; use the update procedure below instead of nesting a new
-copy inside an old installation.
+Replace each `cto` with `catchup`, `delegate`, `design-director`, `debug`, or `ship`
+to install that skill. The guards refuse an existing file, folder or symlink; use the update
+procedure below instead of nesting a new copy inside an old installation.
 
 For project scope, use `<your-project>/.agents/skills/<name>` for Codex or
 `<your-project>/.claude/skills/<name>` for Claude Code. Do not install into this
@@ -52,8 +53,9 @@ library checkout: its `skills/` source stays inert.
 
 ## Invoke and check discovery
 
-Start a fresh session. Use `$cto` or `$delegate` in Codex; `/cto` or `/delegate` in
-Claude Code. Codex also exposes skills through its skill selector. Keep Claude
+Start a fresh session. Use `$catchup`, `$cto`, `$delegate`, `$design-director`, `$debug`,
+or `$ship` in Codex; use the corresponding `/name` invocation in Claude Code.
+Codex also exposes skills through its skill selector. Keep Claude
 project settings enabled for project-scope discovery. A personal Claude skill
 with the same name takes precedence over a project copy; update or remove the
 personal copy when switching versions ([host precedence rules](https://code.claude.com/docs/en/skills#resolve-skills-that-share-a-name)).
@@ -61,6 +63,27 @@ personal copy when switching versions ([host precedence rules](https://code.clau
 The shared SKILL.md is authoritative for either host; optional metadata does not
 create a separate behavioral implementation. Each skill's own README explains
 its triggers and composition with other skills.
+
+## Migrating from claude-commands
+
+This collection includes portable successors to `catchup`, `repro`, and `ship`.
+Install `catchup`, **`debug`** (the new name for Repro), and/or `ship`. Start a
+fresh session and confirm the loaded instruction source before use. There is no
+`repro` alias in this collection.
+
+See the [Ship migration notes](../skills/ship/README.md#moving-from-claude-commands)
+for old plugin and manually copied command installations. You can keep the old
+plugin for its remaining commands; installing these skills does not uninstall
+it or retire the old repository. Back up any manual command copies outside the
+host's discovery folders when replacing them.
+
+## Migrating Design Director
+
+Install `design-director` from this collection. The complete folder includes its
+validator, reference guidance, source ledger, and MIT license. The original
+repository's custom installer is not required. Preserve any local modifications
+in a backup outside discovery folders before replacing an old installation.
+See the [skill overview](../skills/design-director/README.md#source-and-migration).
 
 ## Update or remove
 

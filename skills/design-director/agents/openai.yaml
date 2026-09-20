@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Director"
+  short_description: "Direct autonomous product design work"
+  default_prompt: "Use $design-director to derive and verify a product-specific design direction from evidence."
