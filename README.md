@@ -2,45 +2,54 @@
 
 ## Build More. Babysit Less.
 
-You give your coding agent a plan. It finishes the first piece, tells you what
-comes next, and waits. You become the project manager: keeping track of unfinished
-work, asking it to continue, and deciding when a problem needs a stronger model.
+Your coding agent can write the code. You still find yourself reconstructing the
+project, keeping the plan moving, questioning the design, chasing bugs, deciding
+what needs review, and checking whether the release worked.
 
-**Catchup gets you oriented. CTO owns the plan. Design Director gives the
-interface a reason for its choices.** Delegate routes the reasoning, Debug proves
-the fix, and Ship carries completed changes through a verified release.
+**Give your agent a process for those jobs, too.**
 
-Six skills. Install the ones you need. Combine them for the full workflow.
+AI Skills is a collection of six independently installable skills for **Codex
+and Claude Code**. Each owns a specific part of the work, with clear boundaries
+and evidence for its conclusions. Use one to solve the problem in front of you,
+or combine them across a project.
 
-| Skill | The job you hand off | The standard it holds |
+| Skill | What you hand off | What you get back |
 | --- | --- | --- |
-| [**Catchup**](skills/catchup/) | Bring me up to speed on this project. | A brief grounded in current evidence, with no project changes. |
-| [**CTO**](skills/cto/) | Take this plan and implement it through shipping. | Every requirement needs evidence before the build is called done. |
-| [**Delegate**](skills/delegate/) | Decide which work needs stronger reasoning and independent review. | Routine work stays economical. Consequential work gets the attention it requires. |
-| [**Design Director**](skills/design-director/) | Make design decisions this product can defend. | Product evidence guides the direction; accessibility and truthful behavior remain required. |
-| [**Debug**](skills/debug/) | Find the cause of this bug and prove the fix. | Reproduce the failure, correct its cause, and check for regressions. |
-| [**Ship**](skills/ship/) | Take completed changes through release. | Verify the published revision, required checks, and the result people use. |
+| [**Catchup**](skills/catchup/) | “Bring me up to speed.” | A concise briefing on current work, unfinished changes, and the next supported step. |
+| [**CTO**](skills/cto/) | “Take this plan through completion.” | Implementation, a persistent work ledger, and evidence against the agreed outcome. |
+| [**Delegate**](skills/delegate/) | “Give this work the reasoning it needs.” | Economical coordination, stronger reasoning where warranted, and required independent review. |
+| [**Design Director**](skills/design-director/) | “Give this interface a direction.” | Design decisions grounded in product evidence, with explicit unknowns and verification criteria. |
+| [**Debug**](skills/debug/) | “Find the cause and prove the fix.” | A faithful reproduction, a scoped correction, and regression evidence. |
+| [**Ship**](skills/ship/) | “Get these changes released.” | A verified release, with the revision, check results, and published-result evidence. |
 
-Built for **Codex and Claude Code**, with portable skill files you can read,
-inspect, and adapt.
+Install the full collection from the project where you use your agent:
 
 ```sh
 npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
+Every skill is readable source. Inspect the instructions, install only what you
+need, and adapt them to your work.
+
 ## Catchup: Pick Up Where the Work Actually Stands.
 
-You return to a project and spend the first twenty minutes reconstructing it.
-Which branch has the work? Did that PR merge? Does the task list still match the
-code? Catchup turns those questions into a short briefing.
+Returning to a project creates a job before the job: reconstructing what
+happened. Which branch has the work? Did the PR merge? Does the task list still
+match the code?
 
-It reads the working tree, recent history, available PR and CI evidence, and
-existing project records. If CTO has a ledger, Catchup checks it against what the
-repository shows. Stale notes and unfinished changes get called out together.
+Catchup reads the working tree, recent history, available PR and CI evidence,
+and existing project records. If CTO has a ledger, it checks those claims against
+the repository. You get a short brief covering current state, work in flight,
+material uncertainty, and the next supported action.
 
-You get the current state, work in flight, and the next supported step. Inferred
-priorities are labeled. Unavailable remote information stays unknown. Catchup
-leaves the files, index, branches, and task records alone.
+**The briefing leaves your project alone.** Catchup does not edit files, fetch
+Git refs, run builds, or resume implementation. It labels inferred priorities
+and missing remote information instead of presenting guesses as current facts.
+
+```text
+Catchup. What is unfinished, what changed recently, and what should I pick up
+next? Read only; do not resume the build.
+```
 
 [Explore Catchup →](skills/catchup/)
 
@@ -49,295 +58,236 @@ leaves the files, index, branches, and task records alone.
 > The user handed you a plan and left the room. They are buying one thing:
 > they come back and it is shipped.
 
-That's the operating principle. Give CTO a PRD, roadmap, issue set, task list,
-or implementation plan. It turns the outcome into acceptance criteria, breaks
-it into verifiable work, and takes responsibility for moving each item through
-implementation and testing.
+Give CTO a PRD, roadmap, issue set, or implementation plan. It turns the outcome
+into acceptance criteria and keeps moving through implementation, integration,
+checks, and repairs. A progress update does not end the assignment.
 
-A progress update doesn't end the job. A failing test starts another diagnosis.
-A difficult bug triggers escalation. CTO keeps working through the approved plan
-without asking you to authorize every next phase.
+Long builds need continuity. CTO maintains `.cto/ledger.md` with requirements,
+work items, decisions, failed attempts, and verification evidence. After a restart
+or handoff, the next session can inspect the ledger and repository before resuming.
+When repeated fixes fail, CTO changes the diagnostic approach or escalates.
 
-### The Work Survives the Conversation
+**Completion has to survive a separate acceptance pass.** CTO rereads the original
+plan and looks for missing requirements, broken flows, and tests that pass while
+the behavior is wrong. Requested release steps remain part of completion when
+authorized; external blockers remain visible.
 
-Long builds outlast a single context window. CTO keeps a ledger in your project
-at `.cto/ledger.md`: what's required, what's finished, what failed, what was
-decided, and what proves the result. After a restart or handoff, the next session
-reads the ledger, checks the repository, and resumes from the actual state.
-
-You get a record of the build instead of a checklist you have to carry in your head.
-
-### Stuck Is a Signal to Escalate
-
-When two different fixes leave the same failure standing, CTO changes the approach.
-It seeks the strongest reasoning available, then a fresh diagnosis or another
-model family when available. If the implementation strategy is the problem, it
-reworks that strategy while preserving the outcome you asked for.
-
-A missing credential or authorization can block part of the plan. CTO records
-exactly what's needed and continues the work that can still move forward.
-
-### “Done” Has to Survive Review
-
-Before declaring completion, CTO reopens the original plan and tries to prove the
-build is incomplete. Missing requirements. Untested user flows. Broken integrations.
-Tests that pass while the behavior is wrong. Material findings go back into the
-work queue for repair and verification.
-
-**SHIPPED means the agreed outcome is verified, including the release step when
-one was requested and authorized.**
+```text
+CTO mode. Implement the plan in PLAN.md. Preserve the existing public API,
+verify the main user flows, and continue until every requirement is complete.
+```
 
 [Explore CTO →](skills/cto/)
 
-## Delegate: Coordinate Cheaply. Bring in Frontier When It Matters.
+## Delegate: Put Stronger Reasoning Where It Matters.
 
-A routine edit, an architecture decision, and a production bug call for different
-levels of reasoning. Delegate keeps a capable, economical model in charge of the
-conversation and brings in stronger agents for the work that warrants them.
+A routine edit, an architecture decision, and an unexplained production failure
+need different kinds of attention. Delegate keeps a capable, economical
+coordinator on routine work and brings in frontier reasoning for plans,
+consequential decisions, and difficult diagnosis.
 
-The coordinator handles routine tasks directly. Agents get bounded assignments,
-return their results, and the coordinator continues. Execution and review are
-separate decisions, so choosing an economical implementation path doesn't remove
-a required quality check.
+Execution and review are separate decisions. Medium-risk and higher implemented
+behavior requires fresh independent review. Low-risk work gets direct checks and
+a stable audit sample. Hard-bug fixes and consequential decisions retain their
+review requirements through handoffs and repairs.
 
-### Give Each Job the Attention It Deserves
+**A review finding goes back into the work.** Reviewers return PASS, REPAIR, or
+BLOCKED, and corrections get verified before acceptance. Models and tools depend
+on what the host actually provides; the skill does not change saved settings or
+claim measured savings from the conversation.
 
-| Work | How Delegate Handles It |
-| --- | --- |
-| Plans and consequential decisions | Bring in frontier reasoning to settle the approach. |
-| Hard bugs and uncertain root causes | Start with stronger diagnosis; hand back a bounded fix once the cause is understood. |
-| Features and understood fixes | Use the coordinator or a bounded worker, with review based on risk. |
-| Research, PDFs, and source comparison | Keep the work economical and verify the evidence. Volume alone doesn't trigger an expensive agent. |
-| Implemented behavior | Require fresh frontier review at medium risk and above; low-risk work gets direct checks plus a stable audit sample. |
+```text
+Use Delegate to implement this change. Route the consequential decisions and
+satisfy the required review before calling it complete.
+```
 
-Hard-bug fixes and implementation of consequential decisions retain their review
-requirements through handoffs. Renaming a security change “routine implementation”
-doesn't make the review disappear.
-
-### Review Leads to Repair
-
-Reviewers return **PASS**, **REPAIR**, or **BLOCKED**. Findings go back to the
-executor with a concrete correction and an acceptance check. Required review stays
-part of completion, including after repairs.
-
-The aim is economical coordination with clear standards for when to spend more
-reasoning. Results depend on the task and the capabilities your host provides;
-the [validation record](docs/validation-status.md) keeps observed results and
-untested claims separate.
-
-[Explore Delegate →](skills/delegate/) · [Architecture and routing details](docs/delegate.md)
+[Explore Delegate →](skills/delegate/) · [Routing and architecture](docs/delegate.md)
 
 ## Design Director: Give Every Design Choice a Reason.
 
-“Make it look good” leaves an agent choosing a style before it understands the
-product. Design Director starts with the people using it, the work they need to
-do, and the behavior the product must preserve.
+“Make it look good” leaves too much unanswered. Who uses this product? What are
+they trying to accomplish? Which behaviors and promises must survive a redesign?
+Design Director starts with those questions and the evidence available to answer
+them.
 
-It can establish a design direction, analyze a conflict, evaluate a built
-interface, or propose a focused amendment. Accessibility, truthful content, and
-recoverable interactions remain required. Product evidence can change the design
-direction; a trend or personal preference cannot establish it.
+It can derive a design direction, analyze a conflict, evaluate a built interface,
+or propose a focused amendment. A mandatory floor protects accessibility,
+truthful content, user autonomy, and recovery. Design principles guide the work;
+product evidence determines the product-specific direction.
 
-You get an explicit proposal with evidence, open questions, and verification
-criteria. A bundled validator checks the artifact's structure and evidence
-requirements. Rendered inspection and behavior checks still determine whether
-the design works. Standalone proposals are advisory; the skill does not pretend
-to be a system that stores or adopts design decisions.
+**You get decisions you can inspect and challenge.** Each pass produces a
+structured proposal with evidence and open questions. A bundled validator checks
+the artifact's structure and encoded evidence requirements. Rendered inspection
+and behavior checks still determine whether the design works. Standalone
+proposals are advisory; durable adoption and storage require a host runtime.
+
+```text
+Use Design Director to evaluate the onboarding flow. Preserve the product's
+promises, inspect the real states, and distinguish implementation problems
+from evidence that the design direction needs to change.
+```
 
 [Explore Design Director →](skills/design-director/)
 
 ## Debug: Make the Bug Show Its Work.
 
 A plausible explanation can send an agent straight into editing. Debug asks for
-evidence first. It traces the failing path, reproduces the problem, and checks
-that the failure comes from the reported bug before changing the implementation.
+evidence first. It traces the failing path and checks that the reproduction fails
+for the reported reason before changing production code.
 
-The correction has to survive the same check that exposed it. Debug runs the
-surrounding checks too, and follows shared callers when the cause affects more
-than one entry point. Unrelated improvements stay out of the fix.
+The correction must pass the check that exposed the failure. Debug also runs
+relevant surrounding checks and follows shared callers when the same cause
+affects more than one entry point. Unrelated improvements stay out of the fix.
 
-Intermittent and environment-specific bugs need more than one lucky passing run.
-Debug records the conditions, compares before and after, and states what the
-available evidence can prove. If the failure cannot be reproduced, you get the
-observations, remaining hypotheses, and the next useful experiment.
+**One lucky passing run does not close an intermittent bug.** Debug investigates
+timing, configuration, environment, and data; records the conditions; and states
+what the evidence can prove. If reproduction remains unavailable, you get the
+observations, remaining hypotheses, and the next useful experiment. Diagnosis-only
+requests remain diagnosis-only. Debug itself does not authorize publishing.
 
-Debug handles investigation and repair. Publishing the result is a separate step.
+```text
+Debug this failure: --retries 0 still performs retries. Reproduce the bug,
+fix its cause, and verify the CLI and any callers sharing the same logic.
+```
 
 [Explore Debug →](skills/debug/)
 
 ## Ship: Close the Gap Between Done and Live.
 
-Your agent says the code is done. You still have to get it reviewed, merged,
-through CI, and into the hands of the people who need it. Ship owns that last
-stretch and brings back proof.
+Completed code still needs a release. Ship reviews the intended changes, runs
+the relevant checks, updates existing project records, and follows the
+repository's branch, pull-request, and publication rules.
 
-It starts with the intended changes and the repository's release process. It
-runs the relevant checks, updates existing task records, and follows the required
-branch or pull-request workflow. It watches the checks for the actual released
-revision, diagnoses failures, and makes bounded repairs.
+It tracks the actual released revision through required CI and deployment
+checks. Failures lead to diagnosis and bounded repairs. Unrelated work and
+existing commit history stay protected, and required human approvals remain
+release gates.
 
-### A Release You Can Check
-
-A green build is one piece of evidence. Ship also verifies the published result:
-changed behavior in a live app, a package installed from its registry, or the
-files people download from a repository. Its final proof names the revision,
-checks, publication evidence, and verification time.
-
-Required approvals remain required. Unrelated edits stay out of the release.
-Missing CI is reported as missing. If access or infrastructure blocks completion,
-you get the failed stage and the exact action needed to continue.
-
-[Explore Ship →](skills/ship/)
-
-## Use Them Together. Keep Your Attention on the Outcome.
-
-Catchup briefs you before work resumes. It can read CTO's ledger without
-resuming implementation or changing its status.
-
-CTO owns the plan, the ledger, and the decision that the whole build is finished.
-Delegate handles task routing, escalation, and required independent review. A
-worker can finish its assignment; CTO still has to prove the assignments fit
-together into the product you requested. Ship handles the authorized release
-step and returns its evidence to CTO for final acceptance. Debug supplies the
-reproduction and repair workflow when a bug needs investigation; Delegate still
-controls routing and required review. Design Director supplies the design
-reasoning and evidence contract for interface work, while CTO retains the scope
-and overall acceptance.
-
-If you also use [ponytail](https://github.com/DietrichGebert/ponytail), it pushes
-each implementation toward the simplest correct solution. CTO preserves the
-approved scope. Delegate preserves required review. Ponytail keeps the code small.
-
-Ponytail is a separate project. Each skill here works independently. None
-requires ponytail.
-
-## Try Them on a Real Job
-
-**Return to a project:**
-
-```text
-Catchup. What is unfinished, what changed recently, and what should I pick up
-next? Read only; do not resume the build.
-```
-
-**Hand CTO a plan:**
-
-```text
-CTO mode. Implement the plan in PLAN.md. Keep the existing public API,
-verify the main user flows, and continue until every requirement is complete.
-```
-
-CTO defines completion, records the work, and starts implementing. With Delegate
-installed, it applies the routing and review rules along the way.
-
-**Give the interface a direction:**
-
-```text
-Use Design Director to evaluate the onboarding flow. Preserve the product's
-existing promises, inspect the real states, and explain which findings require
-implementation fixes versus a change in design direction.
-```
-
-**Give Debug a difficult bug:**
-
-```text
-Debug this OAuth error that only happens in production. Trace the request
-from the route to the callback, find the root cause, and fix it. Run the
-relevant checks.
-```
-
-Debug establishes the failure evidence and proves the correction. With Delegate
-installed, uncertain diagnosis gets stronger reasoning and the resulting fix
-gets the required independent review.
-
-**Hand Ship the release:**
+**The finish line is the result people receive.** Ship verifies changed behavior
+in a live app, a package installed from its registry, or the files published in
+a repository. The final proof identifies the revision, checks, publication,
+verification, and time. Missing infrastructure is reported honestly; an incomplete
+required step cannot become a successful release claim.
 
 ```text
 Ship the current changes. Follow this repository's release process, chase
 required checks, and verify the published result.
 ```
 
-Ship carries the completed work through release. Use it on its own or as the
-final step of a CTO build.
+[Explore Ship →](skills/ship/)
 
-## Install
+## Choose the Job. Combine the Skills When It Helps.
 
-Use the [open skills CLI](https://github.com/vercel-labs/skills) from the project
-where you use your agent. Choose a skill or install all six:
+You do not need all six for every task. Catchup can brief you without starting
+a build. Debug can resolve a defect without releasing it. Ship can publish
+completed work without requiring a CTO plan.
+
+For a larger project, their responsibilities fit together:
+
+| Responsibility | Skill |
+| --- | --- |
+| Establish the current state before resuming | Catchup |
+| Own scope, dependencies, the ledger, and final acceptance | CTO |
+| Route reasoning, escalation, and required review throughout the work | Delegate |
+| Ground interface decisions and design verification in product evidence | Design Director |
+| Investigate failures and prove scoped corrections | Debug |
+| Execute and verify the authorized release | Ship |
+
+Installing the collection makes these workflows available; it does not start
+all of them or authorize every action. CTO retains overall acceptance when it
+owns the plan. The other skills contribute their work and evidence.
+
+If you also use [Ponytail](https://github.com/DietrichGebert/ponytail), it pushes
+implementation toward the simplest correct solution. Requested behavior and
+required verification still matter. Ponytail is a separate project and an
+optional companion.
+
+## Install One Skill or the Whole Collection
+
+Use the [open skills CLI](https://github.com/vercel-labs/skills) from your project.
+Choose one name or list the skills you want:
 
 ```sh
-# Catchup
-npx skills add GregStarling/ai-skills --skill catchup --agent codex claude-code --copy
-
-# CTO
-npx skills add GregStarling/ai-skills --skill cto --agent codex claude-code --copy
-
-# Delegate
-npx skills add GregStarling/ai-skills --skill delegate --agent codex claude-code --copy
-
-# Design Director
-npx skills add GregStarling/ai-skills --skill design-director --agent codex claude-code --copy
-
-# Debug
+# One skill
 npx skills add GregStarling/ai-skills --skill debug --agent codex claude-code --copy
 
-# Ship
-npx skills add GregStarling/ai-skills --skill ship --agent codex claude-code --copy
+# A selection
+npx skills add GregStarling/ai-skills --skill catchup debug ship --agent codex claude-code --copy
 
 # All six
 npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
-Add `--global` to make them available across projects. Omit an agent name if you
-only use the other. Node.js is needed for the installer, Delegate's review
-helper, and Design Director's validator. The other four skills are instructions
-only. The consumer skills need no repository build or separate service. Ship uses your existing release tools
-and authorized access to your hosting and deployment providers.
+| Skill | Install name | Codex | Claude Code |
+| --- | --- | --- | --- |
+| Catchup | `catchup` | `$catchup` | `/catchup` |
+| CTO | `cto` | `$cto` | `/cto` |
+| Delegate | `delegate` | `$delegate` | `/delegate` |
+| Design Director | `design-director` | `$design-director` | `/design-director` |
+| Debug | `debug` | `$debug` | `/debug` |
+| Ship | `ship` | `$ship` | `/ship` |
 
-Prefer to copy the files yourself? Follow the [manual installation guide](docs/install.md),
-which also covers updates and removal.
+Add `--global` for availability across projects. Remove the agent name you do
+not use. `--copy` installs complete copies of the selected folders.
 
-| Skill | Codex | Claude Code |
-| --- | --- | --- |
-| Catchup | `$catchup` | `/catchup` |
-| CTO | `$cto` | `/cto` |
-| Delegate | `$delegate` | `/delegate` |
-| Design Director | `$design-director` | `/design-director` |
-| Debug | `$debug` | `/debug` |
-| Ship | `$ship` | `/ship` |
+Node.js runs the installer, Delegate's review helper, and Design Director's
+validator. Catchup, CTO, Debug, and Ship are instructions only. Consumer skills
+need no repository build or separate service. They use the tools and authorized
+access available in your existing agent session.
 
-Skills can activate automatically for matching requests. CTO is for complete-plan
-execution; Ship is for an authorized release of completed work. Ordinary coding
-questions don't launch CTO mode or authorize publishing. Start a fresh session
-if a newly installed skill doesn't appear.
+Skills can activate for matching requests or be invoked by name. Start a fresh
+session if a new installation does not appear. They preserve your permissions
+and model settings, and cannot keep running after their host closes. Reinvoke
+CTO in the same project to resume from its ledger.
 
-These skills run inside your existing agent session. They preserve your permissions
-and model settings. They cannot run after the host closes or bypass its limits;
-reinvoke CTO in the same project to resume from the ledger.
+[Manual installation, updates, and removal →](docs/install.md)
 
-## Inspect the Work Behind the Promise
+## Bringing Your Existing Skills Across
 
-The collection has been checked with clean installs for both hosts, native skill
-discovery, independent review, and the repository's regression suite. CTO's
-behavioral checks include a small build taken from failing tests through repair
-and verified completion. Those checks are bounded evidence, not a guarantee for
-every project.
+Catchup and Ship have portable successors here. **Repro is now Debug**, installed
+and invoked as `debug`; this collection does not register a `repro` alias.
+Design Director includes its original validator, references, source lineage,
+and MIT license, with installation adapted to this collection.
 
-[Collection validation](docs/skills-collection.md) · [Ship validation](docs/ship-skill.md) · [Catchup and Debug validation](docs/catchup-debug.md) · [Design Director import](docs/design-director-import.md) · [Delegate validation history](docs/validation-status.md)
+If you already use a copy from `claude-commands` or `design-director`, follow the
+[migration instructions](docs/install.md#migrating-from-claude-commands). Preserve
+local customizations before replacing a complete skill folder and confirm which
+copy the host loads. Installing from this collection does not uninstall an old
+plugin or retire either original repository.
+
+## Inspect the Evidence Behind the Promise
+
+Validation includes clean installations for both hosts, packaging and reference
+checks, independent review, and the repository's regression suite. Behavioral
+exercises include a CTO build, read-only Catchup briefings, a failing-to-passing
+Debug repair, and an isolated Ship release. Design Director has validator
+contract tests and installed-helper checks.
+
+These are bounded checks. Simulated provider cases and synthetic contract
+fixtures do not prove production behavior or design quality for every project.
+The records keep those limits explicit:
+
+- [Collection installation and discovery](docs/skills-collection.md)
+- [Delegate validation history](docs/validation-status.md)
+- [Catchup and Debug exercises](docs/catchup-debug.md)
+- [Ship release exercise](docs/ship-skill.md)
+- [Design Director import and contract checks](docs/design-director-import.md)
 
 <details>
 <summary><strong>For Skill Authors and Maintainers</strong></summary>
 
 Add `skills/<name>/SKILL.md` with `name` and `description` frontmatter, a short
 README, and only the resources it needs. Keep consumer references inside that
-folder and installation paths out of portable behavior. Add it to the catalog,
-then run `node scripts/verify/skills.mjs` after `npm ci`. Consumer skills are
-checked from isolated copies; no central registration file is needed. Keep this
-library checkout inert by installing into your own projects or personal directory.
+folder and installation paths out of portable behavior. Add the skill to the
+catalog and install table, then run `node scripts/verify/skills.mjs` after
+`npm ci`. Consumer skills are checked from isolated copies; no central
+registration file is needed.
 
-[refresh-models](skills/refresh-models/SKILL.md) is a maintainer workflow for
-Delegate's routing pack. Model Governor, policy, fixtures, and evaluation history
-remain maintainer tooling. Consumers install the six catalog skills independently.
+Keep this library checkout inert by installing into your own projects or
+personal directory. [refresh-models](skills/refresh-models/SKILL.md) is a maintainer
+workflow for Delegate's routing pack. Model Governor, policy, fixtures, and
+evaluation history remain maintainer tooling, separate from the six consumer
+skills above.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
 `node scripts/verify/skills.mjs`.
