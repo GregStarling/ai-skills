@@ -1,0 +1,4 @@
+interface:
+  display_name: "Debug"
+  short_description: "Reproduce a bug, fix its cause, and prove the fix"
+  default_prompt: "Use $debug to investigate this bug, reproduce the failure, and verify a scoped correction."

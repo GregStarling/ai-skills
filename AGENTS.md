@@ -1,5 +1,14 @@
 # AI Skills
 
+## Catchup and Debug — 2026-09-19
+
+Add portable Catchup and Debug (renamed from Repro) skills and update the catalog
+and install guide. Catchup must remain read-only; Debug must establish failure
+evidence and verify scoped repairs. Extend the existing collection PR, preserving
+other skills and historical evidence. Validate disposable installs and independent
+behavioral exercises; do not alter personal installations or the old command repo.
+See docs/catchup-debug.md.
+
 ## Ship skill migration — 2026-09-19
 
 Add an improved portable Ship skill from claude-commands and the personal Ship
