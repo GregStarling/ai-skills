@@ -1,5 +1,14 @@
 # AI Skills
 
+## Design Director import — 2026-09-19
+
+Bring the standalone Design Director bundle into the collection with its MIT
+license and source lineage. Preserve its validator, references, and design rules;
+clarify invocation paths and use the collection installation workflow. Extend the
+existing PR and six-skill catalog. Validate contract cases and disposable installs
+without changing personal installations or the upstream repository. See
+docs/design-director-import.md.
+
 ## Catchup and Debug — 2026-09-19
 
 Add portable Catchup and Debug (renamed from Repro) skills and update the catalog

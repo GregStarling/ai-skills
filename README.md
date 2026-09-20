@@ -6,17 +6,18 @@ You give your coding agent a plan. It finishes the first piece, tells you what
 comes next, and waits. You become the project manager: keeping track of unfinished
 work, asking it to continue, and deciding when a problem needs a stronger model.
 
-**Catchup gets you oriented. CTO owns the plan. Debug proves the fix.** Delegate
-puts the right reasoning behind the work, and Ship carries completed changes
-through a verified release.
+**Catchup gets you oriented. CTO owns the plan. Design Director gives the
+interface a reason for its choices.** Delegate routes the reasoning, Debug proves
+the fix, and Ship carries completed changes through a verified release.
 
-Five skills. Install the ones you need. Combine them for the full workflow.
+Six skills. Install the ones you need. Combine them for the full workflow.
 
 | Skill | The job you hand off | The standard it holds |
 | --- | --- | --- |
 | [**Catchup**](skills/catchup/) | Bring me up to speed on this project. | A brief grounded in current evidence, with no project changes. |
 | [**CTO**](skills/cto/) | Take this plan and implement it through shipping. | Every requirement needs evidence before the build is called done. |
 | [**Delegate**](skills/delegate/) | Decide which work needs stronger reasoning and independent review. | Routine work stays economical. Consequential work gets the attention it requires. |
+| [**Design Director**](skills/design-director/) | Make design decisions this product can defend. | Product evidence guides the direction; accessibility and truthful behavior remain required. |
 | [**Debug**](skills/debug/) | Find the cause of this bug and prove the fix. | Reproduce the failure, correct its cause, and check for regressions. |
 | [**Ship**](skills/ship/) | Take completed changes through release. | Verify the published revision, required checks, and the result people use. |
 
@@ -24,7 +25,7 @@ Built for **Codex and Claude Code**, with portable skill files you can read,
 inspect, and adapt.
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup cto delegate debug ship --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
 ## Catchup: Pick Up Where the Work Actually Stands.
@@ -126,6 +127,25 @@ untested claims separate.
 
 [Explore Delegate →](skills/delegate/) · [Architecture and routing details](docs/delegate.md)
 
+## Design Director: Give Every Design Choice a Reason.
+
+“Make it look good” leaves an agent choosing a style before it understands the
+product. Design Director starts with the people using it, the work they need to
+do, and the behavior the product must preserve.
+
+It can establish a design direction, analyze a conflict, evaluate a built
+interface, or propose a focused amendment. Accessibility, truthful content, and
+recoverable interactions remain required. Product evidence can change the design
+direction; a trend or personal preference cannot establish it.
+
+You get an explicit proposal with evidence, open questions, and verification
+criteria. A bundled validator checks the artifact's structure and evidence
+requirements. Rendered inspection and behavior checks still determine whether
+the design works. Standalone proposals are advisory; the skill does not pretend
+to be a system that stores or adopts design decisions.
+
+[Explore Design Director →](skills/design-director/)
+
 ## Debug: Make the Bug Show Its Work.
 
 A plausible explanation can send an agent straight into editing. Debug asks for
@@ -180,7 +200,9 @@ worker can finish its assignment; CTO still has to prove the assignments fit
 together into the product you requested. Ship handles the authorized release
 step and returns its evidence to CTO for final acceptance. Debug supplies the
 reproduction and repair workflow when a bug needs investigation; Delegate still
-controls routing and required review.
+controls routing and required review. Design Director supplies the design
+reasoning and evidence contract for interface work, while CTO retains the scope
+and overall acceptance.
 
 If you also use [ponytail](https://github.com/DietrichGebert/ponytail), it pushes
 each implementation toward the simplest correct solution. CTO preserves the
@@ -208,6 +230,14 @@ verify the main user flows, and continue until every requirement is complete.
 CTO defines completion, records the work, and starts implementing. With Delegate
 installed, it applies the routing and review rules along the way.
 
+**Give the interface a direction:**
+
+```text
+Use Design Director to evaluate the onboarding flow. Preserve the product's
+existing promises, inspect the real states, and explain which findings require
+implementation fixes versus a change in design direction.
+```
+
 **Give Debug a difficult bug:**
 
 ```text
@@ -233,7 +263,7 @@ final step of a CTO build.
 ## Install
 
 Use the [open skills CLI](https://github.com/vercel-labs/skills) from the project
-where you use your agent. Choose a skill or install all five:
+where you use your agent. Choose a skill or install all six:
 
 ```sh
 # Catchup
@@ -245,20 +275,23 @@ npx skills add GregStarling/ai-skills --skill cto --agent codex claude-code --co
 # Delegate
 npx skills add GregStarling/ai-skills --skill delegate --agent codex claude-code --copy
 
+# Design Director
+npx skills add GregStarling/ai-skills --skill design-director --agent codex claude-code --copy
+
 # Debug
 npx skills add GregStarling/ai-skills --skill debug --agent codex claude-code --copy
 
 # Ship
 npx skills add GregStarling/ai-skills --skill ship --agent codex claude-code --copy
 
-# All five
-npx skills add GregStarling/ai-skills --skill catchup cto delegate debug ship --agent codex claude-code --copy
+# All six
+npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
 Add `--global` to make them available across projects. Omit an agent name if you
-only use the other. Node.js is needed for the installer and Delegate's review
-helper; the other four skills are instructions only. The consumer skills need no
-repository build or separate service. Ship uses your existing release tools
+only use the other. Node.js is needed for the installer, Delegate's review
+helper, and Design Director's validator. The other four skills are instructions
+only. The consumer skills need no repository build or separate service. Ship uses your existing release tools
 and authorized access to your hosting and deployment providers.
 
 Prefer to copy the files yourself? Follow the [manual installation guide](docs/install.md),
@@ -269,6 +302,7 @@ which also covers updates and removal.
 | Catchup | `$catchup` | `/catchup` |
 | CTO | `$cto` | `/cto` |
 | Delegate | `$delegate` | `/delegate` |
+| Design Director | `$design-director` | `/design-director` |
 | Debug | `$debug` | `/debug` |
 | Ship | `$ship` | `/ship` |
 
@@ -289,7 +323,7 @@ behavioral checks include a small build taken from failing tests through repair
 and verified completion. Those checks are bounded evidence, not a guarantee for
 every project.
 
-[Collection validation](docs/skills-collection.md) · [Ship validation](docs/ship-skill.md) · [Catchup and Debug validation](docs/catchup-debug.md) · [Delegate validation history](docs/validation-status.md)
+[Collection validation](docs/skills-collection.md) · [Ship validation](docs/ship-skill.md) · [Catchup and Debug validation](docs/catchup-debug.md) · [Design Director import](docs/design-director-import.md) · [Delegate validation history](docs/validation-status.md)
 
 <details>
 <summary><strong>For Skill Authors and Maintainers</strong></summary>
@@ -303,7 +337,7 @@ library checkout inert by installing into your own projects or personal director
 
 [refresh-models](skills/refresh-models/SKILL.md) is a maintainer workflow for
 Delegate's routing pack. Model Governor, policy, fixtures, and evaluation history
-remain maintainer tooling. Consumers install the five catalog skills independently.
+remain maintainer tooling. Consumers install the six catalog skills independently.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
 `node scripts/verify/skills.mjs`.
