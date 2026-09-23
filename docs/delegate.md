@@ -13,7 +13,7 @@ The coordinator classifies the request, applies a prescribed routing rule, and r
 
 The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
 
-These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global CLAUDE.md or AGENTS.md, such as `Delegate frontier: <model>`, overrides them, so a new provider model needs one line there rather than a skill update.
+These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global `~/.claude/CLAUDE.md` (Claude Code) or `~/.codex/AGENTS.md` (Codex), such as `Delegate frontier: <model>`, overrides them, so a new provider model needs one line there rather than a skill update.
 
 ## The Architecture
 
@@ -98,6 +98,8 @@ The assignment is the unit of work. A small change in a large codebase stays sma
 Independent investigations and settled workstreams can use bounded workers when useful. Repository size, document length, file type, and source volume never independently require frontier.
 
 ## Validation and Rollout Status
+
+**2026-09-22 model roles.** Claude Code escalates from `sonnet` to `opus`; Codex coordinates on `gpt-6-sol` and escalates to `gpt-6-astra`. This revision is installed in the maintainer's personal Claude Code and Codex locations. Saved defaults are unchanged, and it has not been tested in live provider sessions. See the [validation record](validation-status.md). Earlier "not installed" notes below describe their own revisions.
 
 **Local middle-ground revision.** The lightweight `check` is mandatory, stable task IDs select audits, and `origin_work_type` preserves review requirements through implementation handoffs. Unknown handoff origins require review. Detailed outcome recording remains optional; see the [local implementation plan and validation](middle-ground.md). This revision has not been installed or tested in live provider sessions.
 
