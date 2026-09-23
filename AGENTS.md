@@ -1,5 +1,17 @@
 # AI Skills
 
+## Model roles — 2026-09-22
+
+Delegate defaults: in Claude Code, `sonnet` coordinates and escalates to `opus`, not Fable (`opus`
+serves Opus 5.5 from Claude Code 2.1.280; older clients serve Opus 5). In Codex, `gpt-6-sol`
+coordinates and escalates to `gpt-6-astra`, with Sol or Luna workers. Operational model names live
+in the SKILL.md Roles table; an explicit role binding in a user's global CLAUDE.md or AGENTS.md
+overrides it, so a provider release needs one personal line rather than a skill release. Earlier
+Terra and Fable role wording below is historical. The ordinary `check` stays model-free, and the
+routing pack remains exact-model evidence. This request authorizes replacing the maintainer's installed Claude
+Code and Codex copies and a branch and pull request; saved defaults stay the user's. See
+docs/validation-status.md.
+
 ## Design Director import — 2026-09-19
 
 Bring the standalone Design Director bundle into the collection with its MIT

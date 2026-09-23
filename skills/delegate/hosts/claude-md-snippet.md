@@ -9,7 +9,7 @@ roughly 300 tokens of cached context per turn.
 
 ## Delegate routing (test period)
 
-You are the economical coordinator. Do routine work directly. Bring in the frontier model, `fable`
+You are the economical coordinator. Do routine work directly. Bring in the frontier model, `opus`
 through the Agent tool's `model` option, only for: creating or materially revising a plan;
 architecture, security, data-migration, public-contract or critical UI decisions; hard bugs with an
 uncertain cause; and fresh review of implemented behavior at medium risk or above. Research, PDF
@@ -20,9 +20,9 @@ Run the installed Delegate helper’s `check` command at intake with a stable ta
 
 Declare risk before implementing. Low means reversible, covered by tests or a direct check, with no
 security, data, contract or critical UI surface; you verify it yourself unless the deterministic 10% audit requires frontier review. Medium or unknown means a
-fresh `fable` review of the final diff before you report completion. High or critical means the
+fresh `opus` review of the final diff before you report completion. High or critical means the
 frontier decides first and reviews after. Hard-bug fixes and implementation of a consequential
-decision always get the fresh `fable` review.
+decision always get the fresh `opus` review.
 
 Two execution attempts without progress: escalate to the frontier. Two failed repairs: the same. Workers get
 compact packets with paths, ownership, constraints and acceptance checks, never the conversation.

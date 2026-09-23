@@ -15,11 +15,14 @@ packet, execute it and return; do not coordinate.
 
 | Role | Claude Code | Codex |
 | --- | --- | --- |
-| Coordinator, this session | Sonnet | Terra, medium reasoning |
-| Frontier | `fable` through the Agent tool | Astra, high reasoning |
-| Optional workers | `sonnet` or `haiku` agents | Terra or Luna agents |
+| Coordinator, this session | `sonnet` | `gpt-6-sol`, medium reasoning |
+| Frontier | `opus` through the Agent tool | `gpt-6-astra`, high reasoning |
+| Optional workers | `sonnet` or `haiku` agents | `gpt-6-sol` or `gpt-6-luna` agents |
 
-Read [hosts/claude-code.md](hosts/claude-code.md) or [hosts/codex.md](hosts/codex.md) once for the
+An explicit role binding in the user's global CLAUDE.md or AGENTS.md, such as
+`Delegate frontier: <model>`, overrides this table, so a new provider model needs one line there,
+not a skill update. The CLAUDE.md activation snippet only mirrors this table. Read
+[hosts/claude-code.md](hosts/claude-code.md) or [hosts/codex.md](hosts/codex.md) once for the
 actual launch controls. Bind roles to the models the host really serves. An observed substitution
 rejects that treatment; never relabel it eligible.
 

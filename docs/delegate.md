@@ -8,16 +8,18 @@ The coordinator classifies the request, applies a prescribed routing rule, and r
 
 | Host | Starting coordinator | Frontier agents |
 | --- | --- | --- |
-| Codex | Terra · medium reasoning | Astra · high reasoning |
-| Claude Code | Sonnet | Fable · supported effort controls |
+| Codex | `gpt-6-sol` · medium reasoning | `gpt-6-astra` · high reasoning |
+| Claude Code | `sonnet` | `opus` · supported effort controls |
 
 The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
 
-These are the intended host settings. Installing the skill does not change saved models or switch an existing session.
+These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global `~/.claude/CLAUDE.md` (Claude Code) or `~/.codex/AGENTS.md` (Codex), such as `Delegate frontier: <model>`, overrides them, so a new provider model needs one line there rather than a skill update.
 
 ## The Architecture
 
 [![Delegate architecture: economical coordinator, prescribed frontier assignments, independent review, and validated completion](delegate-system.png)](delegate-system.html)
+
+The diagram's model labels predate the 2026-09-22 roles; the table above is current.
 
 [Open the interactive map](delegate-system.html) · [Editable Archify source](delegate-system.architecture.json)
 
@@ -96,6 +98,8 @@ The assignment is the unit of work. A small change in a large codebase stays sma
 Independent investigations and settled workstreams can use bounded workers when useful. Repository size, document length, file type, and source volume never independently require frontier.
 
 ## Validation and Rollout Status
+
+**2026-09-22 model roles.** Claude Code escalates from `sonnet` to `opus`; Codex coordinates on `gpt-6-sol` and escalates to `gpt-6-astra`. This revision is installed in the maintainer's personal Claude Code and Codex locations. Saved defaults are unchanged, and it has not been tested in live provider sessions. See the [validation record](validation-status.md). Earlier "not installed" notes below describe their own revisions.
 
 **Local middle-ground revision.** The lightweight `check` is mandatory, stable task IDs select audits, and `origin_work_type` preserves review requirements through implementation handoffs. Unknown handoff origins require review. Detailed outcome recording remains optional; see the [local implementation plan and validation](middle-ground.md). This revision has not been installed or tested in live provider sessions.
 
