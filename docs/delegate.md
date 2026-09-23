@@ -8,16 +8,18 @@ The coordinator classifies the request, applies a prescribed routing rule, and r
 
 | Host | Starting coordinator | Frontier agents |
 | --- | --- | --- |
-| Codex | Terra · medium reasoning | Astra · high reasoning |
-| Claude Code | Sonnet | Fable · supported effort controls |
+| Codex | `gpt-6-sol` · medium reasoning | `gpt-6-astra` · high reasoning |
+| Claude Code | `sonnet` | `opus` · supported effort controls |
 
 The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
 
-These are the intended host settings. Installing the skill does not change saved models or switch an existing session.
+These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global CLAUDE.md or AGENTS.md, such as `Delegate frontier: <model>`, overrides them, so a new provider model needs one line there rather than a skill update.
 
 ## The Architecture
 
 [![Delegate architecture: economical coordinator, prescribed frontier assignments, independent review, and validated completion](delegate-system.png)](delegate-system.html)
+
+The diagram's model labels predate the 2026-09-22 roles; the table above is current.
 
 [Open the interactive map](delegate-system.html) · [Editable Archify source](delegate-system.architecture.json)
 

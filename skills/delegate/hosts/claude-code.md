@@ -2,12 +2,12 @@
 
 Read this only when running in Claude Code.
 
-Saved starting model for the test period: `sonnet`. Frontier: `fable`. A skill cannot change the
+Start sessions on the coordinator from the [Roles](../SKILL.md#roles) table. A skill cannot change the
 saved model; only the user does, in settings.
 
 ## Launch controls
 
-- Use the Agent tool (named Task in some versions). Its `model` option selects the child: `haiku` / `sonnet` for workers, `fable` for frontier planning, decisions and review. Select `fable` explicitly; never let a frontier packet inherit the coordinator model.
+- Use the Agent tool (named Task in some versions). Its `model` option takes an alias such as `haiku` / `sonnet` / `opus` and selects the child: a worker model for workers, the frontier model for planning, decisions and review. Select the frontier explicitly; never let a frontier packet inherit the coordinator model.
 - Agents start with a fresh context and do not share the parent's cache. Give them paths and requirements, not the conversation.
 - The Agent tool has no effort option. Agent-definition frontmatter can set effort for a named agent, but that does not create an invocation-time control. Record effort as `null` when it is neither controlled nor observable. Do not start a CLI child merely to tune effort.
 - Do not assume `Explore` runs on a cheaper model; it can inherit the coordinator's model. Pass `model` explicitly when cost matters.
