@@ -17,6 +17,8 @@ The single current-state index. It is updated with every pack recompile and ever
 
 ## Current consumer folder
 
+Example refresh (2026-09-23): the illustrative `finish` payload in `local-learning.md` now names `claude-sonnet-5` as coordinator instead of `claude-opus-5`, matching the Roles table. Documentation only; the helper, host guidance and routing pack are byte-for-byte unchanged, and installed copies were not updated. Previous 16-file source: folder `sha256:dba0ed49d93ab2a355142f8055e04c537db5e434aeb2a82914676248289c67be`, guidance `sha256:be7ebd4a4be3f2c471e8476bd8b8a66dcc465f19e9f74754ecfa8154d54f0923`.
+
 Model roles (2026-09-22): Claude Code keeps `sonnet` coordinating and now escalates to `opus` instead of `fable`. Codex now coordinates on `gpt-6-sol` instead of `gpt-5.6-terra`, still escalates to `gpt-6-astra`, and uses `gpt-6-sol` or `gpt-6-luna` workers. Host guides name roles instead of models, and an explicit role binding in the user's global CLAUDE.md or AGENTS.md overrides the Roles table, so a provider release needs one personal line rather than a skill release. Probes: in the Claude Code 2.1.280 desktop app, the Agent tool served `claude-opus-5-5` for `opus` and `claude-fable-5-1` for `fable` (transcript `message.model`); the terminal CLI 2.1.267 served `claude-opus-5` for `opus` through both `--model` and the Agent tool, and refused `claude-opus-5-5` (the API requires 2.1.280 or newer). The ChatGPT desktop app's bundled Codex 0.155.0-alpha.16 accepted `-m gpt-6-sol` at low effort and completed a turn (its JSON stream and rollout record only the configured model); standalone Codex CLI 0.154.0 was refused (`gpt-6-sol` not supported with a ChatGPT account). After the maintainer updated both terminal CLIs on 2026-09-23, Claude Code 2.1.280 served `claude-opus-5-5` for `opus` through `--model` and through the Agent tool under a `sonnet` parent, and standalone Codex CLI 0.156.1 accepted `-m gpt-6-sol` and completed a turn. The helper script and routing pack are byte-for-byte unchanged; the pack's `claude-opus-5` treatments do not cover `claude-opus-5-5`. The maintainer's installed Claude Code and Codex copies were replaced with this source after review, superseding the installation notes below for those copies. Previous 16-file source: folder `sha256:7c041044ccd1350bc0a7a6bb13c00c5811a76f7f822e682e2a055e200c036097`, guidance `sha256:26d6452b13de0989c088bd01430a6b561ed246685785998db1393d934d726dcc`.
 
 Collection packaging (2026-09-19) adds a consumer README only; Delegate instructions, helper, host guidance and routing pack are byte-for-byte unchanged. Previous 15-file source: folder `sha256:e1bac3d1f0dd79bdf5918cd8b547a2d013e9748ac49e9822f3a7ddcb85003d5e`, guidance `sha256:56c521954b5aa1767c2806b4d12ae1e7011e22071b4b1ec742316906a9842460`. See [collection validation](skills-collection.md).
@@ -25,8 +27,8 @@ The current canonical source uses a mandatory stateless `check` at intake and wh
 
 | Current source digest | Value |
 | --- | --- |
-| Helper `folderDigest` (16 consumer files) | `sha256:dba0ed49d93ab2a355142f8055e04c537db5e434aeb2a82914676248289c67be` |
-| Guidance without `routing-pack.json` | `sha256:be7ebd4a4be3f2c471e8476bd8b8a66dcc465f19e9f74754ecfa8154d54f0923` |
+| Helper `folderDigest` (16 consumer files) | `sha256:383efdd062402b9c75c8d3df2d4d4bfbe0103d0fcf5c744973922d729485f5b6` |
+| Guidance without `routing-pack.json` | `sha256:0af2ee5f1902a48c11b15377c1fc6c3fd988333cd3937790e77325a7d96b1f86` |
 
 Previous revision (2026-09-12 release verification, 14 consumer files): folder `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7`, guidance `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730`.
 

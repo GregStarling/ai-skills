@@ -104,7 +104,7 @@ Input shape (replace the illustrative values):
 
 ```json
 {"cwd":"/abs/project","host":"claude","run_id":"<from start>","mode":"delegated","acceptance":"accepted","relevant_checks_complete":true,
- "coordinator":{"model":"claude-opus-5","effort":null,"observed":null},
+ "coordinator":{"model":"claude-sonnet-5","effort":null,"observed":null},
  "checks":[{"name":"unit tests","kind":"test","reference":{"path":"/abs/state/evidence/<capture>","digest":"sha256:<hash>"}},
            {"name":"build","kind":"artifact","command":["npm","run","build"]}],
  "inspected":[{"name":"diff review","kind":"review","outcome":"passed"}],
