@@ -78,7 +78,136 @@ blind adversarial close-out. The maintainer's guiding prompt is preserved in
 - **Checklist file in AUDIT and PLAN.** Writing the checklist file counts as a
   record rather than an implementation change. A user who forbids writes keeps
   it in the conversation.
+- **A strict validator.** The gate rejects anything that could hide or disguise
+  an entry rather than emulating Markdown rendering:
+  - HTML comments, raw HTML and unclosed fences;
+  - IDs disguised by emphasis, escapes, links or look-alike hyphens;
+  - checked evidence that is a placeholder, a bare assertion, or anchored only
+    by a date;
+  - evidence still marked `STALE` or `FAILED`;
+  - a review whose Result does not start with `PASS`;
+  - exceptions without authority;
+  - future-dated event times.
+
+  Correction and waiver wording, and whether a count or version really
+  identifies a check, remain close-out judgments.
 
 ## Validation
 
-Pending; recorded here from executed checks only.
+All results below come from executed checks on 2026-10-09 (UTC).
+
+### Validator contract tests
+
+`test/routing/checklist.test.ts` has 136 cases. They cover:
+
+- valid records, including the guiding prompt's sample items with checkboxes;
+- every structural rejection;
+- the OPEN, BLOCKED, ACCEPTED WITH EXCEPTIONS and VERIFIED COMPLETE statuses;
+- the `--baseline` ratchet;
+- usage errors;
+- a drift guard that validates the format reference's template (OPEN) and
+  completed example (VERIFIED COMPLETE).
+
+All 136 pass. The first 104 cases failed 44 times against the original
+validator, which shows they can fail. Typecheck passes.
+
+### Adversarial validator review
+
+Two independent attack rounds probed the validator:
+
+| Round | Probe files | Issues found | Material |
+| --- | --- | --- | --- |
+| 1 | 63 | 25 | 15 |
+| 2 | 43 | 21 | 17 |
+
+The material issues were records that reached a passing status. They used
+hidden items, placeholder or date-only evidence, a struck or `FAIL` result, a
+prototype-name status, erased findings or a reused ID. All material probes now
+give INVALID or OPEN, and each class has a regression test. The former false
+rejects (tabs, indented headings, non-Latin text, link sub-bullets, code spans)
+now pass, and 300 KB lines are processed in under 0.1 s.
+
+### Fidelity to the guiding prompt
+
+- `docs/checklist-source-prompt.md` matches the pasted prompt word for word
+  (4,084 words, 0 differences after normalizing Markdown markers).
+- A blind fidelity review traced about 340 prompt rules. It found one material
+  issue: a blocked release item let the record report BLOCKED before the
+  adversarial close-out ran. The validator now keeps the record OPEN until a
+  review passes.
+- Round 2 confirmed all six round-1 issues fixed, and its minor clarifications
+  were applied. The four status lines are verbatim.
+
+### Trigger checks
+
+These ran in Claude Code 2.1.292 headless with the skill installed:
+
+- Four completion-discipline prompts invoked `checklist` as their first tool
+  call.
+- Four content-checklist prompts made no skill call: camping packing, engineer
+  onboarding, a Cessna pre-flight list and a launch-day email list.
+
+### Behavior exercises
+
+Sonnet executors followed the installed skill, and fresh Opus evaluators
+inspected the results:
+
+| Exercise | Result |
+| --- | --- |
+| BUILD: `--lines` for a word-count CLI | PASS, VERIFIED COMPLETE 13/13, `npm test` 10/10 |
+| AUDIT: notes CLI, run twice | PASS both times. Real gaps found (delete does not remove, unknown id accepted, empty notes accepted, missing tests); implementation files unchanged; CHECKLIST OPEN |
+| CTO ledger composition: CSV export, run twice | PASS both times. One `.checklists` record linked from `.cto/ledger.md`, no duplicated items, correct RFC 4180 output, VERIFIED COMPLETE |
+
+A pressure-scenario review of S1–S15 covered:
+
+- waiver by implication;
+- false BLOCKED;
+- an unavailable reviewer;
+- shared-code freshness;
+- release authorization;
+- audit fixes;
+- resume;
+- the Node.js fallback;
+- conflicting requirements;
+- the baseline;
+- the report line.
+
+Its two rounds of ambiguities were resolved in the text. These are simulations
+judged against the text, not live runs.
+
+### Standalone host run
+
+A real Claude Code session (2.1.292, Sonnet) ran with
+`--setting-sources project,local`, so only the project's `checklist` skill was
+loaded and no personal companion skills.
+
+It completed a BUILD task, used a fresh reviewer, ran the installed validator
+and reported VERIFIED COMPLETE 4/4. The validator, rerun independently, agrees,
+and `npm test` passes.
+
+### Installs and discovery
+
+- Skills CLI 1.7.2 installed `checklist` alone, and all seven skills, into
+  disposable projects for Codex and Claude Code. The installed files match the
+  source byte for byte, and the installed validator runs from the consumer
+  directory.
+- Personal copies are discovered by Claude Code 2.1.292 (init skill inventory)
+  and by Codex 0.156.1 (`skills/list`: enabled, user scope).
+
+### Repository
+
+The full suite surfaced one existing failure that also occurs on `main`.
+`test/routing/routing.test.ts` "refuses a header that outlives evidence" did not
+pin its clock, unlike its sibling cases. Its fixture evidence had aged out
+against the real date. The test now pins 2026-09-09 like the others; no source
+or routing-pack bytes changed.
+
+Separately, the published routing pack expires 2026-10-11T05:16:44Z, after which
+CI's pack-validation step fails. Refreshing it is outside this change.
+
+### Limits
+
+- Fixtures and simulations are bounded checks. They do not prove the skill's
+  behavior on every project.
+- The validator checks the record's consistency, not whether the work behaves
+  correctly.

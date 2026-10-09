@@ -74,7 +74,7 @@ const C2 = `- [x] C-002 [release] Published outcome.
   - Evidence: Release v1.2.0 page shows the change at 2026-10-09T10:00Z.
   - Depends on: C-001.`;
 const withC2 = (replacement: string, text = complete) => text.replace(C2, replacement);
-const exception = (status: string, {reason = 'Specific reason for the exception.', authority = 'Registry policy: owner approval required (issue #51).' as string | null} = {}) => withC2(`- [ ] C-002 [release] Published outcome.
+const exception = (status: string, {reason = 'Specific reason for the exception.' as string | null, authority = 'Registry policy: owner approval required (issue #51).' as string | null} = {}) => withC2(`- [ ] C-002 [release] Published outcome.
   - Source: Explicit requirement.
   - Accept: Published condition holds.
   - Verify: Inspect the published result.
@@ -179,9 +179,10 @@ describe('portable Checklist validator: statuses', () => {
   const result = run(closeOut(lines)); expect(result.status, result.stderr).toBe(2);
   expect(result.stdout).toContain('CHECKLIST OPEN | verified=2/2 | open=none'); expect(result.stdout).toContain('review=pending');
  });
- it('ignores fields hidden in HTML comments', () => {
-  const result = run(closeOut('- Review: pending\n- Inventory: pending\n- Result: pending\n\n<!--\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n-->'));
-  expect(result.status).toBe(2); expect(result.stdout).toContain('review=pending');
+ it('rejects HTML comments, which could hide fields or items, but not comment markers in code spans', () => {
+  const hidden = run(closeOut('- Review: pending\n- Inventory: pending\n- Result: pending\n\n<!--\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n-->'));
+  expect(hidden.status).toBe(1); expect(hidden.stderr).toContain('HTML comments are not allowed');
+  expect(run(complete.replace('- None material.', '- Comments such as `<!--` are not used.')).status).toBe(0);
  });
  it('keeps the record open while a close-out finding is unresolved, and accepts resolved findings', () => {
   const base = '- Review: self (not independent) — fresh inventory first.\n- Inventory: inventory.md\n- Result: PASS after fixes.\n\n';
@@ -238,7 +239,7 @@ describe('portable Checklist validator: structural gate', () => {
   ['waiver whose authority denies one exists', logged(exception('WAIVED', {authority: 'None given; agent decision.'}), '- Waived C-002.'), 'WAIVED needs the Authority'],
   ['waiver without a reason', logged(exception('WAIVED', {reason: null}), '- Waived C-002.'), 'WAIVED needs a Reason'],
   ['waiver missing from the Change Log', exception('WAIVED'), 'WAIVED must be recorded in a Change Log entry naming C-002'],
-  ['waiver logged only in an HTML comment', logged(exception('WAIVED'), '<!-- Waived C-002 -->'), 'WAIVED must be recorded in a Change Log entry naming C-002'],
+  ['waiver logged only in an HTML comment', logged(exception('WAIVED'), '<!-- Waived C-002 -->'), 'HTML comments are not allowed'],
   ['not-applicable without authority', logged(exception('NOT APPLICABLE', {authority: null}), '- C-002 not applicable.'), 'NOT APPLICABLE needs the Authority'],
   ['not-applicable missing from the Change Log', logged(exception('NOT APPLICABLE'), '- Reviewed C-002 wording.'), 'NOT APPLICABLE must be recorded in a Change Log entry naming C-002'],
   ['blocked without authority', exception('BLOCKED', {authority: null}), 'BLOCKED needs the Authority'],
@@ -273,6 +274,58 @@ describe('portable Checklist validator: structural gate', () => {
   const started = Date.now();
   const result = run(complete.replace('### Group\n', `### Group\n\n- a${' '.repeat(200000)}x\n## Notes${' '.repeat(200000)}x\n`));
   expect(result.status).toBe(1); expect(Date.now() - started).toBeLessThan(5000);
+ });
+});
+
+describe('portable Checklist validator: second adversarial round', () => {
+ const extra = '- [ ] C-003 [build] Data is preserved on retry.\n  - Source: Pre-mortem P1.\n  - Accept: Retry keeps data.\n  - Verify: Retry test.\n  - Evidence: Pending.';
+ const before = (text: string) => complete.replace('\n## Decisions', `${text}\n\n## Decisions`);
+ it.each([
+  ['an empty HTML comment', before(`\n<!-->\n${extra}`), 'HTML comments are not allowed'],
+  ['a raw HTML block', before(`\n<div>\n\n${extra}\n\n</div>`), 'raw HTML is not allowed'],
+  ['an unclosed fence', before('\n```text\nunfinished example'), 'code fence is never closed'],
+  ...['**C-003**', 'C\\-003', 'C‑003', '[C-003](#c-003)'].map((id): [string, string, string] =>
+   [`a disguised ID ${id} outside Items`, complete.replace('- State: complete.', `- State: complete.\n- [ ] ${id} [build] Data is preserved.`), 'looks like a checklist entry']),
+  ...['Not tested at rev abc123.', 'TODO: run `npm test`.', 'Pending (rerun at rev abc124).', 'Verified on 2026-10-09.', 'Checked by me at 10:00.']
+   .map((value): [string, string, string] => [`evidence "${value}"`, evidence(value), 'checked item needs evidence']),
+  ...['**STALE**: rev abc123: `npm test` 4 passed.', 'FAILED (rerun at rev abc124): `npm test` 3/4.', '[STALE] rev abc123: `npm test` 4 passed.', 'Stale. Was: rev abc123 `npm test` 4 passed.']
+   .map((value): [string, string, string] => [`marked evidence "${value}"`, evidence(value), 'marked stale or failed']),
+  ['a struck independent claim on a self review', closeOut('- Review: ~~independent~~ self, by the same agent.\n- Inventory: inventory.md\n- Result: PASS.'), 'self review must say it was not independent'],
+  ['an authority that disclaims itself in parentheses', logged(exception('WAIVED', {authority: '(none given; agent decision)'}), '- Waived C-002.'), 'WAIVED needs the Authority'],
+  ['every required item waived', logged(logged(exception('WAIVED', {authority: 'User message 2026-10-09.'}), '- Waived C-002 per user.').replace('- [x] C-001 [build] First outcome.', '- [ ] C-001 [build] First outcome.').replace('  - Depends on: None.', '  - Depends on: None.\n  - Status: WAIVED\n  - Reason: User removed it.\n  - Authority: User message 2026-10-09.'), '- Waived C-001 per user.'), 'nothing was verified'],
+  ['a future event time', logged(complete, '- 2099-01-01T00:00Z Verified C-002.'), 'is in the future'],
+ ])('rejects %s', (_name, text, message) => {
+  const result = run(text); expect(result.status).toBe(1); expect(result.stderr).toContain(message);
+ });
+ it.each([
+  ['a 4-space indented closing fence', before(`\n\`\`\`markdown\nexample\n    \`\`\`\n\`\`\`\n\n${extra}`), 'open=C-003'],
+  ['a 1-space indented top-level fence around a review', closeOut('- Review: pending\n- Inventory: pending\n- Result: pending\n\n ```text\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n ```'), 'review=pending'],
+  ['a struck PASS', closeOut('- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ~~PASS~~ FAIL — regression in C-001.'), 'review=pending'],
+  ['a PASS/FAIL template', closeOut('- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: PASS/FAIL'), 'review=pending'],
+  ['a review still to be assigned', closeOut('- Review: independent — to be assigned.\n- Inventory: inventory.md\n- Result: PASS.'), 'review=pending'],
+ ])('keeps the record open for %s', (_name, text, expected) => {
+  const result = run(text); expect(result.status, result.stderr).toBe(2); expect(result.stdout).toContain(expected);
+ });
+ it.each([
+  ['a link sub-bullet in evidence', complete.replace('`npm test` 4 passed.', '`npm test` 4 passed.\n    - [test log](logs/test.txt)')],
+  ['item syntax quoted in a code span', complete.replace('Accept: First condition holds.', 'Accept: The parser accepts `- [ ] C-001 [build] Outcome` lines.')],
+  ['evidence that begins by describing the earlier failure', evidence('Failed before the fix; `npm test` now 4/4 at rev abc123.')],
+  ['a Result of Passed', closeOut('- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: Passed; no open material findings.')],
+  ['an emphasized self-review disclosure', closeOut('- Review: self — **not** independent; fresh inventory first.\n- Inventory: inventory.md\n- Result: PASS.')],
+  ['a future deadline after the event time', logged(complete, '- 2026-10-09T10:00Z Noted that the routing pack expires 2099-01-01T00:00Z.')],
+ ])('accepts %s', (_name, text) => {
+  const result = run(text); expect(result.status, result.stderr).toBe(0);
+ });
+ it('rejects reopen or no-change entries as authority to weaken or remove an item, but keeps planned IDs reusable', () => {
+  for (const [text, message] of [
+   [logged(complete.replace('Accept: Published condition holds.', 'Accept: Something happened.'), '- 2026-10-09T12:00Z Reopened C-002: shared helper changed.'), 'C-002: Accept changed'],
+   [logged(complete.replace('Verify: Run the first check.', 'Verify: Read the code.'), '- 2026-10-09T12:00Z No changes to C-001 behavior.'), 'C-001: Verify changed'],
+  ] as const) {
+   const result = run(text, ['--baseline', 'baseline.md'], complete); expect(result.status).toBe(1); expect(result.stderr).toContain(message);
+  }
+  const planned = logged(complete, '- 2026-10-09T10:00Z C-003 will be added once the API spec lands.');
+  const added = run(before(`\n${extra}`).replace('- 2026-10-09T09:00Z Created C-001 and C-002.', '- 2026-10-09T09:00Z Created C-001 and C-002.\n- 2026-10-09T10:00Z C-003 will be added once the API spec lands.\n- 2026-10-09T11:00Z Added C-003 from the API spec.'), ['--baseline', 'baseline.md'], planned);
+  expect(added.status, added.stderr).toBe(2); expect(added.stdout).toContain('open=C-003');
  });
 });
 

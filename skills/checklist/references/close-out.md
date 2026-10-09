@@ -31,9 +31,10 @@ Withhold at first:
 
 Ask the reviewer to identify the necessary behaviors, important failure cases,
 integration requirements and acceptance criteria independently. It must record
-that inventory, for example in `.checklists/<task-id>.review.md` or in its
-returned report, before it sees the checklist. Record where the inventory lives
-in the Close-Out `Inventory` field.
+that inventory before it sees the checklist. Persist it in
+`.checklists/<task-id>.review.md` (or the reviewer's own durable file) so that a
+later session can inspect it; a reply that disappears with the session is not
+a record. Put that location in the Close-Out `Inventory` field.
 
 **Without independent review capability,** do a distinct adversarial
 self-review:
@@ -91,9 +92,14 @@ credible failure mechanism. Record findings as `F-` entries in Close-Out.
 For each material omission:
 
 1. Add or reopen the affected item.
-2. Correct the implementation.
+2. Correct the implementation. In AUDIT mode, or when changes are not
+   authorized, leave the item open with the observed failure as evidence instead.
 3. Verify the result and record the evidence.
 4. Repeat the affected review.
+
+Keep one Review, Inventory and Result in Close-Out. Update them after each
+round, and record the earlier rounds' outcomes in Verification. In AUDIT mode,
+Result reports the review's outcome, not the audited work's.
 
 Later rounds focus on what changed or was newly discovered, while keeping
 critical dependencies covered. After two full review rounds, a new requirement
@@ -112,7 +118,9 @@ Before accepting the work:
 - [ ] Confirm the required tests and acceptance checks are still valid for the final revision.
 - [ ] Confirm no authorized delivery requirement remains outstanding.
 
-The work must survive an attempt to prove it incomplete.
+The work must survive an attempt to prove it incomplete. If release items were
+still open during the review, repeat this reconciliation and the completion gate
+after they close. Release evidence needs the same challenge as build evidence.
 
 ## The completion gate
 
@@ -136,16 +144,18 @@ The validator covers some of these points mechanically:
 | Points | What the validator does |
 | --- | --- |
 | 1–3, 5 and 9 | Checks the recorded structure |
-| 4 | Rejects placeholder or bare-assertion evidence, and evidence that names nothing inspectable |
-| 6 | Rejects checked evidence marked `STALE:` or `FAILED:` |
-| 7 and 8 | Requires a recorded review whose Result starts with `PASS` and leaves no open finding |
+| 4 (partly) | Rejects placeholder or unrecorded evidence, bare assertions, and evidence whose only anchor is a date or clock time. A count, version or file name still satisfies it, so "Tested 1 time" passes |
+| 6 | Rejects checked evidence marked `STALE` or `FAILED` |
+| 7 and 8 | Require a recorded review whose Result starts with `PASS`, and no open finding |
 
 Some judgments remain yours in this close-out:
 
+- whether each piece of evidence names an actual check, not merely a number (point 4);
 - whether the evidence is real and sufficient;
 - whether every defect was recorded as a finding;
 - whether every authorized delivery requirement has a `[release]` item (point 10);
-- whether exception wording means what its keywords suggest.
+- whether exception and correction wording in the Change Log means what its
+  keywords suggest.
 
 If the validator could not run, say so and apply the checks with another tool or
 by reading each item.
