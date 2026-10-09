@@ -31,7 +31,8 @@ punctuation is ignored, so `## Pre-mortem` and `## Closeout` are accepted.
 | Resume | Current state, open items, blockers and the next action |
 
 Request and Definition of Complete must not be empty. Text inside fenced code
-blocks is ignored, so examples never count as items.
+blocks and HTML comments is ignored, so examples never count as items and hidden
+text never counts as a record.
 
 ## Items
 
@@ -55,10 +56,16 @@ follow it, one per line:
   `Pending.` until the item is verified.
 - **Depends on:** item IDs or `None`. A checked item cannot depend on an open
   one. If the dependency was reopened, reopen the dependent item too.
-- `*` and `+` bullets work as well as `-`. Lines indented deeper than the fields
-  continue the previous field, which suits multi-line evidence or nested output.
+- `*` and `+` bullets work as well as `-`, followed by spaces or a tab.
+- Lines indented deeper than the fields continue the previous field. A
+  column-0 line that directly follows the field text, with no blank line between,
+  also continues it.
 - Every list entry under Items must be an item. Put notes in prose paragraphs or
   another section.
+- Anything a reader would take for an item must parse as one, or the record is
+  invalid. That includes an item after an unknown heading, in a blockquote, in a
+  table row, without a bullet, or anywhere a checkbox appears before an ID
+  outside Items (or outside Close-Out, for findings).
 
 ## States
 
@@ -67,14 +74,25 @@ verified, and it is the only state that means verified.
 
 A checked item needs evidence that names the check, inputs or conditions, the
 observed result, and the revision or artifact. Include the environment, time
-and evidence location where practical. The validator rejects:
+and evidence location where practical, and take times from the system clock.
+The validator rejects evidence on a checked item when it:
 
-- empty or placeholder evidence such as `Pending`, `TBD`, `TODO`, `N/A`,
-  `none`, `unknown`, `not run` or `see above`;
-- bare assertions made only of words like "all tests passed", "works",
-  "verified", "done", "checked manually" or "LGTM".
+- is empty, or says nothing was recorded: `Pending`, `TBD`, `TODO`, `N/A`,
+  `none yet`, `not run`, `not tested`, `skipped`, `to be determined`,
+  `see above`;
+- only asserts success, for example "all unit tests passed", "works on my
+  machine", "verified manually", "done" or "LGTM";
+- names nothing inspectable, meaning no command or code span, path or file name,
+  URL, revision, count or time.
 
-It cannot judge whether evidence is true. That is the job of the close-out.
+The Evidence line itself must name the check. Fenced output may follow it but
+does not count.
+
+The validator cannot judge whether evidence is true. That is the job of the
+close-out.
+
+In AUDIT mode, a gap stays `[ ]`, and its Evidence records the observed failure
+prefixed `FAILED:`.
 
 ### Exceptions
 
@@ -89,36 +107,50 @@ An exception keeps the box unchecked and adds fields:
   - Depends on: C-006.
   - Status: BLOCKED
   - Reason: Registry publication requires an approval this session does not have.
+  - Authority: The registry's publishing policy requires owner approval.
 ```
 
 | Status | Meaning | Additional requirements |
 | --- | --- | --- |
-| `BLOCKED` | Genuine external dependency or unavailable authorization | Reason and Evidence. Put the required action in Resume |
+| `BLOCKED` | Genuine external dependency, a capability this environment lacks, or unavailable authorization | Reason, Evidence, and the Authority or rule that imposes the constraint. Put the required action in Resume |
 | `WAIVED` | The user explicitly removed it from accepted scope | Reason, Evidence, the user's Authority, and a Change Log entry naming the ID and the waiver |
 | `NOT APPLICABLE` | Evidence shows the requirement does not apply | Reason, Evidence, Authority, and a Change Log entry naming the ID as not applicable |
 
 A technical problem is never `BLOCKED`; it stays open. Waived items lead to
 ACCEPTED WITH EXCEPTIONS, never VERIFIED COMPLETE. Not-applicable items leave
-the denominator and are listed in the validator's output.
+the denominator and are listed in the validator's output. A record needs at
+least one required item.
+
+An Authority that says none exists ("none given", "n/a") is rejected. The
+Change Log check is keyword-based, so the close-out still judges what each
+entry means.
 
 ### Reopening
 
 When later work may have invalidated an item, uncheck it and prefix its old
 evidence with `STALE:` (or `FAILED:` when a rerun failed). Keep that text until
 new evidence replaces it, and add a Change Log entry, for example
-`Reopened C-004: shared auth helper changed`. The validator rejects a checked
-item whose evidence still starts with `STALE:`, `FAILED:` or `INVALIDATED:`.
+`Reopened C-004: shared auth helper changed`. Reopen the items that depend on
+it as well. The validator rejects a checked item whose evidence still starts
+with `STALE`, `FAILED` or `INVALIDATED`, even when bolded or followed by a dash.
 
 ## Change Log and corrections
 
-The Change Log is append-only: never edit or delete an entry. Record every
-added item, waiver, non-applicability decision and reopened item.
+The Change Log is append-only. Never edit, reorder or delete an entry; add new
+entries at the end. Record every added item, waiver, non-applicability decision
+and reopened item.
 
 Corrections are allowed only when an item is demonstrably erroneous,
 duplicated, superseded or inapplicable. Record the original text, the
-correction, the justification and the authority. Removing an item, or changing
-its stage, outcome, Accept or Verify text, requires a new Change Log entry
-naming its ID. `--baseline` enforces this.
+correction, the justification and the authority. These changes each need a new
+Change Log entry that names the ID and says what changed, for example
+"Corrected C-004 Accept from …" or "Removed C-006: duplicate of C-002":
+
+- removing an item;
+- changing an item's stage, outcome, Accept or Verify text;
+- removing a close-out finding.
+
+A removed ID stays retired. `--baseline` enforces all of this.
 
 ## Close-Out
 
@@ -132,9 +164,13 @@ naming its ID. `--baseline` enforces this.
 - [ ] F-002 <An unresolved finding.>
 ```
 
-- **Review** starts with `independent` or `self`. Self-review must say it was
-  not independent. Leave all three fields `pending` until the close-out
-  happens.
+- **Review** starts with `independent` or `self`. A self review must contain
+  the words "not independent".
+- **Inventory** says where the blind inventory was recorded.
+- **Result** must start with `PASS` before the review counts. Anything else,
+  such as `FAIL` or `pending`, keeps the record open.
+- Leave all three fields `pending` until the close-out happens, and write each
+  one only once.
 - **Findings** are `F-` items. An open finding blocks completion, and a
   resolved finding needs a Resolution: fixed through an item, or rejected with
   the reason it fails the Scope Gate.
@@ -151,7 +187,9 @@ node "<installed-skill-directory>/scripts/validate-checklist.mjs" ".checklists/<
 
 For a baseline, use the last committed version, for example
 `git show HEAD:.checklists/<task-id>.md > <temp-dir>/baseline.md`. Without
-version control, use a copy saved outside the project when the session started.
+commits, copy the checklist to `.checklists/<task-id>.baseline.md` as soon as it
+is first written. Never edit that copy, and keep it until the task ends so the
+check can be repeated.
 
 The validator prints one line with the computed status and real counts:
 
@@ -165,14 +203,17 @@ CHECKLIST OPEN | verified=3/5 | open=C-004,C-005 | blocked=none | waived=none | 
 | 1 | Invalid record or usage. The problems are listed on stderr |
 | 2 | Valid but `CHECKLIST OPEN` or `CHECKLIST BLOCKED` |
 
-The status is OPEN while any item is open, any finding is open, or Review,
-Inventory or Result is still pending. It is BLOCKED only when every remaining
-item is BLOCKED. The validator needs only Node.js and reads only the files it is
-given.
+The status is OPEN while any item is open, any finding is open, or the review
+has not been recorded with a `PASS` result. That holds even when other items are
+blocked, because the review is still actionable. The status is BLOCKED only
+after a passing review, when every remaining item is BLOCKED. The validator
+needs only Node.js and reads only the files it is given.
 
 The validator establishes that the record is consistent. It does not prove the
-work behaves correctly, and its output adds no evidence of its own. The final
-report still needs the evidence location and timestamp.
+work behaves correctly, and its output adds no evidence of its own. Its line is
+a gate result, not the final report. Carry its counts and IDs, in the order it
+prints them, into the report line, which also needs the evidence location and
+timestamp.
 
 ## Template
 

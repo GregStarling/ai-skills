@@ -68,6 +68,12 @@ publication. Writing the checklist file is a record, not an implementation
 change; if the user forbids writes, keep the checklist in the conversation and
 say so.
 
+In AUDIT mode, check an item only when the audited work demonstrably meets it.
+A gap stays `[ ]`, with the observed failure as evidence prefixed `FAILED:`. Run
+the close-out once every item has a recorded result. An audit that finds gaps
+ends CHECKLIST OPEN, with the fixes (or the authorization to make them) as the
+next action.
+
 Identify restrictions on scope and compatibility, spending and external
 services, data changes and destructive actions, security and access, commits,
 publication and deployment, and required human approvals.
@@ -138,8 +144,11 @@ Definition of Complete, Items, Decisions, Pre-Mortem, Exclusions, Change Log,
 Verification, Close-Out and Resume.
 
 If the project already has an authoritative task or acceptance record, extend it
-instead of introducing a competing tracker. Hold the items there, or link this
-file from it as the single item record.
+instead of introducing a competing tracker. Keep the items there only if it can
+carry every field and section above. Otherwise, as with a ledger table or an
+issue tracker, keep them in `.checklists/<task-id>.md` and link that file from
+the record as its single item record. Move outstanding items into it rather than
+copying them.
 
 Commit the checklist with the work when commits are authorized and fit the
 project's conventions. If no durable file can be written, keep the checklist in
@@ -150,7 +159,9 @@ the write succeeded.
 verified. An exception stays unchecked and records its reason, evidence and
 authority:
 
-- `BLOCKED`: a genuine external dependency or unavailable authorization;
+- `BLOCKED`: a genuine external dependency, such as a capability this
+  environment lacks (an independent reviewer, for example), or unavailable
+  authorization;
 - `WAIVED`: the user explicitly removed the item from scope;
 - `NOT APPLICABLE`: evidence shows the item does not apply.
 
@@ -175,7 +186,10 @@ justification and the authority in the Change Log. An explicit user requirement
 is never "not applicable" because it is inconvenient.
 
 Only the user may waive a required outcome; "keep it simple", "ship quickly" and
-"MVP is fine" waive nothing specific. Optional improvements that fail the Scope
+"MVP is fine" waive nothing specific. When requirements conflict, record the
+conflict as a Decision. Choose a reading yourself only if it keeps every
+explicit requirement intact. Otherwise ask, because narrowing an explicit
+requirement is a waiver. Optional improvements that fail the Scope
 Gate never block completion. Completion is earned through implementation and
 verification, never by redefining success.
 
@@ -196,7 +210,8 @@ progress summary.
 
 **Evidence** lets another engineer inspect or reproduce the result. Record the
 check, inputs and conditions, the observed result, the revision or artifact and
-the environment, plus time and location where practical.
+the environment, plus time and location where practical. Take times from the
+system clock when the event happens; never estimate them.
 
 For a regression, show the failure before the fix when feasible, then the
 passing equivalent. For a new feature, run meaningful acceptance checks without
@@ -210,10 +225,13 @@ affect a verified item, directly or through shared code such as authentication:
 
 1. Identify the affected acceptance criteria.
 2. Uncheck the item and mark its old evidence `STALE:`.
-3. Rerun the verification.
-4. Record new evidence.
+3. Reopen the items that depend on it, and log the reopening in the Change Log.
+4. Rerun the verification.
+5. Record new evidence.
 
-Skip needless full-suite reruns, but never reuse stale evidence.
+Keep an earlier check only when evidence shows a change cannot affect it, such
+as a diff that does not touch the exercised path. Skip needless full-suite
+reruns, but never reuse stale evidence.
 
 **When stuck** (a failure survives two genuinely different corrections, or you
 are about to repeat a failed approach):
@@ -250,10 +268,11 @@ list with unrelated enhancements.
 
 ## 7. Blind adversarial close-out
 
-When every required item appears complete, follow the
-[close-out procedure](references/close-out.md). Its question is *"What is
-required for this task to be complete that the original checklist failed to
-discover?"* Do not start by reading the checklist.
+When every required implementation item appears complete, follow the
+[close-out procedure](references/close-out.md). Release items awaiting
+publication and blocked items may still be open at this point. Its question is
+*"What is required for this task to be complete that the original checklist
+failed to discover?"* Do not start by reading the checklist.
 
 **Re-derive blind.** Prefer a fresh-context reviewer that did not write the
 checklist. Give it:
@@ -275,14 +294,16 @@ Without an independent reviewer, write your own fresh inventory first, compare
 it with the checklist only afterwards, and disclose that the review was not
 independent. Never manufacture a reviewer or equate self-review with independent
 review. If the user requires independent review and none is available, that
-requirement stays unresolved.
+requirement stays unresolved. Mark it `BLOCKED`, with the action needed, such as
+a person or a separate session reviewing the work.
 
 **Compare and challenge.**
 
 - Add new requirements that pass the Scope Gate.
 - Reject others only with a recorded reason.
 - Reopen items whose acceptance was too weak.
-- Check exclusions, waivers and corrections for unjustified scope reduction.
+- Check exclusions, waivers, blocked items and corrections for unjustified scope
+  reduction.
 - Inspect the actual artifacts, and rerun high-risk or questionable checks when
   practical and safe.
 
@@ -308,23 +329,37 @@ the project directory, pointing at the folder where this skill is installed:
 node "<installed-skill-directory>/scripts/validate-checklist.mjs" ".checklists/<task-id>.md"
 ```
 
-To enforce the ratchet, add `--baseline <earlier copy>`, such as the last
-committed version. The baseline check rejects removed or changed items that lack
-a new Change Log entry, and edits to earlier entries.
+To enforce the ratchet, add `--baseline <earlier copy>`. The copy is the last
+committed version or, without commits, `.checklists/<task-id>.baseline.md`,
+saved when the checklist is first written and never edited. The baseline check
+rejects removed or changed items and findings that lack a new Change Log entry
+recording the correction. It also rejects edits to earlier entries and reused
+IDs.
 
-The validator checks IDs, fields, evidence on checked items, exception
-authority, dependencies, open findings and the recorded review, and prints the
-status with real counts. It proves the record is consistent, not that the work
-behaves correctly. If it cannot run, apply the same checks by reading each item
-and say that it did not run. Never claim it ran unless it did.
+The validator checks the following:
+
+- IDs and fields;
+- that the evidence on checked items names something inspectable;
+- exception authority;
+- dependencies;
+- open findings;
+- that the review was recorded with a passing result.
+
+It prints the status with real counts. That line is a gate result, not the final
+report: carry its counts and IDs into the status line in §9. The validator
+proves the record is consistent, not that the work behaves correctly.
+
+If the validator cannot run, apply the same checks with another available tool
+or by reading each item, and say that it did not run. Never claim it ran unless
+it did.
 
 Every `[build]` item must be verified before the work is called ready for
 release. If release is not part of the objective, build acceptance can be overall
 completion. When release is authorized, `[release]` items stay open until real
 publication and live verification; neither a passing build nor a deployment
 proves that the published functionality works. If publication needs more
-authorization, finish the independent preparation, keep the release items open
-and report the exact outstanding action.
+authorization, finish the independent preparation. Keep the release items
+unchecked and marked `BLOCKED`, and report the exact outstanding action.
 
 The final status is one of these:
 
@@ -391,10 +426,14 @@ Checklist needs no other skill. When others are installed, discover them and
 follow their actual instructions; never require them, assume their paths or copy
 their rules.
 
-- A plan owner such as **CTO** keeps the outer loop and its ledger. This checklist
-  becomes the ledger's linked item record, so there is one tracker. Neither may
-  declare completion while the other's gate is unmet. An unresolved technical
-  problem stays `[ ]`, never `BLOCKED`.
+- A plan owner such as **CTO** keeps the outer loop and its ledger. This
+  checklist becomes the ledger's linked item record, so there is one tracker.
+  Ledger states map as follows:
+  - `done` becomes `[x]`, but only after its evidence is reconciled;
+  - `blocked-external` becomes `BLOCKED`;
+  - `todo`, `doing` and `blocked-technical` become `[ ]`.
+
+  Neither skill may declare completion while the other's gate is unmet.
 - A routing and review skill such as **Delegate** decides who executes and which
   review is required. Record its assignment identity and review requirement as
   an item. The blind close-out satisfies that item only if it meets the skill's
@@ -414,8 +453,8 @@ their rules.
    nothing.
 4. **Inspect reality.** Code, running behavior, results and artifacts outrank
    assumptions and agent assertions.
-5. **Protect the scope.** Hard requirements do not disappear, and acceptance
-   does not weaken without justification and authority.
+5. **Protect the scope.** Difficult requirements do not disappear, and
+   acceptance does not weaken without legitimate justification and authority.
 6. **Maintain the ratchet.** Add missing work, preserve history and reopen
    invalidated claims.
 7. **Verify continuously,** not at the end.

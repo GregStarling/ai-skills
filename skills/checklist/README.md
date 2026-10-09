@@ -58,11 +58,15 @@ node "<installed-skill-directory>/scripts/validate-checklist.mjs" .checklists/<t
 node "<installed-skill-directory>/scripts/validate-checklist.mjs" .checklists/<task-id>.md --baseline <earlier-copy.md>
 ```
 
-The validator rejects malformed items, missing fields, and checked boxes with
-placeholder or bare-assertion evidence. It also rejects exceptions without
-authority, inconsistent dependencies and open review findings. With
-`--baseline`, it rejects silently removed or weakened items and edits to earlier
-Change Log entries. It prints the status and real counts.
+The validator rejects malformed or hidden items and missing fields. It rejects
+checked boxes whose evidence is a placeholder, a bare assertion, or names
+nothing inspectable. It also rejects exceptions without authority and
+inconsistent dependencies. It keeps the record open until a blind review is
+recorded as passed with no open findings.
+
+With `--baseline`, it rejects silently removed or weakened items and findings,
+reused IDs, and edits to earlier Change Log entries. It prints the status and
+real counts.
 
 The validator checks the record, not the work. Behavioral checks and the blind
 close-out decide whether the work is complete.

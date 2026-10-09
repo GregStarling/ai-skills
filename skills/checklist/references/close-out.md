@@ -1,6 +1,8 @@
 # Blind adversarial close-out
 
-Run this when every required item appears complete. The central question is:
+Run this when every required implementation item appears complete. Release
+items still awaiting publication and `BLOCKED` items may remain open. In AUDIT
+mode, run it once every item has a recorded result. The central question is:
 
 > What is required for this task to be complete that the original checklist
 > failed to discover?
@@ -16,7 +18,7 @@ delivered artifacts.
 the environment can provide one: a new agent, a separate session or a person.
 Give it:
 
-- the original requirements, including conversation-only requirements quoted from the checklist's Request section;
+- the original requirements, including conversation-only requirements quoted verbatim from the checklist's Request section (the user's words only, never the item list);
 - the relevant system context, as paths rather than a narrative;
 - the delivered implementation or change, as the diff, revision or artifact paths;
 - the applicable constraints.
@@ -44,7 +46,9 @@ self-review:
 
 Never manufacture an independent reviewer, and never claim self-review gives the
 same assurance. If the user explicitly required independent review and none is
-available, that requirement stays open, as an item, until it is satisfied.
+available, that requirement stays unresolved. Record it as an item marked
+`BLOCKED`, with the action needed, such as a person or a separate session
+reviewing the work.
 
 When another installed skill sets review rules (for example, which model or
 reviewer tier is required for this risk), the blind reviewer must also meet
@@ -60,8 +64,9 @@ identified requirement:
   `F-` finding with a Resolution or as an Exclusion;
 - reopen an existing item whose acceptance criteria were insufficient.
 
-Review the Exclusions, waivers and Change Log corrections for unjustified scope
-reduction. Do not let a reviewer add unrelated features because they might
+Review the Exclusions, waivers, `BLOCKED` items and Change Log corrections for
+unjustified scope reduction. A technical problem relabelled as an external
+blocker is a finding. Do not let a reviewer add unrelated features because they might
 improve the product.
 
 ## Phase C: challenge the evidence
@@ -126,10 +131,24 @@ with `--baseline` when an earlier version exists. Confirm by inspection that:
 9. scope changes and waivers have valid recorded authority;
 10. all authorized delivery and release requirements are satisfied.
 
-The validator checks the structure behind points 1–3 and 5–10, and rejects
-bare assertions for point 4. Whether the evidence is real and sufficient
-remains a judgment for this close-out. If the validator could not run, say so
-and apply the checks by reading each item.
+The validator covers some of these points mechanically:
+
+| Points | What the validator does |
+| --- | --- |
+| 1–3, 5 and 9 | Checks the recorded structure |
+| 4 | Rejects placeholder or bare-assertion evidence, and evidence that names nothing inspectable |
+| 6 | Rejects checked evidence marked `STALE:` or `FAILED:` |
+| 7 and 8 | Requires a recorded review whose Result starts with `PASS` and leaves no open finding |
+
+Some judgments remain yours in this close-out:
+
+- whether the evidence is real and sufficient;
+- whether every defect was recorded as a finding;
+- whether every authorized delivery requirement has a `[release]` item (point 10);
+- whether exception wording means what its keywords suggest.
+
+If the validator could not run, say so and apply the checks with another tool or
+by reading each item.
 
 ## Final standard
 

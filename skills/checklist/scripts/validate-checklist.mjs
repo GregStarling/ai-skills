@@ -7,82 +7,130 @@ const USAGE = 'usage: validate-checklist.mjs <checklist.md> [--baseline <earlier
 const SECTIONS = ['Request', 'Definition of Complete', 'Items', 'Decisions', 'Pre-Mortem',
   'Exclusions', 'Change Log', 'Verification', 'Close-Out', 'Resume'];
 const ITEM_FIELDS = ['Source', 'Accept', 'Verify', 'Evidence', 'Depends on', 'Status', 'Reason', 'Authority'];
-const STATUSES = { blocked: 'BLOCKED', waived: 'WAIVED', notapplicable: 'NOT APPLICABLE' };
-const ITEM = /^[-*+] \[([ xX])\] +(C-\d+) +\[(build|release)\] +(\S.*)$/i;
-const FINDING = /^[-*+] \[([ xX])\] +(F-\d+) +(\S.*)$/i;
-const FIELD = /^[-*+] +([A-Za-z][A-Za-z -]*?) *: *(.*)$/;
-const PLACEHOLDERS = new Set(['', 'pending', 'tbd', 'tba', 'todo', 'na', 'none', 'unknown', 'notrun',
-  'notyetrun', 'notverified', 'seeabove', 'seebelow']);
+const STATUSES = new Map([['blocked', 'BLOCKED'], ['waived', 'WAIVED'], ['notapplicable', 'NOT APPLICABLE']]);
+const ITEM = /^[-*+][ \t]+\[([ xX])\][ \t]+(C-\d+)[ \t]+\[(build|release)\][ \t]+(\S.*)$/i;
+const FINDING = /^[-*+][ \t]+\[([ xX])\][ \t]+(F-\d+)[ \t]+(\S.*)$/i;
+const FIELD = /^[-*+][ \t]+([A-Za-z][A-Za-z -]{0,30}?)[ \t]*:[ \t]*(.*)$/;
+const BOX = /^([-*+]|\d+[.)])[ \t]+\[[^\]]*\]/;
+const LIST = /^([-*+]|\d+[.)])[ \t]/;
+// What a reader would take for a checklist entry: a checkbox directly before an item or finding ID.
+const ENTRY_LIKE = /\[[^\]]?\][ \t]*[CF]-\d+/i;
+ITEM.example = '- [ ] C-001 [build] Outcome';
+FINDING.example = '- [ ] F-001 Finding';
+
+// Words that, on their own, say nothing was recorded.
+const PLACEHOLDER_WORDS = new Set(('pending tbd tba todo to be determined decided confirmed added add will later n a ' +
+  'na none nothing unknown not no yet run ran tested verified checked started done skipped skip untested unverified ' +
+  'see above below still waiting wait for now needed required recorded written created provided given available ' +
+  'applicable it this that the is was been has have evidence result results data here there').split(' '));
 // Words that only assert success; evidence made of nothing else names no check or artifact.
-const ASSERTIONS = new Set(('all the it its everything test tests check checks build builds suite is are was were ' +
-  'has have been and ok okay pass passes passed passing done works work worked working verified verify complete ' +
-  'completed fixed implemented yes true green success successful successfully tested checked confirmed looks good ' +
-  'lgtm fine as expected now correctly correct manually manual locally visually by hand me i we myself').split(' '));
+const ASSERTIONS = new Set(('all every everything test tests check checks build builds suite are were and ok okay ' +
+  'pass passes passed passing works work worked working verify complete completed fixed implemented yes true green ' +
+  'success successful successfully confirmed looks good lgtm fine as expected correctly correct manually manual ' +
+  'locally visually by hand me i we myself my should would seems appears probably').split(' '));
+// Something inspectable: a digit (count, revision, time), code span, URL, path or file name.
+const ANCHOR = /\d|`[^`]+`|https?:\/\/|\w\/\w|\b\w[\w-]*\.[a-z]{2,4}\b/i;
 
 const key = (text) => text.toLowerCase().replace(/[^a-z]/g, '');
-const placeholder = (text = '') => PLACEHOLDERS.has(key(text)) || /^\s*(pending|tbd|todo)\b/i.test(text);
-const assertion = (text) => text.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).every((word) => ASSERTIONS.has(word));
+const words = (text = '') => text.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+const letterWords = (text) => words(text).filter((word) => /\p{L}/u.test(word));
+const plain = (text = '') => text.replace(/[*_~`]/g, '').trim();
+const placeholder = (text) => words(text).every((word) => PLACEHOLDER_WORDS.has(word));
+const assertionOnly = (text) => letterWords(text).every((word) => ASSERTIONS.has(word) || PLACEHOLDER_WORDS.has(word));
+const negated = (text = '') => /^\s*(none|no|not|n\/a|nobody|unknown)\b/i.test(plain(text));
 const list = (values) => (values.length ? values.join(',') : 'none');
+const idPattern = (id) => new RegExp(`\\b${id}\\b`);
 
-function sections(text, errors) {
-  const found = new Map();
-  let current = null;
+// Returns the non-fenced lines with their section, keeping line numbers. HTML comments are removed
+// because they do not render; fences follow CommonMark closely enough that rendered items stay visible.
+function scan(text, errors) {
+  const visible = text.replace(/^﻿/, '').replace(/<!--[\s\S]*?-->/g, (comment) => comment.replace(/[^\n]/g, ''));
+  const lines = [];
+  const seen = new Set();
+  let section = null;
   let fence = null;
-  text.replace(/^﻿/, '').split(/\r?\n/).forEach((raw, index) => {
-    const line = raw.replace(/\t/g, '    ');
-    const marker = /^ {0,3}(`{3,}|~{3,})/.exec(line);
+  visible.split(/\r?\n/).forEach((raw, index) => {
+    const line = raw.replace(/\t/g, '    ').replace(/[​-‍⁠]/g, '');
+    const indent = line.length - line.trimStart().length;
     if (fence) {
-      if (marker && marker[1][0] === fence[0] && marker[1].length >= fence.length) fence = null;
+      const close = /^\s*(`{3,}|~{3,})\s*$/.exec(line);
+      if (close && close[1][0] === fence.char && close[1].length >= fence.length) { fence = null; return; }
+      // A fence opened inside a list item ends with that item.
+      if (!(fence.indent > 0 && line.trim() && indent < fence.indent)) return;
+      fence = null;
+    }
+    const open = /^(\s*)(`{3,}|~{3,})(.*)$/.exec(line);
+    if (open && !(open[2][0] === '`' && open[3].includes('`'))) {
+      fence = { char: open[2][0], length: open[2].length, indent: open[1].length };
       return;
     }
-    if (marker) { fence = marker[1]; return; }
-    const heading = /^(#{1,2}) +(.+?)[ #]*$/.exec(line);
-    if (heading) {
-      current = null;
-      if (heading[1] === '#') return;
-      const name = SECTIONS.find((section) => key(section) === key(heading[2]));
-      if (!name) return;
-      if (found.has(name)) errors.push(`line ${index + 1}: duplicate section "## ${name}"`);
-      current = []; found.set(name, current);
+    const heading = /^ {0,3}(#{1,6})[ \t]+(.*)$/.exec(line);
+    if (heading && heading[1].length <= 2) {
+      section = SECTIONS.find((name) => key(name) === key(heading[2])) ?? null;
+      if (section && seen.has(section)) errors.push(`line ${index + 1}: duplicate section "## ${section}"`);
+      if (section) seen.add(section);
       return;
     }
-    if (current) current.push({ n: index + 1, line });
+    lines.push({ n: index + 1, line, section });
   });
-  return found;
+  return { lines, sections: seen };
 }
 
 // Parses top-level checkbox entries and their indented "- Field: value" children.
-function entries(lines, { head, fields, top = [], strict }, errors) {
+function entries(lines, { head, fields, top = [], strict }, errors, parsed) {
   const result = [];
   const topValues = {};
   let entry = null;
   let child = null;
   let last = null;
   let lastTop = null;
+  let continues = false;
+  const append = (text) => {
+    if (lastTop) topValues[lastTop] += ` ${text}`;
+    else if (last) entry.fields[last] += ` ${text}`;
+    else entry.outcome += ` ${text}`;
+  };
   for (const { n, line } of lines) {
-    if (!line.trim()) continue;
+    if (!line.trim()) { continues = false; continue; }
     const indent = line.length - line.trimStart().length;
     const body = line.trim();
-    const box = /^([-*+]|\d+[.)]) \[[^\]]*\]/.test(body);
     if (indent === 0) {
-      entry = null; child = null; last = null; lastTop = null;
-      const field = FIELD.exec(body);
-      const topName = !box && field && top.find((name) => key(name) === key(field[1]));
-      if (box) {
+      const entryLike = !BOX.test(body) && ENTRY_LIKE.test(body);
+      // A wrapped line at column 0 directly after entry text is a lazy continuation, as in CommonMark.
+      if (continues && (entry || lastTop) && !entryLike && !LIST.test(body) && !body.startsWith('#') && !body.startsWith('|')) { append(body); continue; }
+      entry = null; child = null; last = null; lastTop = null; continues = false;
+      if (entryLike) {
+        parsed.add(n);
+        errors.push(`line ${n}: cannot parse "${body}"; expected "${head.example}"`);
+      } else if (BOX.test(body)) {
         const match = head.exec(body);
-        if (!match) { errors.push(`line ${n}: cannot parse "${body}"; expected ${head.example}`); continue; }
-        entry = { line: n, checked: match[1] !== ' ', id: match[2].toUpperCase(), fields: {}, head: match };
-        result.push(entry);
-      } else if (topName) {
-        topValues[topName] = field[2].trim(); lastTop = topName;
-      } else if (strict && /^([-*+]|\d+[.)]) /.test(body)) {
-        errors.push(`line ${n}: list entry without a checkbox; write "${head.example}" or move prose out of the list`);
+        parsed.add(n);
+        if (!match) { errors.push(`line ${n}: cannot parse "${body}"; expected "${head.example}"`); continue; }
+        entry = { line: n, checked: match[1] !== ' ', id: match[2].toUpperCase(), outcome: match.at(-1).trim(), fields: {}, match };
+        result.push(entry); continues = true;
+      } else if (LIST.test(body)) {
+        const field = FIELD.exec(body);
+        const name = field && top.find((candidate) => key(candidate) === key(field[1]));
+        if (name) {
+          if (name in topValues) errors.push(`line ${n}: duplicate ${name}`);
+          topValues[name] = field[2].trim(); lastTop = name; continues = true;
+        } else if (strict) {
+          errors.push(`line ${n}: list entry without a checkbox; write "${head.example}" or move prose out of the list`);
+        } else if (/\b[CF]-\d+\b/.test(body)) {
+          errors.push(`line ${n}: an entry naming an ID must be a checkbox entry such as "${head.example}"`);
+        }
+      } else if (strict && body.startsWith('|') && /\bC-\d+\b/.test(body)) {
+        errors.push(`line ${n}: items cannot be table rows; write "${head.example}"`);
       }
       continue;
     }
-    if (box) { errors.push(`line ${n}: checkbox entries must start at the beginning of the line`); continue; }
-    if (lastTop) { topValues[lastTop] += ` ${body}`; continue; }
-    if (!entry) continue;
+    if (BOX.test(body)) { parsed.add(n); errors.push(`line ${n}: checkbox entries must start at the beginning of the line`); continue; }
+    if (lastTop) { append(body); continue; }
+    if (!entry) {
+      if (strict && FIELD.test(body)) errors.push(`line ${n}: field outside an item; fields belong directly under "${head.example}"`);
+      continue;
+    }
+    continues = true;
     if (child === null) child = indent;
     if (indent === child) {
       const field = FIELD.exec(body);
@@ -99,102 +147,117 @@ function entries(lines, { head, fields, top = [], strict }, errors) {
   }
   return { result, top: topValues };
 }
-ITEM.example = '"- [ ] C-001 [build] Outcome"';
-FINDING.example = '"- [ ] F-001 Finding"';
 
 function parse(text, errors) {
-  const found = sections(text, errors);
-  const { result: items } = entries(found.get('Items') ?? [], { head: ITEM, fields: ITEM_FIELDS, strict: true }, errors);
-  for (const item of items) {
-    item.stage = item.head[3].toLowerCase();
-    item.outcome = item.head[4].trim();
+  const { lines, sections } = scan(text, errors);
+  const parsed = new Set();
+  const inSection = (name) => lines.filter((line) => line.section === name);
+  const { result: items } = entries(inSection('Items'), { head: ITEM, fields: ITEM_FIELDS, strict: true }, errors, parsed);
+  for (const item of items) item.stage = item.match[3].toLowerCase();
+  const closeOut = entries(inSection('Close-Out'), { head: FINDING, fields: ['Resolution'], top: ['Review', 'Inventory', 'Result'] }, errors, parsed);
+  for (const { n, line } of lines) {
+    if (!parsed.has(n) && ENTRY_LIKE.test(line.replace(/^[\s>]+/, ''))) {
+      errors.push(`line ${n}: looks like a checklist entry but is not one; items go at the start of a line under "## Items" and findings under "## Close-Out"`);
+    }
   }
-  const closeOut = entries(found.get('Close-Out') ?? [], { head: FINDING, fields: ['Resolution'], top: ['Review', 'Inventory', 'Result'] }, errors);
-  const changeLog = (found.get('Change Log') ?? []).map(({ line }) => line.trim()).filter(Boolean);
-  return { found, items, findings: closeOut.result, review: closeOut.top, changeLog };
+  const changeLog = inSection('Change Log').map(({ line }) => line.trim()).filter(Boolean);
+  const filled = (name) => inSection(name).some(({ line }) => line.trim());
+  return { sections, filled, items, findings: closeOut.result, review: closeOut.top, changeLog };
 }
 
 function validate(record, errors) {
-  const { found, items, findings, review, changeLog } = record;
-  for (const name of SECTIONS) if (!found.has(name)) errors.push(`missing section "## ${name}"`);
-  for (const name of ['Request', 'Definition of Complete']) {
-    if (found.has(name) && !found.get(name).some(({ line }) => line.trim())) errors.push(`section "## ${name}" is empty`);
-  }
-  if (found.has('Items') && !items.length) errors.push('no checklist items found under "## Items"');
+  const { sections, filled, items, findings, review, changeLog } = record;
+  for (const name of SECTIONS) if (!sections.has(name)) errors.push(`missing section "## ${name}"`);
+  for (const name of ['Request', 'Definition of Complete']) if (sections.has(name) && !filled(name)) errors.push(`section "## ${name}" is empty`);
+  if (sections.has('Items') && !items.length) errors.push('no checklist items found under "## Items"');
   const byId = new Map();
   for (const item of items) {
     if (byId.has(item.id)) errors.push(`line ${item.line}: duplicate item ID ${item.id}`);
     else byId.set(item.id, item);
   }
-  // The entry must name both the item and the exception, not merely mention the ID (e.g. its creation).
-  const logged = (id, status) => changeLog.some((line) => new RegExp(`\\b${id}\\b`).test(line)
-    && (status === 'WAIVED' ? /\bwaive/i : /not.?applicable|\bn\/a\b|inapplicable/i).test(line));
+  // A waiver or non-applicability needs an entry naming both the item and the exception, not merely the ID.
+  const exceptionWord = { WAIVED: /\bwaive/i, 'NOT APPLICABLE': /not.?applicable|\bn\/a\b|inapplicable|does ?n[o']t apply/i };
+  const logged = (id, status) => changeLog.some((line) => idPattern(id).test(line) && exceptionWord[status].test(line));
   for (const item of items) {
     const at = `line ${item.line}: ${item.id}`;
     const { fields } = item;
     for (const name of ['Source', 'Accept', 'Verify']) if (placeholder(fields[name])) errors.push(`${at}: needs ${name}`);
     if (!('Evidence' in fields)) errors.push(`${at}: needs an Evidence field ("Pending." until verified)`);
     if ('Status' in fields) {
-      item.status = STATUSES[key(fields.Status)];
+      item.status = STATUSES.get(key(fields.Status));
       if (!item.status) errors.push(`${at}: Status must be BLOCKED, WAIVED or NOT APPLICABLE`);
       if (item.checked) errors.push(`${at}: an exception keeps its box unchecked; only [x] means verified`);
-      if (placeholder(fields.Reason)) errors.push(`${at}: ${fields.Status} needs a Reason`);
-      if (placeholder(fields.Evidence)) errors.push(`${at}: ${fields.Status} needs Evidence for the exception`);
-      if (item.status && item.status !== 'BLOCKED') {
-        if (placeholder(fields.Authority)) errors.push(`${at}: ${item.status} needs the Authority that approved it`);
-        if (!logged(item.id, item.status)) errors.push(`${at}: ${item.status} must be recorded in a Change Log entry naming ${item.id}`);
+      const label = item.status ?? fields.Status;
+      if (placeholder(fields.Reason)) errors.push(`${at}: ${label} needs a Reason`);
+      if (placeholder(fields.Evidence)) errors.push(`${at}: ${label} needs Evidence for the exception`);
+      if (placeholder(fields.Authority) || negated(fields.Authority)) errors.push(`${at}: ${label} needs the Authority that established it`);
+      if (item.status && item.status !== 'BLOCKED' && !logged(item.id, item.status)) {
+        errors.push(`${at}: ${item.status} must be recorded in a Change Log entry naming ${item.id}`);
       }
     } else if (item.checked) {
       const evidence = fields.Evidence ?? '';
-      if (placeholder(evidence) || assertion(evidence)) {
-        errors.push(`${at}: checked item needs evidence naming a check, observation or artifact, found "${evidence}"`);
-      } else if (/^\s*(stale|failed|invalidated)\s*:/i.test(evidence)) {
+      if (placeholder(evidence) || assertionOnly(evidence) || !ANCHOR.test(evidence)) {
+        errors.push(`${at}: checked item needs evidence naming a check, observation or artifact (a command, path, URL, revision, count or time), found "${evidence}"`);
+      } else if (/^(stale|failed|invalidated)\b\s*[:\-–—)\]]/i.test(evidence.replace(/^[\s*_~`>]+/, ''))) {
         errors.push(`${at}: evidence is marked stale or failed; uncheck the item until it is verified again`);
       }
     }
     if ('Depends on' in fields) {
-      const value = fields['Depends on'];
-      const ids = /^\s*none\.?\s*$/i.test(value) ? [] : value.match(/\bC-\d+\b/gi)?.map((id) => id.toUpperCase());
+      const value = plain(fields['Depends on']);
+      const ids = /^none\b/i.test(value) ? [] : value.match(/\bC-\d+\b/gi)?.map((id) => id.toUpperCase());
       if (!ids) errors.push(`${at}: Depends on must list item IDs or None`);
       for (const id of ids ?? []) {
         const dependency = byId.get(id);
         if (id === item.id) errors.push(`${at}: depends on itself`);
         else if (!dependency) errors.push(`${at}: depends on unknown item ${id}`);
-        else if (item.checked && !dependency.checked && !['WAIVED', 'NOT APPLICABLE'].includes(STATUSES[key(dependency.fields.Status ?? '')])) {
+        else if (item.checked && !dependency.checked && !['WAIVED', 'NOT APPLICABLE'].includes(STATUSES.get(key(dependency.fields.Status ?? '')))) {
           errors.push(`${at}: checked but depends on open ${id}; verify ${id} or reopen ${item.id}`);
         }
       }
     }
   }
+  if (items.length && items.every((item) => item.status === 'NOT APPLICABLE')) errors.push('every item is NOT APPLICABLE; a checklist needs at least one required item');
   const seen = new Set();
   for (const finding of findings) {
     if (seen.has(finding.id)) errors.push(`line ${finding.line}: duplicate finding ID ${finding.id}`);
     seen.add(finding.id);
     if (finding.checked && placeholder(finding.fields.Resolution)) errors.push(`line ${finding.line}: ${finding.id}: resolved finding needs a Resolution`);
   }
-  const reviewer = /^\s*(independent|self)\b/i.exec(review.Review ?? '')?.[1].toLowerCase();
-  return reviewer && !placeholder(review.Inventory) && !placeholder(review.Result) ? reviewer : 'pending';
+  const reviewer = /^(independent|self)\b/i.exec(plain(review.Review))?.[1].toLowerCase();
+  if (reviewer === 'self' && !/not independent/i.test(review.Review)) errors.push('Close-Out: a self review must say it was not independent');
+  // The review counts only when it happened, its inventory was recorded, and its result passed.
+  return reviewer && !placeholder(review.Inventory) && /^pass\b/i.test(plain(review.Result)) ? reviewer : 'pending';
 }
 
 function ratchet(record, baseline, errors) {
   const current = record.changeLog;
-  const earlier = new Set(baseline.changeLog);
-  for (const line of earlier) if (!current.includes(line)) errors.push(`Change Log is append-only; baseline entry edited or removed: "${line}"`);
-  const added = current.filter((line) => !earlier.has(line));
-  const logged = (id) => added.some((line) => new RegExp(`\\b${id}\\b`).test(line));
-  const now = new Map(record.items.map((item) => [item.id, item]));
+  const earlier = baseline.changeLog;
+  const kept = earlier.every((line, index) => current[index] === line);
+  if (!kept) errors.push('Change Log is append-only: the baseline entries must stay unchanged, in order, before any new entry');
+  const added = kept ? current.slice(earlier.length) : current.filter((line) => !earlier.includes(line));
+  const corrected = (id) => added.some((line) => idPattern(id).test(line)
+    && /\b(correct|chang|remov|replac|supersed|split|merg|reword|renam|narrow|broaden|duplicat|erroneous|inapplicable|withdr|delet)/i.test(line));
   const same = (a = '', b = '') => a.replace(/\s+/g, ' ').trim() === b.replace(/\s+/g, ' ').trim();
+  const now = new Map(record.items.map((item) => [item.id, item]));
   for (const old of baseline.items) {
     const item = now.get(old.id);
     if (!item) {
-      if (!logged(old.id)) errors.push(`${old.id} was removed without a new Change Log entry`);
+      if (!corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction`);
       continue;
     }
     const changed = [['stage', old.stage, item.stage], ['outcome', old.outcome, item.outcome],
       ['Accept', old.fields.Accept, item.fields.Accept], ['Verify', old.fields.Verify, item.fields.Verify]]
       .filter(([, before, after]) => !same(before, after)).map(([name]) => name);
-    if (changed.length && !logged(old.id)) errors.push(`${old.id}: ${changed.join(', ')} changed without a new Change Log entry`);
+    if (changed.length && !corrected(old.id)) errors.push(`${old.id}: ${changed.join(', ')} changed without a new Change Log entry recording the correction`);
   }
+  const findings = new Set(record.findings.map((finding) => finding.id));
+  for (const old of baseline.findings) {
+    if (!findings.has(old.id) && !corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction`);
+  }
+  // IDs the baseline log mentions but its items lack were removed earlier and stay retired.
+  const present = new Set(baseline.items.map((item) => item.id));
+  const retired = new Set(earlier.flatMap((line) => line.match(/\bC-\d+\b/g) ?? []).filter((id) => !present.has(id)));
+  for (const item of record.items) if (retired.has(item.id)) errors.push(`line ${item.line}: ${item.id} was removed earlier; IDs are never reused`);
 }
 
 function main(argv) {
@@ -219,8 +282,7 @@ function main(argv) {
   const record = parse(text, errors);
   const review = validate(record, errors);
   if (baselineFile !== null) {
-    const baselineErrors = [];
-    const baseline = parse(earlier, baselineErrors);
+    const baseline = parse(earlier, []);
     if (!baseline.items.length) errors.push(`baseline ${baselineFile} has no parseable items`);
     else ratchet(record, baseline, errors);
   }
@@ -240,10 +302,11 @@ function main(argv) {
     const inStage = required.filter((item) => item.stage === name);
     return `${inStage.filter((item) => item.checked).length}/${inStage.length}`;
   };
+  // A pending review is actionable work, so it keeps the record OPEN even when other items are blocked.
   let status = 'CHECKLIST OPEN';
-  if (!open.length && !findingsOpen.length) {
+  if (!open.length && !findingsOpen.length && review !== 'pending') {
     if (blocked.length) status = 'CHECKLIST BLOCKED';
-    else if (review !== 'pending') status = waived.length ? 'CHECKLIST ACCEPTED WITH EXCEPTIONS' : 'CHECKLIST VERIFIED COMPLETE';
+    else status = waived.length ? 'CHECKLIST ACCEPTED WITH EXCEPTIONS' : 'CHECKLIST VERIFIED COMPLETE';
   }
   console.log([status, `verified=${verified.length}/${required.length}`, `open=${list(open)}`, `blocked=${list(blocked)}`,
     `waived=${list(waived)}`, `not_applicable=${list(ids('NOT APPLICABLE'))}`, `findings_open=${list(findingsOpen)}`,
