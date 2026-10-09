@@ -97,10 +97,15 @@ observed result, and the revision or artifact. Include the environment, time
 and evidence location where practical, and take times from the system clock.
 The validator rejects evidence on a checked item when it:
 
-- is empty, or says or starts by saying nothing was recorded, for example
-  `Pending`, `TBD`, `TODO:`, `To do:`, `N/A`, `none yet`, `not yet`, `not run`,
-  `not tested at …`, `Skipped.`, `will run …`, `awaiting …`, `to be determined`
-  or `see above`;
+- is empty, or says or starts by saying the check has not happened, for
+  example:
+  - `Pending`, `TBD`, `TODO:`, `To do:`, `N/A` or `see above`;
+  - `none yet`, `not yet`, `not run`, `not tested at …` or `Skipped.`;
+  - `Awaiting:`, `waiting for …`, `planned:`, `queued for …`, `will run …` or
+    `unable to verify …`;
+  - `to be determined`.
+
+  Ordinary nouns such as "Queued messages …" or "Skipped rows …" are fine;
 - only asserts success, for example "all unit tests passed", "works on my
   machine", "verified manually", "done" or "LGTM";
 - has no anchor once dates and times are set aside. An anchor is a command or
@@ -110,17 +115,21 @@ The validator rejects evidence on a checked item when it:
 The anchor check sets aside these date and time forms:
 
 - ISO dates and timestamps;
-- clock times, including ones suffixed `Z`, `UTC`, `am` or `pm`;
-- month-name dates, ordinals, and four-digit years;
+- clock times, including `10am` and times suffixed `Z`, `UTC`, `am` or `pm`;
+- month-name dates such as `Oct 9`, `9 October 2026` and `Oct 2026`;
+- ordinals such as `the 9th`;
 - `d/m/y` dates;
 - `date -u` output.
+
+Other numbers count as anchors, including a bare year or a count such as "2000
+requests".
 
 The Evidence line itself must name the check. Fenced output may follow it but
 does not count.
 
-A timestamp that leads an Evidence value, or leads a Change Log or Verification
-entry (optionally after "Between", "From" or "At"), is an event time, and one
-later than now is rejected. Later timestamps, such as an expiry being verified,
+A timestamp that leads an Evidence value, or leads a bulleted or numbered Change
+Log or Verification entry (optionally after "Between", "From" or "At"), is an
+event time, and one later than now is rejected. Later timestamps, such as an expiry being verified,
 are not checked.
 
 These checks are mechanical minimums. A count, version or file name satisfies
@@ -155,8 +164,8 @@ An exception keeps the box unchecked and adds fields:
 A technical problem is never `BLOCKED`; it stays open. Waived items lead to
 ACCEPTED WITH EXCEPTIONS, never VERIFIED COMPLETE. Not-applicable items leave
 the denominator and are listed in the validator's output. A record needs at
-least one required item. Once nothing is left open, a record with waivers also
-needs at least one verified item.
+least one required item. A record in which every item is waived or not
+applicable is rejected, because nothing was delivered.
 
 An Authority that says none exists ("none given", "n/a") is rejected. The
 Change Log check is keyword-based, so the close-out still judges what each
@@ -197,8 +206,9 @@ Change Log entry that names the ID and says what changed, for example
 
 A removed ID stays retired. `--baseline` enforces all of this. The correction
 check looks for words such as "corrected", "removed", "replaced" or "Accept
-changed" in the same clause as the ID, and ignores negations such as "not
-changed". The close-out still judges whether each correction was legitimate.
+changed" in the same clause as the ID (clauses are split at `;`, `,` and `.`),
+and ignores negations such as "not changed". The close-out still judges whether
+each correction was legitimate.
 
 ## Close-Out
 
@@ -219,14 +229,17 @@ changed". The close-out still judges whether each correction was legitimate.
   review counts. These keep the record open:
   - `FAIL` or `BLOCKED` anywhere in it;
   - an alternative such as `PASS/FAIL`, `PASS | FAIL` or `PASS or FAIL`;
-  - `PASS expected`;
+  - a qualified pass such as `PASS expected`, `PASS?`, `PASS if …`,
+    `PASS unless …`, `PASS except …` or `PASS once …`;
   - `pending`.
 
   In AUDIT mode, Result reports the review's outcome, not the audited work's.
 - Leave all three fields `pending` until the close-out happens. Struck-through
   text (`~~x~~` or `~x~`) is ignored. A field that says the work is still not
   done also keeps the record open: "not yet", "TBD", "to be …", "will be …",
-  "awaiting" or "planned".
+  "awaiting" or "pending". A negated use such as "no findings pending" does not
+  count. The validator prints a note on stderr explaining why the review is
+  still pending.
 - Write each field once, with no duplicates. Update it when a later round
   replaces it, and keep the earlier rounds' outcomes in Verification.
 - **Findings** are `F-` items. An open finding blocks completion, and a

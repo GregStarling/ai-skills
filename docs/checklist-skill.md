@@ -101,7 +101,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 
 ### Validator contract tests
 
-`test/routing/checklist.test.ts` has 170 cases. They cover:
+`test/routing/checklist.test.ts` has 192 cases. They cover:
 
 - valid records, including the guiding prompt's sample items with checkboxes;
 - every structural rejection;
@@ -111,18 +111,26 @@ All results below come from executed checks on 2026-10-09 (UTC).
 - a drift guard that validates the format reference's template (OPEN) and
   completed example (VERIFIED COMPLETE).
 
-All 170 pass. The first 104 cases failed 44 times against the original
+All 192 pass. The first 104 cases failed 44 times against the original
 validator, which shows they can fail. Typecheck passes.
 
 ### Adversarial validator review
 
-Three independent attack rounds probed the validator:
+Three independent attack rounds probed the validator, and a fourth close-out
+review tried about 120 more probes:
 
 | Round | Probe files | Issues found | Material |
 | --- | --- | --- | --- |
 | 1 | 63 | 25 | 15 |
 | 2 | 43 | 21 | 17 |
 | 3 | 60 | 18 | 9 |
+| 4 (close-out) | about 120 | 3 plus minor issues | 2 |
+
+The round-4 material findings were both fixed:
+
+- A fence quirk, present since round 1, could hide an entry.
+- Overly broad "not recorded" words, introduced in round 3, rejected real
+  evidence.
 
 The material issues were records that reached a passing status. They used:
 

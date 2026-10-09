@@ -36,20 +36,22 @@ const ASSERTIONS = new Set(('all every everything test tests check checks build 
   'success successful successfully confirmed looks good lgtm fine as expected correctly correct manually manual ' +
   'locally visually by hand me i we myself my should would seems appears probably on at').split(' '));
 // Dates and clock times in common written forms; they say when, not what was checked.
-const MONTH = '(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\\.?';
+const MONTH = '(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\\b\\.?';
 const TEMPORAL = new RegExp([
   '\\b\\d{4}-\\d{2}-\\d{2}(?:[T ]\\d{1,2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?)?(?:z|utc|gmt|[+-]\\d{2}:?\\d{2})?\\b',
-  '\\b\\d{1,2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:\\s?(?:z|utc|gmt|am|pm)\\b)?',
-  `\\b${MONTH}\\s{1,3}\\d{1,2}(?:st|nd|rd|th)?\\b`,
-  `\\b\\d{1,2}(?:st|nd|rd|th)?\\s{1,3}${MONTH}`,
+  '\\b\\d{1,2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:\\s?(?:z|utc|gmt)\\b(?:\\s{1,3}\\d{4}\\b)?|\\s?(?:am|pm)\\b)?',
+  '\\b\\d{1,2}\\s?(?:am|pm)\\b',
+  `\\b${MONTH}\\s{1,3}\\d{1,2}(?:st|nd|rd|th)?\\b(?:,?\\s{1,3}\\d{4}\\b)?`,
+  `\\b\\d{1,2}(?:st|nd|rd|th)?\\s{1,3}${MONTH}(?:,?\\s{1,3}\\d{4}\\b)?`,
+  `\\b${MONTH}\\s{1,3}\\d{4}\\b`,
   '\\b\\d{1,2}(?:st|nd|rd|th)\\b',
-  '\\b(?:19|20)\\d{2}\\b',
   '\\b\\d{1,2}/\\d{1,2}/\\d{2,4}\\b',
 ].join('|'), 'gi');
 // Something inspectable besides a date or time: a digit (count, revision), code span, URL, path or file name.
 const ANCHOR = /\d|`[^`]+`|https?:\/\/|\w\/\w|\w\.[a-z]{2,4}\b/i;
-const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverified|n\/a)(?=$|\s*[:,.;(]|\s+\p{Pd})|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded|executed)|not yet|to be \w+|none yet|no evidence|will|awaiting|waiting|queued|planned|unable)\b)/iu;
-const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will be|awaiting|planned|pending)\b/i;
+// Evidence that opens by saying the check has not happened. Ordinary nouns ("Queued messages", "Skipped rows") pass.
+const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverified|n\/a|planned|queued|awaiting|waiting)(?=$|\s*[:,.;(]|\s+\p{Pd}|\s+(?:for|on|until|to)\b)|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded|executed)|not yet|to be \w+|none yet|no evidence|will (?:be |still )?(?:run|re-?run|add|added|verify|verified|test|tested|check|checked|do|done|record|recorded)|unable to (?:run|verify|test|check|execute))\b)/iu;
+const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will be|awaiting|pending)\b/i;
 const CORRECTION = /\b(?:correct(?:ed|ion)?|remov(?:ed|al)|replac(?:ed|ement)|supersed(?:ed|es)|split|merged|reworded|renamed|narrowed|broadened|duplicat(?:e|ed)|erroneous|withdr(?:ew|awn)|deleted|dropped|weakened|tightened|loosened|clarified)\b/i;
 const FIELD_CHANGE = /\b(?:accept|acceptance|verify|verification|outcome|stage)\b[^.;]{0,80}\bchanged\b|\bchanged\b[^.;]{0,80}\b(?:accept|acceptance|verify|verification|outcome|stage)\b/i;
 const NEGATED_CHANGE = /\bnot (?:changed|corrected|removed|replaced|a duplicate)\b|\bunchanged\b|\bno (?:changes?|corrections?)\b|\bnothing\b[^.;]{0,40}\b(?:changed|corrected)\b/i;
@@ -93,9 +95,10 @@ function scan(text, errors) {
     const line = raw.replace(/\t/g, '    ');
     const indent = line.length - line.trimStart().length;
     if (fence) {
+      // A fence inside an item closes only within that item; a line left of the item ends the item and its fence.
       const close = /^( *)(`{3,}|~{3,}) *$/.exec(line);
-      if (close && close[2][0] === fence.char && close[2].length >= fence.length && close[1].length <= fence.indent + 3) { fence = null; return; }
-      // A fence opened inside a list item ends with that item.
+      const within = !fence.inItem || indent >= fence.indent;
+      if (close && within && close[2][0] === fence.char && close[2].length >= fence.length && close[1].length <= fence.indent + 3) { fence = null; return; }
       if (!(fence.inItem && line.trim() && indent < fence.indent)) return;
       fence = null;
     }
@@ -109,7 +112,7 @@ function scan(text, errors) {
     }
     const visible = line.replace(/`[^`\n]{0,500}`/g, ' ').replace(/<(?:https?|mailto|ftp):[^\s<>]{0,500}>/gi, ' ');
     if (visible.includes('<!--')) errors.push(`line ${n}: HTML comments are not allowed; they can hide entries`);
-    else if (HTML.test(visible)) errors.push(`line ${n}: raw HTML is not allowed because it does not render as written; put text such as <id> in a code span`);
+    else if (HTML.test(visible)) errors.push(`line ${n}: raw HTML ${HTML.exec(visible)[0].slice(0, 40)} is not allowed because it does not render as written; put it in a code span`);
     if (/&(?:#\d{1,7}|#x[0-9a-f]{1,6}|[a-z][a-z0-9]{1,31});/i.test(visible)) errors.push(`line ${n}: character references are not allowed; write the character itself`);
     if (line.trim()) inList = LIST.test(line.trim()) || (inList && indent >= 2);
     const heading = /^ {0,3}(#{1,6})[ \t]+(.*)$/.exec(line);
@@ -215,7 +218,7 @@ function parse(text, errors, now) {
   }
   // Event times are read from the clock, so none can be later than now. Only a time that leads an
   // entry or evidence value is an event time; a later one may be a deadline or an expiry being verified.
-  const lead = (text) => ISO_EVENT.exec(plain(text).replace(/^[-*+]\s+/, ''))?.[1];
+  const lead = (text) => ISO_EVENT.exec(plain(text).replace(/^(?:[-*+]|\d+[.)])\s+/, ''))?.[1];
   const events = [...lines.filter((line) => ['Change Log', 'Verification'].includes(line.section) && LIST.test(line.line.trim()))
     .map(({ n, line }) => [n, lead(line.trim())]), ...items.map((item) => [item.line, lead(item.fields.Evidence ?? '')])];
   for (const [n, stamp] of events) {
@@ -258,8 +261,10 @@ function validate(record, errors, notes) {
       }
     } else if (item.checked) {
       const evidence = fields.Evidence ?? '';
-      if (placeholder(evidence) || assertionOnly(evidence) || UNRECORDED.test(plain(evidence)) || !anchored(evidence)) {
-        errors.push(`${at}: checked item needs evidence naming a check, observation or artifact (a command, path, URL, revision or count), found "${evidence}"`);
+      if (UNRECORDED.test(plain(evidence))) {
+        errors.push(`${at}: checked item's evidence starts by saying the check has not happened, found "${evidence}"`);
+      } else if (placeholder(evidence) || assertionOnly(evidence) || !anchored(evidence)) {
+        errors.push(`${at}: checked item needs evidence naming a check, observation or artifact (a command, path, URL, revision or count other than a date), found "${evidence}"`);
       } else if (marked(evidence)) {
         errors.push(`${at}: evidence is marked stale or failed; uncheck the item until it is verified again`);
       }
@@ -280,7 +285,7 @@ function validate(record, errors, notes) {
   }
   if (items.length && items.every((item) => item.status === 'NOT APPLICABLE')) errors.push('every item is NOT APPLICABLE; a checklist needs at least one required item');
   // Waivers cannot make up the whole delivery: once nothing is open, something must have been verified.
-  if (items.some((item) => item.status === 'WAIVED') && !items.some((item) => item.checked || !item.status)) errors.push('every item is waived or excepted; nothing was verified');
+  if (items.some((item) => item.status === 'WAIVED') && items.every((item) => ['WAIVED', 'NOT APPLICABLE'].includes(item.status))) errors.push('every item is waived or not applicable; nothing was verified');
   const seen = new Set();
   for (const finding of findings) {
     if (seen.has(finding.id)) errors.push(`line ${finding.line}: duplicate finding ID ${finding.id}`);
@@ -291,11 +296,14 @@ function validate(record, errors, notes) {
   const reviewer = /^(independent|self)\b/i.exec(reviewText)?.[1].toLowerCase();
   if (reviewer === 'self' && !/not independent/i.test(reviewText)) errors.push('Close-Out: a self review must say it was not independent');
   // The review counts only when it happened, its inventory was recorded, and its result passed outright.
-  const passed = /^pass(?:ed|es)?\b/i.test(result) && !/^pass(?:ed|es)?\s*(?:[/|]|or\b|expected\b)/i.test(result)
+  const passed = /^pass(?:ed|es)?\b/i.test(result) && !/^pass(?:ed|es)?\s*(?:[/|?]|or\b|expected\b|if\b|unless\b|except\b|once\b)/i.test(result)
     && !/\b(?:FAIL(?:ED|S)?|BLOCKED)\b/.test(result);
-  const done = ![reviewText, inventory, result].some((value) => NOT_DONE.test(value));
-  if (reviewer && !placeholder(inventory) && passed && done) return reviewer;
+  // "Not done" wording counts only when it is not negated ("no findings pending").
+  const unfinished = [reviewText, inventory, result].flatMap((value) => value.split(/[;,.]\s*/))
+    .find((clause) => NOT_DONE.test(clause) && !/\b(?:no|nothing|none)\b/i.test(clause));
+  if (reviewer && !placeholder(inventory) && passed && !unfinished) return reviewer;
   if (review.Result !== undefined && !placeholder(result) && !passed) notes.push('Close-Out Result does not start with an unqualified PASS, so the review does not count yet');
+  else if (unfinished && reviewer && passed) notes.push(`Close-Out says the review is not finished ("${unfinished.trim()}"), so it does not count yet`);
   return 'pending';
 }
 
@@ -306,7 +314,7 @@ function ratchet(record, baseline, errors) {
   if (!kept) errors.push('Change Log is append-only: the baseline entries must stay unchanged, in order, before any new entry');
   const added = kept ? current.slice(earlier.length) : current.filter((line) => !earlier.includes(line));
   // The correction word must apply to the item: it has to share a clause with the ID.
-  const corrected = (id) => added.some((line) => line.split(/[;.]\s/).some((clause) => idPattern(id).test(clause)
+  const corrected = (id) => added.some((line) => line.split(/[;,.]\s/).some((clause) => idPattern(id).test(clause)
     && (CORRECTION.test(clause) || FIELD_CHANGE.test(clause)) && !NEGATED_CHANGE.test(clause)));
   const same = (a = '', b = '') => a.replace(/\s+/g, ' ').trim() === b.replace(/\s+/g, ' ').trim();
   const now = new Map(record.items.map((item) => [item.id, item]));

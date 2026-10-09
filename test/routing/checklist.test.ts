@@ -213,7 +213,7 @@ describe('portable Checklist validator: structural gate', () => {
   ['missing Evidence field', complete.replace('  - Evidence: rev abc123: `npm test` 4 passed.\n', ''), 'C-001: needs an Evidence field'],
   ...['Pending.', '', 'All tests passed.', 'All unit tests passed.', 'Verified manually.', 'Not tested.', 'Not run yet.', 'Skipped.', 'TBA, will add.',
    'To be determined.', 'None yet.', 'N/A - not run yet.', 'Should work.', 'Works on my machine.', 'CI is green.', 'Done 1.']
-   .map((value): [string, string, string] => [`evidence "${value}" on a checked item`, evidence(value), 'checked item needs evidence']),
+   .map((value): [string, string, string] => [`evidence "${value}" on a checked item`, evidence(value), 'checked item']),
   ...['STALE: rev abc123 npm test 4 passed.', '**STALE:** rev abc123: `npm test` 4 passed.', 'STALE - rev abc123 npm test 4 passed.', 'FAILED: rev abc123 npm test 3/4.']
    .map((value): [string, string, string] => [`marked evidence "${value}"`, evidence(value), 'marked stale or failed']),
   ['unparseable item line', complete.replace('- [x] C-001 [build] First outcome.', '- [x] C-1 build First outcome.'), 'cannot parse'],
@@ -284,11 +284,13 @@ describe('portable Checklist validator: second adversarial round', () => {
  const before = (text: string) => complete.replace('\n## Decisions', `${text}\n\n## Decisions`);
  it.each([
   ['an empty HTML comment', before(`\n<!-->\n${extra}`), 'HTML comments are not allowed'],
-  ['a raw HTML block', before(`\n<div>\n\n${extra}\n\n</div>`), 'raw HTML is not allowed'],
+  ['a raw HTML block', before(`\n<div>\n\n${extra}\n\n</div>`), 'is not allowed because it does not render'],
   ['an unclosed fence', before('\n```text\nunfinished example'), 'code fence is never closed'],
   ...['**C-003**', 'C\\-003', 'C‑003', '[C-003](#c-003)'].map((id): [string, string, string] =>
    [`a disguised ID ${id} outside Items`, complete.replace('- State: complete.', `- State: complete.\n- [ ] ${id} [build] Data is preserved.`), 'task checkboxes belong only under']),
-  ...['Not tested at rev abc123.', 'TODO: run `npm test`.', 'Pending (rerun at rev abc124).', 'Verified on 2026-10-09.', 'Checked by me at 10:00.']
+  ...['Not tested at rev abc123.', 'TODO: run `npm test`.', 'Pending (rerun at rev abc124).']
+   .map((value): [string, string, string] => [`evidence "${value}"`, evidence(value), 'starts by saying the check has not happened']),
+  ...['Verified on 2026-10-09.', 'Checked by me at 10:00.']
    .map((value): [string, string, string] => [`evidence "${value}"`, evidence(value), 'checked item needs evidence']),
   ...['**STALE**: rev abc123: `npm test` 4 passed.', 'FAILED (rerun at rev abc124): `npm test` 3/4.', '[STALE] rev abc123: `npm test` 4 passed.', 'Stale. Was: rev abc123 `npm test` 4 passed.']
    .map((value): [string, string, string] => [`marked evidence "${value}"`, evidence(value), 'marked stale or failed']),
@@ -337,17 +339,18 @@ describe('portable Checklist validator: third adversarial round', () => {
  const resume = (line: string) => complete.replace('- State: complete.', `- State: complete.\n${line}`);
  it.each([
   ['an invisible character before a fence', before(`\n${String.fromCharCode(0x200b)}\`\`\`\n${extra}\n${String.fromCharCode(0x200b)}\`\`\``), 'invisible formatting characters are not allowed'],
-  ['a processing-instruction block', closeOut('<?\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n?>\nThe close-out has not started.'), 'raw HTML is not allowed'],
-  ['inline raw HTML in evidence', evidence('<?rev abc123: `npm test` 4 passed?>Pending.'), 'raw HTML is not allowed'],
+  ['a processing-instruction block', closeOut('<?\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n?>\nThe close-out has not started.'), 'is not allowed because it does not render'],
+  ['inline raw HTML in evidence', evidence('<?rev abc123: `npm test` 4 passed?>Pending.'), 'is not allowed because it does not render'],
   ['a character reference in an ID', resume('- [ ] C&#45;003 [build] Retried export keeps every record.'), 'character references are not allowed'],
   ['a misindented exception on a checked item', withC2(C2 + '\n   - Status: BLOCKED\n   - Reason: Specific reason.\n   - Authority: Policy.'), 'inconsistent indentation'],
   ['a 2-space top-level fence after a paragraph', closeOut('The close-out review has not started. Expected shape:\n\n  ```text\n  - Review: independent — x.\n  ```\n\n- Review: pending\n- Inventory: pending\n- Result: pending'), 'indented code fences are only allowed inside an item'],
   ['an unchecked task in Resume that names an ID later', resume('- [ ] Re-run the retry test for C-003 after the rebase.'), 'task checkboxes belong only under'],
   ['a Cyrillic look-alike ID outside Items', resume(`- [ ] ${String.fromCharCode(0x0421)}-003 [build] Retried export keeps every record.`), 'task checkboxes belong only under'],
-  ['angle-bracket template placeholders', complete.replace('### Group', '### <Group>'), 'raw HTML is not allowed'],
-  ...['Checked at 23:04:20Z.', 'Verified Fri Oct  9 23:07:55 UTC 2026.', 'Verified on 9 October 2026.', 'Checked by me at 10:00am.', 'Verified on Friday the 9th.',
-   'To do: run `npm test`.', 'Not yet: `npm test` is queued.', 'Will run `npm test` after the merge.']
+  ['angle-bracket template placeholders', complete.replace('### Group', '### <Group>'), 'is not allowed because it does not render'],
+  ...['Checked at 23:04:20Z.', 'Verified Fri Oct  9 23:07:55 UTC 2026.', 'Verified on 9 October 2026.', 'Checked by me at 10:00am.', 'Verified on Friday the 9th.', 'Verified at 10am.']
    .map((value): [string, string, string] => [`evidence "${value}"`, evidence(value), 'checked item needs evidence']),
+  ...['To do: run `npm test`.', 'Not yet: `npm test` is queued.', 'Will run `npm test` after the merge.', 'Awaiting: CI run 42.', 'Unable to run `npm test` here.']
+   .map((value): [string, string, string] => [`evidence "${value}"`, evidence(value), 'starts by saying the check has not happened']),
   ['an authority of Nil', logged(exception('WAIVED', {authority: 'Nil; the agent decided.'}), '- Waived C-002.'), 'WAIVED needs the Authority'],
   ...['2026-10-09 STALE: rev abc123 `npm test` 4 passed.', 'Stale rev abc123 `npm test` 4 passed.', 'OUTDATED: rev abc123 `npm test` 4 passed.', 'FAILING: rev abc124 `npm test` 3/4 passed.']
    .map((value): [string, string, string] => [`marked evidence "${value}"`, evidence(value), 'marked stale or failed']),
@@ -390,6 +393,60 @@ describe('portable Checklist validator: third adversarial round', () => {
   const started = Date.now();
   const result = run(resume(`- ${'[a'.repeat(100000)}`));
   expect(result.status).toBe(0); expect(Date.now() - started).toBeLessThan(5000);
+ });
+});
+
+describe('portable Checklist validator: fourth review round', () => {
+ const tail = '  - Depends on: C-001.';
+ it('does not let a column-0 fence close an in-item fence and hide the next entry', () => {
+  const hidden = complete.replace(tail, `${tail}\n  \`\`\`\n  output\n\`\`\`\n  \`\`\`\n  - [ ] C-003 [build] Hidden open item.`);
+  const result = run(hidden); expect(result.status).not.toBe(0); expect(result.stdout + result.stderr).toMatch(/C-003|INVALID/);
+  const finding = closeOut(`${PASSED}\n\n- [x] F-001 Fixed thing.\n  - Resolution: Added C-003.\n  \`\`\`\n  output\n\`\`\`\n  \`\`\`\n  - [ ] F-002 Open material finding.`);
+  const findingResult = run(finding); expect(findingResult.status).not.toBe(0);
+ });
+ it.each([
+  ['an unable-to-reproduce regression check', 'Unable to reproduce after the fix: `./repro.sh` 50/50 runs clean at rev abc123.'],
+  ['queued messages', 'Queued messages survive a restart: `npm run test:queue` 12 passed at rev abc123.'],
+  ['a waiting spinner', 'Waiting spinner renders: screenshot shots/waiting.png at rev abc123.'],
+  ['planned maintenance', 'Planned-maintenance banner shows: `npm test -- banner` 3 passed.'],
+  ['awaiting-approval orders', 'Awaiting-approval orders listed: `curl /orders?state=awaiting` returned 4.'],
+  ['will-call orders', 'Will-call orders print: `npm test -- willcall` 2 passed.'],
+  ['words that start like month names', 'Decoded 12 sample frames and every hash matched the fixture.'],
+  ['a count that looks like a year', 'Load test served 2000 requests: `k6 run load.js` p95 120 ms.'],
+ ])('accepts evidence about %s', (_name, value) => {
+  const result = run(evidence(value)); expect(result.status, result.stderr).toBe(0);
+ });
+ it.each([
+  ['a negated pending', 'PASS; no findings pending.'],
+  ['nothing awaiting', 'PASS. Nothing is awaiting action.'],
+ ])('counts a passing review with %s', (_name, result) => {
+  const out = run(closeOut(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+  expect(out.status, out.stderr).toBe(0);
+ });
+ it.each(['PASS if the rerun holds.', 'PASS?', 'PASS except one check.'])('keeps a qualified result %j open with a note', (result) => {
+  const out = run(closeOut(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+  expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending'); expect(out.stderr).toContain('note:');
+ });
+ it('explains a review that says it is not finished', () => {
+  const out = run(closeOut('- Review: independent — fresh reviewer.\n- Inventory: to be written in review.md\n- Result: PASS.'));
+  expect(out.status).toBe(2); expect(out.stderr).toContain('not finished');
+ });
+ it('checks numbered log entries for future event times', () => {
+  const out = run(complete.replace('- 2026-10-09T09:00Z Created C-001 and C-002.', '1. 2026-10-09T09:00Z Created C-001 and C-002.\n2. 2099-01-01T00:00Z Verified C-002.'));
+  expect(out.status).toBe(1); expect(out.stderr).toContain('is in the future');
+ });
+ it('rejects a correction word that belongs to another comma clause', () => {
+  const out = run(logged(complete.replace('Accept: Published condition holds.', 'Accept: Something happened.'), '- 2026-10-09T12:00Z Corrected a typo in C-001, C-002 verified.'), ['--baseline', 'baseline.md'], complete);
+  expect(out.status).toBe(1); expect(out.stderr).toContain('C-002: Accept changed');
+ });
+ it('reports a record with a waiver and only blocked work left as blocked, not invalid', () => {
+  const text = logged(exception('WAIVED', {authority: 'User message 2026-10-09.'}), '- Waived C-002 per user.').replace('- [x] C-001 [build] First outcome.', '- [ ] C-001 [build] First outcome.')
+   .replace('  - Depends on: None.', '  - Depends on: None.\n  - Status: BLOCKED\n  - Reason: Needs a registry token.\n  - Authority: Registry policy.');
+  const out = run(text); expect(out.status, out.stderr).toBe(2); expect(out.stdout).toContain('CHECKLIST BLOCKED | verified=0/2');
+ });
+ it('names the offending tag in the raw HTML message', () => {
+  const out = run(evidence('rev abc123 printed "usage: notes.js delete <id>" as expected, `npm test` 4 passed.'));
+  expect(out.status).toBe(1); expect(out.stderr).toContain('raw HTML <id>');
  });
 });
 
