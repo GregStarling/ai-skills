@@ -8,7 +8,7 @@ what needs review, and checking whether the release worked.
 
 **Give your agent a process for those jobs, too.**
 
-AI Skills is a collection of six independently installable skills for **Codex
+AI Skills is a collection of seven independently installable skills for **Codex
 and Claude Code**. Each owns a specific part of the work, with clear boundaries
 and evidence for its conclusions. Use one to solve the problem in front of you,
 or combine them across a project.
@@ -16,6 +16,7 @@ or combine them across a project.
 | Skill | What you hand off | What you get back |
 | --- | --- | --- |
 | [**Catchup**](skills/catchup/) | “Bring me up to speed.” | A concise briefing on current work, unfinished changes, and the next supported step. |
+| [**Checklist**](skills/checklist/) | “Prove this is actually done.” | A falsifiable checklist, evidence for every item, and a blind review that tries to prove the work incomplete. |
 | [**CTO**](skills/cto/) | “Take this plan through completion.” | Implementation, a persistent work ledger, and evidence against the agreed outcome. |
 | [**Delegate**](skills/delegate/) | “Give this work the reasoning it needs.” | Economical coordination, stronger reasoning where warranted, and required independent review. |
 | [**Design Director**](skills/design-director/) | “Give this interface a direction.” | Design decisions grounded in product evidence, with explicit unknowns and verification criteria. |
@@ -25,7 +26,7 @@ or combine them across a project.
 Install the full collection from the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
 Every skill is readable source. Inspect the instructions, install only what you
@@ -52,6 +53,35 @@ next? Read only; do not resume the build.
 ```
 
 [Explore Catchup →](skills/catchup/)
+
+## Checklist: Make Done Something You Can Prove.
+
+> A checklist written by the worker and graded by the worker is a diary. A
+> checklist that can prove the worker wrong is quality control.
+
+“Done” is easy to claim. The build passed, the happy path works, and every box
+is checked. Then someone finds the empty state, the failed save, or the setting
+that was never connected.
+
+Checklist defines complete before the work starts. It turns the request into
+falsifiable items covering three things: the stated requirements, the implied
+ones a competent reviewer would expect, and the failures a pre-mortem predicts.
+It records them in `.checklists/<task-id>.md`. An item gets its check only with
+evidence, and the list can grow but never silently shrink. Only you can waive a
+requirement.
+
+**Completion has to survive an attempt to disprove it.** A blind reviewer
+re-derives the requirements without seeing the checklist, then challenges the
+evidence. A bundled validator rejects placeholder evidence, unauthorized waivers,
+and silently removed or weakened items before the agent can report VERIFIED
+COMPLETE. Use Checklist to build, to audit existing work, or to plan.
+
+```text
+Checklist mode. Add CSV export to the reports page. Define what complete means
+first, verify every item, and run a blind close-out before calling it done.
+```
+
+[Explore Checklist →](skills/checklist/)
 
 ## CTO: Hand Over the Plan. Get Back to Your Work.
 
@@ -178,15 +208,17 @@ required checks, and verify the published result.
 
 ## Choose the Job. Combine the Skills When It Helps.
 
-You do not need all six for every task. Catchup can brief you without starting
-a build. Debug can resolve a defect without releasing it. Ship can publish
-completed work without requiring a CTO plan.
+You do not need all seven for every task. Catchup can brief you without starting
+a build. Checklist can audit finished work without changing it. Debug can resolve
+a defect without releasing it. Ship can publish completed work without requiring
+a CTO plan.
 
 For a larger project, their responsibilities fit together:
 
 | Responsibility | Skill |
 | --- | --- |
 | Establish the current state before resuming | Catchup |
+| Define what complete means and hold the work to evidence | Checklist |
 | Own scope, dependencies, the ledger, and final acceptance | CTO |
 | Route reasoning, escalation, and required review throughout the work | Delegate |
 | Ground interface decisions and design verification in product evidence | Design Director |
@@ -195,7 +227,8 @@ For a larger project, their responsibilities fit together:
 
 Installing the collection makes these workflows available; it does not start
 all of them or authorize every action. CTO retains overall acceptance when it
-owns the plan. The other skills contribute their work and evidence.
+owns the plan; with Checklist installed, its checklist becomes the ledger's item
+record. The other skills contribute their work and evidence.
 
 If you also use [Ponytail](https://github.com/DietrichGebert/ponytail), it pushes
 implementation toward the simplest correct solution. Requested behavior and
@@ -214,13 +247,14 @@ npx skills add GregStarling/ai-skills --skill debug --agent codex claude-code --
 # A selection
 npx skills add GregStarling/ai-skills --skill catchup debug ship --agent codex claude-code --copy
 
-# All six
-npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
+# All seven
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
 | Skill | Install name | Codex | Claude Code |
 | --- | --- | --- | --- |
 | Catchup | `catchup` | `$catchup` | `/catchup` |
+| Checklist | `checklist` | `$checklist` | `/checklist` |
 | CTO | `cto` | `$cto` | `/cto` |
 | Delegate | `delegate` | `$delegate` | `/delegate` |
 | Design Director | `design-director` | `$design-director` | `/design-director` |
@@ -230,15 +264,15 @@ npx skills add GregStarling/ai-skills --skill catchup cto delegate design-direct
 Add `--global` for availability across projects. Remove the agent name you do
 not use. `--copy` installs complete copies of the selected folders.
 
-Node.js runs the installer, Delegate's review helper, and Design Director's
-validator. Catchup, CTO, Debug, and Ship are instructions only. Consumer skills
+Node.js runs the installer, Delegate's review helper, and the Checklist and
+Design Director validators. Catchup, CTO, Debug, and Ship are instructions only. Consumer skills
 need no repository build or separate service. They use the tools and authorized
 access available in your existing agent session.
 
 Skills can activate for matching requests or be invoked by name. Start a fresh
 session if a new installation does not appear. They preserve your permissions
 and model settings, and cannot keep running after their host closes. Reinvoke
-CTO in the same project to resume from its ledger.
+CTO or Checklist in the same project to resume from its ledger or checklist.
 
 [Manual installation, updates, and removal →](docs/install.md)
 
@@ -260,8 +294,9 @@ plugin or retire either original repository.
 Validation includes clean installations for both hosts, packaging and reference
 checks, independent review, and the repository's regression suite. Behavioral
 exercises include a CTO build, read-only Catchup briefings, a failing-to-passing
-Debug repair, and an isolated Ship release. Design Director has validator
-contract tests and installed-helper checks.
+Debug repair, an isolated Ship release, and Checklist build and audit runs.
+Checklist and Design Director have validator contract tests and installed-helper
+checks.
 
 These are bounded checks. Simulated provider cases and synthetic contract
 fixtures do not prove production behavior or design quality for every project.
@@ -272,6 +307,7 @@ The records keep those limits explicit:
 - [Catchup and Debug exercises](docs/catchup-debug.md)
 - [Ship release exercise](docs/ship-skill.md)
 - [Design Director import and contract checks](docs/design-director-import.md)
+- [Checklist validator and behavior exercises](docs/checklist-skill.md)
 
 <details>
 <summary><strong>For Skill Authors and Maintainers</strong></summary>
@@ -286,7 +322,7 @@ registration file is needed.
 Keep this library checkout inert by installing into your own projects or
 personal directory. [refresh-models](skills/refresh-models/SKILL.md) is a maintainer
 workflow for Delegate's routing pack. Model Governor, policy, fixtures, and
-evaluation history remain maintainer tooling, separate from the six consumer
+evaluation history remain maintainer tooling, separate from the seven consumer
 skills above.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and

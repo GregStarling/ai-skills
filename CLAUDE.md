@@ -1,5 +1,18 @@
 # AI Skills
 
+## Checklist skill — 2026-10-09
+
+Add a portable Checklist skill that defines what complete means, persists a
+falsifiable checklist, enforces a completion ratchet and blind adversarial
+close-out, and ships a dependency-free validator. The maintainer's guiding prompt
+is preserved in docs/checklist-source-prompt.md; keep every rule traceable. The
+skill must stand alone and compose with the other skills (one tracker, their
+review and release evidence) without editing them. Update the catalog and
+install guide to seven skills. This request authorizes a branch, pull request
+and /ship release, plus personal Claude Code and Codex installations of
+Checklist only; saved settings and other installed skills stay unchanged. See
+docs/checklist-skill.md.
+
 ## Model roles — 2026-09-22
 
 Delegate defaults: in Claude Code, `sonnet` coordinates and escalates to `opus`, not Fable (`opus`
