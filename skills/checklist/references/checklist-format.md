@@ -32,8 +32,19 @@ punctuation is ignored, so `## Pre-mortem` and `## Closeout` are accepted.
 | Resume | Current state, open items, blockers and the next action |
 
 Request and Definition of Complete must not be empty. Text inside fenced code
-blocks is ignored, so examples never count as items; every fence must be closed.
-HTML comments and raw HTML are rejected, because they can hide entries.
+blocks is ignored, so examples never count as items. Every fence must be closed,
+and a fence must start at column 0 unless it sits inside an item.
+
+Some constructs are rejected outright, because a renderer can hide or disguise
+entries with them:
+
+- HTML comments;
+- raw HTML: tags, processing instructions and declarations;
+- character references such as `&#45;`;
+- invisible formatting characters, such as zero-width spaces.
+
+Inside code spans they are fine. Put angle-bracket text, such as a usage string
+quoting `<id>`, in a code span; a renderer would drop it otherwise.
 
 ## Items
 
@@ -42,7 +53,7 @@ follow it, one per line:
 
 ```text
 - [ ] C-001 [build] One specific, observable outcome.
-  - Source: Explicit requirement | Implied, <reason> | Pre-mortem P1 | Decision <date>
+  - Source: Explicit requirement | Implied, {reason} | Pre-mortem P1 | Decision {date}
   - Accept: The objective condition that defines success.
   - Verify: A check that would fail if the outcome were false.
   - Evidence: Pending.
@@ -63,12 +74,18 @@ follow it, one per line:
   also continues it.
 - Every list entry under Items must be an item. Put notes in prose paragraphs or
   another section.
+- Task checkboxes (`- [ ]`, `- [x]`) appear only under Items and Close-Out. Use
+  plain bullets everywhere else.
 - Anything a reader would take for an item must parse as one, or the record is
-  invalid. That includes an item after an unknown heading, in a blockquote, in a
-  table row, without a bullet, or anywhere a checkbox appears before an ID
-  outside Items (or outside Close-Out, for findings). It also covers an ID
-  disguised by emphasis, an escape, a link or a look-alike hyphen. Item syntax
-  quoted in a code span is fine.
+  invalid. That includes:
+  - an item after an unknown heading, in a blockquote, in a table row, or
+    without a bullet;
+  - a checkbox before an ID anywhere outside Items (or, for findings, outside
+    Close-Out);
+  - an ID disguised by emphasis, an escape, a link, a look-alike letter or a
+    look-alike hyphen.
+
+  Item syntax quoted in a code span is fine.
 
 ## States
 
@@ -81,20 +98,34 @@ and evidence location where practical, and take times from the system clock.
 The validator rejects evidence on a checked item when it:
 
 - is empty, or says or starts by saying nothing was recorded, for example
-  `Pending`, `TBD`, `TODO:`, `N/A`, `none yet`, `not run`, `not tested at …`,
-  `skipped`, `to be determined` or `see above`;
+  `Pending`, `TBD`, `TODO:`, `To do:`, `N/A`, `none yet`, `not yet`, `not run`,
+  `not tested at …`, `Skipped.`, `will run …`, `awaiting …`, `to be determined`
+  or `see above`;
 - only asserts success, for example "all unit tests passed", "works on my
   machine", "verified manually", "done" or "LGTM";
-- names nothing inspectable: no command or code span, path or file name, URL,
-  revision or count. A date or clock time alone does not count.
+- has no anchor once dates and times are set aside. An anchor is a command or
+  code span, a path or file name, a URL, or another number such as a revision or
+  count.
+
+The anchor check sets aside these date and time forms:
+
+- ISO dates and timestamps;
+- clock times, including ones suffixed `Z`, `UTC`, `am` or `pm`;
+- month-name dates, ordinals, and four-digit years;
+- `d/m/y` dates;
+- `date -u` output.
 
 The Evidence line itself must name the check. Fenced output may follow it but
-does not count. Times recorded at the start of an Evidence value or of a Change
-Log or Verification entry are event times; one later than now is rejected.
+does not count.
 
-These are mechanical minimums. A count, version or file name satisfies them even
-in weak evidence such as "Tested 1 time". Whether evidence names an actual check
-and is true is the close-out's judgment.
+A timestamp that leads an Evidence value, or leads a Change Log or Verification
+entry (optionally after "Between", "From" or "At"), is an event time, and one
+later than now is rejected. Later timestamps, such as an expiry being verified,
+are not checked.
+
+These checks are mechanical minimums. A count, version or file name satisfies
+them even in weak evidence such as "Tested 1 time". Whether evidence names an
+actual check and is true is the close-out's judgment.
 
 In AUDIT mode, a gap stays `[ ]`, and its Evidence records the observed failure
 prefixed `FAILED:`.
@@ -124,7 +155,8 @@ An exception keeps the box unchecked and adds fields:
 A technical problem is never `BLOCKED`; it stays open. Waived items lead to
 ACCEPTED WITH EXCEPTIONS, never VERIFIED COMPLETE. Not-applicable items leave
 the denominator and are listed in the validator's output. A record needs at
-least one required item and, if anything is waived, at least one verified item.
+least one required item. Once nothing is left open, a record with waivers also
+needs at least one verified item.
 
 An Authority that says none exists ("none given", "n/a") is rejected. The
 Change Log check is keyword-based, so the close-out still judges what each
@@ -136,9 +168,16 @@ When later work may have invalidated an item, uncheck it and prefix its old
 evidence with `STALE:` (or `FAILED:` when a rerun failed). Keep that text until
 new evidence replaces it, and add a Change Log entry, for example
 `Reopened C-004: shared auth helper changed`. Reopen the items that depend on
-it as well. The validator rejects a checked item whose evidence still starts
-with `STALE`, `FAILED` or `INVALIDATED`, even when the marker is bolded or
-bracketed or is followed by a dash.
+it as well.
+
+The validator rejects a checked item whose evidence still starts with one of
+these markers, even after a leading date, bolding or brackets:
+
+- `STALE` (in any case);
+- `FAILED`, `FAILING`, `OUTDATED`, `INVALIDATED` or `SUPERSEDED` in capitals;
+- one of those words in any case followed by `:`, `.`, `)` or a dash.
+
+"Failed before the fix; …" is still accepted as regression evidence.
 
 ## Change Log and corrections
 
@@ -158,29 +197,36 @@ Change Log entry that names the ID and says what changed, for example
 
 A removed ID stays retired. `--baseline` enforces all of this. The correction
 check looks for words such as "corrected", "removed", "replaced" or "Accept
-changed" in an entry naming the ID, so the close-out still judges whether each
-correction was legitimate.
+changed" in the same clause as the ID, and ignores negations such as "not
+changed". The close-out still judges whether each correction was legitimate.
 
 ## Close-Out
 
 ```text
-- Review: independent — <who or what reviewed, and what it was given>
-- Inventory: <where the blind requirement inventory was recorded before comparison>
-- Result: <outcome, such as PASS with no open material findings>
+- Review: independent — {who or what reviewed, and what it was given}
+- Inventory: {durable file where the blind inventory was recorded before comparison}
+- Result: {outcome, such as PASS with no open material findings}
 
-- [x] F-001 <A finding naming the requirement, defect, missing verification or failure mechanism.>
-  - Resolution: Added C-009; fixed and verified at <revision>.
-- [ ] F-002 <An unresolved finding.>
+- [x] F-001 {A finding naming the requirement, defect, missing verification or failure mechanism.}
+  - Resolution: Added C-009; fixed and verified at {revision}.
+- [ ] F-002 {An unresolved finding.}
 ```
 
 - **Review** starts with `independent` or `self`. A self review must contain
   the words "not independent".
 - **Inventory** says where the blind inventory was recorded.
-- **Result** must start with `PASS` (or `Passed`) before the review counts.
-  Anything else, such as `FAIL`, `PASS/FAIL` or `pending`, keeps the record open.
+- **Result** must start with an unqualified `PASS` (or `Passed`) before the
+  review counts. These keep the record open:
+  - `FAIL` or `BLOCKED` anywhere in it;
+  - an alternative such as `PASS/FAIL`, `PASS | FAIL` or `PASS or FAIL`;
+  - `PASS expected`;
+  - `pending`.
+
   In AUDIT mode, Result reports the review's outcome, not the audited work's.
 - Leave all three fields `pending` until the close-out happens. Struck-through
-  text is ignored, as are fields that say they are still "to be" done.
+  text (`~~x~~` or `~x~`) is ignored. A field that says the work is still not
+  done also keeps the record open: "not yet", "TBD", "to be …", "will be …",
+  "awaiting" or "planned".
 - Write each field once, with no duplicates. Update it when a later round
   replaces it, and keep the earlier rounds' outcomes in Verification.
 - **Findings** are `F-` items. An open finding blocks completion, and a
@@ -234,51 +280,51 @@ validator prints a note on stderr.
 ## Template
 
 ```markdown
-# Checklist: <task-id>
+# Checklist: {task-id}
 
 ## Request
 
-- Objective: <the user's request in their words, with links to specs, issues or plans>
-- Conversation-only requirements: <the user's words, quoted verbatim, for anything said in chat that is not written elsewhere>
-- Date / revision: <YYYY-MM-DD, branch and commit>
+- Objective: {the user's request in their words, with links to specs, issues or plans}
+- Conversation-only requirements: {the user's words, quoted verbatim, for anything said in chat that is not written elsewhere}
+- Date / revision: {YYYY-MM-DD, branch and commit}
 - Mode: BUILD | AUDIT | PLAN
-- Constraints and authority: <scope, compatibility, spending, data, security, publication, approvals>
+- Constraints and authority: {scope, compatibility, spending, data, security, publication, approvals}
 
 ## Definition of Complete
 
-- <Observable condition required for acceptance.>
-- Delivery destination: <local build | merged branch | published package | live deployment>, authorized by <who, where>.
+- {Observable condition required for acceptance.}
+- Delivery destination: {local build | merged branch | published package | live deployment}, authorized by {who, where}.
 
 ## Items
 
-### <Group>
+### {Group}
 
-- [ ] C-001 [build] <One specific, observable outcome.>
-  - Source: <Explicit requirement | Implied, reason | Pre-mortem P1 | Decision>
-  - Accept: <Objective condition that defines success.>
-  - Verify: <Check that would fail if the outcome were false.>
+- [ ] C-001 [build] {One specific, observable outcome.}
+  - Source: {Explicit requirement | Implied, reason | Pre-mortem P1 | Decision}
+  - Accept: {Objective condition that defines success.}
+  - Verify: {Check that would fail if the outcome were false.}
   - Evidence: Pending.
   - Depends on: None.
 
 ## Decisions
 
-- <date> <choice>. Reason: <why>. Reversal cost: <low | medium | high>.
+- {date} {choice}. Reason: {why}. Reversal cost: {low | medium | high}.
 
 ## Pre-Mortem
 
-- P1: <credible failure in the first week>. Covered by C-001.
+- P1: {credible failure in the first week}. Covered by C-001.
 
 ## Exclusions
 
-- <dimension or optional work>: <why it is not required>.
+- {dimension or optional work}: {why it is not required}.
 
 ## Change Log
 
-- <timestamp> Created C-001 from passes A–D.
+- {timestamp from the clock} Created C-001 from passes A to D.
 
 ## Verification
 
-- <timestamp> <revision> <environment>: <check> gave <result>; evidence at <location>.
+- {timestamp} {revision} {environment}: {check} gave {result}; evidence at {location}.
 
 ## Close-Out
 
@@ -288,11 +334,14 @@ validator prints a note on stderr.
 
 ## Resume
 
-- State: <current state>
-- Open: <IDs>
-- Blockers: <none, or the specific external constraint and required action>
-- Next: <specific next action>
+- State: {current state}
+- Open: {IDs}
+- Blockers: {none, or the specific external constraint and required action}
+- Next: {specific next action}
 ```
+
+Replace every `{…}` placeholder. Angle-bracket placeholders such as `<Group>`
+render as HTML tags and are rejected.
 
 ## Completed example
 

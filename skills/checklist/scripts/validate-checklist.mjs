@@ -8,6 +8,7 @@ import { readFileSync } from 'node:fs';
 const USAGE = 'usage: validate-checklist.mjs <checklist.md> [--baseline <earlier-copy.md>]';
 const SECTIONS = ['Request', 'Definition of Complete', 'Items', 'Decisions', 'Pre-Mortem',
   'Exclusions', 'Change Log', 'Verification', 'Close-Out', 'Resume'];
+const ENTRY_SECTIONS = ['Items', 'Close-Out'];
 const ITEM_FIELDS = ['Source', 'Accept', 'Verify', 'Evidence', 'Depends on', 'Status', 'Reason', 'Authority'];
 const STATUSES = new Map([['blocked', 'BLOCKED'], ['waived', 'WAIVED'], ['notapplicable', 'NOT APPLICABLE']]);
 const ITEM = /^[-*+][ \t]+\[([ xX])\][ \t]+(C-\d+)[ \t]+\[(build|release)\][ \t]+(\S.*)$/i;
@@ -18,9 +19,9 @@ const BOX = /^([-*+]|\d+[.)])[ \t]+\[[ xX]\](?=[ \t]|$)/;
 const LIST = /^([-*+]|\d+[.)])[ \t]/;
 // What a reader would take for an entry: a checkbox-like bracket directly before an item or finding ID.
 const ENTRY_LIKE = /\[[^\]]?\][ \t]*[CF]-\d+/i;
-const INVISIBLE = /[­​-‏⁠-⁤﻿]/g;
-const HYPHENS = /[‐-―−﹘﹣－]/g;
-const ISO_TIME = /\b(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?Z)/g;
+// Raw HTML as a renderer sees it: a processing instruction, declaration, closing tag, or well-formed opening tag.
+const HTML = /<(?:[?!]|\/[A-Za-z]|[A-Za-z][A-Za-z0-9-]{0,30}(?:\s+[A-Za-z_:][\w.:-]{0,30}(?:\s*=\s*(?:"[^"\n]{0,200}"|'[^'\n]{0,200}'|[^\s"'=<>`]{1,200}))?){0,20}\s*\/?>)/;
+const ISO_EVENT =/^(?:(?:between|from|at|around|ran at|run at)\s+)?(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2}))/i;
 ITEM.example = '- [ ] C-001 [build] Outcome';
 FINDING.example = '- [ ] F-001 Finding';
 
@@ -34,31 +35,46 @@ const ASSERTIONS = new Set(('all every everything test tests check checks build 
   'pass passes passed passing works work worked working verify complete completed fixed implemented yes true green ' +
   'success successful successfully confirmed looks good lgtm fine as expected correctly correct manually manual ' +
   'locally visually by hand me i we myself my should would seems appears probably on at').split(' '));
-// Something inspectable besides a date or clock time: a digit (count, revision), code span, URL, path or file name.
+// Dates and clock times in common written forms; they say when, not what was checked.
+const MONTH = '(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\\.?';
+const TEMPORAL = new RegExp([
+  '\\b\\d{4}-\\d{2}-\\d{2}(?:[T ]\\d{1,2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?)?(?:z|utc|gmt|[+-]\\d{2}:?\\d{2})?\\b',
+  '\\b\\d{1,2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:\\s?(?:z|utc|gmt|am|pm)\\b)?',
+  `\\b${MONTH}\\s{1,3}\\d{1,2}(?:st|nd|rd|th)?\\b`,
+  `\\b\\d{1,2}(?:st|nd|rd|th)?\\s{1,3}${MONTH}`,
+  '\\b\\d{1,2}(?:st|nd|rd|th)\\b',
+  '\\b(?:19|20)\\d{2}\\b',
+  '\\b\\d{1,2}/\\d{1,2}/\\d{2,4}\\b',
+].join('|'), 'gi');
+// Something inspectable besides a date or time: a digit (count, revision), code span, URL, path or file name.
 const ANCHOR = /\d|`[^`]+`|https?:\/\/|\w\/\w|\w\.[a-z]{2,4}\b/i;
-const UNRECORDED = /^(?:(?:todo|tbd|tba|pending)(?=$|\s*[:–—,.;(]|\s+-)|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded)|to be \w+|skipped|untested|unverified|none yet|no evidence)\b)/i;
-const FUTURE_WORK = /\bto be (?:assigned|written|decided|determined|done|recorded|added|confirmed|run)\b/i;
-const CORRECTION = /\b(?:correct(?:ed|ion)?|remov(?:ed|al)|replac(?:ed|ement)|supersed(?:ed|es)|split|merged|reworded|renamed|narrowed|broadened|duplicat(?:e|ed)|erroneous|withdr(?:ew|awn)|deleted|weakened|tightened|loosened|clarified)\b/i;
-const FIELD_CHANGE = /\b(?:accept|acceptance|verify|verification|outcome|stage)\b[^.;]*\bchanged\b|\bchanged\b[^.;]*\b(?:accept|acceptance|verify|verification|outcome|stage)\b/i;
+const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverified|n\/a)(?=$|\s*[:,.;(]|\s+\p{Pd})|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded|executed)|not yet|to be \w+|none yet|no evidence|will|awaiting|waiting|queued|planned|unable)\b)/iu;
+const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will be|awaiting|planned|pending)\b/i;
+const CORRECTION = /\b(?:correct(?:ed|ion)?|remov(?:ed|al)|replac(?:ed|ement)|supersed(?:ed|es)|split|merged|reworded|renamed|narrowed|broadened|duplicat(?:e|ed)|erroneous|withdr(?:ew|awn)|deleted|dropped|weakened|tightened|loosened|clarified)\b/i;
+const FIELD_CHANGE = /\b(?:accept|acceptance|verify|verification|outcome|stage)\b[^.;]{0,80}\bchanged\b|\bchanged\b[^.;]{0,80}\b(?:accept|acceptance|verify|verification|outcome|stage)\b/i;
+const NEGATED_CHANGE = /\bnot (?:changed|corrected|removed|replaced|a duplicate)\b|\bunchanged\b|\bno (?:changes?|corrections?)\b|\bnothing\b[^.;]{0,40}\b(?:changed|corrected)\b/i;
 
 const key = (text) => text.toLowerCase().replace(/[^a-z]/g, '');
 const words = (text = '') => text.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
-const unstrike = (text = '') => text.replace(/~~[^~]*~~/g, ' ');
+const unstrike = (text = '') => text.replace(/~~[^~\n]{0,500}~~|~[^~\n]{1,500}~/g, ' ');
 const plain = (text = '') => unstrike(text).replace(/[*_~`\\]/g, '').replace(/\s+/g, ' ').trim();
-// The text a reader sees: no code spans, escapes, link targets, emphasis, or look-alike hyphens.
-const rendered = (text) => text.replace(/`[^`]*`/g, ' ').replace(/\\(.)/g, '$1').replace(/\[([^\]\s][^\]]*)\]\([^)]*\)/g, '$1')
-  .replace(/[*_~]/g, '').replace(HYPHENS, '-');
+// The text a reader sees: no code spans, escapes, link targets, emphasis, or look-alike dashes.
+const rendered = (text) => text.replace(/`[^`\n]{0,500}`/g, ' ').replace(/\\(.)/g, '$1')
+  .replace(/\[([^\][\s][^\][\n]{0,200})\]\([^)(\n]{0,500}\)/g, '$1').replace(/[*_~]/g, '').replace(/\p{Pd}/gu, '-');
 const placeholder = (text) => words(plain(text)).every((word) => PLACEHOLDER_WORDS.has(word));
 const assertionOnly = (text) => words(plain(text)).filter((word) => /\p{L}/u.test(word))
   .every((word) => ASSERTIONS.has(word) || PLACEHOLDER_WORDS.has(word));
-const anchored = (text) => ANCHOR.test(unstrike(text).replace(/\b\d{4}-\d{2}-\d{2}(?:T[\d:.]+Z?)?\b/g, ' ').replace(/\b\d{1,2}:\d{2}(?::\d{2})?\b/g, ' '));
+const anchored = (text) => ANCHOR.test(unstrike(text).replace(TEMPORAL, ' '));
+// A reopened item's old evidence starts with a marker, possibly after a leading date or time.
 const marked = (text) => {
-  const value = unstrike(text).replace(/[*_`]/g, '').trim().replace(/^[[(]+/, '');
-  return /^(?:STALE|FAILED|INVALIDATED)(?![A-Za-z])/.test(value) || /^(?:stale|failed|invalidated)\s*[:\-–—.)\]]/i.test(value);
+  const value = unstrike(text).replace(/[*_`]/g, '').trim()
+    .replace(/^\d{4}-\d{2}-\d{2}(?:T[\d:.]+(?:Z|[+-]\d{2}:?\d{2})?)?[\s:,\p{Pd}]*/u, '').replace(/^[[(]+/, '');
+  return /^(?:STALE|FAILED|FAILING|OUTDATED|INVALIDATED|SUPERSEDED)(?![A-Za-z])/.test(value) || /^stale\b/i.test(value)
+    || /^(?:failed|failing|outdated|invalidated)\s*(?:[:.)\]]|\p{Pd})/iu.test(value);
 };
 const negated = (text = '') => {
-  const value = plain(text).replace(/^[\s"'([{<\-–—]+/, '');
-  return /^(?:none|no|not|n\/a|nobody|unknown)\b/i.test(value) || /\b(?:none given|no authority|not given|not authori[sz]ed)\b/i.test(value);
+  const value = plain(text).replace(/^[\s"'([{<\p{Pd}]+/u, '');
+  return /^(?:none|no|not|n\/a|nil|nobody|unknown)\b/i.test(value) || /\b(?:none given|no authority|not given|not authori[sz]ed)\b/i.test(value);
 };
 const list = (values) => (values.length ? values.join(',') : 'none');
 const idPattern = (id) => new RegExp(`\\b${id}\\b`);
@@ -69,25 +85,33 @@ function scan(text, errors) {
   const seen = new Set();
   let section = null;
   let fence = null;
-  text.replace(/^﻿/, '').split(/\r?\n/).forEach((raw, index) => {
+  let inList = false;
+  const source = text.charCodeAt(0) === 0xFEFF ? text.slice(1) : text;
+  source.split(/\r?\n/).forEach((raw, index) => {
     const n = index + 1;
-    const line = raw.replace(/\t/g, '    ').replace(INVISIBLE, '');
+    if (/\p{Cf}/u.test(raw)) errors.push(`line ${n}: invisible formatting characters are not allowed; they can disguise entries`);
+    const line = raw.replace(/\t/g, '    ');
     const indent = line.length - line.trimStart().length;
     if (fence) {
       const close = /^( *)(`{3,}|~{3,}) *$/.exec(line);
       if (close && close[2][0] === fence.char && close[2].length >= fence.length && close[1].length <= fence.indent + 3) { fence = null; return; }
       // A fence opened inside a list item ends with that item.
-      if (!(fence.indent >= 2 && line.trim() && indent < fence.indent)) return;
+      if (!(fence.inItem && line.trim() && indent < fence.indent)) return;
       fence = null;
     }
     const open = /^( *)(`{3,}|~{3,})(.*)$/.exec(line);
     if (open && !(open[2][0] === '`' && open[3].includes('`'))) {
-      fence = { char: open[2][0], length: open[2].length, indent: open[1].length, line: n };
+      // Item content starts two columns in, so only a fence indented that far can belong to an item.
+      const inItem = inList && indent >= 2;
+      if (indent > 0 && !inItem) errors.push(`line ${n}: indented code fences are only allowed inside an item`);
+      fence = { char: open[2][0], length: open[2].length, indent, inItem, line: n };
       return;
     }
-    const visible = line.replace(/`[^`]*`/g, ' ');
-    if (visible.includes('<!--') || visible.includes('-->')) errors.push(`line ${n}: HTML comments are not allowed; they can hide entries`);
-    else if (/^ *<\/?[A-Za-z][A-Za-z0-9-]*(?:[ >/]|$)/.test(line)) errors.push(`line ${n}: raw HTML is not allowed; write plain Markdown`);
+    const visible = line.replace(/`[^`\n]{0,500}`/g, ' ').replace(/<(?:https?|mailto|ftp):[^\s<>]{0,500}>/gi, ' ');
+    if (visible.includes('<!--')) errors.push(`line ${n}: HTML comments are not allowed; they can hide entries`);
+    else if (HTML.test(visible)) errors.push(`line ${n}: raw HTML is not allowed because it does not render as written; put text such as <id> in a code span`);
+    if (/&(?:#\d{1,7}|#x[0-9a-f]{1,6}|[a-z][a-z0-9]{1,31});/i.test(visible)) errors.push(`line ${n}: character references are not allowed; write the character itself`);
+    if (line.trim()) inList = LIST.test(line.trim()) || (inList && indent >= 2);
     const heading = /^ {0,3}(#{1,6})[ \t]+(.*)$/.exec(line);
     if (heading && heading[1].length <= 2) {
       section = SECTIONS.find((name) => key(name) === key(heading[2])) ?? null;
@@ -110,6 +134,7 @@ function entries(lines, { head, fields, top = [], strict }, errors, parsed) {
   let last = null;
   let lastTop = null;
   let continues = false;
+  const known = (body) => { const field = FIELD.exec(body); return field && fields.find((candidate) => key(candidate) === key(field[1])); };
   const append = (text) => {
     if (lastTop) topValues[lastTop] += ` ${text}`;
     else if (last) entry.fields[last] += ` ${text}`;
@@ -158,16 +183,15 @@ function entries(lines, { head, fields, top = [], strict }, errors, parsed) {
     continues = true;
     if (child === null) child = indent;
     if (indent === child) {
-      const field = FIELD.exec(body);
-      const name = field && fields.find((candidate) => key(candidate) === key(field[1]));
+      const name = known(body);
       last = null;
       if (!name) { errors.push(`line ${n}: ${entry.id}: expected "- Field: value" using ${fields.join(', ')}`); continue; }
       if (name in entry.fields) errors.push(`line ${n}: ${entry.id}: duplicate ${name}`);
-      entry.fields[name] = field[2].trim(); last = name;
-    } else if (indent > child && last) {
+      entry.fields[name] = FIELD.exec(body)[2].trim(); last = name;
+    } else if (indent > child && last && !known(body)) {
       entry.fields[last] += ` ${body}`;
     } else {
-      errors.push(`line ${n}: ${entry.id}: inconsistent indentation`);
+      errors.push(`line ${n}: ${entry.id}: inconsistent indentation; fields must line up under the item`);
     }
   }
   return { result, top: topValues };
@@ -180,19 +204,23 @@ function parse(text, errors, now) {
   const { result: items } = entries(inSection('Items'), { head: ITEM, fields: ITEM_FIELDS, strict: true }, errors, parsed);
   for (const item of items) item.stage = item.match[3].toLowerCase();
   const closeOut = entries(inSection('Close-Out'), { head: FINDING, fields: ['Resolution'], top: ['Review', 'Inventory', 'Result'] }, errors, parsed);
-  for (const { n, line } of lines) {
+  for (const { n, line, section } of lines) {
     const text = rendered(line).replace(/^[\s>]+/, '');
-    if (!parsed.has(n) && ENTRY_LIKE.test(text)) {
+    if (parsed.has(n)) continue;
+    if (!ENTRY_SECTIONS.includes(section) && BOX.test(line.replace(/^[\s>]+/, ''))) {
+      errors.push(`line ${n}: task checkboxes belong only under "## Items" and "## Close-Out"; write a plain bullet here`);
+    } else if (ENTRY_LIKE.test(text)) {
       errors.push(`line ${n}: looks like a checklist entry but is not one; items go at the start of a line under "## Items" and findings under "## Close-Out"`);
     }
   }
-  // Event times are read from the clock, so none can be later than now. Only the first time in a log
-  // or verification entry, or in an evidence value, is an event time; later ones may be deadlines.
-  const events = [...lines.filter((line) => ['Change Log', 'Verification'].includes(line.section) && /^[-*+] /.test(line.line.trim()))
-    .map(({ n, line }) => [n, line]), ...items.map((item) => [item.line, item.fields.Evidence ?? ''])];
-  for (const [n, text] of events) {
-    const stamp = text.match(ISO_TIME)?.[0];
-    if (stamp && now !== null && Date.parse(stamp) > now + 10 * 60 * 1000) errors.push(`line ${n}: timestamp ${stamp} is in the future; take event times from the clock`);
+  // Event times are read from the clock, so none can be later than now. Only a time that leads an
+  // entry or evidence value is an event time; a later one may be a deadline or an expiry being verified.
+  const lead = (text) => ISO_EVENT.exec(plain(text).replace(/^[-*+]\s+/, ''))?.[1];
+  const events = [...lines.filter((line) => ['Change Log', 'Verification'].includes(line.section) && LIST.test(line.line.trim()))
+    .map(({ n, line }) => [n, lead(line.trim())]), ...items.map((item) => [item.line, lead(item.fields.Evidence ?? '')])];
+  for (const [n, stamp] of events) {
+    const time = stamp && Date.parse(stamp.replace(/([+-]\d{2})(\d{2})$/, '$1:$2'));
+    if (time && now !== null && time > now + 10 * 60 * 1000) errors.push(`line ${n}: event time ${stamp} is in the future; take event times from the clock`);
   }
   const changeLog = inSection('Change Log').map(({ line }) => line.trim()).filter(Boolean);
   const filled = (name) => inSection(name).some(({ line }) => line.trim());
@@ -251,7 +279,8 @@ function validate(record, errors, notes) {
     }
   }
   if (items.length && items.every((item) => item.status === 'NOT APPLICABLE')) errors.push('every item is NOT APPLICABLE; a checklist needs at least one required item');
-  if (items.some((item) => item.status === 'WAIVED') && !items.some((item) => item.checked)) errors.push('every required item is waived or open; nothing was verified');
+  // Waivers cannot make up the whole delivery: once nothing is open, something must have been verified.
+  if (items.some((item) => item.status === 'WAIVED') && !items.some((item) => item.checked || !item.status)) errors.push('every item is waived or excepted; nothing was verified');
   const seen = new Set();
   for (const finding of findings) {
     if (seen.has(finding.id)) errors.push(`line ${finding.line}: duplicate finding ID ${finding.id}`);
@@ -261,11 +290,12 @@ function validate(record, errors, notes) {
   const [reviewText, inventory, result] = [plain(review.Review), plain(review.Inventory), plain(review.Result)];
   const reviewer = /^(independent|self)\b/i.exec(reviewText)?.[1].toLowerCase();
   if (reviewer === 'self' && !/not independent/i.test(reviewText)) errors.push('Close-Out: a self review must say it was not independent');
-  // The review counts only when it happened, its inventory was recorded, and its result passed.
-  const passed = /^pass(?:ed|es)?\b(?!\s*(?:\/|or\b))/i.test(result);
-  const future = [reviewText, inventory, result].some((value) => FUTURE_WORK.test(value));
-  if (reviewer && !placeholder(inventory) && passed && !future) return reviewer;
-  if (review.Result !== undefined && !placeholder(result) && !passed) notes.push('Close-Out Result does not start with PASS, so the review does not count yet');
+  // The review counts only when it happened, its inventory was recorded, and its result passed outright.
+  const passed = /^pass(?:ed|es)?\b/i.test(result) && !/^pass(?:ed|es)?\s*(?:[/|]|or\b|expected\b)/i.test(result)
+    && !/\b(?:FAIL(?:ED|S)?|BLOCKED)\b/.test(result);
+  const done = ![reviewText, inventory, result].some((value) => NOT_DONE.test(value));
+  if (reviewer && !placeholder(inventory) && passed && done) return reviewer;
+  if (review.Result !== undefined && !placeholder(result) && !passed) notes.push('Close-Out Result does not start with an unqualified PASS, so the review does not count yet');
   return 'pending';
 }
 
@@ -275,8 +305,9 @@ function ratchet(record, baseline, errors) {
   const kept = earlier.every((line, index) => current[index] === line);
   if (!kept) errors.push('Change Log is append-only: the baseline entries must stay unchanged, in order, before any new entry');
   const added = kept ? current.slice(earlier.length) : current.filter((line) => !earlier.includes(line));
-  const corrected = (id) => added.some((line) => idPattern(id).test(line)
-    && (CORRECTION.test(line) || FIELD_CHANGE.test(line)) && !/\bno (?:changes?|corrections?)\b/i.test(line));
+  // The correction word must apply to the item: it has to share a clause with the ID.
+  const corrected = (id) => added.some((line) => line.split(/[;.]\s/).some((clause) => idPattern(id).test(clause)
+    && (CORRECTION.test(clause) || FIELD_CHANGE.test(clause)) && !NEGATED_CHANGE.test(clause)));
   const same = (a = '', b = '') => a.replace(/\s+/g, ' ').trim() === b.replace(/\s+/g, ' ').trim();
   const now = new Map(record.items.map((item) => [item.id, item]));
   for (const old of baseline.items) {
@@ -294,10 +325,11 @@ function ratchet(record, baseline, errors) {
   for (const old of baseline.findings) {
     if (!findings.has(old.id) && !corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction`);
   }
-  // An ID the baseline log records as removed stays retired.
+  // An ID whose removal the baseline log records stays retired.
   const present = new Set(baseline.items.map((item) => item.id));
-  const retired = new Set(earlier.filter((line) => /\b(?:remov|delet|withdr|merged|supersed|duplicat)/i.test(line))
-    .flatMap((line) => line.match(/\bC-\d+\b/g) ?? []).filter((id) => !present.has(id)));
+  const removal = (id) => new RegExp(`\\b(?:removed|deleted|withdrawn|merged|superseded|dropped)\\b[^.;:]{0,40}\\b${id}\\b|\\b${id}\\b[^.;]{0,40}\\b(?:removed|deleted|withdrawn|superseded|dropped|duplicate)\\b`, 'i');
+  const mentioned = new Set(earlier.flatMap((line) => line.match(/\bC-\d+\b/g) ?? []));
+  const retired = new Set([...mentioned].filter((id) => !present.has(id) && earlier.some((line) => removal(id).test(line))));
   for (const item of record.items) if (retired.has(item.id)) errors.push(`line ${item.line}: ${item.id} was removed earlier; IDs are never reused`);
 }
 

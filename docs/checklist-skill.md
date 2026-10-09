@@ -80,12 +80,15 @@ blind adversarial close-out. The maintainer's guiding prompt is preserved in
   it in the conversation.
 - **A strict validator.** The gate rejects anything that could hide or disguise
   an entry rather than emulating Markdown rendering:
-  - HTML comments, raw HTML and unclosed fences;
-  - IDs disguised by emphasis, escapes, links or look-alike hyphens;
-  - checked evidence that is a placeholder, a bare assertion, or anchored only
-    by a date;
+  - HTML comments, raw HTML, character references and invisible formatting
+    characters;
+  - unclosed fences, and indented fences outside items;
+  - task checkboxes outside Items and Close-Out;
+  - IDs disguised by emphasis, escapes, links or look-alike characters;
+  - checked evidence that is a placeholder, says nothing was recorded, is a
+    bare assertion, or has no anchor apart from a date or time;
   - evidence still marked `STALE` or `FAILED`;
-  - a review whose Result does not start with `PASS`;
+  - a review whose Result is not an unqualified `PASS`;
   - exceptions without authority;
   - future-dated event times.
 
@@ -98,7 +101,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 
 ### Validator contract tests
 
-`test/routing/checklist.test.ts` has 136 cases. They cover:
+`test/routing/checklist.test.ts` has 170 cases. They cover:
 
 - valid records, including the guiding prompt's sample items with checkboxes;
 - every structural rejection;
@@ -108,24 +111,36 @@ All results below come from executed checks on 2026-10-09 (UTC).
 - a drift guard that validates the format reference's template (OPEN) and
   completed example (VERIFIED COMPLETE).
 
-All 136 pass. The first 104 cases failed 44 times against the original
+All 170 pass. The first 104 cases failed 44 times against the original
 validator, which shows they can fail. Typecheck passes.
 
 ### Adversarial validator review
 
-Two independent attack rounds probed the validator:
+Three independent attack rounds probed the validator:
 
 | Round | Probe files | Issues found | Material |
 | --- | --- | --- | --- |
 | 1 | 63 | 25 | 15 |
 | 2 | 43 | 21 | 17 |
+| 3 | 60 | 18 | 9 |
 
-The material issues were records that reached a passing status. They used
-hidden items, placeholder or date-only evidence, a struck or `FAIL` result, a
-prototype-name status, erased findings or a reused ID. All material probes now
-give INVALID or OPEN, and each class has a regression test. The former false
-rejects (tabs, indented headings, non-Latin text, link sub-bullets, code spans)
-now pass, and 300 KB lines are processed in under 0.1 s.
+The material issues were records that reached a passing status. They used:
+
+- hidden items behind comments, fences, processing instructions, invisible
+  characters, entities or look-alike IDs;
+- placeholder, unrecorded or date-only evidence;
+- a struck, qualified or `FAIL` result;
+- a prototype-name status;
+- erased findings or a reused ID.
+
+The third round's close-out review also found two regressions from round 2: a
+waiver rule that rejected legitimately open records, and a quadratic link
+pattern. Both are fixed.
+
+All material probes now give INVALID or OPEN, and each class has a regression
+test. The former false rejects now pass: tabs, indented headings, non-Latin
+text, link sub-bullets, code spans, ASCII arrows, planned IDs, and expiry times
+inside evidence. Adversarial 300 KB lines take 0.02–0.03 s.
 
 ### Fidelity to the guiding prompt
 
@@ -137,6 +152,11 @@ now pass, and 300 KB lines are processed in under 0.1 s.
   review passes.
 - Round 2 confirmed all six round-1 issues fixed, and its minor clarifications
   were applied. The four status lines are verbatim.
+- Round 3 found two material gaps, both now fixed:
+  - `close-out.md` still offered reading items by hand as an equal fallback
+    when Node.js is unavailable. It now requires parsing with another tool, as
+    `SKILL.md` already did.
+  - The waiver rule contradicted the PLAN end state.
 
 ### Trigger checks
 

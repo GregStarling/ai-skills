@@ -59,9 +59,11 @@ node "<installed-skill-directory>/scripts/validate-checklist.mjs" .checklists/<t
 ```
 
 The validator rejects malformed or hidden items and missing fields. It rejects
-checked boxes whose evidence is a placeholder, a bare assertion, or names
-nothing inspectable. It also rejects exceptions without authority and
-inconsistent dependencies. It keeps the record open until a blind review is
+markup that could hide them: HTML, comments, character references and
+invisible characters. It rejects checked boxes whose evidence is a placeholder
+or a bare assertion, or has no anchor such as a command, path or revision apart
+from a date. It also rejects exceptions without authority and inconsistent
+dependencies. It keeps the record open until a blind review is
 recorded as passed with no open findings.
 
 With `--baseline`, it rejects silently removed or weakened items and findings,

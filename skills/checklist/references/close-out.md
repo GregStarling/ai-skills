@@ -144,7 +144,7 @@ The validator covers some of these points mechanically:
 | Points | What the validator does |
 | --- | --- |
 | 1–3, 5 and 9 | Checks the recorded structure |
-| 4 (partly) | Rejects placeholder or unrecorded evidence, bare assertions, and evidence whose only anchor is a date or clock time. A count, version or file name still satisfies it, so "Tested 1 time" passes |
+| 4 (partly) | Rejects placeholder or unrecorded evidence, bare assertions, and evidence with no anchor once common date and time forms are set aside (see the [format reference](checklist-format.md#states)). A count, version or file name still satisfies it, so "Tested 1 time" passes |
 | 6 | Rejects checked evidence marked `STALE` or `FAILED` |
 | 7 and 8 | Require a recorded review whose Result starts with `PASS`, and no open finding |
 
@@ -157,8 +157,9 @@ Some judgments remain yours in this close-out:
 - whether exception and correction wording in the Change Log means what its
   keywords suggest.
 
-If the validator could not run, say so and apply the checks with another tool or
-by reading each item.
+If the validator could not run, say so. Parse the entries and their fields with
+another available tool rather than a text search for `[x]` or `[release]`, and
+read each item yourself only when no tool can run.
 
 ## Final standard
 
