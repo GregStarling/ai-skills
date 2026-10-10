@@ -57,6 +57,9 @@ describe('budgeted reviewer calibration harness',()=>{
   expect(executeBudgeted).toHaveBeenCalledTimes(4);
   expect(calls.every(call=>call.budgetFile===join(dir,'budget.json'))).toBe(true);
   expect(calls.map(call=>call.purpose)).toEqual(['reviewer_calibration_worker','reviewer_calibration_review','reviewer_calibration_review','reviewer_calibration_review']);
+  // Staging rejects a worker absent from the current observations (WORKER_OBSERVATION_MISMATCH).
+  const observed=JSON.parse(await readFile(resolve('data/routing/host-observations.json'),'utf8')).treatments;
+  expect(observed.some((t:any)=>t.evidence.host==='codex'&&!t.frontier&&t.model_id===calls[0].target.model_id&&t.effort===calls[0].target.effort)).toBe(true);
   const ledger=JSON.parse(await readFile(join(dir,'ledger.json'),'utf8'));
   expect(ledger).toMatchObject({schema_version:'reviewer_calibration_ledger.v1',calibration_limit:8});
   expect(ledger.executions).toHaveLength(4);
