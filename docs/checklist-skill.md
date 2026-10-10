@@ -101,7 +101,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 
 ### Validator contract tests
 
-`test/routing/checklist.test.ts` has 211 cases. They cover:
+`test/routing/checklist.test.ts` has 233 cases. They cover:
 
 - valid records, including the guiding prompt's sample items with checkboxes;
 - every structural rejection;
@@ -111,7 +111,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 - a drift guard that validates the format reference's template (OPEN) and
   completed example (VERIFIED COMPLETE).
 
-All 211 pass. The first 104 cases failed 44 times against the original
+All 233 pass. The first 104 cases failed 44 times against the original
 validator, which shows they can fail. Typecheck passes.
 
 ### Adversarial validator review
@@ -126,6 +126,7 @@ review tried about 120 more probes:
 | 3 | 60 | 18 | 9 |
 | 4 (close-out) | about 120 | 3 plus minor issues | 2 |
 | 5 (fix review) | about 130 | 4 plus minor issues | 4 |
+| 6 (fix review) | about 45 | 6 plus minor issues | 6 |
 
 Round 4's material findings, both now fixed:
 
@@ -142,9 +143,34 @@ accepts. The design now fails closed:
 - A negation cancels "pending" only when it comes directly before it.
 - A year that ends a phrase is not an anchor.
 
-A rejection comes with an actionable message. Replaying all 174 probes from the
-five rounds, the only ones that still exit 0 are legitimate records and the
-documented keyword residual (a waiver log entry that refuses the waiver).
+A rejection comes with an actionable message.
+
+Round 6 found these, all fixed or now rejected:
+
+- a no-break space or form feed after a closing fence;
+- a lone carriage return;
+- a negation reaching across a conjunction;
+- qualified passes after punctuation;
+- unrecorded evidence after a leading date;
+- a year as the only anchor.
+
+After round 6, the stopping rule is:
+
+- a finding in lines a round changed is fixed;
+- a keyword gap outside them is recorded under "Known limits" in the format
+  reference.
+
+The validator is a structural gate for honest records, not a security
+boundary, and the blind close-out still judges meaning.
+
+All 210 probes from the six rounds were replayed, with the 11 ratchet probes run
+against their baselines. The only ones that still exit 0 are legitimate records
+and four documented keyword residuals:
+
+- a waiver log entry that refuses the waiver;
+- "ticket no 42 pending";
+- lowercase "failed";
+- a hyphenated "Awaiting-CI".
 
 The material issues were records that reached a passing status. They used:
 

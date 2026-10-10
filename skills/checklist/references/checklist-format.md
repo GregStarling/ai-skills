@@ -43,7 +43,10 @@ entries with them:
 - HTML comments;
 - raw HTML: tags, processing instructions and declarations;
 - character references such as `&#45;`;
-- invisible formatting characters, such as zero-width spaces.
+- invisible formatting characters, such as zero-width spaces;
+- unusual whitespace, such as no-break spaces, form feeds or line separators.
+
+A lone carriage return ends a line, as it does for renderers.
 
 Inside code spans they are fine. Put angle-bracket text, such as a usage string
 quoting `<id>`, in a code span; a renderer would drop it otherwise.
@@ -104,7 +107,8 @@ The validator rejects evidence on a checked item when it:
   - `Pending`, `TBD`, `TODO:`, `To do:`, `N/A` or `see above`;
   - `none yet`, `not yet`, `not run`, `not tested at …` or `Skipped.`;
   - any evidence that opens with `Will`, `Awaiting`, `Waiting`, `Queued`,
-    `Planned`, `Scheduled` or `Unable`;
+    `Planned`, `Scheduled` or `Unable`, even after a leading date or an opening
+    bracket or quote;
   - `to be determined`.
 
   When in doubt the check rejects, so lead with the check that ran, for example
@@ -125,7 +129,8 @@ The anchor check sets aside these date and time forms:
 - ordinals such as `the 9th`;
 - `d/m/y` dates;
 - `date -u` output;
-- a year that ends a phrase, as in "in 2026".
+- a year that ends a phrase or follows "in", "since", "during", "until" or
+  "by", as in "in 2026".
 
 Other numbers count as anchors, including a count such as "2000 requests" or
 "2048-byte".
@@ -245,12 +250,18 @@ The close-out still judges whether each correction was legitimate.
 
   In AUDIT mode, Result reports the review's outcome, not the audited work's.
 - Leave all three fields `pending` until the close-out happens. Struck-through
-  text (`~~x~~` or `~x~`) is ignored. A field that says the work is still not
-  done also keeps the record open: "not yet", "TBD", "to be …", "will be …",
-  "awaiting", "pending", "planned" or "scheduled". Only a negation directly
-  before the word cancels it, as in "no findings pending" or "nothing is
-  awaiting"; "pending a re-run with no changes" stays open. The validator prints
-  a note on stderr for each reason a recorded review does not count yet.
+  text, as GitHub renders it (`~~x~~` or `~x~` with no space inside the
+  tildes), is ignored.
+- A field that says the work is still not done also keeps the record open:
+  "not yet", "TBD", "to be …", "will be …", "will re-run …", "awaiting",
+  "pending", "planned", "scheduled" or "outstanding".
+- Only in Result, and only when the negation comes directly before the word
+  (at most one word between, and never a conjunction), does a negation cancel
+  it. "no findings pending" and "nothing is awaiting" count; "pending a re-run
+  with no changes" and "no issues but retest pending" stay open. An Inventory
+  that says "none" is not a recorded inventory.
+- The validator prints a note on stderr for each reason a recorded review does
+  not count yet.
 - Write each field once, with no duplicates. Update it when a later round
   replaces it, and keep the earlier rounds' outcomes in Verification.
 - **Findings** are `F-` items. An open finding blocks completion, and a
@@ -298,8 +309,30 @@ a gate result, not the final report. Carry its counts and IDs, in the order it
 prints them, into the report line. For VERIFIED COMPLETE, that line also needs
 the evidence location and timestamp.
 
-When the review is pending because Result does not start with PASS, the
-validator prints a note on stderr.
+When a recorded review does not count yet, the validator prints a note on
+stderr explaining why.
+
+### Known limits
+
+The validator is strict about anything that could hide or disguise an entry. It
+cannot judge meaning, so wording checks are keyword minimums, and these remain
+close-out judgments:
+
+- **Evidence quality.** A count, version or file name satisfies the anchor
+  check even in weak evidence ("Tested 1 time"). Lowercase "failed" in passing
+  evidence or results is not read as a failure, because regression evidence
+  often says "failed before the fix".
+- **Exception and correction wording.** A Change Log entry that names an ID
+  next to a matching keyword passes, even if it refuses the waiver or describes
+  something else.
+- **Contrived phrasing.** Hyphenated markers ("Awaiting-CI") are deliberately
+  allowed, as are rare constructions such as "ticket no 42 pending".
+- **Rendering.** Fences, HTML and unusual characters are handled by rejection,
+  not by reproducing every renderer. A record the validator accepts should
+  render as it reads. If a rendered record and the validator ever disagree,
+  treat the record as invalid.
+
+A record that passes the validator still needs the blind close-out.
 
 ## Template
 

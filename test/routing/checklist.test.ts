@@ -494,6 +494,57 @@ describe('portable Checklist validator: fifth review round', () => {
  });
 });
 
+describe('portable Checklist validator: sixth review round', () => {
+ const extra = '- [ ] C-005 [build] Hidden open item.\n  - Source: Pre-mortem.\n  - Accept: Holds.\n  - Verify: Check.\n  - Evidence: Pending.';
+ const afterFence = (closer: string) => complete.replace('\n## Decisions', `\n\`\`\`text\nexample\n${closer}\n${extra}\n\n## Decisions`);
+ it.each([
+  ['a no-break space after a closing fence', afterFence(`\`\`\`${String.fromCharCode(0xa0)}`), 'unusual whitespace'],
+  ['a form feed after a closing fence', afterFence(`\`\`\`${String.fromCharCode(0x0c)}`), 'unusual whitespace'],
+ ])('rejects %s', (_name, text, message) => {
+  const result = run(text); expect(result.status).toBe(1); expect(result.stderr).toContain(message);
+ });
+ it('treats a lone carriage return as a line end, as renderers do', () => {
+  const result = run(afterFence('```\r').replace('```\r\n', '```\r'));
+  expect(result.status).not.toBe(0); expect(result.stdout).toContain('C-005');
+ });
+ it.each([
+  'PASS with no issues but retest pending.',
+  'PASS with no changes but re-run pending.',
+  'PASS, unless the Windows run fails.',
+  'PASS (expected).',
+  'PASS - if CI agrees.',
+  'PASS: provided F-002 is accepted.',
+  'PASS; two findings outstanding.',
+  'PASS; will re-run after the rebase.',
+  'PASS ~ pending a re-run ~',
+ ])('keeps %j pending', (result) => {
+  const out = run(closeOut(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+  expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending');
+ });
+ it.each([
+  ['a negation in Review that hides approval pending', '- Review: independent with no context and approval pending.\n- Inventory: inventory.md\n- Result: PASS.'],
+  ['an inventory of none planned', '- Review: independent — fresh reviewer.\n- Inventory: none planned for this change.\n- Result: PASS.'],
+ ])('keeps %s pending', (_name, lines) => {
+  const out = run(closeOut(lines)); expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending');
+ });
+ it.each(['2026-10-09: Awaiting CI run 4412.', '2026-10-09 Will run `npm test` after merge.', '(Will run `npm test` in CI.)', '[Awaiting CI](https://ci.example/4412).'])(
+  'rejects unrecorded evidence %j after a date or bracket', (value) => {
+   const result = run(evidence(value)); expect(result.status).toBe(1); expect(result.stderr).toContain('starts by saying the check has not happened');
+  });
+ it.each(['All tests passed in 2026 on my machine.', 'Verified manually in 2026 by Greg.'])('rejects a year used as the only anchor in %j', (value) => {
+  const result = run(evidence(value)); expect(result.status).toBe(1); expect(result.stderr).toContain('checked item needs evidence');
+ });
+ it('still counts a genuine passing review with a negated pending and real strikethrough', () => {
+  for (const result of ['PASS; ~~two~~ no findings pending.', 'PASS; no delivery step is outstanding.']) {
+   const out = run(closeOut(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+   expect(out.status, out.stderr).toBe(0);
+  }
+ });
+ it('rejects evidence that is pending until a date', () => {
+  const result = run(evidence('Pending until 2026-10-12.')); expect(result.status).toBe(1); expect(result.stderr).toContain('starts by saying the check has not happened');
+ });
+});
+
 describe('portable Checklist validator: ratchet and usage', () => {
  it('accepts an unchanged baseline and a correction recorded in a new Change Log entry', () => {
   expect(run(complete, ['--baseline', 'baseline.md'], complete).status).toBe(0);
