@@ -48,8 +48,10 @@ entries with them:
 
 A lone carriage return ends a line, as it does for renderers.
 
-Inside code spans they are fine. Put angle-bracket text, such as a usage string
-quoting `<id>`, in a code span; a renderer would drop it otherwise.
+Invisible characters and unusual whitespace are rejected everywhere, including
+inside code spans and fences. Comments, HTML and character references are fine
+inside code spans. Put angle-bracket text, such as a usage string quoting
+`<id>`, in a code span; a renderer would drop it otherwise.
 
 ## Items
 
@@ -255,11 +257,15 @@ The close-out still judges whether each correction was legitimate.
 - A field that says the work is still not done also keeps the record open:
   "not yet", "TBD", "to be …", "will be …", "will re-run …", "awaiting",
   "pending", "planned", "scheduled" or "outstanding".
-- Only in Result, and only when the negation comes directly before the word
-  (at most one word between, and never a conjunction), does a negation cancel
-  it. "no findings pending" and "nothing is awaiting" count; "pending a re-run
-  with no changes" and "no issues but retest pending" stay open. An Inventory
-  that says "none" is not a recorded inventory.
+- A negation cancels the word only in Result, and only when it comes directly
+  before it: at most three words between, none of them a conjunction or an
+  exception word such as "besides" or "only", and no exception after the word.
+  - Counted as passing: "no findings pending", "nothing is awaiting", "no
+    delivery step is outstanding".
+  - Still open: "pending a re-run with no changes", "no issues but retest
+    pending", "nothing pending except the Windows re-run".
+- An Inventory that begins "none", "no", "not", "n/a" or "nil" is not a
+  recorded inventory.
 - The validator prints a note on stderr for each reason a recorded review does
   not count yet.
 - Write each field once, with no duplicates. Update it when a later round
@@ -327,6 +333,13 @@ close-out judgments:
   something else.
 - **Contrived phrasing.** Hyphenated markers ("Awaiting-CI") are deliberately
   allowed, as are rare constructions such as "ticket no 42 pending".
+- **Result qualifiers.** Qualifiers are caught as words after common
+  punctuation. Rarer forms still count as passing: "PASS... if", "PASS
+  [expected]", a quoted qualifier, "PASS, subject to …" or "PASS (partial)".
+  Write an unqualified Result, and put any condition in a finding instead.
+- **Years.** A year after "in", "since", "during", "until" or "by" is treated as
+  a date, so "in 2000 requests" does not count as an anchor. Put the count next
+  to its unit, as in "2000 requests served".
 - **Rendering.** Fences, HTML and unusual characters are handled by rejection,
   not by reproducing every renderer. A record the validator accepts should
   render as it reads. If a rendered record and the validator ever disagree,

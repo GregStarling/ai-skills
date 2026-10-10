@@ -545,6 +545,31 @@ describe('portable Checklist validator: sixth review round', () => {
  });
 });
 
+describe('portable Checklist validator: seventh review round', () => {
+ const reviewed = (lines: string) => closeOut(lines);
+ it('accepts an inventory that mentions what the reviewer was not given', () => {
+  const out = run(reviewed('- Review: independent — fresh reviewer.\n- Inventory: `.checklists/export-dry-run.review.md`; the reviewer was not given this checklist.\n- Result: PASS.'));
+  expect(out.status, out.stderr).toBe(0);
+ });
+ it('explains an inventory that says none was recorded', () => {
+  const out = run(reviewed('- Review: independent — fresh reviewer.\n- Inventory: No separate file.\n- Result: PASS.'));
+  expect(out.status).toBe(2); expect(out.stderr).toContain('Inventory says no inventory was recorded');
+ });
+ it.each(['PASS; nothing pending except the Windows re-run.', 'PASS; nothing outstanding except the release tag.', 'PASS; nothing besides retest pending.', 'PASS; no blockers only retest pending.'])(
+  'keeps %j pending', (result) => {
+   const out = run(reviewed(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+   expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending');
+  });
+ it.each(['2026-10-09 15:20 UTC: Awaiting CI run 4412.', '[2026-10-09] Awaiting CI run 4412.', '(2026-10-09) Will run `npm test` after merge.', 'Oct 9: Awaiting CI run 4412.', '15:20 Awaiting CI run 4412.', '2026-10-09 / Awaiting CI run 4412.'])(
+  'rejects unrecorded evidence %j behind a date lead', (value) => {
+   const result = run(evidence(value)); expect(result.status).toBe(1); expect(result.stderr).toContain('starts by saying the check has not happened');
+  });
+ it('keeps a result open when a strikethrough would close on a tilde', () => {
+  const out = run(reviewed('- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: PASS; retest ~pending ~~'));
+  expect(out.status).toBe(2);
+ });
+});
+
 describe('portable Checklist validator: ratchet and usage', () => {
  it('accepts an unchanged baseline and a correction recorded in a new Change Log entry', () => {
   expect(run(complete, ['--baseline', 'baseline.md'], complete).status).toBe(0);

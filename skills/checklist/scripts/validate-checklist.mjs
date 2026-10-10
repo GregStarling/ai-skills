@@ -50,6 +50,8 @@ const TEMPORAL = new RegExp([
   '\\b(?:19|20)\\d{2}\\b(?!\\s*[a-z-])',
   '\\b(?:in|since|during|until|by)\\s+(?:19|20)\\d{2}\\b',
 ].join('|'), 'gi');
+// A lead a reader skips before the first real word: dates, times, time zones, brackets, quotes and separators.
+const LEAD = new RegExp(`^(?:(?:utc|gmt|z)\\b|[\\s\\[\\](){}"'\\p{Pi}\\p{Pf}:,/\\p{Pd}]+|(?:${TEMPORAL.source}))+`, 'iu');
 // Something inspectable besides a date or time: a digit (count, revision), code span, URL, path or file name.
 const ANCHOR = /\d|`[^`]+`|https?:\/\/|\w\/\w|\w\.[a-z]{2,4}\b/i;
 // Evidence that opens by saying the check has not happened. When in doubt this rejects: an ordinary noun such as
@@ -58,7 +60,7 @@ const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverifie
 const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will (?:be|re-?run|run|re-?test|test|check|verify|confirm)|awaiting|pending|planned|scheduled|outstanding)\b/i;
 // Only a negation directly before the not-done word, with at most three words and no conjunction between, cancels
 // it ("no findings pending", "no delivery step is outstanding"); it applies to Result only.
-const NEGATED_NOT_DONE = /\b(?:no|nothing|none)\b(?:\s+(?!(?:and|but|or|yet|though|although|while|except|so|then|with|without)\b)[\w-]+){0,3}?\s+(?:pending|awaiting|outstanding|planned|scheduled)\b/gi;
+const NEGATED_NOT_DONE = /\b(?:no|nothing|none)\b(?:\s+(?!(?:and|but|or|yet|though|although|while|except|so|then|with|without|besides|beyond|only|other|apart|aside|save)\b)[\w-]+){0,3}?\s+(?:pending|awaiting|outstanding|planned|scheduled)\b(?!\s+(?:except|but|besides|beyond|other than|apart from|save)\b)/gi;
 // Whitespace other than spaces, tabs and line ends can make a renderer and this validator disagree.
 const ODD_SPACE = /[\f\v\p{Zl}\p{Zp}]|(?! )\p{Zs}/u;
 const CORRECTION = /\b(?:correct(?:ed|ion)?|remov(?:ed|al)|replac(?:ed|ement)|supersed(?:ed|es)|split|merged|reworded|renamed|narrowed|broadened|duplicat(?:e|ed)|erroneous|withdr(?:ew|awn)|deleted|dropped|weakened|tightened|loosened|clarified)\b/i;
@@ -68,7 +70,7 @@ const NEGATED_CHANGE = /\bnot (?:changed|corrected|removed|replaced|a duplicate)
 const key = (text) => text.toLowerCase().replace(/[^a-z]/g, '');
 const words = (text = '') => text.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
 // Strikethrough as GitHub renders it: the delimiters must hug the text ("~~a b~~", not "~~ a b ~~").
-const unstrike = (text = '') => text.replace(/~~(?=\S)[^~\n]{0,500}?\S~~|~(?=\S)[^~\n]{0,500}?\S~|~~\S~~|~\S~/g, ' ');
+const unstrike = (text = '') => text.replace(/~~(?=\S)[^~\n]{0,500}?[^\s~]~~|~(?=\S)[^~\n]{0,500}?[^\s~]~|~~\S~~|~\S~/g, ' ');
 const plain = (text = '') => unstrike(text).replace(/[*_~`\\]/g, '').replace(/\s+/g, ' ').trim();
 // The text a reader sees: no code spans, escapes, link targets, emphasis, or look-alike dashes.
 const rendered = (text) => text.replace(/`[^`\n]{0,500}`/g, ' ').replace(/\\(.)/g, '$1')
@@ -271,7 +273,7 @@ function validate(record, errors, notes) {
     } else if (item.checked) {
       const evidence = fields.Evidence ?? '';
       // Look past a leading date or time and opening brackets or quotes, as a reader would.
-      const opening = plain(evidence).replace(/^\d{4}-\d{2}-\d{2}(?:[T ][\d:.]+(?:Z|[+-]\d{2}:?\d{2})?)?[\s:,\p{Pd}]*/u, '').replace(/^[[("'\p{Pi}]+/u, '');
+      const opening = plain(evidence).replace(LEAD, '');
       if (UNRECORDED.test(opening)) {
         errors.push(`${at}: checked item's evidence starts by saying the check has not happened, found "${evidence}". Lead with the check that ran, for example "\`npm test\`: queued messages survive a restart"`);
       } else if (placeholder(evidence) || assertionOnly(evidence) || !anchored(evidence)) {
@@ -314,11 +316,13 @@ function validate(record, errors, notes) {
   const unfinished = [reviewText, inventory, result]
     .flatMap((value) => value.split(/[;,.?!]\s*/).map((clause) => (value === result ? clause.replace(NEGATED_NOT_DONE, ' ') : clause)))
     .find((clause) => NOT_DONE.test(clause));
-  if (reviewer && !placeholder(inventory) && !negated(inventory) && passed && !unfinished) return reviewer;
+  const noInventory = /^(?:none|no|not|n\/a|nil)\b/i.test(inventory);
+  if (reviewer && !placeholder(inventory) && !noInventory && passed && !unfinished) return reviewer;
   // Explain every reason a recorded review does not count yet.
   if (Object.keys(review).length && [reviewText, inventory, result].some((value) => !placeholder(value))) {
     if (!reviewer) notes.push('Close-Out Review must start with "independent" or "self"');
     if (placeholder(inventory)) notes.push('Close-Out Inventory must say where the blind inventory was recorded');
+    else if (noInventory) notes.push('Close-Out Inventory says no inventory was recorded; name the file where the blind inventory was recorded');
     if (!passed) notes.push('Close-Out Result does not start with an unqualified PASS, so the review does not count yet');
     if (unfinished) notes.push(`Close-Out says the review is not finished ("${unfinished.trim()}"), so it does not count yet`);
   }

@@ -101,7 +101,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 
 ### Validator contract tests
 
-`test/routing/checklist.test.ts` has 233 cases. They cover:
+`test/routing/checklist.test.ts` has 246 cases. They cover:
 
 - valid records, including the guiding prompt's sample items with checkboxes;
 - every structural rejection;
@@ -111,7 +111,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 - a drift guard that validates the format reference's template (OPEN) and
   completed example (VERIFIED COMPLETE).
 
-All 233 pass. The first 104 cases failed 44 times against the original
+All 246 pass. The first 104 cases failed 44 times against the original
 validator, which shows they can fail. Typecheck passes.
 
 ### Adversarial validator review
@@ -127,6 +127,7 @@ review tried about 120 more probes:
 | 4 (close-out) | about 120 | 3 plus minor issues | 2 |
 | 5 (fix review) | about 130 | 4 plus minor issues | 4 |
 | 6 (fix review) | about 45 | 6 plus minor issues | 6 |
+| 7 (scoped review) | about 40 | 5 plus minor issues | 5 |
 
 Round 4's material findings, both now fixed:
 
@@ -163,14 +164,27 @@ After round 6, the stopping rule is:
 The validator is a structural gate for honest records, not a security
 boundary, and the blind close-out still judges meaning.
 
-All 210 probes from the six rounds were replayed, with the 11 ratchet probes run
-against their baselines. The only ones that still exit 0 are legitimate records
-and four documented keyword residuals:
+Round 7 reviewed only the lines changed in round 6. It found:
+
+- one regression: a negated-Inventory check without a note;
+- an exception word after a negated "pending";
+- leading dates in forms other than ISO;
+- two doc mismatches.
+
+The reviewer tested fixes against every probe and all tests. Those exact fixes
+were applied and its doc corrections made. Remaining minor keyword gaps are
+listed under "Known limits".
+
+All 248 probes from the seven rounds were replayed, with the 11 ratchet probes
+run against their baselines. The only ones that still exit 0 are legitimate
+records and documented known limits:
 
 - a waiver log entry that refuses the waiver;
 - "ticket no 42 pending";
 - lowercase "failed";
-- a hyphenated "Awaiting-CI".
+- a hyphenated "Awaiting-CI";
+- rare Result qualifier forms;
+- two contrived strikethrough forms.
 
 The material issues were records that reached a passing status. They used:
 
