@@ -216,8 +216,8 @@ describe('finish',()=>{
   await f.call('start',{run_id:'a'});
   const captured=await f.call('capture',{run_id:'a',command:exit(0)});
   const input={run_id:'a',...f.delegated,coordinator:{...f.coordinator,evidence:[captured.reference]},relevant_checks_complete:true,acceptance:'accepted',checks:[{name:'tests',kind:'test',reference:captured.reference}],inspected:[{name:'final source review',kind:'review',outcome:'passed'}],attempts:[
-   {role:'worker',model:'gpt-5.3-codex-spark',effort:'low',outcome:'unavailable',observed:null,evidence:[captured.reference]},
-   {role:'worker',model:'gpt-5.5',effort:'low',outcome:'accepted',observed:null,evidence:[captured.reference]},
+   {role:'worker',model:'gpt-6-luna',effort:'low',outcome:'unavailable',observed:null,evidence:[captured.reference]},
+   {role:'worker',model:'gpt-6-sol',effort:'low',outcome:'accepted',observed:null,evidence:[captured.reference]},
   ]};
   const result=await f.call('finish',input);
   expect(result.receipt.attempts.map((a:any)=>a.outcome)).toEqual(['accepted','blocked','accepted']);

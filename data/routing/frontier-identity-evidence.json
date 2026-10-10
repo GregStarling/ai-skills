@@ -1,0 +1,205 @@
+{
+  "sha256:ba48f4fb34b80d77bab9a3b565cb98e8534f0feb6ccef99f646501e9dab5bf87": {
+    "schema_version": "frontier_identity_evidence.v1",
+    "candidate": {
+      "schema_version": "candidate.v1",
+      "candidate_id": "frontier_codex_high",
+      "provider": "openai",
+      "model_id": "gpt-6-astra",
+      "snapshot_id": "gpt-6-astra",
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use",
+        "json_schema"
+      ],
+      "provenance": {
+        "registry_id": "frontier_probe_targets",
+        "model_record_id": "frontier_codex",
+        "registry_content_digest": "sha256:d8cb495f3178637cffdd15c0d3019ea6e5024cb669ee37d8e0a79baeb7cefd34"
+      }
+    },
+    "report": {
+      "schema_version": "runtime_report.v1",
+      "report_id": "frontier_codex_1791589523203",
+      "provider": "openai",
+      "execution_environment": "codex",
+      "candidate_id": "frontier_codex_high",
+      "started_at": "2026-10-09T23:45:08.820Z",
+      "completed_at": "2026-10-09T23:45:23.201Z",
+      "command": {
+        "executable": "codex",
+        "args": [
+          "exec",
+          "--ignore-user-config",
+          "--ignore-rules",
+          "--ephemeral",
+          "--skip-git-repo-check",
+          "-C",
+          "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-JnAcMd",
+          "-s",
+          "read-only",
+          "-m",
+          "gpt-6-astra",
+          "-c",
+          "model_reasoning_effort=\"high\"",
+          "--json",
+          "-"
+        ],
+        "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-JnAcMd"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "signal": null,
+      "timeout_ms": 90000,
+      "stdout_digest": "sha256:a7b06f779ae5d4084c74f96c093ad8d1e77d5d1de5fb797f1e480608887517fe",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "native_evidence": {
+        "request_digest": "sha256:96c49dc7b4ace602c610d60908415b76a6e44f68188d7f4a56101bf17a8fa83b",
+        "process_digest": "sha256:adab7124588da5ef4d0ebe1542ee571d7643596c43163469700b573da7548597",
+        "version_digest": "sha256:aa9540ba22e99a052cd2634f5de83f1fc2bf70e3f852e3f0743754be743734b9"
+      },
+      "observed_identity": {
+        "source": "unknown"
+      }
+    },
+    "sources": {
+      "sha256:96c49dc7b4ace602c610d60908415b76a6e44f68188d7f4a56101bf17a8fa83b": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"codex\",\n  \"candidate_identity\": \"sha256:98e5347854ad7dec839b2fce2e2f5f8591bf848361690c5967574101bd17962c\",\n  \"command\": {\n    \"executable\": \"codex\",\n    \"args\": [\n      \"exec\",\n      \"--ignore-user-config\",\n      \"--ignore-rules\",\n      \"--ephemeral\",\n      \"--skip-git-repo-check\",\n      \"-C\",\n      \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-JnAcMd\",\n      \"-s\",\n      \"read-only\",\n      \"-m\",\n      \"gpt-6-astra\",\n      \"-c\",\n      \"model_reasoning_effort=\\\"high\\\"\",\n      \"--json\",\n      \"-\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-JnAcMd\"\n  },\n  \"prompt_digest\": \"sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"artifacts/renewal-2026-10-09/frontier-probes/codex/environment-controls.json\",\n      \"content_digest\": \"sha256:939891597ce40c5f158666a5549ce8e771aed71c2793510c103ab591be9e5b24\"\n    }\n  ]\n}\n",
+      "sha256:adab7124588da5ef4d0ebe1542ee571d7643596c43163469700b573da7548597": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:96c49dc7b4ace602c610d60908415b76a6e44f68188d7f4a56101bf17a8fa83b\",\n  \"started_at\": \"2026-10-09T23:45:08.820Z\",\n  \"completed_at\": \"2026-10-09T23:45:23.201Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:a7b06f779ae5d4084c74f96c093ad8d1e77d5d1de5fb797f1e480608887517fe\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+      "sha256:aa9540ba22e99a052cd2634f5de83f1fc2bf70e3f852e3f0743754be743734b9": "codex-cli 0.156.1\n",
+      "sha256:a7b06f779ae5d4084c74f96c093ad8d1e77d5d1de5fb797f1e480608887517fe": "{\"type\":\"thread.started\",\"thread_id\":\"01a1230e-6975-7630-b8b8-cac9edc22651\"}\n{\"type\":\"turn.started\"}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_0\",\"type\":\"agent_message\",\"text\":\"I’ll read `quantity.mjs` and run the tests, then check the behavior against the rule for zero, null, and undefined.\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_1\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'cat quantity.mjs'\",\"aggregated_output\":\"export const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n\",\"exit_code\":0,\"status\":\"completed\"}}\n{\"type\":\"item.started\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"\",\"exit_code\":null,\"status\":\"in_progress\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_2\",\"type\":\"command_execution\",\"command\":\"/bin/zsh -lc 'node quantity.test.mjs'\",\"aggregated_output\":\"node:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-codex-JnAcMd/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\\n\",\"exit_code\":1,\"status\":\"failed\"}}\n{\"type\":\"item.completed\",\"item\":{\"id\":\"item_3\",\"type\":\"agent_message\",\"text\":\"REPAIR\\n\\nCause: `item.quantity || 1` replaces explicit zero with one because zero is falsy. Tests failed: actual `3`, expected `2`.\\n\\nPrecise minimal fix: replace `item.quantity || 1` with `item.quantity ?? 1`, which defaults only null and undefined.\\n\\nNo files edited.\"}}\n{\"type\":\"turn.completed\",\"usage\":{\"input_tokens\":37220,\"cached_input_tokens\":30336,\"cache_write_input_tokens\":0,\"output_tokens\":273,\"reasoning_output_tokens\":93}}\n",
+      "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f": "Read quantity.mjs and run node quantity.test.mjs. Independently diagnose any defect against: preserve explicit zero; default only null/undefined quantities to one. Do not edit files or invoke subagents. Return REPAIR with the cause and precise minimal fix if needed, otherwise ACCEPT. This is a bounded model-availability and diagnostic evaluation, not a request to install anything.",
+      "sha256:939891597ce40c5f158666a5549ce8e771aed71c2793510c103ab591be9e5b24": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"openai\",\n  \"override_names\": [\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+    },
+    "assurance": {
+      "overall": "CONFIGURATION_ATTESTED",
+      "model": {
+        "value": "gpt-6-astra",
+        "assurance": "host_configuration"
+      },
+      "effort": {
+        "value": "high",
+        "assurance": "host_configuration"
+      },
+      "execution_environment": "codex",
+      "evidence_digest": "sha256:a1ac75bb14413e86a335b9db9aba74d28dd2123ac49b0400744ff8d33ee77036",
+      "limitations": [
+        "No host fallback was configured; provider-side fallback state is not independently attested.",
+        "Served model is not independently exposed by this host trace.",
+        "Served effort is not independently exposed by this host trace."
+      ],
+      "diagnostics": []
+    }
+  },
+  "sha256:f98afe0c03c1085f03fe376732d5d5716f379b9e3bb741db463fd60ce363c27e": {
+    "schema_version": "frontier_identity_evidence.v1",
+    "candidate": {
+      "schema_version": "candidate.v1",
+      "candidate_id": "frontier_claude_high",
+      "provider": "anthropic",
+      "model_id": "claude-fable-5-1",
+      "snapshot_id": "claude-fable-5-1",
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use",
+        "json_schema"
+      ],
+      "provenance": {
+        "registry_id": "frontier_probe_targets",
+        "model_record_id": "frontier_claude",
+        "registry_content_digest": "sha256:d4401a605d05771abd0c7e338adf951ea436154e8654c37d3a4f7ad3b86bb0f0"
+      }
+    },
+    "report": {
+      "schema_version": "runtime_report.v1",
+      "report_id": "frontier_claude_1791589538825",
+      "provider": "anthropic",
+      "execution_environment": "claude_code",
+      "candidate_id": "frontier_claude_high",
+      "started_at": "2026-10-09T23:45:23.311Z",
+      "completed_at": "2026-10-09T23:45:38.823Z",
+      "command": {
+        "executable": "claude",
+        "args": [
+          "-p",
+          "--model",
+          "claude-fable-5-1",
+          "--effort",
+          "high",
+          "--output-format",
+          "stream-json",
+          "--verbose",
+          "--no-session-persistence",
+          "--setting-sources",
+          "",
+          "--strict-mcp-config",
+          "--mcp-config",
+          "{\"mcpServers\":{}}",
+          "--permission-mode",
+          "dontAsk",
+          "--tools",
+          "Read,Bash",
+          "--allowedTools",
+          "Read,Bash",
+          "--max-budget-usd",
+          "2"
+        ],
+        "cwd": "/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2"
+      },
+      "status": "completed",
+      "exit_code": 0,
+      "signal": null,
+      "timeout_ms": 90000,
+      "stdout_digest": "sha256:181b6ecd453ba232960e92e287c4ec7bdee07ad1ac530dfae43a1553bbc86184",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "native_evidence": {
+        "request_digest": "sha256:e84779ae67efcd32bb04f492802f0cdfbc957c0a92410d99825d21c56af43693",
+        "process_digest": "sha256:d01498f2b4697051e8c87f545033b6093eb7cc850de50b1d5c1693ceb6b2244a",
+        "version_digest": "sha256:46ef67828dfb9d34aef4d5df24d529825edb3cfa334f333e445fe5d0f1b14cc2"
+      },
+      "observed_identity": {
+        "model_id": "claude-fable-5-1",
+        "source": "runtime_report"
+      }
+    },
+    "sources": {
+      "sha256:e84779ae67efcd32bb04f492802f0cdfbc957c0a92410d99825d21c56af43693": "{\n  \"schema_version\": \"native_execution_request.v1\",\n  \"execution_environment\": \"claude_code\",\n  \"candidate_identity\": \"sha256:affa5083b3d460f7ecb479a752fd78bc0dbc512d931b07d73e47b3c500795ea4\",\n  \"command\": {\n    \"executable\": \"claude\",\n    \"args\": [\n      \"-p\",\n      \"--model\",\n      \"claude-fable-5-1\",\n      \"--effort\",\n      \"high\",\n      \"--output-format\",\n      \"stream-json\",\n      \"--verbose\",\n      \"--no-session-persistence\",\n      \"--setting-sources\",\n      \"\",\n      \"--strict-mcp-config\",\n      \"--mcp-config\",\n      \"{\\\"mcpServers\\\":{}}\",\n      \"--permission-mode\",\n      \"dontAsk\",\n      \"--tools\",\n      \"Read,Bash\",\n      \"--allowedTools\",\n      \"Read,Bash\",\n      \"--max-budget-usd\",\n      \"2\"\n    ],\n    \"cwd\": \"/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2\"\n  },\n  \"prompt_digest\": \"sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f\",\n  \"environment\": {\n    \"ANTHROPIC_API_KEY\": null,\n    \"ANTHROPIC_AUTH_TOKEN\": null,\n    \"ANTHROPIC_BASE_URL\": null,\n    \"ANTHROPIC_MODEL\": null,\n    \"ANTHROPIC_SMALL_FAST_MODEL\": null,\n    \"CLAUDE_CODE_EFFORT_LEVEL\": null,\n    \"CLAUDE_CODE_SAFE_MODE\": null,\n    \"CLAUDE_CODE_SIMPLE\": null,\n    \"CLAUDE_CODE_SUBAGENT_MODEL\": null,\n    \"CLAUDE_CODE_USE_BEDROCK\": null,\n    \"CLAUDE_CODE_USE_FOUNDRY\": null,\n    \"CLAUDE_CODE_USE_VERTEX\": null,\n    \"CODEX_API_KEY\": null,\n    \"CODEX_BASE_URL\": null,\n    \"OPENAI_API_BASE\": null,\n    \"OPENAI_API_KEY\": null,\n    \"OPENAI_BASE_URL\": null\n  },\n  \"configuration_files\": [\n    {\n      \"path\": \"artifacts/renewal-2026-10-09/frontier-probes/claude/environment-controls.json\",\n      \"content_digest\": \"sha256:44e9e29a9bea6fb2640071666d4a2a829b3ca811a1955f6cfef98cf47af1caab\"\n    }\n  ]\n}\n",
+      "sha256:d01498f2b4697051e8c87f545033b6093eb7cc850de50b1d5c1693ceb6b2244a": "{\n  \"schema_version\": \"native_execution_process.v1\",\n  \"request_digest\": \"sha256:e84779ae67efcd32bb04f492802f0cdfbc957c0a92410d99825d21c56af43693\",\n  \"started_at\": \"2026-10-09T23:45:23.311Z\",\n  \"completed_at\": \"2026-10-09T23:45:38.823Z\",\n  \"exit_code\": 0,\n  \"signal\": null,\n  \"timed_out\": false,\n  \"spawn_error\": null,\n  \"stdout_digest\": \"sha256:181b6ecd453ba232960e92e287c4ec7bdee07ad1ac530dfae43a1553bbc86184\",\n  \"stderr_digest\": \"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\"\n}\n",
+      "sha256:46ef67828dfb9d34aef4d5df24d529825edb3cfa334f333e445fe5d0f1b14cc2": "2.1.292 (Claude Code)\n",
+      "sha256:181b6ecd453ba232960e92e287c4ec7bdee07ad1ac530dfae43a1553bbc86184": "{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2\",\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"tools\":[\"Bash\",\"Read\"],\"mcp_servers\":[],\"model\":\"claude-fable-5-1\",\"permissionMode\":\"dontAsk\",\"slash_commands\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\",\"plugin-authoring\",\"advisor\",\"agents\",\"auto-mode-setup\",\"autocompact\",\"clear\",\"color\",\"compact\",\"config\",\"output-style\",\"context\",\"effort\",\"fast\",\"focus\",\"heapdump\",\"init\",\"mcp\",\"import\",\"model\",\"__remote-workflow\",\"workflow-launch-exec\",\"reload-plugins\",\"reload-skills\",\"rename\",\"ultrareview\",\"security-review\",\"usage-credits\",\"extra-usage\",\"usage\",\"insights\",\"recap\",\"skill-doctor\",\"goal\",\"design-consent\",\"design-revoke\",\"list-agents\",\"team-onboarding\"],\"terminal_slash_commands\":[\"doctor\",\"color\",\"focus\",\"reload-plugins\"],\"apiKeySource\":\"none\",\"claude_code_version\":\"2.1.292\",\"output_style\":\"default\",\"agents\":[\"claude\",\"Explore\",\"general-purpose\",\"Plan\",\"statusline-setup\"],\"skills\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"loop\",\"schedule\",\"claude-api\",\"workflow-authoring\",\"run\",\"run-skill-generator\",\"plugin-authoring\"],\"plugins\":[{\"name\":\"cc-plugin-agents-md\",\"path\":\"builtin\",\"source\":\"cc-plugin-agents-md@builtin\"},{\"name\":\"cc-plugin-telemetry\",\"path\":\"builtin\",\"source\":\"cc-plugin-telemetry@builtin\"},{\"name\":\"cc-plugin-plugin-authoring\",\"path\":\"builtin\",\"source\":\"cc-plugin-plugin-authoring@builtin\"}],\"capabilities\":[\"interrupt_receipt_v1\",\"interrupt_cancel_queued_v1\",\"interrupt_send_now_v1\",\"msg_lifecycle_v1\",\"sdk_mcp_tools_list_changed\",\"sdk_mcp_manifests\",\"mcp_read_resource_v1\",\"mcp_tool_ui_meta_v1\",\"ui_surface_v1\"],\"analytics_disabled\":false,\"product_feedback_disabled\":false,\"uuid\":\"43087905-7c48-4503-b2e4-8f3fd5440cf4\",\"memory_paths\":{\"auto\":\"/Users/gregpro/.claude/projects/-private-var-folders-2y-761-mj9n5bd9pk43mnybw9gw0000gn-T-frontier-probe-claude-KCFYv2/memory/\"},\"messaging_socket_path\":\"/tmp/cc-socks/46310.sock\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"per_turn_effort_active\":true,\"view_mode\":\"default\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ48eG2Y4wtFMedDkuB\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'll read the source file and run the test in parallel, then diagnose.\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":7116,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":7116},\"output_tokens\":8,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"054e7f6e-6962-4a94-b952-e595d1898476\",\"timestamp\":\"2026-10-09T23:45:31.009Z\",\"request_id\":\"req_011CfsZ48JfgMmR7qfn7J2zY\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ48eG2Y4wtFMedDkuB\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_01DKQNZK8zoBVui1Z7t5fZxw\",\"name\":\"Read\",\"input\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.mjs\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":7116,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":7116},\"output_tokens\":8,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"2feb5bc5-9c96-46fb-832f-e219691b3757\",\"timestamp\":\"2026-10-09T23:45:31.139Z\",\"request_id\":\"req_011CfsZ48JfgMmR7qfn7J2zY\",\"wire_tool_inputs\":{\"toolu_01DKQNZK8zoBVui1Z7t5fZxw\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.mjs\"}}}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"tool_use_id\":\"toolu_01DKQNZK8zoBVui1Z7t5fZxw\",\"type\":\"tool_result\",\"content\":\"1\\texport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n2\\t\"}]},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"5c5bdc92-e84d-477c-816a-5bb9af516ece\",\"timestamp\":\"2026-10-09T23:45:31.164Z\",\"tool_use_result\":{\"type\":\"text\",\"file\":{\"filePath\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.mjs\",\"content\":\"export const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\\n\",\"numLines\":2,\"startLine\":1,\"totalLines\":2}}}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ48eG2Y4wtFMedDkuB\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_019ujURxpMrTwY5fd4gEM5sZ\",\"name\":\"Bash\",\"input\":{\"command\":\"node quantity.test.mjs 2>&1; echo \\\"exit=$?\\\"\",\"description\":\"Run the quantity test file\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":2,\"cache_creation_input_tokens\":7116,\"cache_read_input_tokens\":0,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":7116},\"output_tokens\":8,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"2ea54038-79d9-4a9f-81c1-0e7168cee919\",\"timestamp\":\"2026-10-09T23:45:31.677Z\",\"request_id\":\"req_011CfsZ48JfgMmR7qfn7J2zY\",\"wire_tool_inputs\":{\"toolu_019ujURxpMrTwY5fd4gEM5sZ\":{\"command\":\"cd /private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2 && node quantity.test.mjs 2>&1; echo \\\"exit=$?\\\"\",\"description\":\"Run the quantity test file\"}},\"wire_ingest_context\":{\"toolu_019ujURxpMrTwY5fd4gEM5sZ\":{\"cwd\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2\"}}}\n{\"type\":\"rate_limit_event\",\"rate_limit_info\":{\"status\":\"allowed\",\"resetsAt\":1791594600,\"rateLimitType\":\"five_hour\",\"overageStatus\":\"rejected\",\"overageDisabledReason\":\"org_level_disabled\",\"isUsingOverage\":false,\"unifiedWindows\":{\"five_hour\":{\"utilization\":0.29,\"resetsAt\":1791594600},\"seven_day\":{\"utilization\":0.53,\"resetsAt\":1791615600},\"seven_day_overage_included\":{\"utilization\":0,\"resetsAt\":1791615600}}},\"uuid\":\"9b2cf75a-2644-4cd1-994a-27dc8d4330bd\",\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\"}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"tool_use_id\":\"toolu_019ujURxpMrTwY5fd4gEM5sZ\",\"type\":\"tool_result\",\"content\":\"node:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\\nexit=1\",\"is_error\":false}]},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"f09214a1-b4c5-44c7-839e-431c45585405\",\"timestamp\":\"2026-10-09T23:45:32.138Z\",\"tool_use_result\":{\"stdout\":\"node:internal/modules/run_main:123\\n    triggerUncaughtException(\\n    ^\\n\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n3 !== 2\\n\\n    at file:///private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.test.mjs:3:8\\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\\n  generatedMessage: true,\\n  code: 'ERR_ASSERTION',\\n  actual: 3,\\n  expected: 2,\\n  operator: 'strictEqual',\\n  diff: 'simple'\\n}\\n\\nNode.js v22.23.2\\nexit=1\",\"stderr\":\"\",\"interrupted\":false,\"isImage\":false,\"noOutputExpected\":false}}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ4QrL489YBGPU9Vsm3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"thinking\",\"thinking\":\"\",\"signature\":\"CAQS4wQKEAgSGAI4AUIIdGhpbmtpbmcSDDHj55fuVAzBYMmv6RoMvXiA0jtZwwIvPEvRIjACAKzgHKmO5ivsbAaw7/EsQ0kTHQfUinWoZ20fSd9XB8WRHoiwJA6+Kh/kZiJSzSQqgAQU5mYIVogACkA05dpdS9Ie0k6A6egr4JoIQyjCwBDNXThVKNZk4VA15PBABskPB27VTNQuJxXYFtiylIrz9UOKJuC1CeuO7MSKazOP4qOFSej4qWm5/1bu74pl89WLtIOhSdpM5INnFJqJ5bFZJv5JvOFTpMl7aUVzhrqDhkJSxqeqhzTPhRjNPQGzOiUBB65IXRjNkW55+yxirBDp+v9XeSuK51REl6NHUFweGros2/FsJiQe/BmxbbL5jH1PVOnwxZTBtkLIoAbrSoVcqD9Whcc85G/7/3jSfc+YhZ4XAF1TsHMH+Ke/ZxoMiUZMHg2gObOISYS6ppzYP1mIDc5T5rgEgRToD+k/zfdYROOHXUESpPtNr+vXASu2gjAfQgSJOsD+Fu12nJ/lLPU6gU9Q5xBQGL8vFgbvivXEH4BlPXdYo4h/hVKnEcoG0pJOBfERVUVd8LOZWCvgho+jZhZ0Tc9AYK/QkGl7M59SAK/8HOiAMCW28DPC28cG4QEy7N0GwrI8dQL9qDYo6ixEUbx+F4appin6bdIsIj4rNieq5mm9PNRqEK2ifGJjPm9Aq3Pip5zbrrL2QhwpWH2uVxF30rR6nU0OUnb8Ep7Wfosc3/ySSrJHJgBHzIjY8a2WtF8sxx6Q5r45g7f+242ZhNaCrrg58cYP4g7+283BNxOn/BgB\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":764,\"cache_read_input_tokens\":7116,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":764},\"output_tokens\":2,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"75b811a0-70ba-4d38-9926-acb1369737cf\",\"timestamp\":\"2026-10-09T23:45:33.985Z\",\"request_id\":\"req_011CfsZ4QeAw9tRGz4L8pJCG\",\"thinking_duration_ms\":884}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ4QrL489YBGPU9Vsm3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'll check the test to confirm what the failing assertion exercises.\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":764,\"cache_read_input_tokens\":7116,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":764},\"output_tokens\":2,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"1fde8865-4ada-4c18-8a9e-339b66c00161\",\"timestamp\":\"2026-10-09T23:45:33.987Z\",\"request_id\":\"req_011CfsZ4QeAw9tRGz4L8pJCG\"}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ4QrL489YBGPU9Vsm3\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"tool_use\",\"id\":\"toolu_01KhKaji9f6k21GcB9RChk2j\",\"name\":\"Read\",\"input\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.test.mjs\"},\"caller\":{\"type\":\"direct\"}}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":764,\"cache_read_input_tokens\":7116,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":764},\"output_tokens\":2,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"bb359af7-c43e-4b70-9439-c7db69bd2533\",\"timestamp\":\"2026-10-09T23:45:34.768Z\",\"request_id\":\"req_011CfsZ4QeAw9tRGz4L8pJCG\",\"wire_tool_inputs\":{\"toolu_01KhKaji9f6k21GcB9RChk2j\":{\"file_path\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.test.mjs\"}}}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"tool_use_id\":\"toolu_01KhKaji9f6k21GcB9RChk2j\",\"type\":\"tool_result\",\"content\":\"1\\timport assert from 'node:assert/strict';\\n2\\timport {totalQuantity} from './quantity.mjs';\\n3\\tassert.equal(totalQuantity([{quantity:0},{quantity:2}]),2);\\n4\\t\"}]},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"c315b6ea-75d5-41fb-91fe-7d4bd7847f26\",\"timestamp\":\"2026-10-09T23:45:34.779Z\",\"tool_use_result\":{\"type\":\"text\",\"file\":{\"filePath\":\"/private/var/folders/2y/761_mj9n5bd9pk43mnybw9gw0000gn/T/frontier-probe-claude-KCFYv2/quantity.test.mjs\",\"content\":\"import assert from 'node:assert/strict';\\nimport {totalQuantity} from './quantity.mjs';\\nassert.equal(totalQuantity([{quantity:0},{quantity:2}]),2);\\n\",\"numLines\":4,\"startLine\":1,\"totalLines\":4}}}\n{\"type\":\"assistant\",\"message\":{\"model\":\"claude-fable-5-1\",\"id\":\"msg_011CfsZ4cADUWerLa8fn3hAN\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"**REPAIR**\\n\\n**Cause:** `quantity.mjs:1` uses `item.quantity || 1`. The `||` operator treats every falsy value as missing, so an explicit `0` is replaced with `1`. The test sums quantities `0` and `2` and expects `2`, but gets `3` because the zero item contributes `1`.\\n\\n**Fix:** Replace `||` with the nullish coalescing operator `??`, which only substitutes the default for `null` and `undefined`.\\n\\n```js\\nexport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity ?? 1), 0);\\n```\\n\\nThis preserves explicit zero and still defaults missing, `null`, or `undefined` quantities to one. No files were edited.\"}],\"container\":null,\"stop_reason\":null,\"stop_sequence\":null,\"stop_details\":null,\"usage\":{\"input_tokens\":32,\"cache_creation_input_tokens\":284,\"cache_read_input_tokens\":7880,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":284},\"output_tokens\":245,\"service_tier\":\"standard\",\"inference_geo\":\"global\"},\"input_transformations\":[],\"diagnostics\":null,\"context_management\":null},\"parent_tool_use_id\":null,\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"uuid\":\"08b560d1-bc4f-4ff2-9151-2265eb945ea6\",\"timestamp\":\"2026-10-09T23:45:38.555Z\",\"request_id\":\"req_011CfsZ4bv5zXq5jwDM5BgYW\"}\n{\"duration_api_ms\":9774,\"stop_reason\":\"end_turn\",\"session_id\":\"3912083c-4a70-4399-b1e7-613516bc4923\",\"total_cost_usd\":0.20203900000000002,\"usage\":{\"input_tokens\":66,\"cache_creation_input_tokens\":8164,\"cache_read_input_tokens\":14996,\"output_tokens\":687,\"output_tokens_details\":{\"thinking_tokens\":23},\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":8164,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"global\",\"iterations\":[{\"input_tokens\":32,\"output_tokens\":245,\"cache_read_input_tokens\":7880,\"cache_creation_input_tokens\":284,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":284},\"type\":\"message\"}],\"speed\":\"standard\",\"fallback_credit\":null},\"modelUsage\":{\"claude-fable-5-1\":{\"inputTokens\":66,\"outputTokens\":687,\"cacheReadInputTokens\":14996,\"cacheCreationInputTokens\":8164,\"webSearchRequests\":0,\"costUSD\":0.20203900000000002,\"contextWindow\":1000000,\"maxOutputTokens\":64000,\"thinkingTokens\":23,\"canonicalModel\":\"claude-fable-5-1\",\"provider\":\"firstParty\",\"costBasis\":\"list\"}},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"subagent_stats\":{\"spawned\":0,\"requested\":{\"background\":0,\"foreground\":0,\"unset\":0},\"started_in_background\":0,\"max_depth\":0,\"spawned_by_subagents\":0,\"completed\":0,\"failed\":0,\"killed\":{\"parent\":0,\"user\":0,\"system\":0},\"refused\":{\"depth_limit\":0,\"concurrency_limit\":0,\"budget\":0},\"by_type\":{}},\"safety_stops\":0,\"is_error\":false,\"num_turns\":4,\"subtype\":\"success\",\"api_error_status\":null,\"result\":\"**REPAIR**\\n\\n**Cause:** `quantity.mjs:1` uses `item.quantity || 1`. The `||` operator treats every falsy value as missing, so an explicit `0` is replaced with `1`. The test sums quantities `0` and `2` and expects `2`, but gets `3` because the zero item contributes `1`.\\n\\n**Fix:** Replace `||` with the nullish coalescing operator `??`, which only substitutes the default for `null` and `undefined`.\\n\\n```js\\nexport const totalQuantity = items => items.reduce((n, item) => n + (item.quantity ?? 1), 0);\\n```\\n\\nThis preserves explicit zero and still defaults missing, `null`, or `undefined` quantities to one. No files were edited.\",\"ttft_ms\":2913,\"type\":\"result\",\"duration_ms\":10470,\"uuid\":\"f22d4a26-84f3-4cf5-bb84-ccfa2e976cb5\",\"ttft_stream_ms\":997,\"time_to_request_ms\":239,\"first_content_frame_ms\":997,\"queued_turn_count\":0,\"result_index\":0}\n",
+      "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": "",
+      "sha256:5b98ffe678cbe050c08aed58575298756bf3e85510c92ff30b775b59434d030f": "Read quantity.mjs and run node quantity.test.mjs. Independently diagnose any defect against: preserve explicit zero; default only null/undefined quantities to one. Do not edit files or invoke subagents. Return REPAIR with the cause and precise minimal fix if needed, otherwise ACCEPT. This is a bounded model-availability and diagnostic evaluation, not a request to install anything.",
+      "sha256:44e9e29a9bea6fb2640071666d4a2a829b3ca811a1955f6cfef98cf47af1caab": "{\n  \"schema_version\": \"native_environment_controls.v1\",\n  \"sanitizer\": \"nativeEnvironment\",\n  \"provider\": \"anthropic\",\n  \"override_names\": [\n    \"CLAUDE_CODE_EFFORT_LEVEL\",\n    \"CLAUDE_CODE_SUBAGENT_MODEL\",\n    \"__CF_USER_TEXT_ENCODING\"\n  ]\n}\n"
+    },
+    "assurance": {
+      "overall": "PARTIALLY_RUNTIME_ATTESTED",
+      "model": {
+        "value": "claude-fable-5-1",
+        "assurance": "runtime_attested"
+      },
+      "effort": {
+        "value": "high",
+        "assurance": "host_configuration"
+      },
+      "execution_environment": "claude_code",
+      "evidence_digest": "sha256:d7ee6d06d8bd5ff49c1455aeefad4aa2b4a053490f3d4aa07967d534114b4106",
+      "limitations": [
+        "No host fallback was configured; provider-side fallback state is not independently attested.",
+        "Served effort is not independently exposed by this host trace."
+      ],
+      "diagnostics": []
+    }
+  }
+}

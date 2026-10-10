@@ -129,7 +129,7 @@ describe('offline matched harness contracts',()=>{
   expect(trial.prompt).toContain('finish-input.json');expect(trial.prompt).not.toContain('reminder-repeat-result.json');
   expect(trial.prompt).not.toContain('For trace-bound renewal acceptance');
   if(host==='claude')expect(trial.args.slice(-3)).toEqual(['--max-budget-usd','12','--forward-subagent-text']);
-  else expect(trial.args).toEqual(['exec','--ignore-user-config','--ignore-rules','--skip-git-repo-check','-C',trial.prepared.directory,'-s','workspace-write','-m','gpt-5.5','-c','model_reasoning_effort="high"','--json','-']);
+  else expect(trial.args).toEqual(['exec','--ignore-user-config','--ignore-rules','--skip-git-repo-check','-C',trial.prepared.directory,'-s','workspace-write','-m','gpt-6-astra','-c','model_reasoning_effort="high"','--json','-']);
  });
  it('binds renewal inspection to each owned artifact in an offline plan',async()=>{
   const parent=await project();

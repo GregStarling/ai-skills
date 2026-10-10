@@ -372,7 +372,7 @@ describe('local routing preferences preserve governed boundaries',()=>{
 
 describe('entry publication horizon',()=>{
   it('refuses a header that outlives evidence by more than the tolerance',()=>{
-    const pack=compileProduction();
+    vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-09T00:00:00Z'));const pack=compileProduction();
     const expiry=earliestEntryExpiry(pack)!;
     pack.expires_at=new Date(Date.parse(expiry)+24*3600000).toISOString();
     expect(()=>assertEntriesOutlivePack(pack,24)).not.toThrow();

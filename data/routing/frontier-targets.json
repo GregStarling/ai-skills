@@ -1,0 +1,30 @@
+{
+  "schema_version": "frontier_targets.v1",
+  "discovered_at": "2026-10-09T23:43:58.000Z",
+  "targets": [
+    {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6-astra",
+      "effort": "high",
+      "source": {
+        "url": "https://learn.chatgpt.com/docs/models",
+        "checked_at": "2026-10-09T23:43:58.000Z",
+        "content_digest": "sha256:953755f65acd68782c825959dfa364c2fcf81e7c04bd07d5f9099d2990156135",
+        "claim": "Official Codex model guidance still identifies Astra as its most capable model and lists Codex CLI availability; GPT-6.1 Sol is described as near-Astra performance at lower cost, not as more capable."
+      }
+    },
+    {
+      "provider": "anthropic",
+      "host": "claude",
+      "model_id": "claude-fable-5-1",
+      "effort": "high",
+      "source": {
+        "url": "https://platform.claude.com/docs/en/models/overview",
+        "checked_at": "2026-10-09T23:43:58.000Z",
+        "content_digest": "sha256:198bdea57b5a94f88dd07ca0aea88afd2fa4385f6f04c8122c995ea25b8269f4",
+        "claim": "Official model overview identifies Fable 5.1 for demanding reasoning and long-horizon agentic work, with Opus 5.5 the starting point for most workloads."
+      }
+    }
+  ]
+}

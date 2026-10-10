@@ -15,7 +15,8 @@ afterEach(async()=>{await Promise.all(temporary.splice(0).map(p=>rm(p,{recursive
 
 async function fixtures(){
   const dir=await root(),template=join(dir,'host-observations.json'),metadata=join(dir,'metadata.json');
-  const real=JSON.parse(await readFile(resolve('data/routing/host-observations.json'),'utf8'));
+  // The September captures stay a fixed fixture after later renewals replace the canonical file.
+  const real=JSON.parse(await readFile(resolve('data/routing/archive/2026-09-11/host-observations.json'),'utf8'));
   await writeFile(template,JSON.stringify({treatments:real.treatments,runs:[]},null,2));
   await writeFile(metadata,JSON.stringify({sources:[{id:'fresh'}],treatments:real.treatments.map((t:any)=>({candidate_id:t.candidate_id,availability:{...t.evidence.availability,checked_at:'2026-09-11T00:00:00.000Z'},pricing:{...t.evidence.pricing,checked_at:'2026-09-11T00:00:00.000Z'}}))},null,2));
   return {dir,template,metadata,treatments:real.treatments};
@@ -247,7 +248,7 @@ it('reuses only a completed budgeted worker capture with unchanged artifact byte
  for(const [name,bytes] of Object.entries(files))await writeFile(join(project,name),bytes);
  const json=(path:string,value:unknown)=>writeFile(path,JSON.stringify(value));
  await json(join(capture,'case.json'),{case_id:'positive',directory:project,files_before:files,files_after:files});
- await json(join(worker,'identity-evidence.json'),{candidate:{model_id:'gpt-5.5',effort:'low'}});
+ await json(join(worker,'identity-evidence.json'),{candidate:{model_id:'gpt-6-sol',effort:'low'}});
  await json(join(worker,'request.json'),{cwd:project});await json(join(worker,'summary.json'),{code:0,timed_out:false,stdout_sha256:rawSha('SYNTHETIC TRACE')});
  await writeFile(join(worker,'stdout.jsonl'),'SYNTHETIC TRACE');await json(join(worker,'accounting.json'),{id:'capture'});
  await budget.initializeBudget(budgetFile,{ceiling:2,authorization:'SYNTHETIC OFFLINE TEST'});
