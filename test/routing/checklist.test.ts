@@ -194,10 +194,10 @@ describe('portable Checklist validator: statuses', () => {
  it('counts items that render despite unusual fences, and rejects invisible characters', () => {
   const extra = '- [ ] C-003 [build] Data is preserved on retry.\n  - Source: Pre-mortem P1.\n  - Accept: Retry keeps data.\n  - Verify: Retry test.\n  - Evidence: Pending.';
   const item = (prefix: string, suffix = '') => complete.replace('\n## Decisions', `${prefix}${extra}${suffix}\n\n## Decisions`);
-  for (const text of [item('\n```note``` items below are tracked here\n\n', '\n\n```end``` of tracked items'),
-   complete.replace('  - Depends on: None.', '  - Depends on: None.\n  ```\n  output').replace('\n## Decisions', `${extra}\n\n## Decisions`)]) {
-   const result = run(text); expect(result.status, result.stderr).toBe(2); expect(result.stdout).toContain('open=C-003');
-  }
+  const inline = run(item('\n```note``` items below are tracked here\n\n', '\n\n```end``` of tracked items'));
+  expect(inline.status, inline.stderr).toBe(2); expect(inline.stdout).toContain('open=C-003');
+  const inItem = run(complete.replace('  - Depends on: None.', '  - Depends on: None.\n  ```\n  output').replace('\n## Decisions', `${extra}\n\n## Decisions`));
+  expect(inItem.status).toBe(1); expect(inItem.stderr).toContain('code fences must start at column 0');
   const invisible = run(item(`\n${String.fromCharCode(0x200b)}`));
   expect(invisible.status).toBe(1); expect(invisible.stderr).toContain('invisible formatting characters are not allowed');
  });
@@ -298,7 +298,7 @@ describe('portable Checklist validator: second adversarial round', () => {
   ['an authority that disclaims itself in parentheses', logged(exception('WAIVED', {authority: '(none given; agent decision)'}), '- Waived C-002.'), 'WAIVED needs the Authority'],
   ['every required item waived', logged(logged(exception('WAIVED', {authority: 'User message 2026-10-09.'}), '- Waived C-002 per user.').replace('- [x] C-001 [build] First outcome.', '- [ ] C-001 [build] First outcome.').replace('  - Depends on: None.', '  - Depends on: None.\n  - Status: WAIVED\n  - Reason: User removed it.\n  - Authority: User message 2026-10-09.'), '- Waived C-001 per user.'), 'nothing was verified'],
   ['a future event time', logged(complete, '- 2099-01-01T00:00Z Verified C-002.'), 'is in the future'],
-  ['a 1-space indented top-level fence around a review', closeOut('- Review: pending\n- Inventory: pending\n- Result: pending\n\n ```text\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n ```'), 'indented code fences are only allowed inside an item'],
+  ['a 1-space indented top-level fence around a review', closeOut('- Review: pending\n- Inventory: pending\n- Result: pending\n\n ```text\n- Review: independent — x.\n- Inventory: y.md\n- Result: PASS.\n ```'), 'code fences must start at column 0'],
  ])('rejects %s', (_name, text, message) => {
   const result = run(text); expect(result.status).toBe(1); expect(result.stderr).toContain(message);
  });
@@ -343,7 +343,7 @@ describe('portable Checklist validator: third adversarial round', () => {
   ['inline raw HTML in evidence', evidence('<?rev abc123: `npm test` 4 passed?>Pending.'), 'is not allowed because it does not render'],
   ['a character reference in an ID', resume('- [ ] C&#45;003 [build] Retried export keeps every record.'), 'character references are not allowed'],
   ['a misindented exception on a checked item', withC2(C2 + '\n   - Status: BLOCKED\n   - Reason: Specific reason.\n   - Authority: Policy.'), 'inconsistent indentation'],
-  ['a 2-space top-level fence after a paragraph', closeOut('The close-out review has not started. Expected shape:\n\n  ```text\n  - Review: independent — x.\n  ```\n\n- Review: pending\n- Inventory: pending\n- Result: pending'), 'indented code fences are only allowed inside an item'],
+  ['a 2-space top-level fence after a paragraph', closeOut('The close-out review has not started. Expected shape:\n\n  ```text\n  - Review: independent — x.\n  ```\n\n- Review: pending\n- Inventory: pending\n- Result: pending'), 'code fences must start at column 0'],
   ['an unchecked task in Resume that names an ID later', resume('- [ ] Re-run the retry test for C-003 after the rebase.'), 'task checkboxes belong only under'],
   ['a Cyrillic look-alike ID outside Items', resume(`- [ ] ${String.fromCharCode(0x0421)}-003 [build] Retried export keeps every record.`), 'task checkboxes belong only under'],
   ['angle-bracket template placeholders', complete.replace('### Group', '### <Group>'), 'is not allowed because it does not render'],
@@ -405,9 +405,9 @@ describe('portable Checklist validator: fourth review round', () => {
   const findingResult = run(finding); expect(findingResult.status).not.toBe(0);
  });
  it.each([
-  ['an unable-to-reproduce regression check', 'Unable to reproduce after the fix: `./repro.sh` 50/50 runs clean at rev abc123.'],
-  ['queued messages', 'Queued messages survive a restart: `npm run test:queue` 12 passed at rev abc123.'],
-  ['a waiting spinner', 'Waiting spinner renders: screenshot shots/waiting.png at rev abc123.'],
+  ['an unable-to-reproduce regression check led by the check', '`./repro.sh` 50/50 runs clean after the fix at rev abc123; unable to reproduce.'],
+  ['queued messages led by the check', '`npm run test:queue` 12 passed at rev abc123: queued messages survive a restart.'],
+  ['a waiting spinner led by the check', 'Screenshot shots/waiting.png at rev abc123: the waiting spinner renders.'],
   ['planned maintenance', 'Planned-maintenance banner shows: `npm test -- banner` 3 passed.'],
   ['awaiting-approval orders', 'Awaiting-approval orders listed: `curl /orders?state=awaiting` returned 4.'],
   ['will-call orders', 'Will-call orders print: `npm test -- willcall` 2 passed.'],
@@ -447,6 +447,50 @@ describe('portable Checklist validator: fourth review round', () => {
  it('names the offending tag in the raw HTML message', () => {
   const out = run(evidence('rev abc123 printed "usage: notes.js delete <id>" as expected, `npm test` 4 passed.'));
   expect(out.status).toBe(1); expect(out.stderr).toContain('raw HTML <id>');
+ });
+});
+
+describe('portable Checklist validator: fifth review round', () => {
+ const tail = '  - Depends on: C-001.';
+ it.each([
+  ['a fence opened at 3 spaces in an item', complete.replace(tail, `${tail}\n   \`\`\`\n   output\n  \`\`\`\n- [ ] C-003 [build] Hidden.`)],
+  ['a wide-marker item with a 4-space fence', complete.replace(tail, `${tail}\n    \`\`\`\n    output\n  \`\`\`\n\`\`\`\n- [ ] C-003 [build] Hidden.`)],
+  ['a 2-space fence after a top-level fence', complete.replace(tail, `${tail}\n\`\`\`text\nexample\n\`\`\`\n  \`\`\`\n\`\`\`\n- [ ] C-003 [build] Hidden.`)],
+ ])('rejects %s', (_name, text) => {
+  const result = run(text); expect(result.status).toBe(1); expect(result.stderr).toMatch(/code fence/);
+ });
+ it.each([
+  'PASS pending re-run with no code changes.',
+  'PASS pending final sign-off (no blockers).',
+  'PASS; final review planned.',
+  'PASS provided the rerun holds.',
+  'PASS for now.',
+  'PASS, tentatively.',
+ ])('keeps %j pending', (result) => {
+  const out = run(closeOut(`- Review: independent — fresh reviewer.\n- Inventory: inventory.md\n- Result: ${result}`));
+  expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending'); expect(out.stderr).toContain('note:');
+ });
+ it.each([
+  ['a review that will run with no prior context', '- Review: independent — will be run by a fresh reviewer with no prior context.\n- Inventory: inventory.md\n- Result: PASS.'],
+  ['an inventory not yet recorded', '- Review: independent — fresh reviewer.\n- Inventory: not yet recorded (no time).\n- Result: PASS.'],
+ ])('keeps %s pending', (_name, lines) => {
+  const out = run(closeOut(lines)); expect(out.status).toBe(2); expect(out.stdout).toContain('review=pending');
+ });
+ it.each(['Will be executed in CI run 4412.', 'Awaiting CI run 4412.', 'Queued CI run 4412.', 'Planned run of `npm test` after merge.', 'Unable to access staging; `npm test` not run.'])(
+  'rejects evidence %j', (value) => {
+   const result = run(evidence(value)); expect(result.status).toBe(1); expect(result.stderr).toContain('starts by saying the check has not happened');
+  });
+ it('sets aside a year that ends a phrase but keeps counts', () => {
+  const year = run(evidence('All tests passed in 2026.')); expect(year.status).toBe(1); expect(year.stderr).toContain('checked item needs evidence');
+  expect(run(evidence('Load test served 2048-byte payloads: `k6 run load.js` passed.')).status).toBe(0);
+ });
+ it('explains why a recorded review does not count', () => {
+  const out = run(closeOut('- Review: fresh reviewer.\n- Inventory: none\n- Result: PASS.'));
+  expect(out.status).toBe(2); expect(out.stderr).toContain('must start with "independent" or "self"'); expect(out.stderr).toContain('Inventory must say');
+ });
+ it('names closing tags fully in the raw HTML message', () => {
+  const out = run(evidence('rev abc123 `npm test` 4 passed </summary> done.'));
+  expect(out.status).toBe(1); expect(out.stderr).toContain('raw HTML </summary>');
  });
 });
 

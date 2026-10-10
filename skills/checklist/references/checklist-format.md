@@ -33,7 +33,9 @@ punctuation is ignored, so `## Pre-mortem` and `## Closeout` are accepted.
 
 Request and Definition of Complete must not be empty. Text inside fenced code
 blocks is ignored, so examples never count as items. Every fence must be closed,
-and a fence must start at column 0 unless it sits inside an item.
+and every fence line (opening and closing) must start at column 0, outside items.
+Put command output in a top-level fence, for example under Verification, and
+refer to it from the item's Evidence.
 
 Some constructs are rejected outright, because a renderer can hide or disguise
 entries with them:
@@ -101,11 +103,14 @@ The validator rejects evidence on a checked item when it:
   example:
   - `Pending`, `TBD`, `TODO:`, `To do:`, `N/A` or `see above`;
   - `none yet`, `not yet`, `not run`, `not tested at …` or `Skipped.`;
-  - `Awaiting:`, `waiting for …`, `planned:`, `queued for …`, `will run …` or
-    `unable to verify …`;
+  - any evidence that opens with `Will`, `Awaiting`, `Waiting`, `Queued`,
+    `Planned`, `Scheduled` or `Unable`;
   - `to be determined`.
 
-  Ordinary nouns such as "Queued messages …" or "Skipped rows …" are fine;
+  When in doubt the check rejects, so lead with the check that ran, for example
+  "`npm test`: queued messages survive a restart". Hyphenated words such as
+  "Will-call" are not read as markers, and nouns such as "Skipped rows …" are
+  fine;
 - only asserts success, for example "all unit tests passed", "works on my
   machine", "verified manually", "done" or "LGTM";
 - has no anchor once dates and times are set aside. An anchor is a command or
@@ -119,13 +124,13 @@ The anchor check sets aside these date and time forms:
 - month-name dates such as `Oct 9`, `9 October 2026` and `Oct 2026`;
 - ordinals such as `the 9th`;
 - `d/m/y` dates;
-- `date -u` output.
+- `date -u` output;
+- a year that ends a phrase, as in "in 2026".
 
-Other numbers count as anchors, including a bare year or a count such as "2000
-requests".
+Other numbers count as anchors, including a count such as "2000 requests" or
+"2048-byte".
 
-The Evidence line itself must name the check. Fenced output may follow it but
-does not count.
+The Evidence line itself must name the check.
 
 A timestamp that leads an Evidence value, or leads a bulleted or numbered Change
 Log or Verification entry (optionally after "Between", "From" or "At"), is an
@@ -207,8 +212,9 @@ Change Log entry that names the ID and says what changed, for example
 A removed ID stays retired. `--baseline` enforces all of this. The correction
 check looks for words such as "corrected", "removed", "replaced" or "Accept
 changed" in the same clause as the ID (clauses are split at `;`, `,` and `.`),
-and ignores negations such as "not changed". The close-out still judges whether
-each correction was legitimate.
+and ignores negations such as "not changed". To correct several items in one
+entry, join their IDs with "and", as in "Corrected C-001 and C-002 Accept: …".
+The close-out still judges whether each correction was legitimate.
 
 ## Close-Out
 
@@ -229,17 +235,22 @@ each correction was legitimate.
   review counts. These keep the record open:
   - `FAIL` or `BLOCKED` anywhere in it;
   - an alternative such as `PASS/FAIL`, `PASS | FAIL` or `PASS or FAIL`;
-  - a qualified pass such as `PASS expected`, `PASS?`, `PASS if …`,
-    `PASS unless …`, `PASS except …` or `PASS once …`;
+  - a qualified pass:
+    - `PASS expected` or `PASS?`;
+    - `PASS if …`, `PASS unless …`, `PASS except …`, `PASS once …`,
+      `PASS provided …`, `PASS assuming …`, `PASS when …` or `PASS until …`;
+    - `PASS-ish`;
+    - "for now", "tentatively", "conditionally" or "provisionally" anywhere;
   - `pending`.
 
   In AUDIT mode, Result reports the review's outcome, not the audited work's.
 - Leave all three fields `pending` until the close-out happens. Struck-through
   text (`~~x~~` or `~x~`) is ignored. A field that says the work is still not
   done also keeps the record open: "not yet", "TBD", "to be …", "will be …",
-  "awaiting" or "pending". A negated use such as "no findings pending" does not
-  count. The validator prints a note on stderr explaining why the review is
-  still pending.
+  "awaiting", "pending", "planned" or "scheduled". Only a negation directly
+  before the word cancels it, as in "no findings pending" or "nothing is
+  awaiting"; "pending a re-run with no changes" stays open. The validator prints
+  a note on stderr for each reason a recorded review does not count yet.
 - Write each field once, with no duplicates. Update it when a later round
   replaces it, and keep the earlier rounds' outcomes in Verification.
 - **Findings** are `F-` items. An open finding blocks completion, and a

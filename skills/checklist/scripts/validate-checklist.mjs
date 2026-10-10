@@ -46,12 +46,17 @@ const TEMPORAL = new RegExp([
   `\\b${MONTH}\\s{1,3}\\d{4}\\b`,
   '\\b\\d{1,2}(?:st|nd|rd|th)\\b',
   '\\b\\d{1,2}/\\d{1,2}/\\d{2,4}\\b',
+  // A year that ends a phrase ("in 2026") is a date; one followed by a word ("2000 requests") is a count.
+  '\\b(?:19|20)\\d{2}\\b(?!\\s*[a-z-])',
 ].join('|'), 'gi');
 // Something inspectable besides a date or time: a digit (count, revision), code span, URL, path or file name.
 const ANCHOR = /\d|`[^`]+`|https?:\/\/|\w\/\w|\w\.[a-z]{2,4}\b/i;
-// Evidence that opens by saying the check has not happened. Ordinary nouns ("Queued messages", "Skipped rows") pass.
-const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverified|n\/a|planned|queued|awaiting|waiting)(?=$|\s*[:,.;(]|\s+\p{Pd}|\s+(?:for|on|until|to)\b)|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded|executed)|not yet|to be \w+|none yet|no evidence|will (?:be |still )?(?:run|re-?run|add|added|verify|verified|test|tested|check|checked|do|done|record|recorded)|unable to (?:run|verify|test|check|execute))\b)/iu;
-const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will be|awaiting|pending)\b/i;
+// Evidence that opens by saying the check has not happened. When in doubt this rejects: an ordinary noun such as
+// "Queued messages" must follow the check instead of leading the evidence. Hyphenated words ("Will-call") pass.
+const UNRECORDED = /^(?:(?:todo|to do|tbd|tba|pending|skipped|untested|unverified|n\/a)(?=$|\s*[:,.;(]|\s+\p{Pd})|(?:not (?:yet )?(?:tested|run|verified|checked|done|started|recorded|executed)|not yet|to be \w+|none yet|no evidence|will|awaiting|waiting|queued|planned|scheduled|unable)\b(?!-))/iu;
+const NOT_DONE = /\b(?:not yet|tbd|tba|to be \w+|will be|awaiting|pending|planned|scheduled)\b/i;
+// Only a negation directly before the not-done word cancels it ("no findings pending", "nothing is awaiting").
+const NEGATED_NOT_DONE = /\b(?:no|nothing|none)\b(?:\s+[\w-]+){0,3}?\s+(?:pending|awaiting|outstanding|planned|scheduled)\b/gi;
 const CORRECTION = /\b(?:correct(?:ed|ion)?|remov(?:ed|al)|replac(?:ed|ement)|supersed(?:ed|es)|split|merged|reworded|renamed|narrowed|broadened|duplicat(?:e|ed)|erroneous|withdr(?:ew|awn)|deleted|dropped|weakened|tightened|loosened|clarified)\b/i;
 const FIELD_CHANGE = /\b(?:accept|acceptance|verify|verification|outcome|stage)\b[^.;]{0,80}\bchanged\b|\bchanged\b[^.;]{0,80}\b(?:accept|acceptance|verify|verification|outcome|stage)\b/i;
 const NEGATED_CHANGE = /\bnot (?:changed|corrected|removed|replaced|a duplicate)\b|\bunchanged\b|\bno (?:changes?|corrections?)\b|\bnothing\b[^.;]{0,40}\b(?:changed|corrected)\b/i;
@@ -87,34 +92,32 @@ function scan(text, errors) {
   const seen = new Set();
   let section = null;
   let fence = null;
-  let inList = false;
   const source = text.charCodeAt(0) === 0xFEFF ? text.slice(1) : text;
   source.split(/\r?\n/).forEach((raw, index) => {
     const n = index + 1;
     if (/\p{Cf}/u.test(raw)) errors.push(`line ${n}: invisible formatting characters are not allowed; they can disguise entries`);
     const line = raw.replace(/\t/g, '    ');
     const indent = line.length - line.trimStart().length;
+    // Code fences live only at column 0, where every renderer agrees on where they start and end.
+    const marker = /^( *)(`{3,}|~{3,})(.*)$/.exec(line);
     if (fence) {
-      // A fence inside an item closes only within that item; a line left of the item ends the item and its fence.
-      const close = /^( *)(`{3,}|~{3,}) *$/.exec(line);
-      const within = !fence.inItem || indent >= fence.indent;
-      if (close && within && close[2][0] === fence.char && close[2].length >= fence.length && close[1].length <= fence.indent + 3) { fence = null; return; }
-      if (!(fence.inItem && line.trim() && indent < fence.indent)) return;
-      fence = null;
+      if (!marker || marker[1].length > 3) return;
+      if (marker[1].length > 0) { errors.push(`line ${n}: code fence lines must start at column 0`); return; }
+      if (marker[2][0] === fence.char && marker[2].length >= fence.length && !marker[3].trim()) fence = null;
+      return;
     }
-    const open = /^( *)(`{3,}|~{3,})(.*)$/.exec(line);
-    if (open && !(open[2][0] === '`' && open[3].includes('`'))) {
-      // Item content starts two columns in, so only a fence indented that far can belong to an item.
-      const inItem = inList && indent >= 2;
-      if (indent > 0 && !inItem) errors.push(`line ${n}: indented code fences are only allowed inside an item`);
-      fence = { char: open[2][0], length: open[2].length, indent, inItem, line: n };
+    if (marker && !(marker[2][0] === '`' && marker[3].includes('`'))) {
+      if (indent > 0) errors.push(`line ${n}: code fences must start at column 0, outside items; put command output in a top-level fence`);
+      fence = { char: marker[2][0], length: marker[2].length, line: n };
       return;
     }
     const visible = line.replace(/`[^`\n]{0,500}`/g, ' ').replace(/<(?:https?|mailto|ftp):[^\s<>]{0,500}>/gi, ' ');
     if (visible.includes('<!--')) errors.push(`line ${n}: HTML comments are not allowed; they can hide entries`);
-    else if (HTML.test(visible)) errors.push(`line ${n}: raw HTML ${HTML.exec(visible)[0].slice(0, 40)} is not allowed because it does not render as written; put it in a code span`);
+    else if (HTML.test(visible)) {
+      const at = visible.search(HTML);
+      errors.push(`line ${n}: raw HTML ${visible.slice(at, at + 40).split('>')[0]}> is not allowed because it does not render as written; put it in a code span`);
+    }
     if (/&(?:#\d{1,7}|#x[0-9a-f]{1,6}|[a-z][a-z0-9]{1,31});/i.test(visible)) errors.push(`line ${n}: character references are not allowed; write the character itself`);
-    if (line.trim()) inList = LIST.test(line.trim()) || (inList && indent >= 2);
     const heading = /^ {0,3}(#{1,6})[ \t]+(.*)$/.exec(line);
     if (heading && heading[1].length <= 2) {
       section = SECTIONS.find((name) => key(name) === key(heading[2])) ?? null;
@@ -262,7 +265,7 @@ function validate(record, errors, notes) {
     } else if (item.checked) {
       const evidence = fields.Evidence ?? '';
       if (UNRECORDED.test(plain(evidence))) {
-        errors.push(`${at}: checked item's evidence starts by saying the check has not happened, found "${evidence}"`);
+        errors.push(`${at}: checked item's evidence starts by saying the check has not happened, found "${evidence}". Lead with the check that ran, for example "\`npm test\`: queued messages survive a restart"`);
       } else if (placeholder(evidence) || assertionOnly(evidence) || !anchored(evidence)) {
         errors.push(`${at}: checked item needs evidence naming a check, observation or artifact (a command, path, URL, revision or count other than a date), found "${evidence}"`);
       } else if (marked(evidence)) {
@@ -296,14 +299,20 @@ function validate(record, errors, notes) {
   const reviewer = /^(independent|self)\b/i.exec(reviewText)?.[1].toLowerCase();
   if (reviewer === 'self' && !/not independent/i.test(reviewText)) errors.push('Close-Out: a self review must say it was not independent');
   // The review counts only when it happened, its inventory was recorded, and its result passed outright.
-  const passed = /^pass(?:ed|es)?\b/i.test(result) && !/^pass(?:ed|es)?\s*(?:[/|?]|or\b|expected\b|if\b|unless\b|except\b|once\b)/i.test(result)
-    && !/\b(?:FAIL(?:ED|S)?|BLOCKED)\b/.test(result);
-  // "Not done" wording counts only when it is not negated ("no findings pending").
-  const unfinished = [reviewText, inventory, result].flatMap((value) => value.split(/[;,.]\s*/))
-    .find((clause) => NOT_DONE.test(clause) && !/\b(?:no|nothing|none)\b/i.test(clause));
+  const passed = /^pass(?:ed|es)?\b/i.test(result)
+    && !/^pass(?:ed|es)?(?:\s*[/|?]|\s+(?:or|expected|if|unless|except|once|provided|assuming|when|until)\b|-ish\b)/i.test(result)
+    && !/\b(?:FAIL(?:ED|S)?|BLOCKED)\b|\b(?:for now|tentative(?:ly)?|conditional(?:ly)?|provisional(?:ly)?)\b/i.test(result.replace(/\bfail(?:ed|s|ing)?\b/g, ''));
+  // "Not done" wording counts unless a negation sits directly before it ("no findings pending").
+  const unfinished = [reviewText, inventory, result].flatMap((value) => value.split(/[;,.?!]\s*/))
+    .find((clause) => NOT_DONE.test(clause.replace(NEGATED_NOT_DONE, ' ')));
   if (reviewer && !placeholder(inventory) && passed && !unfinished) return reviewer;
-  if (review.Result !== undefined && !placeholder(result) && !passed) notes.push('Close-Out Result does not start with an unqualified PASS, so the review does not count yet');
-  else if (unfinished && reviewer && passed) notes.push(`Close-Out says the review is not finished ("${unfinished.trim()}"), so it does not count yet`);
+  // Explain every reason a recorded review does not count yet.
+  if (Object.keys(review).length && [reviewText, inventory, result].some((value) => !placeholder(value))) {
+    if (!reviewer) notes.push('Close-Out Review must start with "independent" or "self"');
+    if (placeholder(inventory)) notes.push('Close-Out Inventory must say where the blind inventory was recorded');
+    if (!passed) notes.push('Close-Out Result does not start with an unqualified PASS, so the review does not count yet');
+    if (unfinished) notes.push(`Close-Out says the review is not finished ("${unfinished.trim()}"), so it does not count yet`);
+  }
   return 'pending';
 }
 
@@ -321,17 +330,17 @@ function ratchet(record, baseline, errors) {
   for (const old of baseline.items) {
     const item = now.get(old.id);
     if (!item) {
-      if (!corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction`);
+      if (!corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction (name the ID in the same clause, e.g. "Corrected C-001 and C-002 Accept: ...")`);
       continue;
     }
     const changed = [['stage', old.stage, item.stage], ['outcome', old.outcome, item.outcome],
       ['Accept', old.fields.Accept, item.fields.Accept], ['Verify', old.fields.Verify, item.fields.Verify]]
       .filter(([, before, after]) => !same(before, after)).map(([name]) => name);
-    if (changed.length && !corrected(old.id)) errors.push(`${old.id}: ${changed.join(', ')} changed without a new Change Log entry recording the correction`);
+    if (changed.length && !corrected(old.id)) errors.push(`${old.id}: ${changed.join(', ')} changed without a new Change Log entry recording the correction (name the ID in the same clause, e.g. "Corrected C-001 and C-002 Accept: ...")`);
   }
   const findings = new Set(record.findings.map((finding) => finding.id));
   for (const old of baseline.findings) {
-    if (!findings.has(old.id) && !corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction`);
+    if (!findings.has(old.id) && !corrected(old.id)) errors.push(`${old.id} was removed without a new Change Log entry recording the correction (name the ID in the same clause, e.g. "Corrected C-001 and C-002 Accept: ...")`);
   }
   // An ID whose removal the baseline log records stays retired.
   const present = new Set(baseline.items.map((item) => item.id));

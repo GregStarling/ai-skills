@@ -101,7 +101,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 
 ### Validator contract tests
 
-`test/routing/checklist.test.ts` has 192 cases. They cover:
+`test/routing/checklist.test.ts` has 211 cases. They cover:
 
 - valid records, including the guiding prompt's sample items with checkboxes;
 - every structural rejection;
@@ -111,7 +111,7 @@ All results below come from executed checks on 2026-10-09 (UTC).
 - a drift guard that validates the format reference's template (OPEN) and
   completed example (VERIFIED COMPLETE).
 
-All 192 pass. The first 104 cases failed 44 times against the original
+All 211 pass. The first 104 cases failed 44 times against the original
 validator, which shows they can fail. Typecheck passes.
 
 ### Adversarial validator review
@@ -125,12 +125,26 @@ review tried about 120 more probes:
 | 2 | 43 | 21 | 17 |
 | 3 | 60 | 18 | 9 |
 | 4 (close-out) | about 120 | 3 plus minor issues | 2 |
+| 5 (fix review) | about 130 | 4 plus minor issues | 4 |
 
-The round-4 material findings were both fixed:
+Round 4's material findings, both now fixed:
 
 - A fence quirk, present since round 1, could hide an entry.
 - Overly broad "not recorded" words, introduced in round 3, rejected real
   evidence.
+
+Round 5 showed that loosening rules to cure false rejects reopened false
+accepts. The design now fails closed:
+
+- Fences may only start at column 0, outside items.
+- Evidence opening with "Will", "Awaiting", "Queued" or a similar word is read
+  as unrecorded unless the word is hyphenated.
+- A negation cancels "pending" only when it comes directly before it.
+- A year that ends a phrase is not an anchor.
+
+A rejection comes with an actionable message. Replaying all 174 probes from the
+five rounds, the only ones that still exit 0 are legitimate records and the
+documented keyword residual (a waiver log entry that refuses the waiver).
 
 The material issues were records that reached a passing status. They used:
 
