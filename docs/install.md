@@ -1,10 +1,10 @@
 # Install skills
 
-Catchup, CTO, Delegate, Design Director, Debug, and Ship are independent skills.
-Install any combination. Copy the complete folder, including references, metadata
-and any scripts. None needs the repository's build or Model Governor engine.
-Delegate's helper and Design Director's validator need Node.js; the other four
-skills are instructions only. Ship uses the project's existing release tools. refresh-models is a repository maintenance workflow, not a
+Catchup, Checklist, CTO, Delegate, Design Director, Debug, and Ship are independent
+skills. Install any combination. Copy the complete folder, including references,
+metadata and any scripts. None needs the repository's build or Model Governor engine.
+Delegate's helper and the Checklist and Design Director validators need Node.js; the
+other four skills are instructions only. Ship uses the project's existing release tools. refresh-models is a repository maintenance workflow, not a
 standalone consumer skill.
 
 ## Skills CLI
@@ -12,7 +12,7 @@ standalone consumer skill.
 From the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup cto delegate design-director debug ship --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug ship --agent codex claude-code --copy
 ```
 
 Choose skills and agents by omitting the names you do not need. Add `--global` for a
@@ -43,7 +43,7 @@ mkdir -p ~/.claude/skills
 test ! -e ~/.claude/skills/cto && test ! -L ~/.claude/skills/cto && cp -R skills/cto ~/.claude/skills/cto
 ```
 
-Replace each `cto` with `catchup`, `delegate`, `design-director`, `debug`, or `ship`
+Replace each `cto` with `catchup`, `checklist`, `delegate`, `design-director`, `debug`, or `ship`
 to install that skill. The guards refuse an existing file, folder or symlink; use the update
 procedure below instead of nesting a new copy inside an old installation.
 
@@ -53,8 +53,8 @@ library checkout: its `skills/` source stays inert.
 
 ## Invoke and check discovery
 
-Start a fresh session. Use `$catchup`, `$cto`, `$delegate`, `$design-director`, `$debug`,
-or `$ship` in Codex; use the corresponding `/name` invocation in Claude Code.
+Start a fresh session. Use `$catchup`, `$checklist`, `$cto`, `$delegate`, `$design-director`,
+`$debug`, or `$ship` in Codex; use the corresponding `/name` invocation in Claude Code.
 Codex also exposes skills through its skill selector. Keep Claude
 project settings enabled for project-scope discovery. A personal Claude skill
 with the same name takes precedence over a project copy; update or remove the
