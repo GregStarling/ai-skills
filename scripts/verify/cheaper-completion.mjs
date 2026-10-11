@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Historical: the model IDs here (Sonnet 5, GPT-5.6 Terra, Fable 5.1, Astra) are the subjects of the dated cheaper-coordination campaign in docs/cheaper-coordination-results.md, not current Delegate defaults.
 /**
  * Completion report validator for the bounded cheaper-coordination campaign.
  *

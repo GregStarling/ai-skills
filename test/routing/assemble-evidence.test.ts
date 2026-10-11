@@ -248,7 +248,7 @@ it('reuses only a completed budgeted worker capture with unchanged artifact byte
  for(const [name,bytes] of Object.entries(files))await writeFile(join(project,name),bytes);
  const json=(path:string,value:unknown)=>writeFile(path,JSON.stringify(value));
  await json(join(capture,'case.json'),{case_id:'positive',directory:project,files_before:files,files_after:files});
- await json(join(worker,'identity-evidence.json'),{candidate:{model_id:'gpt-6-sol',effort:'low'}});
+ await json(join(worker,'identity-evidence.json'),{candidate:{model_id:'gpt-6.1-sol',effort:'low'}});
  await json(join(worker,'request.json'),{cwd:project});await json(join(worker,'summary.json'),{code:0,timed_out:false,stdout_sha256:rawSha('SYNTHETIC TRACE')});
  await writeFile(join(worker,'stdout.jsonl'),'SYNTHETIC TRACE');await json(join(worker,'accounting.json'),{id:'capture'});
  await budget.initializeBudget(budgetFile,{ceiling:2,authorization:'SYNTHETIC OFFLINE TEST'});

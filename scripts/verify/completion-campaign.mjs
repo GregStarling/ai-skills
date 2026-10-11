@@ -24,7 +24,7 @@ export async function capacityPreflight(host,{budget=budgetFile}={}){
  const native=await import('../../dist/runtime/native.js');
  const environment=sanitizedChildEnvironment(native,host);
  const {executeFrontier}=await import('./frontier-host.mjs');
- const target={host,provider:host==='claude'?'anthropic':'openai',model_id:host==='claude'?'claude-opus-5':'gpt-6-astra',effort:'low'};
+ const target={host,provider:host==='claude'?'anthropic':'openai',model_id:host==='claude'?'claude-opus-5-5':'gpt-6-astra',effort:'low'};
  await save(join(destination,'preflight-plan.json'),{id,target,purpose:'capacity_preflight',qualification_authority:false,environment:environment.identity,environment_override_names:environment.overrideNames});
  await reserveBudget(budget,{id,host,purpose:'capacity_preflight',worstCase:1});
  let actual;

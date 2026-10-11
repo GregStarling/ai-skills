@@ -8,7 +8,7 @@ The coordinator classifies the request, applies a prescribed routing rule, and r
 
 | Host | Starting coordinator | Frontier agents |
 | --- | --- | --- |
-| Codex | `gpt-6-sol` · medium reasoning | `gpt-6-astra` · high reasoning |
+| Codex | `gpt-6.1-sol` · medium reasoning (`gpt-6-sol` where 6.1 is not enabled) | `gpt-6-astra` · high reasoning |
 | Claude Code | `sonnet` | `opus` · supported effort controls |
 
 The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
@@ -98,6 +98,8 @@ The assignment is the unit of work. A small change in a large codebase stays sma
 Independent investigations and settled workstreams can use bounded workers when useful. Repository size, document length, file type, and source volume never independently require frontier.
 
 ## Validation and Rollout Status
+
+**2026-10-11 model currency.** Codex coordinates on `gpt-6.1-sol`, which supersedes `gpt-6-sol` at the same price, and still escalates to `gpt-6-astra`; Claude Code keeps `sonnet` and `opus`, now serving Sonnet 5.5 and Opus 5.5, with Haiku 5.5 workers from Claude Code 2.1.293. The routing pack was renewed on these models; see [the renewal results](delegate-renewal-results-2026-10-11.md). The maintainer's personal installations were not changed.
 
 **2026-09-22 model roles.** Claude Code escalates from `sonnet` to `opus`; Codex coordinates on `gpt-6-sol` and escalates to `gpt-6-astra`. This revision is installed in the maintainer's personal Claude Code and Codex locations. Saved defaults are unchanged, and it has not been tested in live provider sessions. See the [validation record](validation-status.md). Earlier "not installed" notes below describe their own revisions.
 

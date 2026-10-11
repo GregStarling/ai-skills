@@ -1,3 +1,4 @@
+// Historical: the model IDs here (Sonnet 5, GPT-5.6 Terra, Fable 5.1, Astra) are the subjects of the dated cheaper-coordination campaign in docs/cheaper-coordination-results.md, not current Delegate defaults.
 // Opt-in maintainer pilot. Existing evidence and comparison workflows remain immutable.
 import {readFile,writeFile,mkdir,rm,readdir,cp,mkdtemp} from 'node:fs/promises';
 import {join,resolve,dirname,relative} from 'node:path';

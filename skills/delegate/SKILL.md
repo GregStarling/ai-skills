@@ -15,9 +15,11 @@ packet, execute it and return; do not coordinate.
 
 | Role | Claude Code | Codex |
 | --- | --- | --- |
-| Coordinator, this session | `sonnet` | `gpt-6-sol`, medium reasoning |
+| Coordinator, this session | `sonnet` | `gpt-6.1-sol`, medium reasoning |
 | Frontier | `opus` through the Agent tool | `gpt-6-astra`, high reasoning |
-| Optional workers | `sonnet` or `haiku` agents | `gpt-6-sol` or `gpt-6-luna` agents |
+| Optional workers | `sonnet` or `haiku` agents | `gpt-6.1-sol` or `gpt-6-luna` agents |
+
+Where GPT-6.1 Sol is not enabled for the account, `gpt-6-sol` takes its place.
 
 An explicit role binding in the user's global CLAUDE.md or AGENTS.md, such as
 `Delegate frontier: <model>`, overrides this table, so a new provider model needs one line there,

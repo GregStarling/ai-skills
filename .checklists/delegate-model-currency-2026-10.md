@@ -50,77 +50,77 @@
     - Terminal: `claude -p --model haiku --output-format json` reported `modelUsage` `claude-haiku-5-5` (session f247ec9e, `~/.claude/projects/-private-tmp/f247ec9e-e60a-4b44-a654-2caedffcb7aa.jsonl`).
     - Agent tool: the `model: haiku` launch's transcript `subagents/agent-a844111e028460dc0.jsonl` records `"model":"claude-haiku-5-5"` 4 times and `claude-haiku-4-5` 0 times.
   - Depends on: None.
-- [ ] C-004 [build] The terminal Codex CLI's catalog includes every Codex model chosen in C-001.
+- [x] C-004 [build] The terminal Codex CLI's catalog includes every Codex model chosen in C-001.
   - Source: Implied, installed Codex CLI 0.156.1 `codex debug models` omits `gpt-6.1-sol`, which the 0.162.0 client's cache lists; latest npm is 0.162.1.
   - Accept: `codex debug models` on the terminal CLI lists each chosen Codex model, and a smoke run's rollout records it as configured.
   - Verify: Run `codex --version` and `codex debug models`; a missing chosen model fails the item.
-  - Evidence: Pending.
+  - Evidence: `codex --version` gave codex-cli 0.162.1. `codex debug models` lists gpt-6.1-sol, gpt-6-astra, gpt-6-sol and gpt-6-luna. Smoke `artifacts/renewal-2026-10-11/smoke-codex-standard/worker/request.json` ran `-m gpt-6.1-sol` with `model_reasoning_effort="low"`; the assembled treatment `codex-gpt-6.1-sol-low` was observed at 2026-10-11T21:54:03Z on codex-cli 0.162.1.
   - Depends on: C-001.
 
 ### Consumer skill source
 
-- [ ] C-005 [build] The SKILL.md Roles table names the models chosen in C-001 and C-002.
+- [x] C-005 [build] The SKILL.md Roles table names the models chosen in C-001 and C-002.
   - Source: Explicit requirement, "ensure our delegate skill is up to date on the latest models".
   - Accept: Each Roles cell matches the decisions; no row names a model the official pages list as legacy, retired or retiring.
   - Verify: Diff the Roles table against the Decisions entries and the official pages fetched that day.
-  - Evidence: Pending.
+  - Evidence: `skills/delegate/SKILL.md` Roles table now reads: coordinator `sonnet` / `gpt-6.1-sol` medium; frontier `opus` / `gpt-6-astra` high; workers `sonnet` or `haiku` / `gpt-6.1-sol` or `gpt-6-luna`. It adds the `gpt-6-sol` fallback line, matching decisions C-001 and C-002. None of the named models is legacy or retiring in `artifacts/renewal-2026-10-11/metadata/claude-models.html` or `openai-models.html` (fetched 2026-10-11T21:46:04Z).
   - Depends on: C-001, C-002.
-- [ ] C-006 [build] `hosts/claude-md-snippet.md` mirrors the Roles table exactly.
+- [x] C-006 [build] `hosts/claude-md-snippet.md` mirrors the Roles table exactly.
   - Source: Implied, SKILL.md says "The CLAUDE.md activation snippet only mirrors this table".
   - Accept: Every model or alias in the snippet equals the Roles table entry for the same role.
   - Verify: Compare the role names and models in both files; any mismatch fails.
-  - Evidence: Pending.
+  - Evidence: `hosts/claude-md-snippet.md` names only the Claude frontier `opus` (3 mentions) and "a Sonnet coordinator", and both are unchanged in the Roles table. It names no Codex model and no worker model, so no edit was needed.
   - Depends on: C-005.
-- [ ] C-007 [build] The host guides' version and source statements match the live docs.
+- [x] C-007 [build] The host guides' version and source statements match the live docs.
   - Source: Implied, `hosts/codex.md` cites sources checked 2026-09-10, and alias resolution now depends on Claude Code version (Opus 5.5 from 2.1.280, Sonnet 5.5 from 2.1.284, Haiku 5.5 from 2.1.293).
   - Accept: Any minimum-version or source-date statement in `hosts/claude-code.md` and `hosts/codex.md` matches the docs fetched that day, and no stale model claim remains.
   - Verify: Grep both guides for versions, dates and model names and compare each with the fetched docs.
-  - Evidence: Pending.
+  - Evidence: `hosts/claude-code.md` has no version or date statements and names only the aliases `haiku`/`sonnet`/`opus`. In `hosts/codex.md`, the source date moved from 2026-09-10 to 2026-10-11 after re-fetching both cited pages: https://learn.chatgpt.com/docs/build-skills (`.agents/skills`, `SKILL.md`, `$` invocation) and https://learn.chatgpt.com/docs/agent-configuration/subagents (per-spawn model and reasoning effort). Its `fork_turns` instruction is conditional on the spawn tool exposing it.
   - Depends on: C-001, C-002.
 
 ### Routing pack renewal (live, counted)
 
-- [ ] C-008 [build] Greg approves an execution ceiling for a counted renewal on the current models.
+- [x] C-008 [build] Greg approves an execution ceiling for a counted renewal on the current models.
   - Source: Decision, repo practice requires a new ceiling before any renewal; the October renewal used 49 of 62.
   - Accept: The ceiling, its date and Greg's words are recorded under Decisions, and a new campaign ledger is initialized with it.
   - Verify: Open the ledger created by `scripts/verify/campaign-budget.mjs` and confirm its ceiling equals the approved number.
-  - Evidence: Pending.
+  - Evidence: `artifacts/renewal-2026-10-11/budget.json`, created by `initializeBudget` before any execution, has `ceiling` 62 and an `authorization` that quotes Greg's 2026-10-11 message; the Decisions entry "C-008 execution ceiling" records the number.
   - Depends on: C-001, C-002.
-- [ ] C-009 [build] The October canonical routing inputs are archived byte-identically before replacement.
+- [x] C-009 [build] The October canonical routing inputs are archived byte-identically before replacement.
   - Source: Explicit constraint, historical evidence stays untouched.
   - Accept: A new `data/routing/archive/2026-10-09/` holds every replaced file with a `preservation.json` whose digests equal the originals.
   - Verify: Recompute SHA-256 of each archived file and compare with `git show 38f06c6:` of the original path.
-  - Evidence: Pending.
+  - Evidence: `artifacts/renewal-2026-10-11/archive-october.mjs` wrote 9 files plus `data/routing/archive/2026-10-09/preservation.json` (`preserved_at` 2026-10-11T21:46:29.530Z; source revision f8166d2, unchanged from 38f06c6 for these paths). Recomputed SHA-256 of all 9 archived files matched `git show 38f06c6:` of each original (9/9).
   - Depends on: C-008.
-- [ ] C-010 [build] `data/routing/frontier-targets.json` names each provider's current most capable model from a fresh official fetch.
+- [x] C-010 [build] `data/routing/frontier-targets.json` names each provider's current most capable model from a fresh official fetch.
   - Source: Implied, `skills/refresh-models/SKILL.md` requires it for every refresh.
   - Accept: Targets carry `checked_at` from the renewal day and a content digest. Each model equals the one its official page recommends for the most demanding work. Today that is `claude-fable-5-1` ("for demanding reasoning and long-horizon agentic work"; the page does not say "most capable") and `gpt-6-astra` ("most capable").
   - Verify: Re-fetch both pages, recompute the digests, and compare models and digests.
-  - Evidence: Pending.
+  - Evidence: `data/routing/frontier-targets.json` (`discovered_at` 2026-10-11T21:46:04.000Z) targets `gpt-6-astra` and `claude-fable-5-1`. Its digests equal `artifacts/renewal-2026-10-11/metadata/sha256.txt` for `openai-models.html` (66ceb21b…) and `claude-models.html` (400903df…), captured with curl at 21:46:04Z. Probes then ran on codex-cli 0.162.1 (21:47:53Z) and Claude Code 2.1.296 (21:48:08Z), and the Opus 5.5 review passed both (review digest `sha256:5286b201…`). `test/routing/frontier-refresh.test.ts` passed 5/5.
   - Depends on: C-009.
-- [ ] C-011 [build] Fresh host observations exist for every treatment the renewed pack routes, each with matching served identity.
+- [x] C-011 [build] Fresh host observations exist for every treatment the renewed pack routes, each with matching served identity.
   - Source: Explicit requirement, latest models; implied by the identity-assurance policy (an observed substitution rejects a treatment).
   - Accept: `data/routing/host-observations.json` has passing smoke runs for the decided Claude treatments (expected `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `claude-fable-5-1`) and Codex treatments (expected `gpt-6-luna`, `gpt-6-sol` or `gpt-6.1-sol`, `gpt-6-astra`). Every run's observed model equals its requested model.
   - Verify: Run the repo's identity validation over the assembled observations; a substitution or missing treatment fails it.
-  - Evidence: Pending.
+  - Evidence: `assembleSmokeEvidence` (via `artifacts/renewal-2026-10-11/assemble-observations.mjs`) accepted all 4 smoke runs with ACCEPT reviews and wrote 6 treatments between 21:50:38Z and 21:54:17Z: Haiku 5.5/not_applicable, Sonnet 5.5/low, Opus 5.5/high, Luna/low, 6.1 Sol/low and Astra/high. Claude stdout served models equal the requested ones (worker `claude-haiku-5-5` and `claude-sonnet-5-5`, reviewers `claude-opus-5-5`), and Codex records the configured model. `refresh-routing-pack.mjs` then parsed them into a 15-route pack (`sha256:6e135a0c…`). Fable 5.1 is covered by C-012.
   - Depends on: C-003, C-004, C-008, C-009.
-- [ ] C-012 [build] Reviewer calibrations exist for each renewed reviewer treatment.
+- [x] C-012 [build] Reviewer calibrations exist for each renewed reviewer treatment.
   - Source: Implied, the pack admits reviewers only through `stage-calibration.mjs`, which rejects a calibration worker absent from host observations (WORKER_OBSERVATION_MISMATCH).
   - Accept: Calibration files stage without error, and each calibration worker is a non-frontier treatment from C-011.
   - Verify: Run `scripts/stage-calibration.mjs` on the new calibrations; any mismatch error fails.
-  - Evidence: Pending.
+  - Evidence: The Fable 5.1/high calibration (`artifacts/renewal-2026-10-11/calibration/report.json`) was admitted with positive ACCEPT, defective REPAIR and boundary ACCEPT; its worker served `claude-haiku-5-5`. `node scripts/stage-calibration.mjs --observations` against the renewed observations exited 0 at 2026-10-11T21:54:56Z with report `sha256:4cfb64bb…`, so its worker matched treatment `claude-claude-haiku-5-5-not_applicable`. The admission was copied to `data/routing/reviewer-calibration/claude.json` (mechanical_work, low). Opus 5.5 and Astra are primary reviewers with fresh smokes, so they need no separate admission.
   - Depends on: C-011, C-016.
-- [ ] C-013 [build] Installed acceptance is re-run on the renewed folder for all 14 cases, or each withheld case is recorded with its reason.
+- [x] C-013 [build] Installed acceptance is re-run on the renewed folder for all 14 cases, or each withheld case is recorded with its reason.
   - Source: Implied, matching installed acceptance outranks smoke extrapolation in the pack.
   - Accept: `data/routing/installed-acceptance.json` holds the new cases with host versions, digests and verdicts; withheld cases keep their failure evidence.
   - Verify: Run the acceptance publication test for the new renewal; it fails on missing or relabeled cases.
-  - Evidence: Pending.
+  - Evidence: All 14 cases ran on frozen folder `sha256:beba70c3…` (Claude Code 2.1.296, codex-cli 0.162.1). Each passed its grader and the maintainer trace review recorded in `artifacts/renewal-2026-10-11/reasons.json`, which read every final artifact and viewed both UI renders at 320 and 1280 px. Claude workers served `claude-haiku-5-5`; Codex workers were configured `gpt-6-luna`/low. `data/routing/installed-acceptance.json` holds 14 cases with host versions. `test/routing/renewal-2026-10-11-publication.test.ts` passed 6/6 at 2026-10-11T22:12Z, including its 14-case binding to `docs/evidence/delegate-renewal-2026-10-11/evidence.json`. Budget 46/62, 0 reserved.
   - Depends on: C-011, C-012.
-- [ ] C-014 [build] The recompiled pack routes only current models and expires after 2026-11-09T00:25Z.
+- [x] C-014 [build] The recompiled pack routes only current models and expires after 2026-11-09T00:25Z.
   - Source: Pre-mortem P5; explicit requirement, latest models.
   - Accept: Treatments in `skills/delegate/routing-pack.json` contain none of `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001` or `gpt-5.5` unless a Decision keeps one. `expires_at` is later than 2026-11-09T00:25Z, and every route entry outlives the pack.
   - Verify: A new renewal publication test, modeled on `test/routing/renewal-2026-10-publication.test.ts`, asserts the treatment list, the digests and the expiry; reverting one treatment makes it fail.
-  - Evidence: Pending.
+  - Evidence: `skills/delegate/routing-pack.json` is `sha256:7a674aa8…`, generated 2026-10-11T22:10:18Z and expiring 2026-11-10T22:10:18Z; its earliest entry expires 2026-11-10T21:46:04Z. Its treatments are exactly the 5.5 Claude models, Fable 5.1, Luna, 6.1 Sol and Astra. `test/routing/renewal-2026-10-11-publication.test.ts` asserts that exact sorted list, the expiry beyond 2026-11-09T00:25:04Z and `assertEntriesOutlivePack`, and passed 6/6. A reverted treatment changes the list, so the equality fails.
   - Depends on: C-010, C-011, C-012, C-013.
 
 ### Maintainer tooling
@@ -131,26 +131,28 @@
   - Verify: Run measure-usage over recent transcripts and read its "Unpriced models" line; a test asserts both entries exist.
   - Evidence: `node scripts/measure-usage.mjs --since 2026-10-08 --json` reported `unpriced_models` `{"claude-sonnet-5-5":845}` with the `38f06c6` prices and `{}` with commit `f368f60`. Rates match the pricing table rows for Sonnet 5.5 and both Haiku 5.5 prompt-length tiers at https://platform.claude.com/docs/en/about-claude/pricing. `test/routing/measure-usage.test.ts` passed 1/1 and failed when the tier line was removed. Full checks on `f368f60`: `npm test` 1175 passed / 3 skipped, typecheck, build and `node scripts/verify/skills.mjs` passed. Merged as PR #14, main `f8166d2`; main CI run 38174524450 succeeded.
   - Depends on: None.
-- [ ] C-016 [build] Model defaults in the scripts the renewal flow runs match renewed host-observation treatments.
+- [x] C-016 [build] Model defaults in the scripts the renewal flow runs match renewed host-observation treatments.
   - Source: Pre-mortem P3; the same mismatch was fixed for Codex in PR #13.
   - Accept: `host-evidence.mjs`, `installed-delegate.mjs`, `completion-campaign.mjs`, `direct-vs-delegated.mjs`, `evaluate-frontier-reviewers.mjs`, `review-frontier-probes.mjs` and `assemble-evidence.mjs` default only to treatments in the renewed `host-observations.json` (today they default to `claude-opus-5`, `claude-sonnet-5` and `claude-haiku-4-5-20251001` on the Claude side).
   - Verify: A test reads each script's exported or literal defaults and asserts each matches a current observation treatment; setting one to a legacy ID makes it fail.
-  - Evidence: Pending.
+  - Evidence: `test/routing/maintainer-defaults.test.ts` reads the model literals of the 7 listed scripts. It passed 1/1, and failed with `"model": "claude-opus-5"` when that legacy ID was put back in `scripts/review-frontier-probes.mjs`, then passed after restoring. Defaults now name `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`, `gpt-6.1-sol`, `gpt-6-luna` and `gpt-6-astra`.
   - Depends on: C-011.
-- [ ] C-017 [build] Each script still pinned to a retiring or superseded model is updated or marked historical by recorded decision.
-  - Source: Implied, `scripts/verify/v1-live.mjs` calls `gpt-5.5`, which leaves Codex on 2026-10-14; `cheaper-completion.mjs` and `cheaper-pilot.mjs` pin `gpt-5.6-terra` and `claude-sonnet-5`.
+- [x] C-017 [build] Each script still pinned to a retiring or superseded model is updated or marked historical by recorded decision.
+  - Source: Implied, `scripts/verify/v1-live.mjs` pins `gpt-5.5` (it re-verifies retained evidence and makes no provider calls; corrected 2026-10-11); `cheaper-completion.mjs` and `cheaper-pilot.mjs` pin `gpt-5.6-terra` and `claude-sonnet-5`.
   - Accept: Each listed script is updated to current models, or carries a header stating it reproduces a dated historical run and is not part of current maintenance, with a Decisions entry.
   - Verify: Grep `scripts/` for `gpt-5.5`, `gpt-5.6-`, `claude-sonnet-5'`, `claude-opus-5'` and `claude-haiku-4-5`; every hit is in a file covered by that decision.
-  - Evidence: Pending.
+  - Evidence: The grep hits 4 files: `scripts/verify/cheaper-completion.mjs`, `scripts/verify/cheaper-pilot.mjs`, `scripts/verify/v1-live.mjs` and `scripts/usage-prices.json`. All four are covered by Decisions entry "C-017 historical model pins". The three scripts now carry a first-line "Historical:" header. `test/routing/cheaper-pilot.test.ts` and `test/routing/cheaper-completion.test.ts` passed 33/33 after the headers.
   - Depends on: C-001, C-002.
 
 ### Records
 
-- [ ] C-018 [build] Project records describe the new roles, host minimums and renewal accurately.
+- [x] C-018 [build] Project records describe the new roles, host minimums and renewal accurately.
   - Source: Implied, the repo already records model roles in `CLAUDE.md`, `docs/validation-status.md`, `docs/routing-pack-maintenance.md` and dated results docs.
   - Accept: `CLAUDE.md` gains a dated scope entry for this request. `docs/validation-status.md` names the new pack and folder digests and host versions. A dated renewal results doc and a maintenance section exist. Earlier entries stay unchanged.
   - Verify: Compare the digests in `docs/validation-status.md` with `skills/delegate/routing-pack.json` and the folder digest from `node scripts/verify/skills.mjs`; `git diff` shows only additions to earlier dated sections.
-  - Evidence: Pending.
+  - Evidence: `node scripts/verify/skills.mjs` passed. It asserts that `docs/validation-status.md` cites the shipped pack `sha256:7a674aa8…` and folder `sha256:283ed46a…`.
+    - Records: `CLAUDE.md` and `AGENTS.md` gained the dated "Model currency renewal — 2026-10-11" entry. `docs/delegate-renewal-results-2026-10-11.md` and the `docs/routing-pack-maintenance.md` "2026-10-11 counted full renewal" section exist, and `docs/delegate.md` gained a dated note.
+    - `git diff` removes only current-state lines: the validation-status pack table, digest table and current acceptance line, plus the `docs/delegate.md` current role row. Every dated section is unchanged.
   - Depends on: C-014.
 
 ### Verification and review
@@ -211,6 +213,13 @@
 - 2026-10-11 C-002 Claude roles unchanged. Coordinator `sonnet` (Sonnet 5.5, $2/$10); frontier `opus` (Opus 5.5, $4/$20, "start with Claude Opus 5.5 for most workloads"); workers `sonnet` or `haiku` (Haiku 5.5, $0.10/$0.50 up to 100k-token prompts and $0.50/$2.50 above). Sources: the pricing page (fetch saved 20:55:25Z) and the models overview. The coordinator-to-frontier price ratio narrowed from 2.5x (Sonnet 5 to Opus 5) to 2x. No measured evidence favors moving either role, so the 2026-09-22 split stands, and Fable 5.1 stays the additional mechanical reviewer in the pack. Reversal cost: low.
 - 2026-10-11 C-022 Mythos 5.1 is not routed. https://support.claude.com/en/articles/14604842 (fetched between 21:41Z and 21:43Z) offers it only through the Cyber Verification Program and gives no model ID or alias. The pricing table marks it "limited availability", and the Claude Code alias table (fetched between 20:46Z and 20:51Z) has no Mythos alias, so it is not generally available to Delegate users. Reversal cost: low.
 - 2026-10-11 C-008 execution ceiling: 62 model executions. Greg's words, received between 21:01Z and 21:41Z: "yes, run the haiku check and commit the checklist, work through this entire workstream, use /cto mode and /ship when complete". That instruction authorizes the counted renewal, and 62 is the ceiling he approved on 2026-10-09 for the same campaign shape, which used 49. Reason: the same treatment count plus one Sol replacement. Reversal cost: low; the budget halts at the ceiling.
+- 2026-10-11 C-017 historical model pins:
+  - `cheaper-completion.mjs` and `cheaper-pilot.mjs` reproduce the dated cheaper-coordination campaign (docs/cheaper-coordination-results.md). Their models are the experiment's subjects, and their tests bind them, so they are marked historical rather than changed.
+  - `v1-live.mjs` re-verifies retained v1 live-smoke evidence with `new_provider_calls: 0`, so the gpt-5.5 retirement cannot break it; it is marked historical too.
+  - `scripts/usage-prices.json` keeps the Haiku 4.5 rates so that older transcripts stay priced.
+  Reversal cost: low.
+- 2026-10-11 Haiku 5.5 worker effort is recorded as `not_applicable`, with an explicit limitation. Neither the smoke CLI launch nor the Claude Code Agent tool requests an effort, so the host default applies. The schema has no "uncontrolled" value, and `src/routing/acceptance.ts` binds an Agent-tool worker with no requested effort only to a `not_applicable` treatment. Recording a specific effort would claim a control that was never exercised and would leave the Claude acceptance cases unbound. Flagged for the frontier review. Reversal cost: medium, a schema or matcher change plus a recompile.
+- 2026-10-11 The interim pack used for installed acceptance was compiled with an empty acceptance placeholder (`artifacts/renewal-2026-10-11/canonical/installed-acceptance-interim.json`). October's placeholder records match the unchanged Luna and Astra treatments, which would cap those entries at 2026-11-08 and fail the 24-hour outlive check. With no records, every interim entry is smoke extrapolation, the same state as October's interim pack. Reversal cost: low; publication recompiles with the new acceptance.
 - 2026-10-11 Delivery destination widened to merged main: Greg's "/ship when complete" authorizes a PR and merge. Reinstalling his personal skill copies is still not requested; Ship avoids altering personal installations.
 
 ## Pre-Mortem
@@ -237,6 +246,7 @@
 - 2026-10-11T20:53Z Added C-022 from the independent audit (Claude Mythos 5.1 named in a pricing footnote).
 - 2026-10-11T21:01Z Greg asked to "ship the price fix now, and update the CLIs". Verified C-015 (PR #14, main `f8166d2`). Updated both terminal CLIs with his authorization. C-003 and C-004 stay open: the served Haiku 5.5 identity and the C-001 model choice are not verified yet.
 - 2026-10-11T21:44Z Greg: "yes, run the haiku check and commit the checklist, work through this entire workstream, use /cto mode and /ship when complete". Verified C-003 (two `haiku` launches served `claude-haiku-5-5`). Recorded and verified decisions C-001, C-002 and C-022. Set the C-008 ceiling decision at 62. Added C-023 and C-024 as `[release]` items, and appended a delivery-destination line to Definition of Complete, because publication is now authorized. C-004 stays open until a `gpt-6.1-sol` smoke rollout records the configured model.
+- 2026-10-11T21:58Z Verified C-004 through C-012 and C-016 from the campaign's free steps, probes, preflights, calibration and smokes (budget 16/62 before acceptance). Corrected C-017 Source: it said `v1-live.mjs` "calls `gpt-5.5`, which leaves Codex on 2026-10-14"; the script re-verifies retained evidence with no provider calls, so the Source now says it pins `gpt-5.5`. Authority: reading `scripts/verify/v1-live.mjs` lines 80 to 101. Verified C-017 by decision and headers.
 
 ## Verification
 

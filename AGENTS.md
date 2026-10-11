@@ -1,5 +1,17 @@
 # AI Skills
 
+## Model currency renewal — 2026-10-11
+
+Bring Delegate to the current lineup. Claude Code roles stay `sonnet` coordinating, `opus` frontier and
+`sonnet`/`haiku` workers, which now serve Sonnet 5.5, Opus 5.5 and Haiku 5.5 (Haiku 5.5 needs Claude
+Code 2.1.293 or later). Codex coordinates on `gpt-6.1-sol`, falling back to `gpt-6-sol` where 6.1 is not
+enabled, and escalates to `gpt-6-astra`. A counted renewal (ceiling 62) re-observed every treatment on
+Claude Code 2.1.296 and codex-cli 0.162.1, recalibrated Fable 5.1, re-ran the 14 installed cases and
+recompiled the pack; the October inputs are archived under data/routing/archive/2026-10-09/. Mythos 5.1
+is not routed (limited availability). This request authorized the workstream, terminal CLI updates, a
+branch, PR and /ship; saved defaults and personal skill installations stay unchanged. See
+.checklists/delegate-model-currency-2026-10.md and docs/delegate-renewal-results-2026-10-11.md.
+
 ## Checklist skill — 2026-10-09
 
 Add a portable Checklist skill that defines what complete means, persists a

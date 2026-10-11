@@ -11,11 +11,11 @@ import { finished } from 'node:stream/promises';
 // Maintainer-only native CLI experiment; deliberately grants no qualification.
 const output = resolve('artifacts/portable-host-evidence');
 const modelRuns = {
-  // 2026-10 renewal: gpt-5.3-codex-spark retired 2026-09-14 and gpt-5.5 leaves Codex sign-in 2026-10-14.
+  // 2026-10-11 renewal: the Claude 5.5 generation replaced Opus 5, Sonnet 5 and Haiku 4.5 (now legacy), and GPT-6.1 Sol superseded GPT-6 Sol.
   codex: { worker: ['gpt-6-luna', 'low'], reviewer: ['gpt-6-astra', 'high'] },
-  'codex-standard': { worker: ['gpt-6-sol', 'low'], reviewer: ['gpt-6-astra', 'high'] },
-  claude: { worker: ['claude-sonnet-5', 'low'], reviewer: ['claude-opus-5', 'high'] },
-  'claude-haiku': { worker: ['claude-haiku-4-5-20251001', null], reviewer: ['claude-opus-5', 'high'] },
+  'codex-standard': { worker: ['gpt-6.1-sol', 'low'], reviewer: ['gpt-6-astra', 'high'] },
+  claude: { worker: ['claude-sonnet-5-5', 'low'], reviewer: ['claude-opus-5-5', 'high'] },
+  'claude-haiku': { worker: ['claude-haiku-5-5', null], reviewer: ['claude-opus-5-5', 'high'] },
 };
 const hash = value => createHash('sha256').update(value).digest('hex');
 export async function execute(binary, args, cwd, prompt, destination, timeoutMs = 120000, {env=process.env} = {}) {
