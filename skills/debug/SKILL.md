@@ -70,10 +70,11 @@ rather than manufacturing another fix.
 
 Trace the observed failure to its cause and choose the smallest complete
 correction. If new evidence contradicts the hypothesis, revise it before editing.
-Do not weaken a regression assertion, skip a failing check, or change the intended
-behavior to make the result green. If a test's expectation is wrong, establish the
-authoritative requirement and explain the corrected test; that is not proof of a
-production defect.
+Do not weaken a regression assertion, skip a failing check, loosen lint, type,
+format or CI configuration, suppress a diagnostic, or change the intended
+behavior to make the result green. If a test's expectation, a check's setting or
+a diagnostic is wrong, establish the authoritative requirement and explain the
+correction; that is not proof of a production defect.
 
 Inspect directly related callers and shared logic for the same failure mechanism.
 Include another affected path only when the demonstrated cause and authorized
