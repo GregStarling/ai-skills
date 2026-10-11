@@ -35,7 +35,7 @@ export function pairManifest({pairId,host,fixtureIndex,prepared,workflow='eviden
 /** The native sanitizer removes material overrides; the allowlist also removes nested host/session state. */
 export function sanitizedChildEnvironment(native,host,inherited=process.env){
  hostCheck(host);
- const {env:clean,overrideNames}=native.nativeEnvironment(host==='claude'?'anthropic':'openai',{model_id:host==='claude'?'claude-opus-5':'gpt-6-astra',effort:'high'},inherited);
+ const {env:clean,overrideNames}=native.nativeEnvironment(host==='claude'?'anthropic':'openai',{model_id:host==='claude'?'claude-opus-5-5':'gpt-6-astra',effort:'high'},inherited);
  const env=Object.fromEntries(environmentKeys.filter(key=>clean[key]!==undefined).map(key=>[key,clean[key]]));
  assertChildEnvironment(env);
  return {env,identity:native.captureIdentityEnvironment(env),overrideNames:[...new Set([...overrideNames,...Object.keys(inherited).filter(key=>!environmentKeys.includes(key)),...Object.keys(clean).filter(key=>!environmentKeys.includes(key))])].sort()};
@@ -97,7 +97,7 @@ export async function prepareCapacityPreflight(host,{timestamp=new Date().toISOS
  await mkdir(artifacts,{recursive:true});await mkdir(destination);
  const native=await import('../../dist/runtime/native.js');
  const environment=sanitizedChildEnvironment(native,host);
- const summary={purpose:'capacity_preflight',qualification_authority:false,host,destination,dry_run:true,executions:0,max_model_calls:1,max_retries:1,executor:'scripts/verify/frontier-host.mjs',target:{host,provider:host==='claude'?'anthropic':'openai',model_id:host==='claude'?'claude-opus-5':'gpt-6-astra',effort:'low'},prompt:'Reply OK. Do not use tools, delegate, or start child processes.',environment:environment.identity,environment_override_names:environment.overrideNames};
+ const summary={purpose:'capacity_preflight',qualification_authority:false,host,destination,dry_run:true,executions:0,max_model_calls:1,max_retries:1,executor:'scripts/verify/frontier-host.mjs',target:{host,provider:host==='claude'?'anthropic':'openai',model_id:host==='claude'?'claude-opus-5-5':'gpt-6-astra',effort:'low'},prompt:'Reply OK. Do not use tools, delegate, or start child processes.',environment:environment.identity,environment_override_names:environment.overrideNames};
  await save(join(destination,'summary.json'),summary);return summary;
 }
 

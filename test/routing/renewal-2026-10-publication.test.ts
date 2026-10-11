@@ -1,15 +1,16 @@
 import {readFileSync} from 'node:fs';
 import {describe,expect,it} from 'vitest';
 import {digest,hashBytes} from '../../src/core/canonical.js';
-import {parseRoutingPack,assertEntriesOutlivePack} from '../../src/routing/contracts.js';
 import {requireFrontierRefresh} from '../../src/routing/frontier-refresh.js';
 import {reviewerCalibrationGate} from '../../src/routing/reviewer-calibration.js';
 
 const read=(path:string)=>JSON.parse(readFileSync(path,'utf8'));
+// The 2026-10-11 renewal archived these canonical inputs and replaced the pack; resolve the October copies.
+const moved=new Map<string,string>(read('data/routing/archive/2026-10-09/preservation.json').files.map((f:any)=>[f.original_path,f.archived_path]));
+const located=(path:string)=>moved.get(path)??path;
 const renewedAfter=Date.parse('2026-10-09T00:00:00Z');
 const index=read('docs/evidence/delegate-renewal-2026-10-09/evidence.json');
-const pack=parseRoutingPack(read('skills/delegate/routing-pack.json'));
-const observations=read('data/routing/host-observations.json');
+const observations=read(located('data/routing/host-observations.json'));
 
 describe('October 2026 renewal publication',()=>{
  it('archives the ten September inputs byte-identically before replacing them',()=>{
@@ -32,15 +33,15 @@ describe('October 2026 renewal publication',()=>{
    expect(old.treatments.some((p:any)=>p.evidence.smoke.execution_digest===t.evidence.smoke.execution_digest)).toBe(false);
   }
   expect(observations.treatments.filter((t:any)=>t.frontier).map((t:any)=>t.candidate_id).sort()).toEqual(['claude-claude-opus-5-high','codex-gpt-6-astra-high']);
-  const audit=read('data/routing/medium-smoke-audit.json');
+  const audit=read(located('data/routing/medium-smoke-audit.json'));
   expect(audit).toMatchObject({schema_version:'medium_smoke_audit.v1',source_digest:digest(observations),scope:'Zero/nullish quantity-default fixes in local plain JavaScript only.'});
   expect(new Set(audit.reviews.map((r:any)=>r.reviewer_execution_digest)).size).toBe(2);
  });
 
  it('binds a fresh reviewed probe of each current frontier',()=>{
-  const targets=read('data/routing/frontier-targets.json'),probes=read('data/routing/frontier-probes.json'),evidence=read('data/routing/frontier-identity-evidence.json');
+  const targets=read(located('data/routing/frontier-targets.json')),probes=read(located('data/routing/frontier-probes.json')),evidence=read(located('data/routing/frontier-identity-evidence.json'));
   expect(targets.targets.map((t:any)=>t.model_id).sort()).toEqual(['claude-fable-5-1','gpt-6-astra']);
-  const reviews=read('data/routing/frontier-probe-reviews.json').reviews;
+  const reviews=read(located('data/routing/frontier-probe-reviews.json')).reviews;
   expect(reviews).toHaveLength(1);expect(digest(reviews[0].bound)).toBe(reviews[0].bound_digest);
   for(const probe of probes.probes)expect(probe.evaluation).toMatchObject({status:'passed',review_digest:reviews[0].bound_digest});
   const now=new Date(Math.max(...probes.probes.map((p:any)=>Date.parse(p.attempted_at)))+1000).toISOString();
@@ -48,30 +49,17 @@ describe('October 2026 renewal publication',()=>{
  });
 
  it('admits only the recalibrated Fable reviewer, restricted to mechanical low',()=>{
-  const admissions=read('data/routing/reviewer-calibration/admissions.json').admissions;
+  const admissions=read(located('data/routing/reviewer-calibration/admissions.json')).admissions;
   expect(admissions.map((a:any)=>a.host)).toEqual(['claude']);
-  const admission=read('data/routing/reviewer-calibration/claude.json');
+  const admission=read(located('data/routing/reviewer-calibration/claude.json'));
   expect(digest(admission.report)).toBe(admissions[0].report_digest);
   expect(reviewerCalibrationGate(admission.report.manifest,admission.report.rows,admission.report.target).admitted).toBe(true);
   expect(Date.parse(admission.treatment.evidence.observed_at)).toBeGreaterThanOrEqual(renewedAfter);
-  const routes=pack.routes.filter(r=>r.reviewers.some(t=>t.candidate_id===admission.treatment.candidate_id));
-  expect(routes.map(r=>[r.public_task_class,r.stratum.worker_request.risk])).toEqual([['mechanical_work','low']]);
-  expect(pack.routes.some(r=>r.workers.some(t=>t.candidate_id===admission.treatment.candidate_id))).toBe(false);
- });
-
- it('keeps the existing provisional scope and outlives the pack header',()=>{
-  expect(pack.routes).toHaveLength(15);
-  expect(pack.routes.filter(r=>r.stratum.worker_request.risk==='medium').map(r=>r.public_task_class)).toEqual(['mechanical_work']);
-  expect(pack.routes.some(r=>r.public_task_class==='full_project')).toBe(false);
-  const entries=pack.routes.flatMap(r=>[...r.workers,...r.reviewers]);
-  expect(entries.every(e=>e.evidence_tier==='provisional')).toBe(true);
-  for(const e of entries)expect(Date.parse(e.expires_at)).toBeGreaterThanOrEqual(Date.parse(pack.generated_at)+29*86400000);
-  expect(Object.values(pack.treatments).map(t=>t.model_id)).not.toContain('gpt-5.5');
-  expect(()=>assertEntriesOutlivePack(pack,24)).not.toThrow();
+  expect(admission).toMatchObject({role:'reviewer',public_task_classes:['mechanical_work'],risk:'low'});
  });
 
  it('publishes only maintainer-reviewed passing cases and reconciles the bounded budget',()=>{
-  const acceptance=read('data/routing/installed-acceptance.json');
+  const acceptance=read(located('data/routing/installed-acceptance.json'));
   expect(index.cases).toHaveLength(14);
   expect(acceptance.cases.map((c:any)=>c.id).sort()).toEqual([...index.accepted_case_ids].sort());
   for(const c of acceptance.cases){

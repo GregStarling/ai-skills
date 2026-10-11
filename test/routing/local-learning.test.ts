@@ -161,16 +161,16 @@ describe('lookup',()=>{
  it('lets a coordinator verify only from inside the reviewer lane',async()=>{
   for(const route of pack.routes)expect(await lookup({host:hostOf(route),task_class:route.public_task_class,risk:route.stratum.worker_request.risk,coordinator:{model:'unlisted-reviewer',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'coordinator_not_in_reviewer_lane'});
   expect((await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-fable-5-1',effort:'high'}},{now})).coordinator_may_verify).toBe(true);
-  expect((await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-opus-5',effort:'high'}},{now})).coordinator_may_verify).toBe(true);
+  expect((await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-opus-5-5',effort:'high'}},{now})).coordinator_may_verify).toBe(true);
   // The medium route requires a fresh reviewer process, so the coordinator may not verify inside its own context even though Opus is its reviewer.
-  expect(await lookup({host:'claude',task_class:'mechanical_work',risk:'medium',coordinator:{model:'claude-opus-5',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'fresh_process_required'});
+  expect(await lookup({host:'claude',task_class:'mechanical_work',risk:'medium',coordinator:{model:'claude-opus-5-5',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'fresh_process_required'});
  });
  it('returns a compact defaulted-roster answer with verbatim limitations and no evidence objects',async()=>{
   const found=await lookup({host:'claude',task_class:'mechanical_work',risk:'low'},{now}),text=JSON.stringify(found);
   // Renewal adds the calibrated reviewer and its verbatim scope limitations (4,157 bytes).
   expect(Buffer.byteLength(text)).toBeLessThan(5120);
-  expect(found.workers.map((w:any)=>w.candidate_id)).toEqual(['claude-claude-haiku-4-5-20251001-not_applicable','claude-claude-sonnet-5-low']);
-  expect(found.reviewers.map((r:any)=>r.candidate_id)).toEqual(['claude-claude-opus-5-high','claude-claude-fable-5-1-high']);
+  expect(found.workers.map((w:any)=>w.candidate_id)).toEqual(['claude-claude-haiku-5-5-not_applicable','claude-claude-sonnet-5-5-low']);
+  expect(found.reviewers.map((r:any)=>r.candidate_id)).toEqual(['claude-claude-opus-5-5-high','claude-claude-fable-5-1-high']);
   expect(found).toMatchObject({host_verified:false,host_checks:['model selectable'],gap:null,route:{shape:'single worker',tools:['terminal']},workers:[{effort:'not_applicable'},{effort:'low'}]});
   for(const key of ['task_evidence','provisional','qualification','economics'])expect(text).not.toContain(`"${key}":`);
   const published=new Set<string>();for(const route of pack.routes)for(const x of [...route.workers,...route.reviewers]){for(const l of x.task_evidence?.limitations??[])published.add(l);for(const l of pack.treatments[x.candidate_identity].provisional?.control_limitations??[])published.add(l);}
@@ -188,9 +188,9 @@ describe('lookup',()=>{
   const sonnet=(route:any)=>({pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'claude',preferred_worker_identity:route.workers[1].candidate_identity});
   // Both research workers extrapolate from smoke; renewed mechanical acceptance is Haiku-only.
   const same=await lookup({host:'claude',task_class:'research',risk:'low',localPreferences:sonnet(routeOf(pack,'claude','research'))},{now});
-  expect(same.workers[0].candidate_id).toBe('claude-claude-sonnet-5-low');expect(same.ranking_basis.worker).toBe('local_preference_within_task_evidence');
+  expect(same.workers[0].candidate_id).toBe('claude-claude-sonnet-5-5-low');expect(same.ranking_basis.worker).toBe('local_preference_within_task_evidence');
   const cross=await lookup({host:'claude',task_class:'hard_debugging',risk:'low',localPreferences:sonnet(routeOf(pack,'claude','hard_debugging'))},{now});
-  expect(cross.workers[0].candidate_id).toBe('claude-claude-haiku-4-5-20251001-not_applicable');
+  expect(cross.workers[0].candidate_id).toBe('claude-claude-haiku-5-5-not_applicable');
  });
  it('rejects a tampered pack from runCommand and the CLI, and the CLI ignores an input clock',async()=>{const f=await fixture();try{
   const tampered=join(f.root,'tampered.json');await writeFile(tampered,JSON.stringify({...f.pack,content_digest:sha('tampered')}));
@@ -217,7 +217,7 @@ describe('finish',()=>{
   const captured=await f.call('capture',{run_id:'a',command:exit(0)});
   const input={run_id:'a',...f.delegated,coordinator:{...f.coordinator,evidence:[captured.reference]},relevant_checks_complete:true,acceptance:'accepted',checks:[{name:'tests',kind:'test',reference:captured.reference}],inspected:[{name:'final source review',kind:'review',outcome:'passed'}],attempts:[
    {role:'worker',model:'gpt-6-luna',effort:'low',outcome:'unavailable',observed:null,evidence:[captured.reference]},
-   {role:'worker',model:'gpt-6-sol',effort:'low',outcome:'accepted',observed:null,evidence:[captured.reference]},
+   {role:'worker',model:'gpt-6.1-sol',effort:'low',outcome:'accepted',observed:null,evidence:[captured.reference]},
   ]};
   const result=await f.call('finish',input);
   expect(result.receipt.attempts.map((a:any)=>a.outcome)).toEqual(['accepted','blocked','accepted']);
@@ -271,12 +271,12 @@ describe('finish',()=>{
   expect(again.receipt).toEqual(first.receipt);expect(await f.events('capture')).toHaveLength(1);
   await f.call('start',{run_id:'d'});
   const routed={run_id:'d',...f.delegated,relevant_checks_complete:true,acceptance:'accepted',coordinator:f.coordinator,inspected:[{name:'review',kind:'review',outcome:'passed'}]};
-  const r=await f.call('finish',{...routed,attempts:[{role:'worker',model:'claude-haiku-4-5-20251001',effort:'not_applicable'}]});
-  expect(r.receipt.attempts[1]).toMatchObject({role:'worker',candidate_id:'claude-claude-haiku-4-5-20251001-not_applicable',candidate_identity:f.route.workers[0].candidate_identity,evidence_tier:'provisional',configured:{model:'claude-haiku-4-5-20251001',effort:'not_applicable'},outcome:'accepted'});
-  expect(r.receipt.attempts[0]).toMatchObject({role:'coordinator',candidate_id:'claude-claude-opus-5-high'});
+  const r=await f.call('finish',{...routed,attempts:[{role:'worker',model:'claude-haiku-5-5',effort:'not_applicable'}]});
+  expect(r.receipt.attempts[1]).toMatchObject({role:'worker',candidate_id:'claude-claude-haiku-5-5-not_applicable',candidate_identity:f.route.workers[0].candidate_identity,evidence_tier:'provisional',configured:{model:'claude-haiku-5-5',effort:'not_applicable'},outcome:'accepted'});
+  expect(r.receipt.attempts[0]).toMatchObject({role:'coordinator',candidate_id:'claude-claude-opus-5-5-high'});
   await f.call('start',{run_id:'e'});
   await expect(f.call('finish',{...routed,run_id:'e',attempts:[{role:'worker',model:'unknown-model',effort:'low'}]})).rejects.toThrow('WORKER_NOT_IN_ROUTE');
-  await expect(f.call('finish',{...routed,run_id:'e',attempts:[{role:'worker',model:'claude-sonnet-5',effort:'low'},{role:'reviewer',model:'claude-sonnet-5',effort:'low'}]})).rejects.toThrow('REVIEWER_NOT_IN_ROUTE');
+  await expect(f.call('finish',{...routed,run_id:'e',attempts:[{role:'worker',model:'claude-sonnet-5-5',effort:'low'},{role:'reviewer',model:'claude-sonnet-5-5',effort:'low'}]})).rejects.toThrow('REVIEWER_NOT_IN_ROUTE');
  }finally{await f.cleanup();}});
  it('observes the host version from the binary on PATH and returns advice inline',async()=>{const f=await fixture();try{
   const stub=join(f.root,'codex-stub');await writeFile(stub,'#!/bin/sh\necho "codex-cli 0.154.0"\n',{mode:0o755});

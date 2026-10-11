@@ -2,7 +2,7 @@
   "admissions": [
     {
       "host": "claude",
-      "report_digest": "sha256:5a9b364b2a34e4d31432e3793c0cd3a8127e8e4b83b1544e1bef78655e7588a2"
+      "report_digest": "sha256:4cfb64bb02ba5a8f347b57af112061a12ab305f09a782be699fe577f62486f53"
     }
   ]
 }

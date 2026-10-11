@@ -1,0 +1,63 @@
+{
+  "schema_version": "frontier_historical_preservation.v1",
+  "source_revision": "f8166d2",
+  "status": "preserved",
+  "files": [
+    {
+      "original_path": "data/routing/frontier-targets.json",
+      "archived_path": "data/routing/archive/2026-10-09/frontier-targets.json",
+      "content_digest": "sha256:ea9972c2f54209377724de91060c636884698fdbf6f66e904fbad53d9e5a2f93",
+      "git_blob_sha": "5d5cb9b54989ba9399850027e17a900d0d26c1e8"
+    },
+    {
+      "original_path": "data/routing/frontier-probes.json",
+      "archived_path": "data/routing/archive/2026-10-09/frontier-probes.json",
+      "content_digest": "sha256:e6745c1da83fc0945000eb5cdf12f9e36d0c38ce83691db0bd4b8a25d0cc1137",
+      "git_blob_sha": "dae8aea2c07e1606547cd4193fcf78bdae3cf37f"
+    },
+    {
+      "original_path": "data/routing/frontier-identity-evidence.json",
+      "archived_path": "data/routing/archive/2026-10-09/frontier-identity-evidence.json",
+      "content_digest": "sha256:4b6d4b44fde129b042ba863f071229c761ea7b9fcbafc45dfe3cadff156c1eb3",
+      "git_blob_sha": "3aa26a865d8c2c57d438a9583059fe1766b042c7"
+    },
+    {
+      "original_path": "data/routing/frontier-probe-reviews.json",
+      "archived_path": "data/routing/archive/2026-10-09/frontier-probe-reviews.json",
+      "content_digest": "sha256:5214e9d67f1b03e6763079ae84516b9a298ffd829e00e97e3e455e38c3d092e8",
+      "git_blob_sha": "27eece3933a029dfe8a58aebbb16cf403b7a9c14"
+    },
+    {
+      "original_path": "data/routing/host-observations.json",
+      "archived_path": "data/routing/archive/2026-10-09/host-observations.json",
+      "content_digest": "sha256:1838c621d3595f48680c81765a277d529015728df49816903839018d035c46d7",
+      "git_blob_sha": "be4acbd4b3589ed8e2f528afb09c7db3b1dc6266"
+    },
+    {
+      "original_path": "data/routing/medium-smoke-audit.json",
+      "archived_path": "data/routing/archive/2026-10-09/medium-smoke-audit.json",
+      "content_digest": "sha256:1acb189831f5e00128400daa075532cbe3ab23fe78af4898f3362475f31ac88f",
+      "git_blob_sha": "ccda04bd8a64b75ba4a3f03d9044cb49f54de370"
+    },
+    {
+      "original_path": "data/routing/installed-acceptance.json",
+      "archived_path": "data/routing/archive/2026-10-09/installed-acceptance.json",
+      "content_digest": "sha256:5ecf37be6acf40d458519675a86547a66e7ffb7049b7e319126e614828588e32",
+      "git_blob_sha": "0da64d0c95160e27a82f9b4a0cbac111411ac0ec"
+    },
+    {
+      "original_path": "data/routing/reviewer-calibration/admissions.json",
+      "archived_path": "data/routing/archive/2026-10-09/reviewer-calibration/admissions.json",
+      "content_digest": "sha256:ba8db4f98cc94affd72dc611a64f97a92ebc841a33d6d66cc6b2fe98a8baeb8d",
+      "git_blob_sha": "9c77ad773fc43fe56583322d3263222726f2922d"
+    },
+    {
+      "original_path": "data/routing/reviewer-calibration/claude.json",
+      "archived_path": "data/routing/archive/2026-10-09/reviewer-calibration/claude.json",
+      "content_digest": "sha256:1e44bffeed48fa46659860ef7fbfc544396581c37d4bd11bb20e770a874ed514",
+      "git_blob_sha": "10cbb3789a855a5bb3c2141cb409359c6c35133e"
+    }
+  ],
+  "preserved_at": "2026-10-11T21:46:29.530Z",
+  "qualification_authority": false
+}

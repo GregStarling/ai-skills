@@ -1,3 +1,4 @@
+// Historical: re-verifies the retained v1 live-smoke evidence with no new provider calls; its model IDs (Opus 5, GPT-5.5, Fable 5.1, Astra) identify that dated evidence, not current Delegate defaults.
 import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

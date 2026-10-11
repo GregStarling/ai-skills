@@ -45,7 +45,7 @@ Fix completion payload for `node <skill-folder>/scripts/local-learning.mjs compl
 (replace paths/hashes and attempts with executed evidence):
 
 ```json
-{"observation_version":3,"cwd":"/absolute/session-workspace","host":"codex","task_id":"stable-task-id","assignment":"implement_fix","work_type":"routine_fix","risk":"medium","bounded":true,"diagnosis_accepted":true,"implemented_behavior":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6-sol","effort":"medium"},"frontier":{"model":"gpt-6-astra","effort":"high"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["nested-repo/src/fix.ts"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":".delegate/checks.txt","digest":"sha256:<file-bytes>"}],"review":{"verdict":"PASS","fresh_context":true,"model":"gpt-6-astra","effort":"high","artifact_digest":"sha256:<same-aggregate>"},"attempts":[{"role":"reviewer","model":"gpt-6-astra","effort":"high","status":"accepted","observed_model":null}],"elapsed_ms":null,"usage":null}
+{"observation_version":3,"cwd":"/absolute/session-workspace","host":"codex","task_id":"stable-task-id","assignment":"implement_fix","work_type":"routine_fix","risk":"medium","bounded":true,"diagnosis_accepted":true,"implemented_behavior":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6.1-sol","effort":"medium"},"frontier":{"model":"gpt-6-astra","effort":"high"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["nested-repo/src/fix.ts"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":".delegate/checks.txt","digest":"sha256:<file-bytes>"}],"review":{"verdict":"PASS","fresh_context":true,"model":"gpt-6-astra","effort":"high","artifact_digest":"sha256:<same-aggregate>"},"attempts":[{"role":"reviewer","model":"gpt-6-astra","effort":"high","status":"accepted","observed_model":null}],"elapsed_ms":null,"usage":null}
 ```
 
 For required frontier decision/execution, include an accepted `frontier` attempt and
@@ -66,7 +66,7 @@ Example unsampled research payload for the same `complete` command (replace task
 run dispatch first to determine whether a cheap audit is required):
 
 ```json
-{"observation_version":3,"cwd":"/absolute/project","host":"codex","task_id":"stable-task-id","assignment":"summarize_sources","work_type":"research","risk":"low","bounded":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6-sol","effort":"medium"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["findings.json"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":"checks.txt","digest":"sha256:<file-bytes>"}],"attempts":[],"elapsed_ms":null,"usage":null}
+{"observation_version":3,"cwd":"/absolute/project","host":"codex","task_id":"stable-task-id","assignment":"summarize_sources","work_type":"research","risk":"low","bounded":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6.1-sol","effort":"medium"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["findings.json"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":"checks.txt","digest":"sha256:<file-bytes>"}],"attempts":[],"elapsed_ms":null,"usage":null}
 ```
 
 Scoped explicit model requests use `user_model_override:{scope:"execution"|"review"|"both",model,effort,instruction}`
@@ -104,11 +104,11 @@ Input shape (replace the illustrative values):
 
 ```json
 {"cwd":"/abs/project","host":"claude","run_id":"<from start>","mode":"delegated","acceptance":"accepted","relevant_checks_complete":true,
- "coordinator":{"model":"claude-sonnet-5","effort":null,"observed":null},
+ "coordinator":{"model":"claude-sonnet-5-5","effort":null,"observed":null},
  "checks":[{"name":"unit tests","kind":"test","reference":{"path":"/abs/state/evidence/<capture>","digest":"sha256:<hash>"}},
            {"name":"build","kind":"artifact","command":["npm","run","build"]}],
  "inspected":[{"name":"diff review","kind":"review","outcome":"passed"}],
- "attempts":[{"role":"worker","model":"claude-haiku-4-5-20251001","effort":"not_applicable","outcome":"accepted",
+ "attempts":[{"role":"worker","model":"claude-haiku-5-5","effort":"not_applicable","outcome":"accepted",
               "evidence":[{"path":"/abs/state/evidence/<capture>","digest":"sha256:<hash>"}]}],
  "pack_path":"<skill-folder>/routing-pack.json","stratum_digest":"<route.stratum_digest from lookup>","usage":null}
 ```

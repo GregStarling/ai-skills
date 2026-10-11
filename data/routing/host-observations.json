@@ -3,66 +3,66 @@
     {
       "id": "claude-models",
       "url": "https://platform.claude.com/docs/en/models/overview",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:198bdea57b5a94f88dd07ca0aea88afd2fa4385f6f04c8122c995ea25b8269f4",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/claude-models.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:400903df0cebdd220170a14a804e89136ee2466310dd5c733192bcfc067708f4",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-models.html"
     },
     {
       "id": "claude-pricing",
       "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:ca116bc8c7239e62a90fa1d287d3fcdc470602ed062b81e506ebfd449c7a4508",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/claude-pricing.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:16f501c115d32d94fb914470114a58e879aae34ddfca0076f3c2770b70daaac6",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-pricing.html"
     },
     {
       "id": "claude-deprecations",
       "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:8357beb1fb106125e530c9dc1cd1725e7db048709fde4e5ef7b0d83213a7d90a",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/claude-deprecations.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:02329118b56616de58be0a1223c8d8121ac722beed18cc7e0f68610190ebf32f",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-deprecations.html"
     },
     {
       "id": "codex-models",
       "url": "https://learn.chatgpt.com/docs/models",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:953755f65acd68782c825959dfa364c2fcf81e7c04bd07d5f9099d2990156135",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/openai-models.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:66ceb21b2cc23c4ea68e99782854f5b0115e61ce6f9ae9c5a4106f7abf2df160",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-models.html"
     },
     {
       "id": "codex-pricing",
       "url": "https://learn.chatgpt.com/docs/pricing",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:ed54088f2754649f930e2434d762121120e1a71cfb9fbd9c86f210b18aac8550",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/openai-pricing.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:e5da05fb88c1181cb74220e58786deba2702bb4c6cda0b3e0fc81975df2b35fa",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-pricing.html"
     },
     {
       "id": "openai-gpt-6-astra",
       "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:c111f3a0d31d40491db11e64571a2f7f66caf76fb017ff38b2b362379fc6b767",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-astra.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:2d3d6b7a5178c26f161412d5662bc1b1162238efe77ebb6a1ad89b06a9055ebc",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6-astra.html"
     },
     {
-      "id": "openai-gpt-6-sol",
-      "url": "https://developers.openai.com/api/docs/models/gpt-6-sol",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:4fa3601848a9548bc3353f33b2007d03e8cb51a67519117fba603982c35060a9",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-sol.html"
+      "id": "openai-gpt-6.1-sol",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:9545afdc715766fe39244037a6a370ea937d533aec85b6dd3e63da174d783f76",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6.1-sol.html"
     },
     {
       "id": "openai-gpt-6-luna",
       "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
-      "checked_at": "2026-10-09T23:43:58.000Z",
-      "content_digest": "sha256:2c03e64f58508b2799901292aae1d9aff31ca36996435dcc0243e3fe44328e2d",
-      "artifact": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-luna.html"
+      "checked_at": "2026-10-11T21:46:04.000Z",
+      "content_digest": "sha256:64d8d02410935518bb626622fba5b8563e676be84439a37b384a70ed8acb97bd",
+      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6-luna.html"
     }
   ],
   "treatments": [
     {
-      "candidate_id": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "candidate_id": "claude-claude-haiku-5-5-not_applicable",
       "provider": "anthropic",
-      "model_id": "claude-haiku-4-5-20251001",
-      "snapshot_id": "claude-haiku-4-5-20251001",
+      "model_id": "claude-haiku-5-5",
+      "snapshot_id": null,
       "effort": "not_applicable",
       "serving": {
         "fallback": "disabled",
@@ -78,12 +78,12 @@
       "capabilities": [
         "terminal"
       ],
-      "context_window_tokens": 200000,
+      "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-09T23:48:00.480Z",
+        "observed_at": "2026-10-11T21:50:38.524Z",
         "host": "claude",
-        "host_version": "2.1.292 (Claude Code)",
-        "observed_model_id": "claude-haiku-4-5-20251001",
+        "host_version": "2.1.296 (Claude Code)",
+        "observed_model_id": "claude-haiku-5-5",
         "observed_effort": null,
         "configured_effort": "not_applicable",
         "effort_source": "not_applicable",
@@ -92,25 +92,26 @@
           "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
           "No explicit fallback was requested; provider-side rerouting is not independently attested.",
           "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "Official Haiku4.5 metadata does not support effort; no effort flag was sent. not_applicable records absence of this control, not observed reasoning behavior.",
-          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
+          "Haiku 5.5 supports adaptive-thinking effort, but neither this smoke (no --effort flag) nor the Claude Code Agent tool (no effort option) requests one, so the host default applies. not_applicable records the absence of an effort request, not that the model lacks effort; served effort is unobserved.",
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown.",
+          "Haiku 5.5 list price rises from $0.10/$0.50 to $0.50/$2.50 per million tokens for a request whose prompt exceeds 100,000 tokens; the recorded price is the lower tier."
         ],
         "availability": {
           "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
-          "input_usd_per_million": 1,
-          "output_usd_per_million": 5,
+          "checked_at": "2026-10-11T21:46:04.000Z",
+          "input_usd_per_million": 0.1,
+          "output_usd_per_million": 0.5,
           "unknown_reason": null
         },
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
-          "artifact_digest": "sha256:41d607d915a4215f88ec902544e4ce10d5e3998ad8b483e127fcef996be9522a",
-          "execution_digest": "sha256:739a6b6e3f9546711ec630b77f9c5f70abf1122e6cd81d2b245130965b29a79a",
-          "review_digest": "sha256:9ada9e4934d64c9a0b29ca54704c6e3b95bc7341adb0bd46ba988f7936214636",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:b52ba13a8882199b5e27f0fc6873f2517ab90b089b63ad4c4ddbeb79d4c81a99",
+          "review_digest": "sha256:ec1a82eff23fab939dc1c1dec2c80bb553feaac54d3236edbfde94793bce9601",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -118,9 +119,9 @@
       }
     },
     {
-      "candidate_id": "claude-claude-opus-5-high",
+      "candidate_id": "claude-claude-opus-5-5-high",
       "provider": "anthropic",
-      "model_id": "claude-opus-5",
+      "model_id": "claude-opus-5-5",
       "snapshot_id": null,
       "effort": "high",
       "serving": {
@@ -139,10 +140,10 @@
       ],
       "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-09T23:52:17.780Z",
+        "observed_at": "2026-10-11T21:52:32.025Z",
         "host": "claude",
-        "host_version": "2.1.292 (Claude Code)",
-        "observed_model_id": "claude-opus-5",
+        "host_version": "2.1.296 (Claude Code)",
+        "observed_model_id": "claude-opus-5-5",
         "observed_effort": null,
         "configured_effort": "high",
         "effort_source": "requested_configuration",
@@ -156,20 +157,20 @@
         ],
         "availability": {
           "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
-          "input_usd_per_million": 5,
-          "output_usd_per_million": 25,
+          "checked_at": "2026-10-11T21:46:04.000Z",
+          "input_usd_per_million": 4,
+          "output_usd_per_million": 20,
           "unknown_reason": null
         },
         "smoke": {
           "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:589872edb3ce62b0c2552bdc8f759502f5606032d8e79abf19ad2f162bb055e3",
-          "review_digest": "sha256:589872edb3ce62b0c2552bdc8f759502f5606032d8e79abf19ad2f162bb055e3",
+          "execution_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+          "review_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -177,9 +178,9 @@
       }
     },
     {
-      "candidate_id": "claude-claude-sonnet-5-low",
+      "candidate_id": "claude-claude-sonnet-5-5-low",
       "provider": "anthropic",
-      "model_id": "claude-sonnet-5",
+      "model_id": "claude-sonnet-5-5",
       "snapshot_id": null,
       "effort": "low",
       "serving": {
@@ -198,10 +199,10 @@
       ],
       "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-09T23:52:05.006Z",
+        "observed_at": "2026-10-11T21:52:21.715Z",
         "host": "claude",
-        "host_version": "2.1.292 (Claude Code)",
-        "observed_model_id": "claude-sonnet-5",
+        "host_version": "2.1.296 (Claude Code)",
+        "observed_model_id": "claude-sonnet-5-5",
         "observed_effort": null,
         "configured_effort": "low",
         "effort_source": "requested_configuration",
@@ -215,11 +216,11 @@
         ],
         "availability": {
           "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
+          "checked_at": "2026-10-11T21:46:04.000Z",
           "input_usd_per_million": 2,
           "output_usd_per_million": 10,
           "unknown_reason": null
@@ -227,8 +228,8 @@
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:27d54302bbc17c83bfd14a2ad056ff0b26d4015e137cec808bc51e41718a03d8",
-          "review_digest": "sha256:589872edb3ce62b0c2552bdc8f759502f5606032d8e79abf19ad2f162bb055e3",
+          "execution_digest": "sha256:548c331125facf0ce2b6705b77ecd505c390ddfafeff897b18acb712282b83ec",
+          "review_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -257,9 +258,9 @@
       ],
       "context_window_tokens": 1050000,
       "evidence": {
-        "observed_at": "2026-10-09T23:50:30.868Z",
+        "observed_at": "2026-10-11T21:53:14.590Z",
         "host": "codex",
-        "host_version": "codex-cli 0.156.1",
+        "host_version": "codex-cli 0.162.1",
         "observed_model_id": "gpt-6-luna",
         "observed_effort": null,
         "configured_effort": "low",
@@ -274,11 +275,11 @@
         ],
         "availability": {
           "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
+          "checked_at": "2026-10-11T21:46:04.000Z",
           "input_usd_per_million": null,
           "output_usd_per_million": null,
           "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
@@ -286,8 +287,8 @@
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:4c0a87922da9078c61776fb03bcf4535af453d34c6b37dd101e462dc1d3d48b5",
-          "review_digest": "sha256:84a61e71c134ddabcf379368550be9a63201c0121d2c1f79ab385d9aa2d97435",
+          "execution_digest": "sha256:48c7d893109702650456bc9180ed0c2fc76e04b658afddaa4a01788810b4274d",
+          "review_digest": "sha256:3eb469f0c63f350ad6730440b3cb7a29beaa6144c81d5aeece5df7c1397e3cc4",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -316,9 +317,9 @@
       ],
       "context_window_tokens": 1050000,
       "evidence": {
-        "observed_at": "2026-10-09T23:51:03.158Z",
+        "observed_at": "2026-10-11T21:54:17.806Z",
         "host": "codex",
-        "host_version": "codex-cli 0.156.1",
+        "host_version": "codex-cli 0.162.1",
         "observed_model_id": "gpt-6-astra",
         "observed_effort": null,
         "configured_effort": "high",
@@ -333,11 +334,11 @@
         ],
         "availability": {
           "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
+          "checked_at": "2026-10-11T21:46:04.000Z",
           "input_usd_per_million": null,
           "output_usd_per_million": null,
           "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
@@ -345,8 +346,8 @@
         "smoke": {
           "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:718533568488e46f99df62749a5fc70939bef26902f5d9e29bde38535df2e965",
-          "review_digest": "sha256:718533568488e46f99df62749a5fc70939bef26902f5d9e29bde38535df2e965",
+          "execution_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
+          "review_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -354,9 +355,9 @@
       }
     },
     {
-      "candidate_id": "codex-gpt-6-sol-low",
+      "candidate_id": "codex-gpt-6.1-sol-low",
       "provider": "openai",
-      "model_id": "gpt-6-sol",
+      "model_id": "gpt-6.1-sol",
       "snapshot_id": null,
       "effort": "low",
       "serving": {
@@ -368,17 +369,17 @@
         "fallback",
         "tool_use"
       ],
-      "family": "gpt-6-sol",
+      "family": "gpt-6.1-sol",
       "frontier": false,
       "capabilities": [
         "terminal"
       ],
       "context_window_tokens": 1050000,
       "evidence": {
-        "observed_at": "2026-10-09T23:50:53.078Z",
+        "observed_at": "2026-10-11T21:54:03.399Z",
         "host": "codex",
-        "host_version": "codex-cli 0.156.1",
-        "observed_model_id": "gpt-6-sol",
+        "host_version": "codex-cli 0.162.1",
+        "observed_model_id": "gpt-6.1-sol",
         "observed_effort": null,
         "configured_effort": "low",
         "effort_source": "requested_configuration",
@@ -392,11 +393,11 @@
         ],
         "availability": {
           "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-09T23:43:58.000Z"
+          "checked_at": "2026-10-11T21:46:04.000Z"
         },
         "pricing": {
           "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-09T23:43:58.000Z",
+          "checked_at": "2026-10-11T21:46:04.000Z",
           "input_usd_per_million": null,
           "output_usd_per_million": null,
           "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
@@ -404,8 +405,8 @@
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:e749dc235865f8c0462830a864a864e95f0683d5e446d35728e160990c794354",
-          "review_digest": "sha256:718533568488e46f99df62749a5fc70939bef26902f5d9e29bde38535df2e965",
+          "execution_digest": "sha256:41ab39bd8ab93fb9ff583759e8388550db979144651fba7e8dda9041981ab473",
+          "review_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -415,49 +416,49 @@
   ],
   "runs": [
     {
-      "id": "renewal-smoke-claude-haiku-1791589996653",
-      "host": "claude",
-      "scope": "tinybug: zero/nullish quantity default only",
-      "objective_passed": true,
-      "artifact_digest": "sha256:41d607d915a4215f88ec902544e4ce10d5e3998ad8b483e127fcef996be9522a",
-      "worker_stdout_digest": "sha256:739a6b6e3f9546711ec630b77f9c5f70abf1122e6cd81d2b245130965b29a79a",
-      "reviewer_stdout_digest": "sha256:9ada9e4934d64c9a0b29ca54704c6e3b95bc7341adb0bd46ba988f7936214636",
-      "worker": {
-        "model": "claude-haiku-4-5-20251001",
-        "configured_effort": "not_applicable"
-      },
-      "reviewer": {
-        "model": "claude-opus-5",
-        "configured_effort": "high",
-        "verdict": "ACCEPT"
-      }
-    },
-    {
-      "id": "renewal-smoke-claude-1791589924916",
+      "id": "renewal-smoke-claude-haiku-1791755522027",
       "host": "claude",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:27d54302bbc17c83bfd14a2ad056ff0b26d4015e137cec808bc51e41718a03d8",
-      "reviewer_stdout_digest": "sha256:589872edb3ce62b0c2552bdc8f759502f5606032d8e79abf19ad2f162bb055e3",
+      "worker_stdout_digest": "sha256:b52ba13a8882199b5e27f0fc6873f2517ab90b089b63ad4c4ddbeb79d4c81a99",
+      "reviewer_stdout_digest": "sha256:ec1a82eff23fab939dc1c1dec2c80bb553feaac54d3236edbfde94793bce9601",
       "worker": {
-        "model": "claude-sonnet-5",
-        "configured_effort": "low"
+        "model": "claude-haiku-5-5",
+        "configured_effort": "not_applicable"
       },
       "reviewer": {
-        "model": "claude-opus-5",
+        "model": "claude-opus-5-5",
         "configured_effort": "high",
         "verdict": "ACCEPT"
       }
     },
     {
-      "id": "renewal-smoke-codex-1791589830820",
+      "id": "renewal-smoke-claude-1791755541700",
+      "host": "claude",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:548c331125facf0ce2b6705b77ecd505c390ddfafeff897b18acb712282b83ec",
+      "reviewer_stdout_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+      "worker": {
+        "model": "claude-sonnet-5-5",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "claude-opus-5-5",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-1791755594551",
       "host": "codex",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:4c0a87922da9078c61776fb03bcf4535af453d34c6b37dd101e462dc1d3d48b5",
-      "reviewer_stdout_digest": "sha256:84a61e71c134ddabcf379368550be9a63201c0121d2c1f79ab385d9aa2d97435",
+      "worker_stdout_digest": "sha256:48c7d893109702650456bc9180ed0c2fc76e04b658afddaa4a01788810b4274d",
+      "reviewer_stdout_digest": "sha256:3eb469f0c63f350ad6730440b3cb7a29beaa6144c81d5aeece5df7c1397e3cc4",
       "worker": {
         "model": "gpt-6-luna",
         "configured_effort": "low"
@@ -469,15 +470,15 @@
       }
     },
     {
-      "id": "renewal-smoke-codex-standard-1791589853066",
+      "id": "renewal-smoke-codex-standard-1791755643376",
       "host": "codex",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:e749dc235865f8c0462830a864a864e95f0683d5e446d35728e160990c794354",
-      "reviewer_stdout_digest": "sha256:718533568488e46f99df62749a5fc70939bef26902f5d9e29bde38535df2e965",
+      "worker_stdout_digest": "sha256:41ab39bd8ab93fb9ff583759e8388550db979144651fba7e8dda9041981ab473",
+      "reviewer_stdout_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
       "worker": {
-        "model": "gpt-6-sol",
+        "model": "gpt-6.1-sol",
         "configured_effort": "low"
       },
       "reviewer": {

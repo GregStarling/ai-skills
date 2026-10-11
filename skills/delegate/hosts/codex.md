@@ -24,5 +24,5 @@ API keys.
 
 The mandatory ordinary `check` needs no host/model fields or saved state; see [SKILL.md](../SKILL.md). For optional evaluation commands such as `dispatch` or `complete`, pass `host:"codex"`.
 
-Sources checked 2026-09-10: [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills),
+Sources checked 2026-10-11: [Codex skill discovery](https://learn.chatgpt.com/docs/build-skills),
 [native subagents and model/effort configuration](https://learn.chatgpt.com/docs/agent-configuration/subagents).

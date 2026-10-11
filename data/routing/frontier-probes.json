@@ -1,15 +1,15 @@
 {
   "schema_version": "frontier_probes.v2",
-  "targets_digest": "sha256:08ea0595b5ed835173a31e1907a5818af6e32d030653f2f35564353bfea57e42",
+  "targets_digest": "sha256:265cfd87cbf32f003b1e270d6d2cc5f9ec5a6f50162874b0499f9865ecc89ca6",
   "probes": [
     {
       "provider": "openai",
       "host": "codex",
       "model_id": "gpt-6-astra",
       "effort": "high",
-      "host_version": "codex-cli 0.156.1",
+      "host_version": "codex-cli 0.162.1",
       "attempted": true,
-      "attempted_at": "2026-10-09T23:45:08.820Z",
+      "attempted_at": "2026-10-11T21:47:53.574Z",
       "availability": "available",
       "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
       "invocation": "native_cli",
@@ -29,22 +29,22 @@
           "assurance": "host_configuration"
         },
         "execution_environment": "codex",
-        "evidence_digest": "sha256:a1ac75bb14413e86a335b9db9aba74d28dd2123ac49b0400744ff8d33ee77036",
+        "evidence_digest": "sha256:5afd7a8fba575c8e1dc0d4611e6afb7d1d171cbda84b400e46744821a55f9a0a",
         "limitations": [
           "No host fallback was configured; provider-side fallback state is not independently attested.",
           "Served model is not independently exposed by this host trace.",
           "Served effort is not independently exposed by this host trace."
         ]
       },
-      "identity_evidence_digest": "sha256:ba48f4fb34b80d77bab9a3b565cb98e8534f0feb6ccef99f646501e9dab5bf87",
+      "identity_evidence_digest": "sha256:2135fc92244ca14d4ad8722a25a479f69d324a080fe242a54fc9de8ca761b854",
       "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:a7b06f779ae5d4084c74f96c093ad8d1e77d5d1de5fb797f1e480608887517fe",
+      "stdout_digest": "sha256:57444581c7251832b6c035c5b6cdfa3de3b6a3397559ba4d89b047ab4216bdd3",
       "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "evaluation": {
         "status": "passed",
-        "review_digest": "sha256:599e984a205e6e66db3490b97e04a913ee439fbff2441e647c0cbfffc71dca1b",
-        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
+        "review_digest": "sha256:5286b201a6452ca8804c8f206cedd19e91036092560d711445b320739c2bbe40",
+        "note": "Fresh independent Opus 5.5/high source, test and raw trace review; configured effort only. Not routing qualification."
       }
     },
     {
@@ -52,9 +52,9 @@
       "host": "claude",
       "model_id": "claude-fable-5-1",
       "effort": "high",
-      "host_version": "2.1.292 (Claude Code)",
+      "host_version": "2.1.296 (Claude Code)",
       "attempted": true,
-      "attempted_at": "2026-10-09T23:45:23.311Z",
+      "attempted_at": "2026-10-11T21:48:08.455Z",
       "availability": "available",
       "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
       "invocation": "native_cli",
@@ -76,21 +76,21 @@
           "assurance": "host_configuration"
         },
         "execution_environment": "claude_code",
-        "evidence_digest": "sha256:d7ee6d06d8bd5ff49c1455aeefad4aa2b4a053490f3d4aa07967d534114b4106",
+        "evidence_digest": "sha256:8de25b9c324b04b233e2b29af6e1df794ef0e9782009d79ec2a5214942fe840a",
         "limitations": [
           "No host fallback was configured; provider-side fallback state is not independently attested.",
           "Served effort is not independently exposed by this host trace."
         ]
       },
-      "identity_evidence_digest": "sha256:f98afe0c03c1085f03fe376732d5d5716f379b9e3bb741db463fd60ce363c27e",
+      "identity_evidence_digest": "sha256:58f8e448d7fe38dedaf04d8390a62d734ada6a2186cadc7fb64314b8efeeb0a3",
       "exit_code": 0,
       "timed_out": false,
-      "stdout_digest": "sha256:181b6ecd453ba232960e92e287c4ec7bdee07ad1ac530dfae43a1553bbc86184",
+      "stdout_digest": "sha256:2e306964c660142ef3a8ab9eb39867806bd607f278af214d03c1201e6265b8db",
       "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "evaluation": {
         "status": "passed",
-        "review_digest": "sha256:599e984a205e6e66db3490b97e04a913ee439fbff2441e647c0cbfffc71dca1b",
-        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
+        "review_digest": "sha256:5286b201a6452ca8804c8f206cedd19e91036092560d711445b320739c2bbe40",
+        "note": "Fresh independent Opus 5.5/high source, test and raw trace review; configured effort only. Not routing qualification."
       }
     }
   ]
