@@ -1,6 +1,6 @@
 {
   "schema_version": "delegate_renewal_evidence.v1",
-  "published_at": "2026-10-11T22:10:26.144Z",
+  "published_at": "2026-10-11T22:22:43.271Z",
   "authorization": "Greg Starling, Claude Code chat message received 2026-10-11 between 21:01Z and 21:41Z: \"yes, run the haiku check and commit the checklist, work through this entire workstream, use /cto mode and /ship when complete\". Authorizes the full Delegate model-currency workstream in .checklists/delegate-model-currency-2026-10.md: fresh frontier preflight, Fable calibration, smoke renewal of the Claude 5.5 (Opus, Sonnet, Haiku) and Codex (GPT-6 Luna, GPT-6.1 Sol, GPT-6 Astra) treatments, and the 14-case installed acceptance re-run, with publication through /ship. Ceiling 62 matches the ceiling Greg approved on 2026-10-09 for the same campaign shape (49 used).",
   "qualification_authority": false,
   "scope": "2026-10-11 full renewal of the existing provisional route scope on the current lineup: Claude Opus 5, Sonnet 5 and Haiku 4.5 treatments replaced by Opus 5.5, Sonnet 5.5 and Haiku 5.5, and the Codex gpt-6-sol worker replaced by gpt-6.1-sol; Luna, Astra and the Fable 5.1 reviewer renewed.",
@@ -492,7 +492,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-backend/maintainer-review-final.json",
-        "digest": "sha256:b4be8d075d6470603979aec8e2dcab57d16b62de315df719531f77e249eaa204"
+        "digest": "sha256:2b6a29838e9fbb089a20c5347ce8c8a565ed20f9f9bebf12028f6da26349b51d"
       },
       "started_at": "2026-10-11T21:59:47.153Z",
       "original_process": {
@@ -550,7 +550,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-fullproject/maintainer-review-final.json",
-        "digest": "sha256:c8769f67b9ea797c868bbda1d8cfecdeae131028693671f4d7191f0780809f5e"
+        "digest": "sha256:688708d48358ab39580e64ab7ca3cb34ccd2266bc153f93b67ae011f0c6f5a89"
       },
       "started_at": "2026-10-11T22:07:57.921Z",
       "original_process": {
@@ -627,7 +627,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-hardbug/maintainer-review-final.json",
-        "digest": "sha256:967fd4f17f24fa84331cc446eb77876411b517f4910a869683dd24f9828c9cfa"
+        "digest": "sha256:c13cb08f9416df1d894d875e5bc8cc637fdc23c02d2cdb0bc64084f16cf1ec92"
       },
       "started_at": "2026-10-11T22:04:06.365Z",
       "original_process": {
@@ -685,7 +685,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-mechanical/maintainer-review-final.json",
-        "digest": "sha256:42f88e299b3ef66876004e3a0fe848c3cc626d2487f8447b31b249adecde637e"
+        "digest": "sha256:522cffc16364541470323f61e6811f2f5363febd272d862937ec73729e060741"
       },
       "started_at": "2026-10-11T21:57:55.050Z",
       "original_process": {
@@ -745,7 +745,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-multicomponent/maintainer-review-final.json",
-        "digest": "sha256:c56359335085dc8475ade803060064635899a77dd9a264da0e3b864bd63646ed"
+        "digest": "sha256:95164a65c3f67d3874d0a480eed4f805a4cf75e02a3fddb657663d5404e255f3"
       },
       "started_at": "2026-10-11T22:06:10.673Z",
       "original_process": {
@@ -809,7 +809,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-tinybug/maintainer-review-final.json",
-        "digest": "sha256:47066b0b997ef79f4a948d83ecb8d3ff42c6fb6f6742f5ea8dd6e3376e69eda6"
+        "digest": "sha256:4db26bdb3f30132849b7384d5c7632fd7dbc1dfd764ede33c4aedc1c637d8915"
       },
       "started_at": "2026-10-11T21:56:13.519Z",
       "original_process": {
@@ -868,7 +868,7 @@
       },
       "review": {
         "path": "artifacts/renewal-2026-10-11/renewal-2026-10-11-installed-codex-ui/maintainer-review-final.json",
-        "digest": "sha256:972530a19023ff1e6be110ac1e0847f0f5b2f0db5584d4b84d7840e5e9d0d515"
+        "digest": "sha256:f4a155394a2df76d5b55b5ec734f36d6391f8be90cda56a12d1f4cbf8a069f1c"
       },
       "started_at": "2026-10-11T22:01:30.441Z",
       "original_process": {

@@ -1,6 +1,6 @@
 {
   "schema_version": "installed_delegate_acceptance.v1",
-  "validated_at": "2026-10-11T22:10:18.495Z",
+  "validated_at": "2026-10-11T22:22:42.972Z",
   "final_consumer_folder_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
   "host_versions": {
     "claude": "2.1.296 (Claude Code)",
@@ -91,7 +91,7 @@
             "quantity.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -207,7 +207,7 @@
             "link.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -321,7 +321,7 @@
             "paginate.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -588,7 +588,7 @@
             "index.html"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -754,7 +754,7 @@
             "search.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -813,7 +813,7 @@
             "view.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
@@ -872,7 +872,7 @@
             "store.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         },
         {
           "requested_model": "gpt-6-luna",
@@ -888,7 +888,7 @@
             "view.mjs"
           ],
           "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch or shell heredoc write events"
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {

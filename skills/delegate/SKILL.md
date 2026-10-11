@@ -19,7 +19,7 @@ packet, execute it and return; do not coordinate.
 | Frontier | `opus` through the Agent tool | `gpt-6-astra`, high reasoning |
 | Optional workers | `sonnet` or `haiku` agents | `gpt-6.1-sol` or `gpt-6-luna` agents |
 
-Where GPT-6.1 Sol is not enabled for the account, `gpt-6-sol` takes its place.
+Where GPT-6.1 Sol is not enabled for the account, coordinate on `gpt-6-sol` and use `gpt-6-luna` workers.
 
 An explicit role binding in the user's global CLAUDE.md or AGENTS.md, such as
 `Delegate frontier: <model>`, overrides this table, so a new provider model needs one line there,

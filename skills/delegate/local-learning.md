@@ -104,11 +104,11 @@ Input shape (replace the illustrative values):
 
 ```json
 {"cwd":"/abs/project","host":"claude","run_id":"<from start>","mode":"delegated","acceptance":"accepted","relevant_checks_complete":true,
- "coordinator":{"model":"claude-sonnet-5","effort":null,"observed":null},
+ "coordinator":{"model":"claude-sonnet-5-5","effort":null,"observed":null},
  "checks":[{"name":"unit tests","kind":"test","reference":{"path":"/abs/state/evidence/<capture>","digest":"sha256:<hash>"}},
            {"name":"build","kind":"artifact","command":["npm","run","build"]}],
  "inspected":[{"name":"diff review","kind":"review","outcome":"passed"}],
- "attempts":[{"role":"worker","model":"claude-haiku-4-5-20251001","effort":"not_applicable","outcome":"accepted",
+ "attempts":[{"role":"worker","model":"claude-haiku-5-5","effort":"not_applicable","outcome":"accepted",
               "evidence":[{"path":"/abs/state/evidence/<capture>","digest":"sha256:<hash>"}]}],
  "pack_path":"<skill-folder>/routing-pack.json","stratum_digest":"<route.stratum_digest from lookup>","usage":null}
 ```

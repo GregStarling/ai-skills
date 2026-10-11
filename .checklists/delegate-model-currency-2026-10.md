@@ -63,7 +63,7 @@
   - Source: Explicit requirement, "ensure our delegate skill is up to date on the latest models".
   - Accept: Each Roles cell matches the decisions; no row names a model the official pages list as legacy, retired or retiring.
   - Verify: Diff the Roles table against the Decisions entries and the official pages fetched that day.
-  - Evidence: `skills/delegate/SKILL.md` Roles table now reads: coordinator `sonnet` / `gpt-6.1-sol` medium; frontier `opus` / `gpt-6-astra` high; workers `sonnet` or `haiku` / `gpt-6.1-sol` or `gpt-6-luna`. It adds the `gpt-6-sol` fallback line, matching decisions C-001 and C-002. None of the named models is legacy or retiring in `artifacts/renewal-2026-10-11/metadata/claude-models.html` or `openai-models.html` (fetched 2026-10-11T21:46:04Z).
+  - Evidence: After the review repair, `skills/delegate/SKILL.md` names coordinator `sonnet` / `gpt-6.1-sol` medium, frontier `opus` / `gpt-6-astra` high, and workers `sonnet` or `haiku` / `gpt-6.1-sol` or `gpt-6-luna`. Its fallback reads "Where GPT-6.1 Sol is not enabled for the account, coordinate on `gpt-6-sol` and use `gpt-6-luna` workers", matching decisions C-001 and C-002 and the pack, which has no `gpt-6-sol` treatment. `test/routing/maintainer-defaults.test.ts` (C-025) asserts that fallback text.
   - Depends on: C-001, C-002.
 - [x] C-006 [build] `hosts/claude-md-snippet.md` mirrors the Roles table exactly.
   - Source: Implied, SKILL.md says "The CLAUDE.md activation snippet only mirrors this table".
@@ -114,13 +114,15 @@
   - Source: Implied, matching installed acceptance outranks smoke extrapolation in the pack.
   - Accept: `data/routing/installed-acceptance.json` holds the new cases with host versions, digests and verdicts; withheld cases keep their failure evidence.
   - Verify: Run the acceptance publication test for the new renewal; it fails on missing or relabeled cases.
-  - Evidence: All 14 cases ran on frozen folder `sha256:beba70c3…` (Claude Code 2.1.296, codex-cli 0.162.1). Each passed its grader and the maintainer trace review recorded in `artifacts/renewal-2026-10-11/reasons.json`, which read every final artifact and viewed both UI renders at 320 and 1280 px. Claude workers served `claude-haiku-5-5`; Codex workers were configured `gpt-6-luna`/low. `data/routing/installed-acceptance.json` holds 14 cases with host versions. `test/routing/renewal-2026-10-11-publication.test.ts` passed 6/6 at 2026-10-11T22:12Z, including its 14-case binding to `docs/evidence/delegate-renewal-2026-10-11/evidence.json`. Budget 46/62, 0 reserved.
+  - Evidence: All 14 cases ran on frozen folder `sha256:beba70c3…` (Claude Code 2.1.296, codex-cli 0.162.1). Each passed its grader and the maintainer trace review in `artifacts/renewal-2026-10-11/reasons.json`, which read every final artifact and viewed both UI renders. Claude workers served `claude-haiku-5-5`; Codex workers were configured `gpt-6-luna`/low.
+    - After the frontier review (finding F-005), the collector attributes a python write only to the `Path` receiving `.write_text(`. Proposals were regenerated: only the 7 Codex proposals changed, each by the write-attribution label alone (normalized comparison). Final reviews, `data/routing/installed-acceptance.json` (14 cases) and the evidence index were then rebuilt; the superseded files are in `artifacts/renewal-2026-10-11/superseded-before-review-repair/`.
+    - `test/routing/renewal-2026-10-11-publication.test.ts` passed within the 1185-test run at 2026-10-11T22:24:28Z. Budget 46/62, 0 reserved.
   - Depends on: C-011, C-012.
 - [x] C-014 [build] The recompiled pack routes only current models and expires after 2026-11-09T00:25Z.
   - Source: Pre-mortem P5; explicit requirement, latest models.
   - Accept: Treatments in `skills/delegate/routing-pack.json` contain none of `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5-20251001` or `gpt-5.5` unless a Decision keeps one. `expires_at` is later than 2026-11-09T00:25Z, and every route entry outlives the pack.
   - Verify: A new renewal publication test, modeled on `test/routing/renewal-2026-10-publication.test.ts`, asserts the treatment list, the digests and the expiry; reverting one treatment makes it fail.
-  - Evidence: `skills/delegate/routing-pack.json` is `sha256:7a674aa8…`, generated 2026-10-11T22:10:18Z and expiring 2026-11-10T22:10:18Z; its earliest entry expires 2026-11-10T21:46:04Z. Its treatments are exactly the 5.5 Claude models, Fable 5.1, Luna, 6.1 Sol and Astra. `test/routing/renewal-2026-10-11-publication.test.ts` asserts that exact sorted list, the expiry beyond 2026-11-09T00:25:04Z and `assertEntriesOutlivePack`, and passed 6/6. A reverted treatment changes the list, so the equality fails.
+  - Evidence: The recompiled `skills/delegate/routing-pack.json` is `sha256:37377985…`, generated 2026-10-11T22:22:43Z and expiring 2026-11-10T22:22:43Z; its earliest entry expires 2026-11-10T21:46:04Z. Its treatments are exactly Claude Opus/Sonnet/Haiku 5.5, Fable 5.1, Luna, 6.1 Sol and Astra. `test/routing/renewal-2026-10-11-publication.test.ts` asserts the sorted treatment list, every entry at least 29 days past `generated_at` (re-added per F-006), the expiry beyond 2026-11-09T00:25:04Z and `assertEntriesOutlivePack`. It passed in the 1185-test run at 22:24:28Z.
   - Depends on: C-010, C-011, C-012, C-013.
 
 ### Maintainer tooling
@@ -150,9 +152,10 @@
   - Source: Implied, the repo already records model roles in `CLAUDE.md`, `docs/validation-status.md`, `docs/routing-pack-maintenance.md` and dated results docs.
   - Accept: `CLAUDE.md` gains a dated scope entry for this request. `docs/validation-status.md` names the new pack and folder digests and host versions. A dated renewal results doc and a maintenance section exist. Earlier entries stay unchanged.
   - Verify: Compare the digests in `docs/validation-status.md` with `skills/delegate/routing-pack.json` and the folder digest from `node scripts/verify/skills.mjs`; `git diff` shows only additions to earlier dated sections.
-  - Evidence: `node scripts/verify/skills.mjs` passed. It asserts that `docs/validation-status.md` cites the shipped pack `sha256:7a674aa8…` and folder `sha256:283ed46a…`.
-    - Records: `CLAUDE.md` and `AGENTS.md` gained the dated "Model currency renewal — 2026-10-11" entry. `docs/delegate-renewal-results-2026-10-11.md` and the `docs/routing-pack-maintenance.md` "2026-10-11 counted full renewal" section exist, and `docs/delegate.md` gained a dated note.
-    - `git diff` removes only current-state lines: the validation-status pack table, digest table and current acceptance line, plus the `docs/delegate.md` current role row. Every dated section is unchanged.
+  - Evidence: `node scripts/verify/skills.mjs` passed at 22:24:28Z. It asserts that `docs/validation-status.md` cites pack `sha256:37377985…` and folder `sha256:3df782b9…`; the guidance is `sha256:60621a18…`.
+    - The status and results docs say the published guidance differs from the acceptance folder by three post-review documentation edits. The results doc attributes "superseded by GPT-6.1 Sol" to the GPT-6 Sol page fetched 21:41 to 21:43Z, and its Limitations now cover Haiku effort inheritance, the bound frontier-target claim and the collector correction.
+    - `CLAUDE.md` and `AGENTS.md` carry the dated scope entry, now also stating that Greg authorized syncing his installed copies after merge. `docs/routing-pack-maintenance.md` and `docs/delegate.md` carry their dated additions.
+    - `git diff` removes only current-state lines; every dated section is unchanged.
   - Depends on: C-014.
 
 ### Verification and review
@@ -161,16 +164,16 @@
   - Source: Explicit project instruction in `CLAUDE.md`.
   - Accept: `npm test`, `npm run typecheck`, `npm run build` and `node scripts/verify/skills.mjs` all exit 0 on the final commit.
   - Verify: Run all four on the final commit and record counts.
-  - Evidence: Pending.
+  - Evidence: STALE: ran at 2026-10-11T22:13:44Z on commit `5c23504`; the review repairs changed the tree. The uncommitted repair tree passed 1185 tests, typecheck, build and the skills check at 22:24:28Z. A rerun on the repair commit is still required.
   - Depends on: C-005, C-006, C-007, C-014, C-015, C-016, C-017, C-018.
 - [ ] C-020 [build] A disposable install of the updated Delegate folder works on both hosts.
   - Source: Implied, `CLAUDE.md` requires validating clean installs in disposable projects.
   - Accept: The folder installs into a temporary project for Claude Code and Codex; `local-learning.mjs check` returns a review requirement; the installed folder digest equals the source digest.
   - Verify: Install into a `mktemp -d` project, run the check, and compare digests.
-  - Evidence: Pending.
+  - Evidence: STALE: the installs from `5c23504` matched folder `sha256:283ed46a…`; the repairs changed the folder to `sha256:3df782b9…`, so the install must be repeated on the repair commit.
   - Depends on: C-019.
 - [ ] C-021 [build] A fresh frontier review of the implemented change returns PASS.
-  - Source: Implied, Delegate requires fresh frontier review for public contracts and consequential decisions; Delegate task ID `5d28a013:delegate-model-currency` with `origin_work_type` `frontier_decision`.
+  - Source: Implied, Delegate requires fresh frontier review for public contracts and consequential decisions; Delegate task ID `5d28a013:delegate-model-currency` with `origin_work_type` `public_contract_design` (`check` returned IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER).
   - Accept: An `opus` reviewer given only the requirements, the final diff and the check results returns PASS, or each REPAIR finding is fixed and re-reviewed.
   - Verify: Record the reviewer's verdict and findings; any edit after the review invalidates it.
   - Evidence: Pending.
@@ -197,6 +200,18 @@
   - Source: Implied, Ship verification for an installable skill.
   - Accept: The Delegate folder installed from `origin/main` into a temporary project has the renewed pack digest and Roles table, and its `check` command runs.
   - Verify: Install from a fresh `origin/main` worktree, compare digests with `docs/validation-status.md`, and run the check.
+  - Evidence: Pending.
+  - Depends on: C-023.
+- [x] C-025 [build] Consumer guidance names only models the pack routes, plus the one documented GPT-6.1 Sol fallback.
+  - Source: Close-out finding F-001.
+  - Accept: Every `claude-…` or `gpt-…` model ID in `skills/delegate/**/*.md` is a pack treatment model or the `gpt-6-sol` named in the Roles fallback sentence.
+  - Verify: A test scans the consumer Markdown against `routing-pack.json`; putting a legacy ID back into an example makes it fail.
+  - Evidence: `test/routing/maintainer-defaults.test.ts` "lets consumer guidance name only routed models…" passed 2/2. It failed with `"model": "claude-haiku-4-5-20251001"` when that ID was restored in `local-learning.md`, and passed again after reverting. The scan finds only `claude-haiku-5-5`, `claude-sonnet-5-5`, `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol` and the fallback `gpt-6-sol`.
+  - Depends on: C-005.
+- [ ] C-026 [release] Greg's installed Delegate copies match the merged source.
+  - Source: Explicit requirement, "sync my installs" (Greg, 2026-10-11).
+  - Accept: Both `~/.claude/skills/delegate` and `~/.agents/skills/delegate` are backed up under `~/.agents/skill-backups/` and then hold the merged `skills/delegate`; each folderDigest equals the published folder digest and `check` runs.
+  - Verify: Compare each installed folderDigest with the digest in `docs/validation-status.md` on main, and run the installed helper's `check`.
   - Evidence: Pending.
   - Depends on: C-023.
 
@@ -247,6 +262,9 @@
 - 2026-10-11T21:01Z Greg asked to "ship the price fix now, and update the CLIs". Verified C-015 (PR #14, main `f8166d2`). Updated both terminal CLIs with his authorization. C-003 and C-004 stay open: the served Haiku 5.5 identity and the C-001 model choice are not verified yet.
 - 2026-10-11T21:44Z Greg: "yes, run the haiku check and commit the checklist, work through this entire workstream, use /cto mode and /ship when complete". Verified C-003 (two `haiku` launches served `claude-haiku-5-5`). Recorded and verified decisions C-001, C-002 and C-022. Set the C-008 ceiling decision at 62. Added C-023 and C-024 as `[release]` items, and appended a delivery-destination line to Definition of Complete, because publication is now authorized. C-004 stays open until a `gpt-6.1-sol` smoke rollout records the configured model.
 - 2026-10-11T21:58Z Verified C-004 through C-012 and C-016 from the campaign's free steps, probes, preflights, calibration and smokes (budget 16/62 before acceptance). Corrected C-017 Source: it said `v1-live.mjs` "calls `gpt-5.5`, which leaves Codex on 2026-10-14"; the script re-verifies retained evidence with no provider calls, so the Source now says it pins `gpt-5.5`. Authority: reading `scripts/verify/v1-live.mjs` lines 80 to 101. Verified C-017 by decision and headers.
+- 2026-10-11T22:12Z Verified C-013, C-014 and C-018. Acceptance was 14/14 PASS; pack `7a674aa8` expires 2026-11-10; records updated. Committed the implementation as `5c23504`.
+- 2026-10-11T22:14Z Verified C-019 (all four checks on `5c23504`) and C-020 (disposable Claude and Codex installs). Corrected C-021 Source: it named `origin_work_type` `frontier_decision`, but the helper rejected that value (ORIGIN_WORK_TYPE_INVALID); the check that ran used `public_contract_design`. Authority: the `local-learning.mjs check` output at intake. Launched the fresh Opus frontier review with the blind inventory for C-021 and the close-out.
+- 2026-10-11T22:25Z The fresh Opus 5.5 review returned REPAIR with 2 material and 6 minor findings, recorded as F-001 to F-008. Reopened C-005, C-013, C-014, C-018, C-019 and C-020: the repairs changed SKILL.md, local-learning.md, hosts/claude-code.md, the acceptance records, the pack and the folder digests. Re-verified C-005, C-013, C-014 and C-018 with fresh evidence. C-019 and C-020 stay open as STALE until they rerun on the repair commit. Added C-025 from F-001, and added C-026 [release] because Greg authorized syncing his installs ("yes, /ship ship it once the review passes, and sync my installs"). Copied the reviewer's blind inventory to .checklists/delegate-model-currency-2026-10.review.md.
 
 ## Verification
 
@@ -278,6 +296,23 @@
 - Review: pending
 - Inventory: pending
 - Result: pending
+
+- [x] F-001 `skills/delegate/local-learning.md` kept a `finish` example on `claude-sonnet-5` and `claude-haiku-4-5-20251001`; copying it fails with WORKER_NOT_IN_ROUTE.
+  - Resolution: IDs changed to `claude-sonnet-5-5` and `claude-haiku-5-5`; added C-025 with a consumer-docs model test; digests updated in C-018.
+- [x] F-002 The Roles fallback sentence implied a `gpt-6-sol` worker, but the pack has no such treatment.
+  - Resolution: the sentence now says to coordinate on `gpt-6-sol` and use `gpt-6-luna` workers; C-005 re-verified.
+- [x] F-003 Haiku 5.5's `not_applicable` effort carries two meanings; identity assurance ranks it like runtime-attested, and acceptance workers may have inherited the coordinator's high effort.
+  - Resolution: `hosts/claude-code.md` now says how to record a routed Haiku worker's effort, and the results doc Limitations disclose the inheritance unknown. The non-provisional guard fails the Scope Gate for this request (no entry is qualified), so it was spawned as a separate task.
+- [x] F-004 The quote "superseded by GPT-6.1 Sol" is not in the preserved pages.
+  - Resolution: the results doc attributes it to the GPT-6 Sol page fetched 21:41 to 21:43Z. The bound frontier-target claim cannot change without re-probing, and its attribution is disclosed in Limitations.
+- [x] F-005 The collector's python write attribution counted every `Path` in a call, and the Codex write_attribution label omitted python writes.
+  - Resolution: the collector is now receiver-exact (unit-checked: read-only gives none, read-one-write-another gives only the written file). Proposals, final reviews, acceptance, pack and index were regenerated; only the Codex label changed (C-013, C-014).
+- [x] F-006 The per-entry `expires_at >= generated_at + 29 days` assertion was dropped from the publication tests.
+  - Resolution: re-added to `test/routing/renewal-2026-10-11-publication.test.ts` (C-014).
+- [x] F-007 `.cto/ledger.md` at HEAD showed the mid-campaign state.
+  - Resolution: the ledger is refreshed in the repair commit.
+- [x] F-008 Greg's installed copies still name `gpt-6-sol` and carry an older pack.
+  - Resolution: Greg then authorized syncing them; added C-026 [release].
 
 ## Resume
 

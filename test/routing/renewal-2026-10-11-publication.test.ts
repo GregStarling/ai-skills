@@ -70,6 +70,7 @@ describe('2026-10-11 model-currency renewal publication',()=>{
   expect(pack.routes.some(r=>r.public_task_class==='full_project')).toBe(false);
   const entries=pack.routes.flatMap(r=>[...r.workers,...r.reviewers]);
   expect(entries.every(e=>e.evidence_tier==='provisional')).toBe(true);
+  for(const e of entries)expect(Date.parse(e.expires_at)).toBeGreaterThanOrEqual(Date.parse(pack.generated_at)+29*86400000);
   expect(Date.parse(pack.expires_at)).toBeGreaterThan(Date.parse('2026-11-09T00:25:04.355Z'));
   expect(()=>assertEntriesOutlivePack(pack,24)).not.toThrow();
  });

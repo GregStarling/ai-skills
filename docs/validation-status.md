@@ -7,17 +7,17 @@ The single current-state index. It is updated with every pack recompile and ever
 | Field | Value |
 | --- | --- |
 | Schema, mode | `routing_pack.v3`, production |
-| `content_digest` | `sha256:7a674aa88138504ee0cc4f0576b779b8c21176d16bdde53d977b69605db71ddf` |
-| `generated_at` | 2026-10-11T22:10:18.767Z (2026-10-11 model-currency renewal) |
-| `refresh_after` | 2026-10-18T22:10:18.767Z |
-| `expires_at` | 2026-11-10T22:10:18.767Z |
+| `content_digest` | `sha256:37377985353aaa510aa7ebd65593e1f2fe254d4f50c5d8106333d5b3b09efa1d` |
+| `generated_at` | 2026-10-11T22:22:43.174Z (2026-10-11 model-currency renewal) |
+| `refresh_after` | 2026-10-18T22:22:43.174Z |
+| `expires_at` | 2026-11-10T22:22:43.174Z |
 | Earliest route-entry expiry | 2026-11-10T21:46:04.000Z; publication guard requires no entry to expire more than 24 hours before the pack |
 | Routes | 15 (14 low risk, 1 medium: Claude `mechanical_work`); qualified entries 0. Claude treatments are `claude-haiku-5-5` and `claude-sonnet-5-5`/low workers with a `claude-opus-5-5`/high reviewer and the calibrated `claude-fable-5-1`/high mechanical reviewer; Codex treatments are `gpt-6-luna`/low and `gpt-6.1-sol`/low workers with a `gpt-6-astra`/high reviewer |
 | Free recompile window | until 2026-10-18T21:46:04.000Z (fresh frontier metadata age); a later refresh requires counted probes |
 
 ## Current consumer folder
 
-Model-currency renewal (2026-10-11): the Roles table now names `gpt-6.1-sol` as the Codex coordinator and Sol worker (with `gpt-6-sol` where 6.1 is not enabled); `local-learning.md` examples follow it, `hosts/codex.md` cites sources re-checked 2026-10-11, and `routing-pack.json` was recompiled from the [2026-10-11 renewal](delegate-renewal-results-2026-10-11.md) on the Claude 5.5 and GPT-6.1 Sol lineup. Guidance `sha256:4e9d4d4f3339e806f08e5d2489a16e178a4b50ad26c9edab9ec0883b57bcd7c0`. Installed acceptance ran on intermediate folder `sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4` with pack `sha256:6e135a0c0a70503b922ccc58c89c77e9d9019f814aeb91fe34aaf08fbaf2e0a1` (guidance identical to the published folder); no live run of the exact published folder is claimed, and installed copies were not updated. Previous 16-file source: folder `sha256:76a6864a9d3073b70dff532a3a97cc0303f7f03e5875e4a68fa8178631fafc74`, guidance `sha256:0af2ee5f1902a48c11b15377c1fc6c3fd988333cd3937790e77325a7d96b1f86`.
+Model-currency renewal (2026-10-11): the Roles table now names `gpt-6.1-sol` as the Codex coordinator and Sol worker (with `gpt-6-sol` where 6.1 is not enabled); `local-learning.md` examples follow it, `hosts/codex.md` cites sources re-checked 2026-10-11, and `routing-pack.json` was recompiled from the [2026-10-11 renewal](delegate-renewal-results-2026-10-11.md) on the Claude 5.5 and GPT-6.1 Sol lineup. Guidance `sha256:60621a18349acd41001557330dcddf9b8a63cb3485b7769fad42715c2a7c9ecd`. Installed acceptance ran on intermediate folder `sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4` with pack `sha256:6e135a0c0a70503b922ccc58c89c77e9d9019f814aeb91fe34aaf08fbaf2e0a1`. Three documentation edits followed the frontier review (the `local-learning.md` `finish` example, the Roles fallback line and one `hosts/claude-code.md` sentence), so the published guidance differs from the acceptance folder's; no live run of the exact published folder is claimed, and installed copies were not updated. Previous 16-file source: folder `sha256:76a6864a9d3073b70dff532a3a97cc0303f7f03e5875e4a68fa8178631fafc74`, guidance `sha256:0af2ee5f1902a48c11b15377c1fc6c3fd988333cd3937790e77325a7d96b1f86`.
 
 Routing renewal (2026-10-09): only `routing-pack.json` changed, recompiled from the [October full renewal](delegate-renewal-results-2026-10-09.md). Guidance bytes are unchanged (`sha256:0af2ee5f1902a48c11b15377c1fc6c3fd988333cd3937790e77325a7d96b1f86`). Installed acceptance ran on intermediate folder `sha256:04e3edbeac507502bdedbd31a491ceb457d10c418edf719d23dc2a8b4ec408d5` with pack `sha256:357665d4cb2b96d15de765741fa54792917db4f0bf5c6034688b5238aa9d1a90`; no live run of the exact published folder is claimed, and installed copies were not updated. Previous 16-file source: folder `sha256:383efdd062402b9c75c8d3df2d4d4bfbe0103d0fcf5c744973922d729485f5b6`, pack `sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619`.
 
@@ -31,8 +31,8 @@ The current canonical source uses a mandatory stateless `check` at intake and wh
 
 | Current source digest | Value |
 | --- | --- |
-| Helper `folderDigest` (16 consumer files) | `sha256:283ed46ac503ec5803d284d7a5de3c00b3c0d7116b470246e37522250e3c5bd5` |
-| Guidance without `routing-pack.json` | `sha256:4e9d4d4f3339e806f08e5d2489a16e178a4b50ad26c9edab9ec0883b57bcd7c0` |
+| Helper `folderDigest` (16 consumer files) | `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e` |
+| Guidance without `routing-pack.json` | `sha256:60621a18349acd41001557330dcddf9b8a63cb3485b7769fad42715c2a7c9ecd` |
 
 Previous revision (2026-09-12 release verification, 14 consumer files): folder `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7`, guidance `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730`.
 
@@ -110,13 +110,13 @@ Every row carries its own folder digest and origin; none carries qualification a
 
 | 6. Reliability follow-up | 2026-09-11 | Claude 2.1.267, Codex 0.154.0 | captured `sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391`; published `sha256:603f405245b835466650a577657805970a2b0ae0da1c6792f00588cd6b3e0725` | captured `0dc26099`; published `sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619` | three new passing runs; prior eleven records unchanged; multiple iterations; qualification_authority false |
 | 7. October full renewal | 2026-10-09 to 2026-10-10 | Claude 2.1.292, Codex 0.156.1 | captured `sha256:04e3edbeac507502bdedbd31a491ceb457d10c418edf719d23dc2a8b4ec408d5`; published `sha256:76a6864a9d3073b70dff532a3a97cc0303f7f03e5875e4a68fa8178631fafc74` | captured `357665d4`; published `sha256:348739dd236a4e9690061edfd4c7e70c25ac1cb88cb46f77cb7695fe1f7fb260` | 14/14 acceptance; Codex treatments replaced with GPT-6 Luna/Sol/Astra; fresh smokes, probes and Fable calibration; qualification_authority false |
-| 8. Model-currency renewal | 2026-10-11 | Claude 2.1.296, Codex 0.162.1 | captured `sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4`; published `sha256:283ed46ac503ec5803d284d7a5de3c00b3c0d7116b470246e37522250e3c5bd5` | captured `6e135a0c`; published `sha256:7a674aa88138504ee0cc4f0576b779b8c21176d16bdde53d977b69605db71ddf` | 14/14 acceptance; treatments moved to Claude 5.5 and GPT-6.1 Sol; fresh smokes, probes and Fable calibration; qualification_authority false |
+| 8. Model-currency renewal | 2026-10-11 | Claude 2.1.296, Codex 0.162.1 | captured `sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4`; published `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e` | captured `6e135a0c`; published `sha256:37377985353aaa510aa7ebd65593e1f2fe254d4f50c5d8106333d5b3b09efa1d` | 14/14 acceptance; treatments moved to Claude 5.5 and GPT-6.1 Sol; fresh smokes, probes and Fable calibration; qualification_authority false |
 
 ## Historical reports
 
 Immutable except dated append-only addenda.
 
-- [delegate-renewal-results-2026-10-11.md](delegate-renewal-results-2026-10-11.md), 2026-10-11, pack `7a674aa8`, with [its evidence index](evidence/delegate-renewal-2026-10-11/evidence.json).
+- [delegate-renewal-results-2026-10-11.md](delegate-renewal-results-2026-10-11.md), 2026-10-11, pack `37377985`, with [its evidence index](evidence/delegate-renewal-2026-10-11/evidence.json).
 - [delegate-renewal-results-2026-10-09.md](delegate-renewal-results-2026-10-09.md), 2026-10-09, pack `348739dd`, with [its evidence index](evidence/delegate-renewal-2026-10-09/evidence.json).
 - [v5-validation.md](v5-validation.md), 2026-09-10, pack `e65c17c8`, 9-file folder before PR #5; machine-readable result frozen at `data/routing/v5-validation.json`; later release-proof runs are written once under `docs/evidence/v5-validation/`.
 - [v5-host-evidence.md](v5-host-evidence.md), [v4-validation.md](v4-validation.md), [v4-host-evidence.md](v4-host-evidence.md), [routing-pack-validation.md](routing-pack-validation.md).

@@ -9,7 +9,8 @@ enabled, and escalates to `gpt-6-astra`. A counted renewal (ceiling 62) re-obser
 Claude Code 2.1.296 and codex-cli 0.162.1, recalibrated Fable 5.1, re-ran the 14 installed cases and
 recompiled the pack; the October inputs are archived under data/routing/archive/2026-10-09/. Mythos 5.1
 is not routed (limited availability). This request authorized the workstream, terminal CLI updates, a
-branch, PR and /ship; saved defaults and personal skill installations stay unchanged. See
+branch, PR and /ship, and syncing the maintainer's installed Delegate copies after merge; saved defaults
+stay unchanged. See
 .checklists/delegate-model-currency-2026-10.md and docs/delegate-renewal-results-2026-10-11.md.
 
 ## Checklist skill — 2026-10-09
