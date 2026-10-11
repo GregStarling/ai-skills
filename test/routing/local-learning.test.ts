@@ -176,6 +176,11 @@ describe('lookup',()=>{
   const published=new Set<string>();for(const route of pack.routes)for(const x of [...route.workers,...route.reviewers]){for(const l of x.task_evidence?.limitations??[])published.add(l);for(const l of pack.treatments[x.candidate_identity].provisional?.control_limitations??[])published.add(l);}
   expect(found.limitations.length).toBeGreaterThan(0);expect(new Set(found.limitations).size).toBe(found.limitations.length);for(const l of found.limitations)expect(published.has(l)).toBe(true);
  });
+ it('excludes a worker whose routed effort the Agent tool cannot express',async()=>{
+  const route=routeOf(pack,'claude','mechanical_work'),agentTool=rosterOf(route).map(t=>t.model_id==='claude-sonnet-5-5'?{...t,effort:'not_applicable'}:t);
+  const found=await lookup({host:'claude',task_class:'mechanical_work',risk:'low',host_treatments:agentTool},{now});
+  expect(found.workers.map((w:any)=>w.candidate_id)).toEqual(['claude-claude-haiku-5-5-not_applicable']);expect(found.host_checks).toEqual(['model selectable']);
+ });
  it('answers absent routes, decomposition and coverage without state',async()=>{
   const started=performance.now(),found=await lookup({host:'codex',task_class:'mechanical_work',risk:'medium'},{now});
   expect(performance.now()-started).toBeLessThan(100);expect(found).toMatchObject({gap:'ROUTE_NOT_FOUND',route:null,workers:[]});
@@ -277,6 +282,31 @@ describe('finish',()=>{
   await f.call('start',{run_id:'e'});
   await expect(f.call('finish',{...routed,run_id:'e',attempts:[{role:'worker',model:'unknown-model',effort:'low'}]})).rejects.toThrow('WORKER_NOT_IN_ROUTE');
   await expect(f.call('finish',{...routed,run_id:'e',attempts:[{role:'worker',model:'claude-sonnet-5-5',effort:'low'},{role:'reviewer',model:'claude-sonnet-5-5',effort:'low'}]})).rejects.toThrow('REVIEWER_NOT_IN_ROUTE');
+ }finally{await f.cleanup();}});
+ // The Agent tool cannot request effort: such a worker records `not_applicable`, which binds only
+ // a treatment that also requested none. `null` (unknown) and a controlled pack effort never match.
+ it.each([
+  {role:'worker',model:'claude-haiku-5-5',effort:'not_applicable',bound:'claude-claude-haiku-5-5-not_applicable'},
+  {role:'worker',model:'claude-sonnet-5-5',effort:'low',bound:'claude-claude-sonnet-5-5-low'},
+  {role:'worker',model:'claude-haiku-5-5',effort:null,error:'WORKER_NOT_IN_ROUTE'},
+  {role:'worker',model:'claude-sonnet-5-5',effort:'not_applicable',error:'WORKER_NOT_IN_ROUTE'},
+  {role:'reviewer',model:'claude-opus-5-5',effort:null,error:'REVIEWER_NOT_IN_ROUTE'},
+ ])('binds a routed $model $role recorded with effort $effort only to an exact treatment',async({role,model,effort,bound,error})=>{const f=await fixture({host:'claude'});try{
+  await f.call('start',{run_id:'a'});
+  const captured=await f.call('capture',{run_id:'a',command:exit(0)});
+  const input={run_id:'a',...f.delegated,coordinator:{...f.coordinator,evidence:[captured.reference]},relevant_checks_complete:true,acceptance:'accepted',checks:[{name:'tests',kind:'test',reference:captured.reference}],inspected:[{name:'review',kind:'review',outcome:'passed'}],attempts:[{role,model,effort,evidence:[captured.reference]}]};
+  if(error){await expect(f.call('finish',input)).rejects.toThrow(error);return;}
+  const r=await f.call('finish',input);
+  expect(r.receipt.attempts[1]).toMatchObject({candidate_id:bound,configured:{model,effort}});expect(r.evidence_supported).toBe(true);
+  // A full-form receipt cannot claim the bound treatment with an unknown effort; the unchanged control stays supported.
+  const recordAs=async(run_id:string,receipt:any)=>{
+   await f.call('start',{run_id});const own=await f.call('capture',{run_id,command:exit(0)});
+   const moved=JSON.parse(JSON.stringify(receipt).replaceAll(captured.reference.path,own.reference.path).replaceAll(captured.reference.digest,own.reference.digest));
+   return f.call('record',{...moved,...f.delegated,run_id,auto_capture:false});
+  };
+  expect((await recordAs('b',r.receipt)).evidence_supported).toBe(true);
+  const unknown=structuredClone(r.receipt);unknown.attempts[1].configured.effort=null;
+  expect((await recordAs('c',unknown)).evidence_supported).toBe(false);
  }finally{await f.cleanup();}});
  it('observes the host version from the binary on PATH and returns advice inline',async()=>{const f=await fixture();try{
   const stub=join(f.root,'codex-stub');await writeFile(stub,'#!/bin/sh\necho "codex-cli 0.154.0"\n',{mode:0o755});

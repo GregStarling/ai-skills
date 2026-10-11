@@ -60,3 +60,7 @@ Installed acceptance ran on consumer folder `sha256:beba70c31427f5e3e2bf08475ad0
 - The `data/routing/frontier-targets.json` Codex claim says GPT-6.1 Sol "supersedes GPT-6 Sol" while citing the Codex models page; that wording comes from the GPT-6 Sol model page. The targets file is bound by digest into the probe report, so the claim was not edited after probing.
 - The maintainer collector attributes a `python3` write only to the `Path` that receives `.write_text(`; the first proposals attributed every `Path` in such a call, and the Codex worker label is now "preserved child patch, shell heredoc or python write_text events". Proposals, final reviews, acceptance, pack and index were regenerated from the corrected collector; only the Codex label changed, and the superseded outputs are kept under `artifacts/renewal-2026-10-11/superseded-before-review-repair/`.
 - Raw artifacts remain local under `artifacts/renewal-2026-10-11/` (gitignored); committed files bind their digests.
+
+## Addendum (2026-10-11, uncontrolled effort)
+
+The Haiku 5.5 limitation above now has its guard. Identity assurance ranks `not_applicable` effort like host configuration, so it never reaches RUNTIME_ATTESTED, and `qualify()` holds every `not_applicable` candidate (`effort_uncontrolled`). Routed Agent-tool workers record `"effort":"not_applicable"`. The pack and this campaign's evidence are unchanged, and the inheritance question remains open. See [validation status](validation-status.md).

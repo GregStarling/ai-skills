@@ -56,7 +56,9 @@ it('omits absent effort knobs without inventing an unknown configured level, and
  const treatment={...candidate(),effort:'not_applicable'};
  const result=await runNative({provider:'anthropic',candidate:treatment,cwd:outputRoot,prompt:'SYNTHETIC TEST task',timeoutMs:1000,outputDirectory:outputRoot,mode:'evaluation',sandbox:'read-only'});
  expect(result.invocation.argv).not.toContain('--effort');expect(result.identity_assurance.effort).toEqual({value:'not_applicable',assurance:'not_applicable'});
- expect(result.identity_assurance.overall).toBe('RUNTIME_ATTESTED');
+ // No effort was requested: the host default is unobserved, so it never ranks as runtime-attested.
+ expect(result.identity_assurance.overall).toBe('PARTIALLY_RUNTIME_ATTESTED');
+ expect(result.identity_assurance.limitations).toContain('No effort was requested; the served host-default effort is unobserved.');
  const sources=new Map(result.evidence_paths.map(path=>{const bytes=readFileSync(path);return [hashBytes(bytes),bytes] as const;}));
  expect(deriveIdentityAssurance({candidate:treatment,report:{...result.report,observed_identity:{source:'provider_receipt',model_id:'claude-other-5'}},sources}).diagnostics.some(d=>d.hard&&d.rule_id==='runtime_identity_mismatch')).toBe(true);
 });

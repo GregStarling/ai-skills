@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { riskCategorySchema, constraintSetSchema, parseRuntimeReport, candidateIdentity, type Candidate, type ModelRegistry, type TaskObservation, type IdentityAssurance } from '../schema/index.js';
+import { riskCategorySchema, constraintSetSchema, parseRuntimeReport, candidateIdentity, overallIdentityAssurance, type Candidate, type ModelRegistry, type TaskObservation, type IdentityAssurance } from '../schema/index.js';
 import { digest } from '../core/canonical.js';
 import { bindCandidate, validateRegistry } from '../registry/index.js';
 import { validateObservations, summarizeObservations } from '../evidence/index.js';
@@ -59,6 +59,7 @@ export function qualify(input: QualificationInput): Qualification {
     const allowConfigurationPinning = policy.policy_version>=5 && ['low','medium'].includes(request.risk) && ['claude_code','codex'].includes(request.execution_environment??'');
     const candidate = bindCandidate(input.candidate, registry, {allowConfigurationPinning});
     const model = registry.records.find(r => r.record_id === candidate.provenance.model_record_id)!;
+    if (candidate.effort === 'not_applicable') fail('effort_uncontrolled', 'An omitted effort control serves an unobserved host default; its evidence stays provisional.', false);
     if (input.mode === 'production' && (candidate.provider === 'synthetic' || model.pinning?.source === 'synthetic_fixture')) fail('synthetic_candidate_in_production', 'Synthetic identity cannot qualify production.');
     const required = new Set([...task.required_capabilities, ...(request.required_capabilities ?? [])]);
     for (const tool of request.constraints.required_tools) required.add(tool);
@@ -156,10 +157,9 @@ export function qualify(input: QualificationInput): Qualification {
 /** Conservative authority summary: one stronger task cannot relabel weaker evidence. */
 function summarizeIdentityAssurance(evidence: IdentityAssurance[]): IdentityAssurance {
   const first=evidence[0]!;
-  const fieldRank={unverified:0,host_configuration:1,runtime_attested:2,not_applicable:2};
+  const fieldRank={unverified:0,host_configuration:1,not_applicable:1,runtime_attested:2};
   const weakest=(field:'model'|'effort')=>evidence.reduce((current,item)=>fieldRank[item[field].assurance]<fieldRank[current.assurance]?item[field]:current,first[field]);
   const model=weakest('model'),effort=weakest('effort');
-  const fields=[model.assurance,effort.assurance];
-  const overall=fields.includes('unverified')?'UNVERIFIED':fields.every(field=>field==='runtime_attested'||field==='not_applicable')?'RUNTIME_ATTESTED':fields.includes('runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
+  const overall=overallIdentityAssurance([model,effort]);
   return {...first,overall,model,effort,evidence_digest:digest(evidence.map(item=>digest(item)).sort()),limitations:[...new Set(evidence.flatMap(item=>item.limitations))].sort()};
 }
