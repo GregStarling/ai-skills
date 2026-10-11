@@ -4,16 +4,16 @@ Plan source / revision: `.checklists/delegate-model-currency-2026-10.md` (the it
 Project root: /Users/gregpro/ai-skills/.claude/worktrees/vigorous-blackburn-92bab2 (git worktree of GregStarling/ai-skills)
 Branch: claude/delegate-model-currency-2026-10, from origin/main f8166d2
 Started: 2026-10-11T21:44Z
-Last updated: 2026-10-11T22:32Z
+Last updated: 2026-10-11T22:36Z
 Delivery destination and authorization: merged into main with CI green, a disposable install from main, then Greg's installed Delegate copies synced. Greg, 2026-10-11: "work through this entire workstream, use /cto mode and /ship when complete"; later "yes, /ship ship it once the review passes, and sync my installs".
 Companion skills / available capabilities: delegate (routing and review), ponytail (minimal means), checklist (item record and gate), ship (release). Live hosts: Claude Code 2.1.296 and codex-cli 0.162.1, both authenticated.
 Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-model-currency`, implement_plan / approved_execution, origin `public_contract_design`, risk high. Review: fresh frontier review required (IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER).
 
 ## Definition of Shipped
-- [ ] Every model Delegate names or routes is current or kept by a recorded decision. Verify: checklist C-005, C-006, C-007, C-014, C-016, C-017 and C-025.
-- [ ] The renewed pack is built on fresh live evidence with no substitution and expires after 2026-11-09T00:25Z. Verify: C-009 to C-014.
-- [ ] Repo checks pass and a fresh frontier review returns PASS. Verify: C-019 to C-021.
-- [ ] Merged into main with CI green, installable from main, and Greg's installs synced. Verify: C-023, C-024 and C-026.
+- [x] Every model Delegate names or routes is current or kept by a recorded decision. Verify: checklist C-005, C-006, C-007, C-014, C-016, C-017 and C-025.
+- [x] The renewed pack is built on fresh live evidence with no substitution and expires after 2026-11-09T00:25Z. Verify: C-009 to C-014.
+- [x] Repo checks pass and a fresh frontier review returns PASS. Verify: C-019 to C-021.
+- [x] Merged into main with CI green, installable from main, and Greg's installs synced. Verify: C-023, C-024 and C-026.
 
 ## Work Items
 | # | Item / original requirement | Depends on | Verify with | Status | Evidence |
@@ -25,7 +25,7 @@ Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-m
 | 5 | Live campaign: C-011, C-012, C-013 | 2, 4 | checklist | done | 46/62 executions; 14/14 PASS |
 | 6 | Pack and records: C-014, C-018 | 5 | checklist | done | pack sha256:37377985…, folder sha256:3df782b9… |
 | 7 | Verify and review: C-019, C-020, C-021 | 3, 6 | checklist | done | round 1 REPAIR (F-001 to F-008 fixed in 9aaa842); round 2 fresh Opus review PASS on 9aaa842 |
-| 8 | Release: C-023, C-024, C-026, C-027 | 7 | checklist | doing | |
+| 8 | Release: C-023, C-024, C-026, C-027 | 7 | checklist | done | PR #15 merged 546acb8, main CI green; install from main verified; Greg's installs synced (backups kept); records PR follows |
 | 9 | Usage prices: C-015 | - | checklist | done | PR #14, main f8166d2 |
 
 ## Decisions
@@ -57,9 +57,9 @@ Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-m
 - 2026-10-11T22:24:28Z / repair working tree: npm test 1185 passed, typecheck, build, skills check passed.
 
 ## Resume Here
-Current item: 8 (release)
-Next action: push, open the PR, wait for CI, merge, verify the install from main (C-024), sync Greg's installs (C-026), then a follow-up records change (C-027 and release evidence).
+Current item: none; checklist VERIFIED COMPLETE 27/27
+Next action: merge the records-only follow-up PR and verify it on main.
 Uncommitted scoped work / unrelated work to preserve: none after the repair commit.
-Pending processes, reviews, or release checks: release.
+Pending processes, reviews, or release checks: records follow-up PR CI and merge.
 
 After compaction or handoff, reconcile this ledger with files and version history.
