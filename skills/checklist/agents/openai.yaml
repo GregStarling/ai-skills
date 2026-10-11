@@ -1,0 +1,4 @@
+interface:
+  display_name: "Checklist"
+  short_description: "Define done, verify every item, and prove the work is complete"
+  default_prompt: "Use $checklist to define what complete means for this task, verify every item with evidence, and run a blind close-out before declaring it complete."
