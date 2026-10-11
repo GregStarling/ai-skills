@@ -160,23 +160,25 @@
 
 ### Verification and review
 
-- [ ] C-019 [build] The repository checks pass on the final revision.
+- [x] C-019 [build] The repository checks pass on the final revision.
   - Source: Explicit project instruction in `CLAUDE.md`.
   - Accept: `npm test`, `npm run typecheck`, `npm run build` and `node scripts/verify/skills.mjs` all exit 0 on the final commit.
   - Verify: Run all four on the final commit and record counts.
-  - Evidence: STALE: ran at 2026-10-11T22:13:44Z on commit `5c23504`; the review repairs changed the tree. The uncommitted repair tree passed 1185 tests, typecheck, build and the skills check at 22:24:28Z. A rerun on the repair commit is still required.
+  - Evidence: Ran at 2026-10-11T22:26:31Z on commit `9aaa842` with a clean tree: `npm test` passed 55 files and 1185 tests; `npm run typecheck` and `npm run build` exited 0; `node scripts/verify/skills.mjs` gave `"status":"passed"`. The independent re-review reproduced the same results on `9aaa842`.
   - Depends on: C-005, C-006, C-007, C-014, C-015, C-016, C-017, C-018.
-- [ ] C-020 [build] A disposable install of the updated Delegate folder works on both hosts.
+- [x] C-020 [build] A disposable install of the updated Delegate folder works on both hosts.
   - Source: Implied, `CLAUDE.md` requires validating clean installs in disposable projects.
   - Accept: The folder installs into a temporary project for Claude Code and Codex; `local-learning.mjs check` returns a review requirement; the installed folder digest equals the source digest.
   - Verify: Install into a `mktemp -d` project, run the check, and compare digests.
-  - Evidence: STALE: the installs from `5c23504` matched folder `sha256:283ed46a…`; the repairs changed the folder to `sha256:3df782b9…`, so the install must be repeated on the repair commit.
+  - Evidence: `git archive 9aaa842 skills/delegate` was copied into a `mktemp -d` project as `.claude/skills/delegate` and `.agents/skills/delegate`. Both copies' `folderDigest` equals the source `sha256:3df782b9…`, and both carry pack `sha256:37377985…`. In each, `local-learning.mjs check -` returned `"status":"checked"` and `"review_requirement":{"role":"frontier","required":true` for a medium-risk input. Ran at 2026-10-11T22:26:31Z.
   - Depends on: C-019.
-- [ ] C-021 [build] A fresh frontier review of the implemented change returns PASS.
+- [x] C-021 [build] A fresh frontier review of the implemented change returns PASS.
   - Source: Implied, Delegate requires fresh frontier review for public contracts and consequential decisions; Delegate task ID `5d28a013:delegate-model-currency` with `origin_work_type` `public_contract_design` (`check` returned IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER).
   - Accept: An `opus` reviewer given only the requirements, the final diff and the check results returns PASS, or each REPAIR finding is fixed and re-reviewed.
   - Verify: Record the reviewer's verdict and findings; any edit after the review invalidates it.
-  - Evidence: Pending.
+  - Evidence: There were two fresh Opus 5.5 reviews (Agent tool, model `opus`).
+    - Round 1 on `5c23504` saw the verbatim requests, repo, commit range and check results, without the checklist or decision rationale. It wrote its blind inventory first (`.checklists/delegate-model-currency-2026-10.review.md`) and returned REPAIR with F-001 to F-008.
+    - Round 2 on `9aaa842` saw those findings and the repair diff. It returned PASS with no material findings: it confirmed each finding resolved, attributed every regeneration difference to the label change, and re-ran 1185 tests, typecheck, build and the skills check. Its minor items are F-009 to F-012.
   - Depends on: C-019, C-020.
 
 ### Added after the independent audit
@@ -214,6 +216,12 @@
   - Verify: Compare each installed folderDigest with the digest in `docs/validation-status.md` on main, and run the installed helper's `check`.
   - Evidence: Pending.
   - Depends on: C-023.
+- [ ] C-027 [release] Project records state that the installed copies were synced.
+  - Source: Close-out finding F-012.
+  - Accept: `docs/delegate.md` and `docs/validation-status.md` no longer say the installed copies were not updated; they name the synced folder digest and the backup locations, and the change reaches main.
+  - Verify: Grep both files on `origin/main` for the install statement and the synced digest.
+  - Evidence: Pending.
+  - Depends on: C-026.
 
 ## Decisions
 
@@ -235,6 +243,7 @@
   Reversal cost: low.
 - 2026-10-11 Haiku 5.5 worker effort is recorded as `not_applicable`, with an explicit limitation. Neither the smoke CLI launch nor the Claude Code Agent tool requests an effort, so the host default applies. The schema has no "uncontrolled" value, and `src/routing/acceptance.ts` binds an Agent-tool worker with no requested effort only to a `not_applicable` treatment. Recording a specific effort would claim a control that was never exercised and would leave the Claude acceptance cases unbound. Flagged for the frontier review. Reversal cost: medium, a schema or matcher change plus a recompile.
 - 2026-10-11 The interim pack used for installed acceptance was compiled with an empty acceptance placeholder (`artifacts/renewal-2026-10-11/canonical/installed-acceptance-interim.json`). October's placeholder records match the unchanged Luna and Astra treatments, which would cap those entries at 2026-11-08 and fail the 24-hour outlive check. With no records, every interim entry is smoke extrapolation, the same state as October's interim pack. Reversal cost: low; publication recompiles with the new acceptance.
+- 2026-10-11 Superseding the reinstall line in the next entry and the matching Exclusion: Greg wrote "yes, /ship ship it once the review passes, and sync my installs", so syncing `~/.claude/skills/delegate` and `~/.agents/skills/delegate` after merge is in scope (C-026), backing each up first under `~/.agents/skill-backups/`. Saved defaults stay unchanged. Reversal cost: low; restore from the backups.
 - 2026-10-11 Delivery destination widened to merged main: Greg's "/ship when complete" authorizes a PR and merge. Reinstalling his personal skill copies is still not requested; Ship avoids altering personal installations.
 
 ## Pre-Mortem
@@ -265,6 +274,7 @@
 - 2026-10-11T22:12Z Verified C-013, C-014 and C-018. Acceptance was 14/14 PASS; pack `7a674aa8` expires 2026-11-10; records updated. Committed the implementation as `5c23504`.
 - 2026-10-11T22:14Z Verified C-019 (all four checks on `5c23504`) and C-020 (disposable Claude and Codex installs). Corrected C-021 Source: it named `origin_work_type` `frontier_decision`, but the helper rejected that value (ORIGIN_WORK_TYPE_INVALID); the check that ran used `public_contract_design`. Authority: the `local-learning.mjs check` output at intake. Launched the fresh Opus frontier review with the blind inventory for C-021 and the close-out.
 - 2026-10-11T22:25Z The fresh Opus 5.5 review returned REPAIR with 2 material and 6 minor findings, recorded as F-001 to F-008. Reopened C-005, C-013, C-014, C-018, C-019 and C-020: the repairs changed SKILL.md, local-learning.md, hosts/claude-code.md, the acceptance records, the pack and the folder digests. Re-verified C-005, C-013, C-014 and C-018 with fresh evidence. C-019 and C-020 stay open as STALE until they rerun on the repair commit. Added C-025 from F-001, and added C-026 [release] because Greg authorized syncing his installs ("yes, /ship ship it once the review passes, and sync my installs"). Copied the reviewer's blind inventory to .checklists/delegate-model-currency-2026-10.review.md.
+- 2026-10-11T22:31Z Re-verified C-019 and C-020 on repair commit 9aaa842. The round 2 fresh Opus review returned PASS, so C-021 is verified and the Close-Out fields are recorded. Added F-009 to F-012 from its minor items, the superseding install Decision, and C-027 [release]. Rewrote Resume.
 
 ## Verification
 
@@ -293,9 +303,9 @@
 
 ## Close-Out
 
-- Review: pending
-- Inventory: pending
-- Result: pending
+- Review: independent — two fresh Opus 5.5 agents. Round 1 saw the verbatim requests, repository, commit range and check results, without the checklist or decision rationale. Round 2 saw the round-1 findings and the repair diff.
+- Inventory: recorded in `.checklists/delegate-model-currency-2026-10.review.md` by the round-1 reviewer before it read the change.
+- Result: PASS on `9aaa842` in round 2, with no open material findings; round 1 REPAIR findings F-001 to F-008 were fixed and verified.
 
 - [x] F-001 `skills/delegate/local-learning.md` kept a `finish` example on `claude-sonnet-5` and `claude-haiku-4-5-20251001`; copying it fails with WORKER_NOT_IN_ROUTE.
   - Resolution: IDs changed to `claude-sonnet-5-5` and `claude-haiku-5-5`; added C-025 with a consumer-docs model test; digests updated in C-018.
@@ -313,10 +323,18 @@
   - Resolution: the ledger is refreshed in the repair commit.
 - [x] F-008 Greg's installed copies still name `gpt-6-sol` and carry an older pack.
   - Resolution: Greg then authorized syncing them; added C-026 [release].
+- [x] F-009 The checklist Resume section still described the planning state.
+  - Resolution: Resume rewritten to the current state.
+- [x] F-010 The Decisions line ruling out reinstalling and the matching Exclusion contradicted C-026.
+  - Resolution: added a dated superseding Decision citing Greg's authorization.
+- [x] F-011 The evidence index limitations lack the post-review disclosures.
+  - Resolution: rejected. The results doc carries those disclosures, and rebuilding the index would change reviewed evidence for a duplicate statement.
+- [x] F-012 Sonnet workers are routed at effort `low`, which the Agent tool cannot set; `docs/delegate.md` will be stale after the install sync.
+  - Resolution: the Sonnet effort question predates this change and was folded into the spawned effort-guard task. The install note is tracked as C-027 [release].
 
 ## Resume
 
-- State: executing under CTO; ledger at `.cto/ledger.md`. Verified C-001, C-002, C-003, C-015 and C-022.
-- Open: C-004 to C-014, C-016 to C-021, C-023 and C-024.
+- State: implementation reviewed (round 2 PASS on `9aaa842`); build items verified.
+- Open: C-023, C-024, C-026 and C-027 (release).
 - Blockers: none.
-- Next: free preparation for the renewal: C-009 archive, C-010 metadata and targets, C-016 script defaults, and the campaign budget. Then the live campaign.
+- Next: push, open the PR, wait for CI, merge, verify the install from main, sync Greg's installs, then record the release in a follow-up records change.

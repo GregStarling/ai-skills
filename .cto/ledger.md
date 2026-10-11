@@ -4,7 +4,7 @@ Plan source / revision: `.checklists/delegate-model-currency-2026-10.md` (the it
 Project root: /Users/gregpro/ai-skills/.claude/worktrees/vigorous-blackburn-92bab2 (git worktree of GregStarling/ai-skills)
 Branch: claude/delegate-model-currency-2026-10, from origin/main f8166d2
 Started: 2026-10-11T21:44Z
-Last updated: 2026-10-11T22:26Z
+Last updated: 2026-10-11T22:32Z
 Delivery destination and authorization: merged into main with CI green, a disposable install from main, then Greg's installed Delegate copies synced. Greg, 2026-10-11: "work through this entire workstream, use /cto mode and /ship when complete"; later "yes, /ship ship it once the review passes, and sync my installs".
 Companion skills / available capabilities: delegate (routing and review), ponytail (minimal means), checklist (item record and gate), ship (release). Live hosts: Claude Code 2.1.296 and codex-cli 0.162.1, both authenticated.
 Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-model-currency`, implement_plan / approved_execution, origin `public_contract_design`, risk high. Review: fresh frontier review required (IMPLEMENTED_BEHAVIOR_REQUIRES_FRONTIER).
@@ -24,8 +24,8 @@ Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-m
 | 4 | Renewal prep (free): C-008, C-009, C-010, C-016, C-017 | 1 | checklist | done | checklist evidence |
 | 5 | Live campaign: C-011, C-012, C-013 | 2, 4 | checklist | done | 46/62 executions; 14/14 PASS |
 | 6 | Pack and records: C-014, C-018 | 5 | checklist | done | pack sha256:37377985…, folder sha256:3df782b9… |
-| 7 | Verify and review: C-019, C-020, C-021 | 3, 6 | checklist | doing | first review REPAIR (F-001 to F-008, all resolved); rerun checks and re-review on the repair commit |
-| 8 | Release: C-023, C-024, C-026 | 7 | checklist | todo | |
+| 7 | Verify and review: C-019, C-020, C-021 | 3, 6 | checklist | done | round 1 REPAIR (F-001 to F-008 fixed in 9aaa842); round 2 fresh Opus review PASS on 9aaa842 |
+| 8 | Release: C-023, C-024, C-026, C-027 | 7 | checklist | doing | |
 | 9 | Usage prices: C-015 | - | checklist | done | PR #14, main f8166d2 |
 
 ## Decisions
@@ -46,7 +46,7 @@ Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-m
 - 2026-10-11T22:19Z
   Item: C-021 fresh frontier review
   Capability/model actually used: fresh Opus 5.5 agent (Agent tool, model opus), given the verbatim requests, repo and commit range, without the checklist or decision rationale.
-  Result: REPAIR, 2 material and 6 minor findings (checklist F-001 to F-008), no blockers. All resolved in the repair commit; re-review pending.
+  Result: REPAIR, 2 material and 6 minor findings (checklist F-001 to F-008), no blockers. All resolved in 9aaa842; round 2 fresh Opus review returned PASS with four minor items (F-009 to F-012).
 
 ## External Blockers
 - None.
@@ -57,9 +57,9 @@ Routing assignment ID / origin / risk / review requirement: `5d28a013:delegate-m
 - 2026-10-11T22:24:28Z / repair working tree: npm test 1185 passed, typecheck, build, skills check passed.
 
 ## Resume Here
-Current item: 7 (verify and review)
-Next action: commit the repair, rerun C-019 and C-020 on it, launch a fresh re-review, then ship (PR, CI, merge), verify the install from main, and sync Greg's installs.
+Current item: 8 (release)
+Next action: push, open the PR, wait for CI, merge, verify the install from main (C-024), sync Greg's installs (C-026), then a follow-up records change (C-027 and release evidence).
 Uncommitted scoped work / unrelated work to preserve: none after the repair commit.
-Pending processes, reviews, or release checks: re-review; release.
+Pending processes, reviews, or release checks: release.
 
 After compaction or handoff, reconcile this ledger with files and version history.
