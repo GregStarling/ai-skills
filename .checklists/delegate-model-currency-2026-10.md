@@ -192,17 +192,17 @@
 
 ### Release (authorized 2026-10-11)
 
-- [ ] C-023 [release] The workstream is merged into GregStarling/ai-skills main, and CI passes on the merge commit.
+- [x] C-023 [release] The workstream is merged into GregStarling/ai-skills main, and CI passes on the merge commit.
   - Source: Explicit requirement, "/ship when complete".
   - Accept: The PR is merged; the CI run on that exact merge commit concludes success.
   - Verify: `gh pr view` shows MERGED with the merge SHA, and `gh run view` for that SHA shows success.
-  - Evidence: Pending.
+  - Evidence: `gh pr view 15` shows MERGED as `546acb8d88cf5246d04a77bca29838515efed436` at 2026-10-11T22:33:26Z. PR CI run 38180808242 succeeded on head `61e85ce`, and main CI run 38180896053 (push) succeeded on `546acb8`. The main tree equals the `61e85ce` tree (`git rev-parse` of both `^{tree}`), and that tree carries the content reviewed in round 2.
   - Depends on: C-021.
-- [ ] C-024 [release] A disposable install from published main carries the renewed pack and roles.
+- [x] C-024 [release] A disposable install from published main carries the renewed pack and roles.
   - Source: Implied, Ship verification for an installable skill.
   - Accept: The Delegate folder installed from `origin/main` into a temporary project has the renewed pack digest and Roles table, and its `check` command runs.
   - Verify: Install from a fresh `origin/main` worktree, compare digests with `docs/validation-status.md`, and run the check.
-  - Evidence: Pending.
+  - Evidence: Between 2026-10-11T22:34:25Z and 22:34:46Z, `git archive origin/main skills/delegate` (`546acb8`) was installed into a `mktemp -d` project as `.claude/skills/delegate`. Its `folderDigest` is `sha256:3df782b9…`, which `docs/validation-status.md` on main cites, and main's pack `sha256:37377985…` is cited there too. The installed `check` returned `"status":"checked"`, and the installed SKILL.md names `gpt-6.1-sol` twice.
   - Depends on: C-023.
 - [x] C-025 [build] Consumer guidance names only models the pack routes, plus the one documented GPT-6.1 Sol fallback.
   - Source: Close-out finding F-001.
@@ -210,17 +210,17 @@
   - Verify: A test scans the consumer Markdown against `routing-pack.json`; putting a legacy ID back into an example makes it fail.
   - Evidence: `test/routing/maintainer-defaults.test.ts` "lets consumer guidance name only routed models…" passed 2/2. It failed with `"model": "claude-haiku-4-5-20251001"` when that ID was restored in `local-learning.md`, and passed again after reverting. The scan finds only `claude-haiku-5-5`, `claude-sonnet-5-5`, `gpt-6-astra`, `gpt-6-luna`, `gpt-6.1-sol` and the fallback `gpt-6-sol`.
   - Depends on: C-005.
-- [ ] C-026 [release] Greg's installed Delegate copies match the merged source.
+- [x] C-026 [release] Greg's installed Delegate copies match the merged source.
   - Source: Explicit requirement, "sync my installs" (Greg, 2026-10-11).
   - Accept: Both `~/.claude/skills/delegate` and `~/.agents/skills/delegate` are backed up under `~/.agents/skill-backups/` and then hold the merged `skills/delegate`; each folderDigest equals the published folder digest and `check` runs.
   - Verify: Compare each installed folderDigest with the digest in `docs/validation-status.md` on main, and run the installed helper's `check`.
-  - Evidence: Pending.
+  - Evidence: At 2026-10-11T22:34:46Z, the previous copies were moved to `~/.agents/skill-backups/delegate-claude-code-before-model-currency-2026-10-11` and `.../delegate-codex-before-model-currency-2026-10-11`. Both backups are folder `sha256:dba0ed49…`, with pack `ebda991b…` that expired 2026-10-11T05:16:44Z. Then `git archive origin/main skills/delegate` was copied to `~/.claude/skills/delegate` and `~/.agents/skills/delegate`. Both now have `folderDigest` `sha256:3df782b9…`, matching main's `docs/validation-status.md`, and pack `sha256:37377985…` expiring 2026-11-10T22:22:43Z. Each installed `check` returned `"status":"checked"` with `"review_requirement":{"role":"frontier","required":true` for a medium-risk input.
   - Depends on: C-023.
-- [ ] C-027 [release] Project records state that the installed copies were synced.
+- [x] C-027 [release] Project records state that the installed copies were synced.
   - Source: Close-out finding F-012.
-  - Accept: `docs/delegate.md` and `docs/validation-status.md` no longer say the installed copies were not updated; they name the synced folder digest and the backup locations, and the change reaches main.
-  - Verify: Grep both files on `origin/main` for the install statement and the synced digest.
-  - Evidence: Pending.
+  - Accept: `docs/delegate.md` and `docs/validation-status.md` no longer say the installed copies were not updated; they name the synced folder digest and the backup locations.
+  - Verify: Grep both files for the install statement and the synced digest.
+  - Evidence: On branch `claude/delegate-model-currency-records` from `546acb8`, `docs/delegate.md` line 102 and the 2026-10-11 paragraph of `docs/validation-status.md` now say the installed copies were synced after PR #15 (`546acb8`). They name folder `sha256:3df782b9…` (delegate.md) and the backups `~/.agents/skill-backups/delegate-{claude-code,codex}-before-model-currency-2026-10-11` (both files). `grep -c "synced to"` returns 1 for each, and the "were not updated" wording is gone from both 2026-10-11 entries.
   - Depends on: C-026.
 
 ## Decisions
@@ -275,6 +275,7 @@
 - 2026-10-11T22:14Z Verified C-019 (all four checks on `5c23504`) and C-020 (disposable Claude and Codex installs). Corrected C-021 Source: it named `origin_work_type` `frontier_decision`, but the helper rejected that value (ORIGIN_WORK_TYPE_INVALID); the check that ran used `public_contract_design`. Authority: the `local-learning.mjs check` output at intake. Launched the fresh Opus frontier review with the blind inventory for C-021 and the close-out.
 - 2026-10-11T22:25Z The fresh Opus 5.5 review returned REPAIR with 2 material and 6 minor findings, recorded as F-001 to F-008. Reopened C-005, C-013, C-014, C-018, C-019 and C-020: the repairs changed SKILL.md, local-learning.md, hosts/claude-code.md, the acceptance records, the pack and the folder digests. Re-verified C-005, C-013, C-014 and C-018 with fresh evidence. C-019 and C-020 stay open as STALE until they rerun on the repair commit. Added C-025 from F-001, and added C-026 [release] because Greg authorized syncing his installs ("yes, /ship ship it once the review passes, and sync my installs"). Copied the reviewer's blind inventory to .checklists/delegate-model-currency-2026-10.review.md.
 - 2026-10-11T22:31Z Re-verified C-019 and C-020 on repair commit 9aaa842. The round 2 fresh Opus review returned PASS, so C-021 is verified and the Close-Out fields are recorded. Added F-009 to F-012 from its minor items, the superseding install Decision, and C-027 [release]. Rewrote Resume.
+- 2026-10-11T22:35Z Verified C-023 (PR #15 merged as `546acb8`, PR and main CI green), C-024 (install from published main) and C-026 (Greg's installs synced, previous copies backed up). Corrected C-027 Accept and Verify: they said "and the change reaches main" and "on `origin/main`". This checklist ships in that same records change and cannot cite its own merge, so the merge of the records PR is verified in the final ship report. Authority: Ship's rule to record later release evidence separately when committing it would trigger another release. Verified C-027 on the records branch.
 
 ## Verification
 
@@ -334,7 +335,7 @@
 
 ## Resume
 
-- State: implementation reviewed (round 2 PASS on `9aaa842`); build items verified.
-- Open: C-023, C-024, C-026 and C-027 (release).
+- State: complete. Implementation merged as `546acb8` (PR #15); installs synced; records change submitted as a follow-up PR.
+- Open: none.
 - Blockers: none.
-- Next: push, open the PR, wait for CI, merge, verify the install from main, sync Greg's installs, then record the release in a follow-up records change.
+- Next: none in this checklist. The uncontrolled-effort guard is a separate spawned task.

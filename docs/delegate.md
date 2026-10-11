@@ -99,7 +99,7 @@ Independent investigations and settled workstreams can use bounded workers when 
 
 ## Validation and Rollout Status
 
-**2026-10-11 model currency.** Codex coordinates on `gpt-6.1-sol`, which supersedes `gpt-6-sol` at the same price, and still escalates to `gpt-6-astra`; Claude Code keeps `sonnet` and `opus`, now serving Sonnet 5.5 and Opus 5.5, with Haiku 5.5 workers from Claude Code 2.1.293. The routing pack was renewed on these models; see [the renewal results](delegate-renewal-results-2026-10-11.md). The maintainer's personal installations were not changed.
+**2026-10-11 model currency.** Codex coordinates on `gpt-6.1-sol`, which supersedes `gpt-6-sol` at the same price, and still escalates to `gpt-6-astra`; Claude Code keeps `sonnet` and `opus`, now serving Sonnet 5.5 and Opus 5.5, with Haiku 5.5 workers from Claude Code 2.1.293. The routing pack was renewed on these models; see [the renewal results](delegate-renewal-results-2026-10-11.md). After merge (PR #15, `546acb8`), the maintainer's installed Claude Code and Codex copies were synced to this source (folder `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e`); the previous copies are backed up under `~/.agents/skill-backups/delegate-{claude-code,codex}-before-model-currency-2026-10-11`.
 
 **2026-09-22 model roles.** Claude Code escalates from `sonnet` to `opus`; Codex coordinates on `gpt-6-sol` and escalates to `gpt-6-astra`. This revision is installed in the maintainer's personal Claude Code and Codex locations. Saved defaults are unchanged, and it has not been tested in live provider sessions. See the [validation record](validation-status.md). Earlier "not installed" notes below describe their own revisions.
 
