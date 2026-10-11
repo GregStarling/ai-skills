@@ -52,14 +52,17 @@ export const providerSchema = z.enum(["anthropic", "openai", "local", "synthetic
 export const executionEnvironmentSchema = z.enum(["claude_code", "codex", "api", "unknown"]);
 export const identityAssuranceLevelSchema = z.enum(["UNVERIFIED", "CONFIGURATION_ATTESTED", "PARTIALLY_RUNTIME_ATTESTED", "RUNTIME_ATTESTED"]);
 const identityFieldSchema = strictObject({value:z.string().min(1).nullable(),assurance:z.enum(["unverified","host_configuration","runtime_attested","not_applicable"])});
+/** `not_applicable` effort means no effort was requested: the host default served
+ * unobserved, so it ranks like host configuration, never as runtime-attested. */
+export const overallIdentityAssurance=(fields:readonly z.infer<typeof identityFieldSchema>[]):z.infer<typeof identityAssuranceLevelSchema>=>
+  fields.some(f=>f.assurance==='unverified'||f.value===null)?'UNVERIFIED':fields.every(f=>f.assurance==='runtime_attested')?'RUNTIME_ATTESTED':fields.some(f=>f.assurance==='runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
 // Output only: validators derive this from source bytes. Observations and runtime
 // reports deliberately have no writable assurance label.
 export const identityAssuranceSchema = strictObject({
   overall:identityAssuranceLevelSchema,model:identityFieldSchema,effort:identityFieldSchema,
   execution_environment:executionEnvironmentSchema,evidence_digest:digestSchema,limitations:z.array(z.string().min(1)),
 }).superRefine((value,ctx)=>{
-  const fields=[value.model,value.effort];
-  const expected=fields.some(f=>f.assurance==='unverified'||f.value===null)?'UNVERIFIED':fields.every(f=>['runtime_attested','not_applicable'].includes(f.assurance))?'RUNTIME_ATTESTED':fields.some(f=>f.assurance==='runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
+  const expected=overallIdentityAssurance([value.model,value.effort]);
   if(value.overall!==expected||value.model.assurance==='not_applicable'||(value.effort.assurance==='not_applicable')!==(value.effort.value==='not_applicable'))ctx.addIssue({code:'custom',message:'IDENTITY_ASSURANCE_INCOHERENT'});
 });
 export type IdentityAssurance = z.infer<typeof identityAssuranceSchema>;

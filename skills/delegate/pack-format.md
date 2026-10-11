@@ -2,7 +2,7 @@
 
 `lookup` reads `routing-pack.json` (`routing_pack.v3`, production mode, content digest recomputed, validity window checked) and returns: `pack` (`content_digest`, `refresh_due`, `refresh_after`, `expires_at`); `route` (`shape`, `scope`, `review_rule`, `tools`, `stratum_digest`); ordered `workers` and `reviewers` (`candidate_id`, `model`, `effort`, `serving`, `evidence_tier`, `basis`, `expires_at`); `limitations`; `host_checks`; `gap`. Use entries in the order given.
 
-Host checks, on the actual host: model selectable; effort expressible (omit when `not_applicable`); fresh process available when `review_rule.fresh_context`.
+Host checks, on the actual host: model selectable; effort expressible (omit when `not_applicable`); fresh process available when `review_rule.fresh_context`. A `not_applicable` effort means no effort was requested, so the served host default is unobserved; such a treatment stays provisional and is never qualified.
 
 The reviewer must satisfy the route's different-model, different-family and fresh-context rules; never infer family identity. One expired entry (`expires_at`) does not disable the others; the pack's own `expires_at` ends all routing, and `refresh_due` only asks for a refresh.
 

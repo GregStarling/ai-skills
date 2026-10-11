@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { basename } from 'node:path';
 import { canonicalJson, digest, hashBytes } from '../core/canonical.js';
-import { candidateIdentity, parseCandidate, parseRuntimeReport, type Candidate, type RuntimeReport, type IdentityAssurance } from '../schema/index.js';
+import { candidateIdentity, overallIdentityAssurance, parseCandidate, parseRuntimeReport, type Candidate, type RuntimeReport, type IdentityAssurance } from '../schema/index.js';
 import { parseNativeTelemetry } from './telemetry.js';
 
 const hash=z.string().regex(/^sha256:[a-f0-9]{64}$/), iso=z.string().datetime({offset:true});
@@ -41,7 +41,9 @@ export function deriveIdentityAssurance(input:{candidate:Candidate;report:Runtim
   };
   const finish=():DerivedIdentityAssurance=>{
     if(diagnostics.length){model={value:null,assurance:'unverified'};effort={value:null,assurance:'unverified'};}
-    const overall:IdentityAssurance['overall']=[model,effort].some(f=>f.assurance==='unverified')?'UNVERIFIED':[model,effort].every(f=>['runtime_attested','not_applicable'].includes(f.assurance))?'RUNTIME_ATTESTED':[model,effort].some(f=>f.assurance==='runtime_attested')?'PARTIALLY_RUNTIME_ATTESTED':'CONFIGURATION_ATTESTED';
+    // Every path: an unrequested effort is never attested, whatever a receipt or trace labels it.
+    if(effort.value==='not_applicable'){effort={value:'not_applicable',assurance:'not_applicable'};limitations.push('No effort was requested; the served host-default effort is unobserved.');}
+    const overall=overallIdentityAssurance([model,effort]);
     return {overall,model,effort,execution_environment:environment,evidence_digest:digest({candidate_identity:candidateIdentity(candidate),report_digest:digest(report),native_evidence:report.native_evidence??null}),limitations,diagnostics};
   };
   if(report.provider!==candidate.provider||report.candidate_id!==candidate.candidate_id)fail('configuration_identity_mismatch','Runtime report belongs to another exact treatment.');

@@ -1,7 +1,8 @@
 import {describe,expect,it} from 'vitest';
-import {parseRuntimeReport} from '../../src/schema/index.js';
+import {identityAssuranceSchema,overallIdentityAssurance,parseRuntimeReport} from '../../src/schema/index.js';
 import {contentDigest,digest} from '../../src/core/canonical.js';
 import {loadPolicy,qualify,evaluateReview,select,createBinding,validateBinding,type SelectionInput} from '../../src/governance/index.js';
+import {deriveIdentityAssurance} from '../../src/runtime/identity-assurance.js';
 import {nativeV5 as fixture} from '../helpers/v5.js';
 
 const first=(input:SelectionInput)=>qualify({...input,candidate:input.candidates[0]!});
@@ -152,6 +153,39 @@ describe('v5 subscription qualification derived from preserved host evidence',()
   if(kind==='latency')for(const item of f.input.observations){item.latency_ms=300001;f.grade(item);}
   if(kind==='failure-ceiling'){row.failure_categories=['security_incident'];f.grade(row);}
   expect(first(f.input).status).not.toBe('QUALIFIED');
+ });
+ // `not_applicable` effort means no effort was requested: the served host default is unobserved.
+ it.each([
+  {environment:'codex',mode:'production',overall:'CONFIGURATION_ATTESTED'},
+  {environment:'claude_code',mode:'production',overall:'PARTIALLY_RUNTIME_ATTESTED'},
+  {environment:'claude_code',mode:'simulation',overall:undefined},
+ ] as const)('holds uncontrolled effort at provisional for $environment $mode',({environment,mode,overall})=>{
+  const f=fixture(environment,'low','not_applicable');f.input.mode=mode;
+  expect(f.input.candidates[0]!.effort).toBe('not_applicable');
+  const result=first(f.input);
+  expect(result.status).toBe('HOLD');expect(result.diagnostics.map(d=>d.rule_id)).toContain('effort_uncontrolled');
+  expect(result.identity_assurance?.overall).toBe(overall);
+  if(mode==='production'){expect(result.metrics.tasks).toBe(20);expect(result.identity_assurance!.effort).toEqual({value:'not_applicable',assurance:'not_applicable'});}
+ });
+ it('never attests an unrequested effort from an API provider receipt',()=>{
+  const f=fixture('codex','low','not_applicable'),candidate=f.input.candidates[0]!,row=f.input.observations.find(o=>o.candidate.candidate_id===candidate.candidate_id)!;
+  const report=parseRuntimeReport(f.runtimeReports.get(row.provenance.runtime_receipt_digest!));report.execution_environment='api';report.observed_identity={source:'provider_receipt',model_id:candidate.snapshot_id!,effort:'not_applicable'};
+  const {diagnostics,...assurance}=deriveIdentityAssurance({candidate,report,sources:f.sources});
+  expect(diagnostics).toEqual([]);expect(assurance.effort).toEqual({value:'not_applicable',assurance:'not_applicable'});
+  expect(identityAssuranceSchema.parse(assurance).overall).toBe('PARTIALLY_RUNTIME_ATTESTED');
+ });
+ const field=(assurance:'unverified'|'host_configuration'|'runtime_attested'|'not_applicable',value:string|null=assurance==='unverified'?null:'x')=>({value:assurance==='not_applicable'?'not_applicable':value,assurance});
+ it.each([
+  ['runtime_attested','not_applicable','PARTIALLY_RUNTIME_ATTESTED'],
+  ['host_configuration','not_applicable','CONFIGURATION_ATTESTED'],
+  ['runtime_attested','runtime_attested','RUNTIME_ATTESTED'],
+  ['runtime_attested','host_configuration','PARTIALLY_RUNTIME_ATTESTED'],
+  ['unverified','not_applicable','UNVERIFIED'],
+ ] as const)('ranks model %s with effort %s as %s, never runtime-attested for an unrequested effort',(model,effort,expected)=>{
+  const value={model:field(model),effort:field(effort),execution_environment:'claude_code' as const,evidence_digest:digest('SYNTHETIC TEST assurance'),limitations:[]};
+  expect(overallIdentityAssurance([value.model,value.effort])).toBe(expected);
+  expect(identityAssuranceSchema.parse({...value,overall:expected}).overall).toBe(expected);
+  if(expected!=='RUNTIME_ATTESTED')expect(()=>identityAssuranceSchema.parse({...value,overall:'RUNTIME_ATTESTED'})).toThrow('IDENTITY_ASSURANCE_INCOHERENT');
  });
  it('historical v4 retains runtime identity semantics without relabeling native evidence',()=>{
   const f=fixture();f.input.policy=loadPolicy('policy/constitution-v4.json');
