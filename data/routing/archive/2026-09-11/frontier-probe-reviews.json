@@ -1,0 +1,74 @@
+{
+  "schema_version": "frontier_probe_reviews.v1",
+  "reviews": [
+    {
+      "id": "renewal_2026_09_11",
+      "artifact_root": "artifacts/delegate-completion-2026-09-11/renewal-frontier-probes",
+      "bound": {
+        "schema_version": "frontier_bound_review.v1",
+        "probe_report_digest": "sha256:38120be53054c532f1852e90797dd48228787c327771fe16ee143b7d05959c67",
+        "review_artifact_digest": "sha256:6b9fc447eed5e626512eed54ffc475688f9282bfce1ac1d174d9eada29e8d2e7",
+        "input_manifest_digest": "sha256:8fdc1c17bb54666cef22d1e3424a6fcce8a556e86b3ef3766d4c7c83d3d2bb98",
+        "review_request_digest": "sha256:2a0978ea6023ce5c878dc4c2bedd45202f4309782ce99ce6dbac22f0e01a6d27",
+        "review_trace_digest": "sha256:fe203f383703c7c0d4aa3d9296aeb086498f13d08c9556e2a7bad0d55104ed61",
+        "probes": [
+          {
+            "host": "codex",
+            "probe_trace_digest": "sha256:cd0f34dae94c1984e4e801df469c9e9c7278e1d60667e480f5c2061df8b202a6",
+            "diagnosis_digest": "sha256:4fe55a7c8ceb14657f23bc4d0d1693c756820cf599249995bbc5e32a5ff6c2f6",
+            "fixture_digest": "sha256:d478cb3d2258cf94d2c5396d55321a35539c47b9a37d784fb6b5a91472740fe0",
+            "status": "passed"
+          },
+          {
+            "host": "claude",
+            "probe_trace_digest": "sha256:f5cea2b526f51b63c95003361e31373c318f8cca7f1596e9936a800cbe6b52ea",
+            "diagnosis_digest": "sha256:e8e564fe91017424ea801f8889718f93b1341e985a6fe013a68ae7d49d791482",
+            "fixture_digest": "sha256:e043b5afae72ad852bca62e764c64fe507569272e74a973cfb44bb3ceebe2664",
+            "status": "passed"
+          }
+        ]
+      },
+      "bound_digest": "sha256:d88a3fd6d9a997b6b726fa23c6c4faa587731084cdf1b9cd2ddbaee4d1699653",
+      "review_artifact": {
+        "schema_version": "frontier_probe_review.v1",
+        "reviewed_at": "2026-09-11T03:37:50.962Z",
+        "reviewer": {
+          "host": "claude",
+          "host_version": "2.1.267 (Claude Code)",
+          "configured_model": "claude-opus-5",
+          "configured_effort": "high",
+          "observed_models": [
+            "claude-opus-5"
+          ],
+          "observed_effort": null,
+          "fresh_process": true
+        },
+        "input_manifest_digest": "sha256:f0507f15705bb3bb4845137975d75b01a724c270fe435033451d14c013934510",
+        "request_digest": "sha256:2a0978ea6023ce5c878dc4c2bedd45202f4309782ce99ce6dbac22f0e01a6d27",
+        "stdout_digest": "sha256:fe203f383703c7c0d4aa3d9296aeb086498f13d08c9556e2a7bad0d55104ed61",
+        "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "CODEX: PASS — Its trace read the fixture with `cat quantity.mjs` (exit 0, returned `item.quantity || 1`) and ran `node quantity.test.mjs` (exit 1, `3 !== 2`, actual 3, expected 2). It said `||` turns an explicit zero into one because zero is falsy, which is the real defect. It proposed one change, `item.quantity || 1` → `item.quantity ?? 1`, and ran no write command or patch, inside a `-s read-only` sandbox. It never opened `quantity.test.mjs`, but the prompt only asked it to read `quantity.mjs`, so that doesn't fail it.\n\nCLAUDE: PASS — Its trace used Read on `quantity.mjs` and on `quantity.test.mjs`, which asserts `[{quantity:0},{quantity:2}]` sums to 2. It ran `node quantity.test.mjs` through Bash and got exit 1, `3 !== 2`. It blamed `||` at `quantity.mjs:1` for treating every falsy value as missing, so explicit `0` becomes `1`. The fix was only `|| 1` → `?? 1`, with the full corrected line shown. It had only Read and Bash, made no Edit or Write calls, spawned no subagents (`spawned:0`) and had no permission denials.\n\nWhat I checked myself:\n- **Fixtures:** Both directories have the same `quantity.mjs` (`item.quantity || 1`) and the same one-line test.\n- **Tests:** Running `node quantity.test.mjs` in each directory fails with exit 1 and `3 !== 2`, matching both traces. My first claude run broke only because of a shell directory mix-up; the rerun with an absolute path gave the same failure.\n- **The fix:** I tried the `??` version in memory without touching any file. The test input gives 2, and `[{}, {quantity:null}, {quantity:0}]` also gives 2 (1 + 1 + 0). So zero stays zero and only null/undefined become one.\n- **No edits:** Searching both traces for edit activity (`file_change`, `apply_patch`, Edit, Write) found nothing. The `quantity.mjs` in each directory is still the unfixed version.",
+        "probes": [
+          {
+            "host": "codex",
+            "probe_trace_digest": "sha256:cd0f34dae94c1984e4e801df469c9e9c7278e1d60667e480f5c2061df8b202a6",
+            "diagnosis_digest": "sha256:4fe55a7c8ceb14657f23bc4d0d1693c756820cf599249995bbc5e32a5ff6c2f6",
+            "fixture_digest": "sha256:d478cb3d2258cf94d2c5396d55321a35539c47b9a37d784fb6b5a91472740fe0",
+            "status": "passed"
+          },
+          {
+            "host": "claude",
+            "probe_trace_digest": "sha256:f5cea2b526f51b63c95003361e31373c318f8cca7f1596e9936a800cbe6b52ea",
+            "diagnosis_digest": "sha256:e8e564fe91017424ea801f8889718f93b1341e985a6fe013a68ae7d49d791482",
+            "fixture_digest": "sha256:e043b5afae72ad852bca62e764c64fe507569272e74a973cfb44bb3ceebe2664",
+            "status": "passed"
+          }
+        ],
+        "qualification_authority": false
+      }
+    }
+  ],
+  "qualification_authority": false
+}

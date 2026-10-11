@@ -13,7 +13,7 @@ export async function renewalAcceptance(host,name,{runId,outputDirectory,budgetF
  if(typeof id!=='string'||!/^[A-Za-z0-9_-]{1,128}$/.test(id))throw Error('INVALID_RENEWAL_RUN_ID');
  const destination=resolve(outputDirectory??join(completionRoot,id));
  try{await lstat(destination);throw Error('TRIAL_OUTPUT_EXISTS');}catch(error){if(error.code!=='ENOENT')throw error;}
- await requireCapacity(host);
+ await requireCapacity(host,budgetFile);
  await reserveBudget(budgetFile,{id,host,purpose:'renewal_installed_acceptance',worstCase:cap});
  let result;
  try{result=await installedTrial(host,name,{mode:'delegated',traceBoundInspection:true,runId:id,timeoutMs:600000,maxModelCalls:cap,outputDirectory:destination});}

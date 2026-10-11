@@ -1,0 +1,97 @@
+{
+  "schema_version": "frontier_probes.v2",
+  "targets_digest": "sha256:7862016b1fb1505a993e1942af001dd4c3816a684c4e222b6009f94fef71e43f",
+  "probes": [
+    {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6-astra",
+      "effort": "high",
+      "host_version": "codex-cli 0.154.0",
+      "attempted": true,
+      "attempted_at": "2026-09-11T03:36:33.224Z",
+      "availability": "available",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
+      "invocation": "native_cli",
+      "native_agent_status": "not_probed",
+      "configured_model": "gpt-6-astra",
+      "configured_effort": "high",
+      "observed_models": [],
+      "observed_effort": null,
+      "identity_assurance": {
+        "overall": "CONFIGURATION_ATTESTED",
+        "model": {
+          "value": "gpt-6-astra",
+          "assurance": "host_configuration"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "codex",
+        "evidence_digest": "sha256:0e862eb58fd761616f6129ad8f4fc9b73982504faf2c3483aeaac19509b30447",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served model is not independently exposed by this host trace.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "identity_evidence_digest": "sha256:d9523c2fd218858486804222ef432b0f176abe7061dc80af125f80b428b950b8",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_digest": "sha256:cd0f34dae94c1984e4e801df469c9e9c7278e1d60667e480f5c2061df8b202a6",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "status": "passed",
+        "review_digest": "sha256:d88a3fd6d9a997b6b726fa23c6c4faa587731084cdf1b9cd2ddbaee4d1699653",
+        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
+      }
+    },
+    {
+      "provider": "anthropic",
+      "host": "claude",
+      "model_id": "claude-fable-5-1",
+      "effort": "high",
+      "host_version": "2.1.267 (Claude Code)",
+      "attempted": true,
+      "attempted_at": "2026-09-11T03:36:45.621Z",
+      "availability": "available",
+      "reason": "Native CLI completed; diagnostic output needs maintainer review before routing refresh.",
+      "invocation": "native_cli",
+      "native_agent_status": "not_probed",
+      "configured_model": "claude-fable-5-1",
+      "configured_effort": "high",
+      "observed_models": [
+        "claude-fable-5-1"
+      ],
+      "observed_effort": null,
+      "identity_assurance": {
+        "overall": "PARTIALLY_RUNTIME_ATTESTED",
+        "model": {
+          "value": "claude-fable-5-1",
+          "assurance": "runtime_attested"
+        },
+        "effort": {
+          "value": "high",
+          "assurance": "host_configuration"
+        },
+        "execution_environment": "claude_code",
+        "evidence_digest": "sha256:81b5c4c6babe8c44628555d7d9e7492f56b6d62d004d919c1525f44fe81f9103",
+        "limitations": [
+          "No host fallback was configured; provider-side fallback state is not independently attested.",
+          "Served effort is not independently exposed by this host trace."
+        ]
+      },
+      "identity_evidence_digest": "sha256:a7f68a1e0384ebd66196b6d0aa684c15b6583de84478d1358ccc63d36942a96f",
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_digest": "sha256:f5cea2b526f51b63c95003361e31373c318f8cca7f1596e9936a800cbe6b52ea",
+      "stderr_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evaluation": {
+        "status": "passed",
+        "review_digest": "sha256:d88a3fd6d9a997b6b726fa23c6c4faa587731084cdf1b9cd2ddbaee4d1699653",
+        "note": "Fresh independent Opus 5/high source, test and raw trace review; configured effort only. Not routing qualification."
+      }
+    }
+  ]
+}

@@ -11,8 +11,9 @@ import { finished } from 'node:stream/promises';
 // Maintainer-only native CLI experiment; deliberately grants no qualification.
 const output = resolve('artifacts/portable-host-evidence');
 const modelRuns = {
-  codex: { worker: ['gpt-5.3-codex-spark', 'low'], reviewer: ['gpt-5.5', 'high'] },
-  'codex-standard': { worker: ['gpt-5.5', 'low'], reviewer: ['gpt-5.5', 'high'] },
+  // 2026-10 renewal: gpt-5.3-codex-spark retired 2026-09-14 and gpt-5.5 leaves Codex sign-in 2026-10-14.
+  codex: { worker: ['gpt-6-luna', 'low'], reviewer: ['gpt-6-astra', 'high'] },
+  'codex-standard': { worker: ['gpt-6-sol', 'low'], reviewer: ['gpt-6-astra', 'high'] },
   claude: { worker: ['claude-sonnet-5', 'low'], reviewer: ['claude-opus-5', 'high'] },
   'claude-haiku': { worker: ['claude-haiku-4-5-20251001', null], reviewer: ['claude-opus-5', 'high'] },
 };
@@ -152,7 +153,7 @@ export async function runSmoke(host,{budgetFile,outputDirectory=null,workerCaptu
   if (objective.code === 0) {
     const [model, effort] = modelRuns[host].reviewer;
     reviewer = await modelExecute(args(model, effort, true),
-      'Independently review quantity.mjs against this requirement: sum supplied quantities, preserve explicit zero, default only null/undefined quantities to one, empty input gives zero. Read actual code and tests, run node --test quantity.test.mjs. Do not edit. Return ACCEPT if correct or REPAIR with a concrete defect. This is a fresh review process; do not rely on a worker report.', 'reviewer');
+      'Independently review quantity.mjs against this requirement: sum supplied quantities, preserve explicit zero, default only null/undefined quantities to one, empty input gives zero. Read actual code and tests, run node --test quantity.test.mjs. Do not edit. Return ACCEPT if correct or REPAIR with a concrete defect, and begin the final answer with that verdict word. This is a fresh review process; do not rely on a worker report.', 'reviewer');
   }
   const afterReview=await readFile(join(directory,'quantity.mjs'),'utf8');
   await writeFile(join(artifacts,'quantity.mjs'),afterReview,{flag:'wx'});

@@ -1,0 +1,462 @@
+{
+  "sources": [
+    {
+      "id": "claude-models",
+      "url": "https://platform.claude.com/docs/en/models/overview",
+      "checked_at": "2026-09-11T02:29:16.954Z",
+      "content_digest": "sha256:8ef5c1a2849777d61f06e7e98a59c77b98bc51945ef65aac880c5e7a58e6b726",
+      "artifact": "artifacts/delegate-completion-2026-09-11/metadata/claude-models.html"
+    },
+    {
+      "id": "claude-pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "checked_at": "2026-09-11T02:29:16.954Z",
+      "content_digest": "sha256:4e95b2ef92d970caa34c960e55a34498e33357396475ef368eb6fa9c9cf15562",
+      "artifact": "artifacts/delegate-completion-2026-09-11/metadata/claude-pricing.html"
+    },
+    {
+      "id": "codex-models",
+      "url": "https://learn.chatgpt.com/docs/models",
+      "checked_at": "2026-09-11T02:29:16.954Z",
+      "content_digest": "sha256:f4ffe196ccff81a40e1ff1f80d97ddd0c9523bb01b1716f1bd5a8aa4836bda23",
+      "artifact": "artifacts/delegate-completion-2026-09-11/metadata/openai-models.md"
+    },
+    {
+      "id": "codex-pricing",
+      "url": "https://learn.chatgpt.com/docs/pricing",
+      "checked_at": "2026-09-11T02:29:16.954Z",
+      "content_digest": "sha256:d00a374011ea04b8106b68525bcf193871cfbf8b4679a64aabc4d93525c2732d",
+      "artifact": "artifacts/delegate-completion-2026-09-11/metadata/openai-pricing.md"
+    }
+  ],
+  "treatments": [
+    {
+      "candidate_id": "codex-gpt-5.3-codex-spark-low",
+      "provider": "openai",
+      "model_id": "gpt-5.3-codex-spark",
+      "snapshot_id": null,
+      "effort": "low",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "gpt-5.3-codex",
+      "frontier": false,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 128000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:40:25.557Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.154.0",
+        "observed_model_id": "gpt-5.3-codex-spark",
+        "observed_effort": null,
+        "configured_effort": "low",
+        "effort_source": "requested_configuration",
+        "identity_source": "host_configuration",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the refreshed account catalog."
+        ],
+        "availability": {
+          "url": "https://learn.chatgpt.com/docs/models",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://learn.chatgpt.com/docs/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Codex plan usage is not an authoritative per-execution USD cost. Spark is a Pro research preview with separate usage limits; subscription token rates are not inferred."
+        },
+        "smoke": {
+          "task": "tinybug: preserve zero and default only null/undefined quantities",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:3c23c30df3493549593178ed74b64e3aa7024d55af6e33fa72c2544e08221305",
+          "review_digest": "sha256:286157c232ad83828bd4d5111cb83b83a8fabea0b3861f9ea4f0c240f03272f6",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "codex-gpt-5.5-high",
+      "provider": "openai",
+      "model_id": "gpt-5.5",
+      "snapshot_id": null,
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "gpt-5.5",
+      "frontier": true,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 272000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:39:54.631Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.154.0",
+        "observed_model_id": "gpt-5.5",
+        "observed_effort": null,
+        "configured_effort": "high",
+        "effort_source": "requested_configuration",
+        "identity_source": "host_configuration",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the refreshed account catalog."
+        ],
+        "availability": {
+          "url": "https://learn.chatgpt.com/docs/models",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://learn.chatgpt.com/docs/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Codex plan usage is not an authoritative per-execution USD cost. Spark is a Pro research preview with separate usage limits; subscription token rates are not inferred."
+        },
+        "smoke": {
+          "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:5032047281c440f8eb8e7e906707c2a784d150e43ef535d06fa4159ffecd0ca2",
+          "review_digest": "sha256:5032047281c440f8eb8e7e906707c2a784d150e43ef535d06fa4159ffecd0ca2",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "codex-gpt-5.5-low",
+      "provider": "openai",
+      "model_id": "gpt-5.5",
+      "snapshot_id": null,
+      "effort": "low",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "gpt-5.5",
+      "frontier": false,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 272000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:37:30.481Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.154.0",
+        "observed_model_id": "gpt-5.5",
+        "observed_effort": null,
+        "configured_effort": "low",
+        "effort_source": "requested_configuration",
+        "identity_source": "host_configuration",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the refreshed account catalog."
+        ],
+        "availability": {
+          "url": "https://learn.chatgpt.com/docs/models",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://learn.chatgpt.com/docs/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Codex plan usage is not an authoritative per-execution USD cost. Spark is a Pro research preview with separate usage limits; subscription token rates are not inferred."
+        },
+        "smoke": {
+          "task": "tinybug: preserve zero and default only null/undefined quantities",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b",
+          "review_digest": "sha256:5032047281c440f8eb8e7e906707c2a784d150e43ef535d06fa4159ffecd0ca2",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "claude-claude-sonnet-5-low",
+      "provider": "anthropic",
+      "model_id": "claude-sonnet-5",
+      "snapshot_id": null,
+      "effort": "low",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "sonnet",
+      "frontier": false,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 1000000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:40:50.708Z",
+        "host": "claude",
+        "host_version": "2.1.267 (Claude Code)",
+        "observed_model_id": "claude-sonnet-5",
+        "observed_effort": null,
+        "configured_effort": "low",
+        "effort_source": "requested_configuration",
+        "identity_source": "runtime",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
+        ],
+        "availability": {
+          "url": "https://platform.claude.com/docs/en/models/overview",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": 2,
+          "output_usd_per_million": 10,
+          "unknown_reason": null
+        },
+        "smoke": {
+          "task": "tinybug: preserve zero and default only null/undefined quantities",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:7b7658a4dc9765be4788f3f2eb631a923545cdab7481165f7cc48c67dbd7793c",
+          "review_digest": "sha256:59edd561168ec212fa500bb8a20268631989c7ca20fbcd48d7fdd8639ee6bf12",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "claude-claude-opus-5-high",
+      "provider": "anthropic",
+      "model_id": "claude-opus-5",
+      "snapshot_id": null,
+      "effort": "high",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "opus",
+      "frontier": true,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 1000000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:40:12.469Z",
+        "host": "claude",
+        "host_version": "2.1.267 (Claude Code)",
+        "observed_model_id": "claude-opus-5",
+        "observed_effort": null,
+        "configured_effort": "high",
+        "effort_source": "requested_configuration",
+        "identity_source": "runtime",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
+        ],
+        "availability": {
+          "url": "https://platform.claude.com/docs/en/models/overview",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": 5,
+          "output_usd_per_million": 25,
+          "unknown_reason": null
+        },
+        "smoke": {
+          "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
+          "artifact_digest": "sha256:643672e68a3c3efa1e9ccd5b4f5a70665431d3477087b7322b9dbf5ef4de63bb",
+          "execution_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a",
+          "review_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "claude-claude-haiku-4-5-20251001-not_applicable",
+      "provider": "anthropic",
+      "model_id": "claude-haiku-4-5-20251001",
+      "snapshot_id": "claude-haiku-4-5-20251001",
+      "effort": "not_applicable",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "haiku",
+      "frontier": false,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 200000,
+      "evidence": {
+        "observed_at": "2026-09-11T03:38:55.052Z",
+        "host": "claude",
+        "host_version": "2.1.267 (Claude Code)",
+        "observed_model_id": "claude-haiku-4-5-20251001",
+        "observed_effort": null,
+        "configured_effort": "not_applicable",
+        "effort_source": "not_applicable",
+        "identity_source": "runtime",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "Official Haiku4.5 metadata does not support effort; no effort flag was sent. not_applicable records absence of this control, not observed reasoning behavior.",
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
+        ],
+        "availability": {
+          "url": "https://platform.claude.com/docs/en/models/overview",
+          "checked_at": "2026-09-11T02:29:16.954Z"
+        },
+        "pricing": {
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "checked_at": "2026-09-11T02:29:16.954Z",
+          "input_usd_per_million": 1,
+          "output_usd_per_million": 5,
+          "unknown_reason": null
+        },
+        "smoke": {
+          "task": "tinybug: preserve zero and default only null/undefined quantities",
+          "artifact_digest": "sha256:643672e68a3c3efa1e9ccd5b4f5a70665431d3477087b7322b9dbf5ef4de63bb",
+          "execution_digest": "sha256:9d1f829ebc52bff73a1e4f8df46b3fb76bc46ea77238ae0fcfca4907c1a0e3e3",
+          "review_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    }
+  ],
+  "runs": [
+    {
+      "id": "renewal-smoke-codex-1789098025541",
+      "host": "codex",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:3c23c30df3493549593178ed74b64e3aa7024d55af6e33fa72c2544e08221305",
+      "reviewer_stdout_digest": "sha256:286157c232ad83828bd4d5111cb83b83a8fabea0b3861f9ea4f0c240f03272f6",
+      "worker": {
+        "model": "gpt-5.3-codex-spark",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "gpt-5.5",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1789097994542",
+      "host": "codex",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:5b140324549634c79d4569715ef08336548c12d3d0de0a2094f63d4d9bf14d3b",
+      "reviewer_stdout_digest": "sha256:5032047281c440f8eb8e7e906707c2a784d150e43ef535d06fa4159ffecd0ca2",
+      "worker": {
+        "model": "gpt-5.5",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "gpt-5.5",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-1789098050695",
+      "host": "claude",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:7b7658a4dc9765be4788f3f2eb631a923545cdab7481165f7cc48c67dbd7793c",
+      "reviewer_stdout_digest": "sha256:59edd561168ec212fa500bb8a20268631989c7ca20fbcd48d7fdd8639ee6bf12",
+      "worker": {
+        "model": "claude-sonnet-5",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "claude-opus-5",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1789098012388",
+      "host": "claude",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:643672e68a3c3efa1e9ccd5b4f5a70665431d3477087b7322b9dbf5ef4de63bb",
+      "worker_stdout_digest": "sha256:9d1f829ebc52bff73a1e4f8df46b3fb76bc46ea77238ae0fcfca4907c1a0e3e3",
+      "reviewer_stdout_digest": "sha256:b86831f2b6ee23b804d46c707a6a221722b00de2f43f4ab4d104b1b1e6994a1a",
+      "worker": {
+        "model": "claude-haiku-4-5-20251001",
+        "configured_effort": "not_applicable"
+      },
+      "reviewer": {
+        "model": "claude-opus-5",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    }
+  ]
+}

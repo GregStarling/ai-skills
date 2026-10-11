@@ -1,0 +1,1847 @@
+{
+  "schema_version": "delegate_renewal_evidence.v1",
+  "published_at": "2026-10-10T00:39:41.288Z",
+  "authorization": "Greg Starling, Claude Code chat reply received 2026-10-09 after 23:00Z: \"option 3 and /ship\". Approves option 3 as presented: full routing-pack renewal with fresh frontier preflight, Claude smoke and Fable calibration renewal, replacement of retired gpt-5.3-codex-spark and retiring gpt-5.5 Codex treatments with gpt-6-luna/gpt-6-sol workers and a gpt-6-astra reviewer, and the 14-case installed acceptance re-run, within the presented upper estimate of 62 model executions; publication through /ship.",
+  "qualification_authority": false,
+  "scope": "October 2026 full renewal of the existing provisional route scope; Codex gpt-5.3-codex-spark/gpt-5.5 treatments replaced by gpt-6-luna/gpt-6-sol workers and a gpt-6-astra reviewer.",
+  "folder_freeze": {
+    "skill_folder_digest": "sha256:04e3edbeac507502bdedbd31a491ceb457d10c418edf719d23dc2a8b4ec408d5",
+    "skill_folder_sha256": "775e9f0dcf1282dd639d448f8451ead19ccfe6ba1f0f4675f59e56f7da0132fe",
+    "pack_content_digest": "sha256:357665d4cb2b96d15de765741fa54792917db4f0bf5c6034688b5238aa9d1a90",
+    "files": {
+      "context-discipline.md": "5f862200d353800d6e0f82ac30ee75ded46a764a5afe1c8899f6b59e3c3f7e15",
+      "delegation-contract.md": "6ee4308774b7b77432d8b015b13bab3a539c2505a6ea5933fa6f6c97da337377",
+      "hosts/claude-code.md": "d033dee66f6bb3cd4e5b170cd7c85e86c30255b789ba762007d7572817d8c063",
+      "hosts/claude-md-snippet.md": "e6adfacb63545ecea569f9e0dc15999c17674f9a0b85138d0825edac5aeaaf1b",
+      "hosts/codex.md": "939f3b5b1cbdfe7b2c9c0d55848db5293e3d4dd1bf2145f5046a72855a70305e",
+      "local-learning.md": "7e8ada53aa0d8602826600ce988a1ac27968bb233f9f46bd7d8e5bf50b441e55",
+      "pack-format.md": "43028d5c9d280e166f48b6ca3b230726c088a22d14b80924c43e8ab011928d61",
+      "README.md": "3d65965125a2a074f5861bbc3281dd48490319ab03ccb09e6def237112e6ab63",
+      "research.md": "7ba09e0fcb4bcab174bf0276a603c40385f1c998118146fa6b89775fe2819218",
+      "routing-pack.json": "f65c8ce69e52232cb152bfb859ec17f0f418ac37d655bc4cdf7c4db80f12da0c",
+      "scripts/local-learning.d.mts": "82c613f282c76aa56c4cac508033293fd7e7d37de7ce929f8b5b5dc0250a51ae",
+      "scripts/local-learning.mjs": "7370d9aa41024678d4cf21d31322cc8860c262b1b00bd9d6b586d57510f41b03",
+      "SKILL.md": "ccd9da4eee5127c4575f5ce49acfa213e27c64eb6490383d2ceb5a0842a51d8b",
+      "swarm-policy.md": "275244fb5ddd28ba914c7b3f4de01629ddead95eeb3b91a25d38435a7866d225",
+      "task-classes.md": "1ede07755bf30c86231015cb8cdc308f7b62ddcacbc27b26d0f098e02d67c3e6",
+      "verification-policy.md": "c9b6e76ae118bec616f8139a1583ccdfcb539f6d10df1eaaf85a9265065e02c5"
+    },
+    "recorded_at": "2026-10-09T23:55:29.528Z",
+    "qualification_authority": false
+  },
+  "cases": [
+    {
+      "run_id": "renewal-2026-10-installed-claude-backend",
+      "host": "claude",
+      "case": "backend",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-backend/result.json",
+        "digest": "sha256:62652ecaae4a934acded6c1a52800ceea7b18f3d394fa8e904d1f7e03df5357d"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:f40841d75a1fddae5f24a81f0a5e6537492ebefbb0f9e74dfadae1bed27c429c"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-backend/maintainer-review-final.json",
+        "digest": "sha256:6e44a19eb283d3541e42c1c3b8df1f40504120b728f70eae328b6ba0895a14f2"
+      },
+      "started_at": "2026-10-10T00:01:20.655Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "paginate validates positive integer page and pageSize with RangeError, returns a new sliced array with total, page, pageSize and ceil totalPages (zero for empty input), yields no items beyond the last page and does not mutate input. The single Haiku Agent worker wrote paginate.mjs; the coordinator read the final file after the worker returned; the grader passes and a matched receipt exists.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "paginate.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_0127YfPT3NJCmaEbaHfkWvKj"
+      ],
+      "artifact_digests": {
+        "paginate.mjs": "sha256:be1483f71092de7018c932979fa9e173bd8d479866b8d57afc3decc17337873d"
+      },
+      "receipt_digests": [
+        "sha256:769dde44686d83cfb47bf2a656daae03c9b3d3758a5fc567a328768ace226f6f"
+      ],
+      "browser": null,
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-fullproject/result.json",
+        "digest": "sha256:d09c1199670aef32e7d77b94948f3b9659482d7515ae8be365e8191101d85a36"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:6505b53a95ae50e474ddc192b7810d21b653889aebc4ef39abd54ace4dc54d0e"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-fullproject/maintainer-review-final.json",
+        "digest": "sha256:15494ffe73c375bf3f54562809197e310a858b637f329f4ba7d5e2b2baccdc01"
+      },
+      "started_at": "2026-10-10T00:18:02.549Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Two Haiku Agent workers owned disjoint files: one wrote store.mjs (trimmed nonempty string titles or TypeError, unique string ids, done:false, toggle RangeError for unknown ids, list returns copies), the other wrote view.mjs (semantic ul with one li per task, escaped titles, a checkbox per task, checked only when done, associated labels). The Opus coordinator integrated app.mjs after both workers completed and read all three final files; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "failed_launches": 0,
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "store.mjs"
+          ]
+        },
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "view.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_014MCq6fRBfZ5x3ZRDzRYMji",
+        "toolu_013dzLLcUrBAvw5ba2szVfMN",
+        "toolu_01LaLDkLmYQZoZT9jzZWoeM2"
+      ],
+      "artifact_digests": {
+        "store.mjs": "sha256:d84ea169c4dfdd24ff3bc086e92bc23884d4ab8d365e695b24d2490dc9f671cc",
+        "view.mjs": "sha256:103cf04ac1953035b3c17954af07e9403417a9f830c331a55a65a2523ac109da",
+        "app.mjs": "sha256:c41bd533b457b6fd0fe42d96b9a3e3b6b2b485b5596ccf0c917eef227e0a8694"
+      },
+      "receipt_digests": [
+        "sha256:de1d184042a3b641e338609ac53814912820d18b4ba5d61235800cc35a87708a",
+        "sha256:de1d184042a3b641e338609ac53814912820d18b4ba5d61235800cc35a87708a"
+      ],
+      "browser": null,
+      "limitations": [
+        "Decomposition evidence only: full-project cases never create a whole-project worker route and do not join provisional routes.",
+        "The coordinator, not a worker, wrote app.mjs during integration.",
+        "Workers requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-hardbug",
+      "host": "claude",
+      "case": "hardbug",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-hardbug/result.json",
+        "digest": "sha256:ee6b0afd199d6e77a939c4bc163878c9b09208b6fd9e10a55de6611fd2e16d94"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:407f193deef118d5565d0198526876097605adb8531723b4b99c11ce10c1cceb"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-hardbug/maintainer-review-final.json",
+        "digest": "sha256:74b097bfabfd2d35da1a30ac41251e0f18087c29689955a35be8a6910629039c"
+      },
+      "started_at": "2026-10-10T00:09:09.367Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "createSearch uses a per-run token: only the latest run calls onResult and returns its result; stale resolutions and stale rejections return undefined without publishing; the latest run's rejection is rethrown (an onResult error on the latest run also propagates); requests are not serialized and no dependency is added. The single Haiku Agent worker made the only edit; the coordinator read the final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "search.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_01TUPfrcCyG5rNXS4iTJSSSc"
+      ],
+      "artifact_digests": {
+        "search.mjs": "sha256:28349eba4165b5e0e74aa3ca35158a2ab48f8f7cdd1e3ed480ea16456da9330d"
+      },
+      "receipt_digests": [
+        "sha256:0d7bf6f03643a887f56fe3b81f531d520e98fbbb7f14cca44786ff6d6491d1e7",
+        "sha256:0d7bf6f03643a887f56fe3b81f531d520e98fbbb7f14cca44786ff6d6491d1e7"
+      ],
+      "browser": null,
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-mechanical",
+      "host": "claude",
+      "case": "mechanical",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-mechanical/result.json",
+        "digest": "sha256:402ac3bd46a22713fbe3ee51a89ee7ef5ddd7e7d70bc50ce2416489293ecef9c"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:12c3929a46a42734b80d969808c2ebfa529343d7480b87c09295ea7f19c98610"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-mechanical/maintainer-review-final.json",
+        "digest": "sha256:10ccc3a87f16fc69c990f2f36293cc76a4921171f4a38e25c30175b54053ae9d"
+      },
+      "started_at": "2026-10-09T23:58:32.461Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "slug.mjs now exports only normalizeSlug with unchanged trim/lowercase/whitespace-run behavior, and link.mjs imports and calls normalizeSlug. The single Haiku worker made both Edits; the coordinator read each final file individually after the worker returned; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "slug.mjs",
+            "link.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_01NHaWyYoajhHXcm9965HKoK",
+        "toolu_01BRn6EwDQpTiZgR7hpnzMqQ"
+      ],
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:c754ddc19be5c605d5d2e5970065fc89458c684356e3745d6d05128623830f3f",
+        "sha256:c754ddc19be5c605d5d2e5970065fc89458c684356e3745d6d05128623830f3f"
+      ],
+      "browser": null,
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-multicomponent",
+      "host": "claude",
+      "case": "multicomponent",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-multicomponent/result.json",
+        "digest": "sha256:06e5c9aacf686bdc570abb78d48a11264a9d36fab730ff4d6a1c146a0a3046c7"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:4138b8dca4ffe7686bf08f72497de242bc5a85d7b9f42733774c4e232b80604e"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:7c5484ad2e62624de203e7359d5fab9a94bd72baeb404035f0f821455e8e5f8c"
+      },
+      "started_at": "2026-10-10T00:13:56.447Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "normalizeTask trims the title, rejects non-string or empty titles with TypeError, requires a string id and returns {id,title,done:Boolean(done)}; addTask normalizes, rejects duplicate ids with Error and returns a new array without touching the input; taskSummary normalizes before formatting (done)/(open). The single Haiku Agent worker wrote all three modules; the coordinator read each final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_01A4ApwuGoPCP2MFMrLsqj3z",
+        "toolu_01D3tSr3uv2LTbAL1pm4Lsy9",
+        "toolu_016j6yhjsZt4VYQZxXGrY5JN"
+      ],
+      "artifact_digests": {
+        "task.mjs": "sha256:288fff52f67e30d58262587dac1ab948e7276c7bd60a214068979100bb1eef38",
+        "service.mjs": "sha256:9e833cdd46083e64206a7f79f4e572da2c8aaf36aec4e2fd1d6652d48203296f",
+        "view.mjs": "sha256:32dbfded059286e31eda1b0aac6dc5abfa069f67d6931cbe3f5edbf011e01a18"
+      },
+      "receipt_digests": [
+        "sha256:9ed39ac8828538b5421df170b9d34f91a355dedc5922c96afdefa3eec2077653",
+        "sha256:9ed39ac8828538b5421df170b9d34f91a355dedc5922c96afdefa3eec2077653"
+      ],
+      "browser": null,
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models.",
+        "normalizeTask also rejects whitespace-only ids, stricter than the specified nonempty-string requirement; the external grader does not exercise that input."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-tinybug",
+      "host": "claude",
+      "case": "tinybug",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-tinybug/result.json",
+        "digest": "sha256:5849d8eb815dfb326704efb36d7b815d93b02b81bc053851e7962c9491718ee0"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:f751cd9f352bd043c7ea759827fcf4113465f2879cb1d2530e89e6e7f403db3b"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-tinybug/maintainer-review-final.json",
+        "digest": "sha256:074abdf374ece1fbd435f2a2dd448ab08151f7158df4efa82d6a14af4a21bb67"
+      },
+      "started_at": "2026-10-09T23:55:35.928Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Final quantity.mjs uses item.quantity ?? 1 with a zero initial accumulator, so explicit zero is preserved and only null/undefined default to one. The single Haiku Agent worker made the only Edit; the Opus coordinator read the final file after the worker returned; the external grader passes and two matched receipts exist.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "quantity.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_01FuVhKxELKJ1zEbGNHqkszN"
+      ],
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:63770500e8af6823f5513b081f6002b5e05e06376a9e9abf34c78b3f6783af5c",
+        "sha256:63770500e8af6823f5513b081f6002b5e05e06376a9e9abf34c78b3f6783af5c"
+      ],
+      "browser": null,
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-ui/result.json",
+        "digest": "sha256:7e17f40156eb31fc3ff3b9bc948bd3e6c04bd9fb734b336ca7b611fec68eaa8d"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:e3887d9a562a7e5b2d0eeb6a998e7500b1f392b0b88ebfd966a1dcee16044c04"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-ui/maintainer-review-final.json",
+        "digest": "sha256:5ec785e163a0bcdd8c05ff8f50f7c8a5c267ab560da679b6b9d5fdb97c8e925a"
+      },
+      "started_at": "2026-10-10T00:04:15.900Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "index.html has title Task list, one main with h1 Task list, a form with a labeled task-title input and Add task submit button, a semantic list with Plan and Build checkboxes each with an associated label, viewport metadata and focus/focus-visible outlines. Maintainer viewed the 320 and 1280 screenshots: full-width controls inside the card at 320, a max-width centered card at 1280, no horizontal overflow, visible focus ring on the first tab stop. The single Haiku Agent worker wrote index.html; the coordinator read the final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-4-5-20251001"
+          ],
+          "observed_written_files": [
+            "index.html"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "toolu_01QPnnghFgvx5mTJyL4SE9xr"
+      ],
+      "artifact_digests": {
+        "index.html": "sha256:52b8c0743eb6c6dbafbc7ebd47da3a3278317909be79fd838230bbaec38addc5"
+      },
+      "receipt_digests": [
+        "sha256:194886682d692d72d2612e75f00fb119f06fb36eade6e85daf60b8c097d8ebc6",
+        "sha256:194886682d692d72d2612e75f00fb119f06fb36eade6e85daf60b8c097d8ebc6"
+      ],
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:52b8c0743eb6c6dbafbc7ebd47da3a3278317909be79fd838230bbaec38addc5",
+        "current_artifact_matches": true,
+        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "title",
+          "heading",
+          "single_main",
+          "form",
+          "task_input",
+          "checkbox_labels",
+          "tasks",
+          "submit",
+          "no_horizontal_overflow",
+          "keyboard_focus"
+        ],
+        "screenshots": [
+          {
+            "path": "320.png",
+            "digest": "sha256:bac7347c49e882db4302ef657643c03f5e1a1f76a87e04bce9a59563ef39ac70"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:b9b70fce1f155d71521303b2efd00abf3527b3e4374b9652e6e0a9715475e358"
+          }
+        ],
+        "browser_checks_digest": "sha256:cd028e2610f818284a442ca7507d7eb9cef02fafb4ee61bf2fcbb04ed62b5f8a"
+      },
+      "limitations": [
+        "Worker requested through the Agent alias haiku with no effort control; served model comes from forwarded child message models.",
+        "Rendered review is the maintainer session's inspection of headless Chromium captures, not a separate counted model execution."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-backend",
+      "host": "codex",
+      "case": "backend",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-backend/result.json",
+        "digest": "sha256:aee5f8209f9df86ce2582a5916380a1471dc1ebbcbed39c4747ca12900aafafc"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:8f6eca2662bd710c2d8f3b47f63f37b09d8c56d7090710a4d5ed24b607bec39e"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-backend/maintainer-review-final.json",
+        "digest": "sha256:59bc22279b05d08dba303aee4ef471bdb82fa00d5088c3037e0b3438a51229f4"
+      },
+      "started_at": "2026-10-09T23:58:27.558Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "paginate validates positive integer page and pageSize with RangeError, returns a new sliced array with total, page, pageSize and ceil totalPages (zero for empty input), yields no items beyond the last page and does not mutate input. The single configured gpt-6-luna/low child wrote paginate.mjs; the coordinator inspected the final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "paginate.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_11"
+      ],
+      "artifact_digests": {
+        "paginate.mjs": "sha256:b1a22cdc679d978892b149021f14d2b1e48626ba7a86cbae069bff2037f22f58"
+      },
+      "receipt_digests": [
+        "sha256:62f81aa66cc3bccdca6e1bed3cab94431f91c0041ea44ac48586e82355db0733",
+        "sha256:62f81aa66cc3bccdca6e1bed3cab94431f91c0041ea44ac48586e82355db0733"
+      ],
+      "browser": null,
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-fullproject",
+      "host": "codex",
+      "case": "fullproject",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-fullproject/result.json",
+        "digest": "sha256:2c5de71cdb86740374495387c5c597979aef2b2409a04cb4119632c2164154e8"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:2237f78f169a940a63e9ccfcc9cb238910f9795e374400fbb94822591183092b"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-fullproject/maintainer-review-final.json",
+        "digest": "sha256:eb7623f08e927dac052052fccab1402155df31ab9df6892bfc1fbd0e8ebbaaf0"
+      },
+      "started_at": "2026-10-10T00:22:47.705Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Two configured gpt-6-luna/low child sessions owned disjoint files: store.mjs (trimmed nonempty string titles or TypeError, unique string ids, done:false, toggle RangeError for unknown ids, list returns copies) and view.mjs (semantic ul with one li per task, escaped titles, a checkbox per task wrapped in its label, checked only when done). The gpt-6-astra/high coordinator integrated app.mjs after both waits completed and cat-inspected all three final files; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 3,
+      "failed_launches": 0,
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "store.mjs"
+          ]
+        },
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "view.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_20",
+        "item_15",
+        "item_16"
+      ],
+      "artifact_digests": {
+        "store.mjs": "sha256:48ef5e225363445279e80fda84f0d632585733e1b723e825e5f065e69bd5375f",
+        "view.mjs": "sha256:020c16d5170e0219d02bf7edef8b49d812894b9b0aafe04d7cdbc862064fd387",
+        "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
+      },
+      "receipt_digests": [
+        "sha256:ddcb8f6d8c3c24a892718c30904736178e8b310f3cd324c376ecda673222418e",
+        "sha256:ddcb8f6d8c3c24a892718c30904736178e8b310f3cd324c376ecda673222418e"
+      ],
+      "browser": null,
+      "limitations": [
+        "Decomposition evidence only: full-project cases never create a whole-project worker route and do not join provisional routes.",
+        "The coordinator, not a worker, wrote app.mjs during integration.",
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-hardbug",
+      "host": "codex",
+      "case": "hardbug",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-hardbug/result.json",
+        "digest": "sha256:e139761b88c80f3c92214c2a0ea86a4b23728b75dcc8ca346ccf099adfb03576"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:401e0af6f62d583ce374ff13f04f2d019d6676d2c8934133323c1ce893318414"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-hardbug/maintainer-review-final.json",
+        "digest": "sha256:b43ced2bc892f4c0ffd80e8851fe4ddb687f62e40c6cfb7b2ae4ba688918f25c"
+      },
+      "started_at": "2026-10-10T00:02:43.948Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "createSearch tracks a per-run invocation counter: only the latest run publishes via onResult, a stale resolution returns undefined without publishing, a stale rejection resolves undefined, and the latest run's rejection propagates; requests are not serialized and no dependency is added. The single configured gpt-6-luna/low child wrote search.mjs with a shell heredoc in its preserved native session; the coordinator only read it for verification and digest, then cat-inspected the final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "search.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_16"
+      ],
+      "artifact_digests": {
+        "search.mjs": "sha256:3b179d0724cff349f58a0189d60a4f51d5dbe0cb416b0b5ae1b4670dea0e3524"
+      },
+      "receipt_digests": [
+        "sha256:387a45b8dbe202136b800887e47dea2137087b214936ad7da1dab69d0fab6523",
+        "sha256:387a45b8dbe202136b800887e47dea2137087b214936ad7da1dab69d0fab6523"
+      ],
+      "browser": null,
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed.",
+        "Worker write attribution comes from a preserved child shell heredoc command, not a patch event."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-mechanical",
+      "host": "codex",
+      "case": "mechanical",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-mechanical/result.json",
+        "digest": "sha256:69b53e53e60549987ab1ac0680eddb3ce584690b1a4e82845b7aaf35277630ea"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:351db9b572cffb7c949b0dc4cdd85bd74a677fb6f85cf71c51b0ac508d5aeea1"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-mechanical/maintainer-review-final.json",
+        "digest": "sha256:7eec14bb033b9f480fc1144cb043afdf4378a6563a8bebed4b202e3e09b0ae46"
+      },
+      "started_at": "2026-10-09T23:56:48.904Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "slug.mjs exports only normalizeSlug with unchanged behavior and link.mjs imports it. The single configured gpt-6-luna/low child made both patches; the coordinator cat-inspected each final file after the wait; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "slug.mjs",
+            "link.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_14",
+        "item_15"
+      ],
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:af6c7a0d0e06122ffb3c803d0124beaaf59597cb13b3f1461926ec4736b1a86c",
+        "sha256:af6c7a0d0e06122ffb3c803d0124beaaf59597cb13b3f1461926ec4736b1a86c"
+      ],
+      "browser": null,
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-multicomponent",
+      "host": "codex",
+      "case": "multicomponent",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-multicomponent/result.json",
+        "digest": "sha256:0179b729874527bbb919ba95b3d288b5141145368b88a2548e362e7775ca92e6"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:311905a8212f781635428f28019bf55922b5f74ae928d57a83ead74bc0293c8a"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:05a48b94149894ce1365ecbd9fabb317e3a696963bf5d4aa2954d2a46a7a7d5c"
+      },
+      "started_at": "2026-10-10T00:04:46.634Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "normalizeTask requires a nonempty string id, trims the title, rejects non-string or empty titles with TypeError and returns {id,title,done:Boolean(done)}; addTask normalizes, rejects duplicate ids with Error and returns a new array without touching the input; taskSummary normalizes before formatting (done)/(open). The single configured gpt-6-luna/low child wrote all three modules; the coordinator cat-inspected each final file; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_20",
+        "item_21",
+        "item_19"
+      ],
+      "artifact_digests": {
+        "task.mjs": "sha256:7bbd0fca54003b99e941aa18b0d9bd8dc4522c6bb755b9470bdf742e760439fa",
+        "service.mjs": "sha256:e06029048487a39f8af7a7e8bf44af16fb65fbd66e46b9faccef82ba9691069b",
+        "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+      },
+      "receipt_digests": [
+        "sha256:137c163568217b063fd445c3f472aa1b55f948ea804611d14435a30575986f8e",
+        "sha256:137c163568217b063fd445c3f472aa1b55f948ea804611d14435a30575986f8e"
+      ],
+      "browser": null,
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-tinybug",
+      "host": "codex",
+      "case": "tinybug",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-tinybug/result.json",
+        "digest": "sha256:6f0786282e2dbbcbb04d61fedfec945a02dabac6e35969349c3e58fd8c736e70"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:ec6060410b52bad2835ff9271a9d5fffc3bff76c37c3614943d6646519609d33"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-tinybug/maintainer-review-final.json",
+        "digest": "sha256:08568e9910bd69e6408035745d74a77ddef1ac63fefa41aa75cbc8118aa2cc8e"
+      },
+      "started_at": "2026-10-09T23:55:37.406Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "Final quantity.mjs uses item.quantity ?? 1, preserving zero and the empty-input zero. The single native child session ran configured gpt-6-luna/low and made the only patch; the gpt-6-astra/high coordinator cat-inspected the final file after the wait completed; the grader passes and receipts are matched.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "quantity.mjs"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_14"
+      ],
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:e9b1c9211bbaf05f9b5d244c9ee3c412688b4a35b27cc80f7e848ebdb69a3cd8",
+        "sha256:e9b1c9211bbaf05f9b5d244c9ee3c412688b4a35b27cc80f7e848ebdb69a3cd8"
+      ],
+      "browser": null,
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-10-installed-codex-ui",
+      "host": "codex",
+      "case": "ui",
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-ui/result.json",
+        "digest": "sha256:98e123f6c57691dd3a0e11af08f13f430ed2fc1068ea5371cff59845b11744d9"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:4eb486e64dd1383a818229c3b9c380da188c3eb3c930a68ba69067558f5c37e8"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-ui/maintainer-review-final.json",
+        "digest": "sha256:7071b214676ce603dba8d8e7615f793c84f21501652ac93d91a5aa87807387ce"
+      },
+      "started_at": "2026-10-10T00:00:05.809Z",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "verdict": "PASS",
+      "reason": "index.html has title Task list, one main with h1 Task list, a form with a labeled task-title input and Add task submit button, a semantic list with Plan and Build checkboxes each with an associated label, viewport metadata and focus-visible outlines. Maintainer viewed the 320 and 1280 screenshots: stacked layout at 320, inline input and button at 1280, no horizontal overflow, visible keyboard focus on the first tab stop. The single configured gpt-6-luna/low child wrote index.html; the coordinator inspected the final file; the grader passes.",
+      "external_grader_passed": true,
+      "executions": 2,
+      "failed_launches": 0,
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "index.html"
+          ]
+        }
+      ],
+      "inspection_tool_ids": [
+        "item_17"
+      ],
+      "artifact_digests": {
+        "index.html": "sha256:f48311a16b9178ee2e9db2a3866676b8b2665ea93d016fab07a533b407854254"
+      },
+      "receipt_digests": [
+        "sha256:27c396cb85ef2b509da645cfa04a7bbbb89b0f7fea61daf317b653d52d180cc7",
+        "sha256:27c396cb85ef2b509da645cfa04a7bbbb89b0f7fea61daf317b653d52d180cc7"
+      ],
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:f48311a16b9178ee2e9db2a3866676b8b2665ea93d016fab07a533b407854254",
+        "current_artifact_matches": true,
+        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "title",
+          "heading",
+          "single_main",
+          "form",
+          "task_input",
+          "checkbox_labels",
+          "tasks",
+          "submit",
+          "no_horizontal_overflow",
+          "keyboard_focus"
+        ],
+        "screenshots": [
+          {
+            "path": "320.png",
+            "digest": "sha256:f82d9bd70dc5fc40262a84247a540e445924a7b13d8e38ed18bb38f40e8f3d40"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:a3cbab9c7ad373ee804a435770c147cee30a011d3dc3405dbd71b899af2a0934"
+          }
+        ],
+        "browser_checks_digest": "sha256:2f5bf08e3d09eabf403b4e15e577e7cf6afe3b7e69ca6df8e72b1720a7559d68"
+      },
+      "limitations": [
+        "Native turn_context records configured gpt-6-luna/low and coordinator gpt-6-astra/high; served model and effort are unexposed.",
+        "Rendered review is the maintainer session's inspection of headless Chromium captures, not a separate counted model execution."
+      ]
+    }
+  ],
+  "accepted_case_ids": [
+    "renewal-2026-10-installed-claude-backend",
+    "renewal-2026-10-installed-claude-fullproject",
+    "renewal-2026-10-installed-claude-hardbug",
+    "renewal-2026-10-installed-claude-mechanical",
+    "renewal-2026-10-installed-claude-multicomponent",
+    "renewal-2026-10-installed-claude-tinybug",
+    "renewal-2026-10-installed-claude-ui",
+    "renewal-2026-10-installed-codex-backend",
+    "renewal-2026-10-installed-codex-fullproject",
+    "renewal-2026-10-installed-codex-hardbug",
+    "renewal-2026-10-installed-codex-mechanical",
+    "renewal-2026-10-installed-codex-multicomponent",
+    "renewal-2026-10-installed-codex-tinybug",
+    "renewal-2026-10-installed-codex-ui"
+  ],
+  "smokes": [
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-claude",
+      "host": "claude",
+      "treatments": {
+        "worker": [
+          "claude-sonnet-5",
+          "low"
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude/result.json",
+        "digest": "sha256:ce2fa70d7e7f49cd5cc0efa6e36205124924d786ec8158f0b9595bfde521a780"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude/reviewer/stdout.jsonl",
+        "digest": "sha256:14b2374eb84d73ca8b5d94211f846f6b1b4c84eff6e54aa8541d89db48e951de"
+      },
+      "assembled": false
+    },
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-claude-haiku",
+      "host": "claude-haiku",
+      "treatments": {
+        "worker": [
+          "claude-haiku-4-5-20251001",
+          null
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-haiku/result.json",
+        "digest": "sha256:79d57e1d1e47934a0f6872e1022b9b804b09fb715f6b38119f2cf890c188c1bb"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-haiku/reviewer/stdout.jsonl",
+        "digest": "sha256:395f21020e809a8aa22ebddd32e7d107ce581b87df84b34b22ed0906040324c4"
+      },
+      "assembled": false
+    },
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-claude-haiku-retry",
+      "host": "claude-haiku",
+      "treatments": {
+        "worker": [
+          "claude-haiku-4-5-20251001",
+          null
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-haiku-retry/result.json",
+        "digest": "sha256:b2dd9f6a913e6f8673575e689a0fa975d241481748d350131b2752a18373017e"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-haiku-retry/reviewer/stdout.jsonl",
+        "digest": "sha256:9ada9e4934d64c9a0b29ca54704c6e3b95bc7341adb0bd46ba988f7936214636"
+      },
+      "assembled": true
+    },
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-claude-retry",
+      "host": "claude",
+      "treatments": {
+        "worker": [
+          "claude-sonnet-5",
+          "low"
+        ],
+        "reviewer": [
+          "claude-opus-5",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-retry/result.json",
+        "digest": "sha256:57f0e4c1dd1cfe35d8367af12a70efa92c80c4ab3f09d7752f293b1d897cc975"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-claude-retry/reviewer/stdout.jsonl",
+        "digest": "sha256:589872edb3ce62b0c2552bdc8f759502f5606032d8e79abf19ad2f162bb055e3"
+      },
+      "assembled": true
+    },
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-codex",
+      "host": "codex",
+      "treatments": {
+        "worker": [
+          "gpt-6-luna",
+          "low"
+        ],
+        "reviewer": [
+          "gpt-6-astra",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-codex/result.json",
+        "digest": "sha256:27adffc6ba634253b6425d98d93cf0682f1cf4d63f6bd9002fdc6ebcfe5a70e6"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-codex/reviewer/stdout.jsonl",
+        "digest": "sha256:84a61e71c134ddabcf379368550be9a63201c0121d2c1f79ab385d9aa2d97435"
+      },
+      "assembled": true
+    },
+    {
+      "directory": "artifacts/renewal-2026-10-09/smoke-codex-standard",
+      "host": "codex-standard",
+      "treatments": {
+        "worker": [
+          "gpt-6-sol",
+          "low"
+        ],
+        "reviewer": [
+          "gpt-6-astra",
+          "high"
+        ]
+      },
+      "result": {
+        "path": "artifacts/renewal-2026-10-09/smoke-codex-standard/result.json",
+        "digest": "sha256:8e3e28c9905081d808f7460cb837a5414b43ea04d4cad7851e08cc850be4179a"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-10-09/smoke-codex-standard/reviewer/stdout.jsonl",
+        "digest": "sha256:718533568488e46f99df62749a5fc70939bef26902f5d9e29bde38535df2e965"
+      },
+      "assembled": true
+    }
+  ],
+  "frontier": {
+    "targets": {
+      "path": "data/routing/frontier-targets.json",
+      "digest": "sha256:ea9972c2f54209377724de91060c636884698fdbf6f66e904fbad53d9e5a2f93"
+    },
+    "probe_report": {
+      "path": "artifacts/renewal-2026-10-09/frontier-probes/report.json",
+      "digest": "sha256:2cdb846730263e32d09cb7c236b5c6989ce37ae7c94a9d6587872d73a5d5a49e"
+    },
+    "review": {
+      "path": "artifacts/renewal-2026-10-09/frontier-probes/independent-review/review.json",
+      "digest": "sha256:b40709d99a2be09f6c59d4a32af31f8435ba3ceae7c3c3554a3d5afce0c2d408"
+    }
+  },
+  "metadata": [
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/claude-deprecations.html",
+      "digest": "sha256:8357beb1fb106125e530c9dc1cd1725e7db048709fde4e5ef7b0d83213a7d90a"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/claude-models.html",
+      "digest": "sha256:198bdea57b5a94f88dd07ca0aea88afd2fa4385f6f04c8122c995ea25b8269f4"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/claude-pricing.html",
+      "digest": "sha256:ca116bc8c7239e62a90fa1d287d3fcdc470602ed062b81e506ebfd449c7a4508"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-astra.html",
+      "digest": "sha256:c111f3a0d31d40491db11e64571a2f7f66caf76fb017ff38b2b362379fc6b767"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-luna.html",
+      "digest": "sha256:2c03e64f58508b2799901292aae1d9aff31ca36996435dcc0243e3fe44328e2d"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/openai-gpt-6-sol.html",
+      "digest": "sha256:4fa3601848a9548bc3353f33b2007d03e8cb51a67519117fba603982c35060a9"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/openai-models.html",
+      "digest": "sha256:953755f65acd68782c825959dfa364c2fcf81e7c04bd07d5f9099d2990156135"
+    },
+    {
+      "file": "artifacts/renewal-2026-10-09/metadata/openai-pricing.html",
+      "digest": "sha256:ed54088f2754649f930e2434d762121120e1a71cfb9fbd9c86f210b18aac8550"
+    }
+  ],
+  "metadata_checked_at": "2026-10-09T23:43:58.000Z",
+  "calibration": {
+    "report": {
+      "path": "artifacts/renewal-2026-10-09/calibration/report.json",
+      "digest": "sha256:08340d6a22573a89d859cbc2375bcb0857142ab1bd9ade089860ac5da4964e72"
+    },
+    "ledger": {
+      "path": "artifacts/renewal-2026-10-09/calibration-ledger.json",
+      "digest": "sha256:7b6be4a7eb53e1d196509b0243481570e674ccec5069248b5cab40af04b16081"
+    }
+  },
+  "admissions": {
+    "path": "data/routing/reviewer-calibration/admissions.json",
+    "digest": "sha256:ba8db4f98cc94affd72dc611a64f97a92ebc841a33d6d66cc6b2fe98a8baeb8d"
+  },
+  "archive": {
+    "path": "data/routing/archive/2026-09-11/preservation.json",
+    "digest": "sha256:d32239db056e19e2105294f26c15ceae2f935f3474c562f4e32ab3db4103cfe2"
+  },
+  "budget": {
+    "schema_version": "completion_budget.v1",
+    "ceiling": 62,
+    "executions": 49,
+    "reserved": 0,
+    "halted": false,
+    "stopped_hosts": [],
+    "authorization": "Greg Starling, Claude Code chat reply received 2026-10-09 after 23:00Z: \"option 3 and /ship\". Approves option 3 as presented: full routing-pack renewal with fresh frontier preflight, Claude smoke and Fable calibration renewal, replacement of retired gpt-5.3-codex-spark and retiring gpt-5.5 Codex treatments with gpt-6-luna/gpt-6-sol workers and a gpt-6-astra reviewer, and the 14-case installed acceptance re-run, within the presented upper estimate of 62 model executions; publication through /ship.",
+    "entries": [
+      {
+        "id": "renewal-frontier-probe-codex",
+        "purpose": "renewal_frontier_probe",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/renewal-2026-10-09/frontier-probes/codex/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-frontier-probe-claude",
+        "purpose": "renewal_frontier_probe",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "artifacts/renewal-2026-10-09/frontier-probes/claude/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-frontier-probe-review",
+        "purpose": "renewal_frontier_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/frontier-probes/independent-review/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-preflight-claude-1",
+        "purpose": "capacity_preflight",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/preflight-claude-2026-10-09T23-47-44.252Z/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "m4-preflight-codex-1",
+        "purpose": "capacity_preflight",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/preflight-codex-2026-10-09T23-47-47.742Z/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-worker",
+        "purpose": "reviewer_calibration_worker",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/calibration/claude/positive/worker/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-positive",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/calibration/claude/positive/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-defective",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/calibration/claude/defective/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "claude-calibration-boundary",
+        "purpose": "reviewer_calibration_review",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/calibration/claude/boundary/reviewer/accounting.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-haiku-1791589752228-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude-haiku/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1791589782797-worker",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1791589782797-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-1791589830820-worker",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-codex/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-1791589830820-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-codex/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-standard-1791589853066-worker",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-codex-standard/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-codex-standard-1791589853066-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "codex",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-codex-standard/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1791589924916-worker",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude-retry/worker/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-1791589924916-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude-retry/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-smoke-claude-haiku-1791589996653-reviewer",
+        "purpose": "renewal_smoke",
+        "host": "claude",
+        "worst_case": 1,
+        "status": "completed",
+        "executions": 1,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/smoke-claude-haiku-retry/reviewer/summary.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-tinybug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-tinybug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-tinybug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-tinybug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-mechanical",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-mechanical/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-backend",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-backend/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-mechanical",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-mechanical/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-ui",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-ui/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-backend",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-backend/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-hardbug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-hardbug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-ui",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-ui/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-multicomponent",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-multicomponent/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-hardbug",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-hardbug/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-multicomponent",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 4,
+        "status": "completed",
+        "executions": 2,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-multicomponent/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-claude-fullproject",
+        "purpose": "renewal_installed_acceptance",
+        "host": "claude",
+        "worst_case": 6,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-fullproject/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      },
+      {
+        "id": "renewal-2026-10-installed-codex-fullproject",
+        "purpose": "renewal_installed_acceptance",
+        "host": "codex",
+        "worst_case": 6,
+        "status": "completed",
+        "executions": 3,
+        "source": "/Users/gregpro/ai-skills/skills/delegate/.claude/worktrees/xenodochial-austin-64b9ab/artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-fullproject/result.json",
+        "providerLimit": false,
+        "uncertain": false,
+        "unbudgeted": false
+      }
+    ],
+    "qualification_authority": false
+  },
+  "execution_index": [
+    {
+      "id": "renewal-frontier-probe-codex",
+      "host": "codex",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/frontier-probes/codex/accounting.json"
+    },
+    {
+      "id": "renewal-frontier-probe-claude",
+      "host": "claude",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/frontier-probes/claude/accounting.json"
+    },
+    {
+      "id": "renewal-frontier-probe-review",
+      "host": "claude",
+      "purpose": "renewal_frontier_review",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/frontier-probes/independent-review/accounting.json"
+    },
+    {
+      "id": "m4-preflight-claude-1",
+      "host": "claude",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/preflight-claude-2026-10-09T23-47-44.252Z/result.json"
+    },
+    {
+      "id": "m4-preflight-codex-1",
+      "host": "codex",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/preflight-codex-2026-10-09T23-47-47.742Z/result.json"
+    },
+    {
+      "id": "claude-calibration-worker",
+      "host": "claude",
+      "purpose": "reviewer_calibration_worker",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/calibration/claude/positive/worker/accounting.json"
+    },
+    {
+      "id": "claude-calibration-positive",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/calibration/claude/positive/reviewer/accounting.json"
+    },
+    {
+      "id": "claude-calibration-defective",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/calibration/claude/defective/reviewer/accounting.json"
+    },
+    {
+      "id": "claude-calibration-boundary",
+      "host": "claude",
+      "purpose": "reviewer_calibration_review",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/calibration/claude/boundary/reviewer/accounting.json"
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1791589752228-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude-haiku/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1791589782797-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude/worker/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1791589782797-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-1791589830820-worker",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-codex/worker/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-1791589830820-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-codex/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1791589853066-worker",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-codex-standard/worker/summary.json"
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1791589853066-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-codex-standard/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1791589924916-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude-retry/worker/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-1791589924916-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude-retry/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1791589996653-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "source": "artifacts/renewal-2026-10-09/smoke-claude-haiku-retry/reviewer/summary.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-tinybug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-tinybug/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-tinybug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-tinybug/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-mechanical",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-mechanical/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-backend",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-backend/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-mechanical",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-mechanical/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-ui",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-ui/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-backend",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-backend/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-hardbug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-hardbug/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-ui",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-ui/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-multicomponent",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-multicomponent/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-hardbug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-hardbug/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-multicomponent",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-multicomponent/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-claude-fullproject",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-claude-fullproject/result.json"
+    },
+    {
+      "id": "renewal-2026-10-installed-codex-fullproject",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "source": "artifacts/renewal-2026-10-09/renewal-2026-10-installed-codex-fullproject/result.json"
+    }
+  ],
+  "maintainer_image_reads": {
+    "renewal-2026-10-installed-codex-ui": [
+      "toolu_013suipYcLhQs2egjwhqpwRm",
+      "toolu_01PxhELJcgxjrKWpY4WK2T2K"
+    ],
+    "renewal-2026-10-installed-claude-ui": [
+      "toolu_01Th17puE3wEkcSKjbLXAVAZ",
+      "toolu_01VQnDe7nGxZwLJXS4bvXtJF"
+    ]
+  },
+  "limitations": [
+    "Provisional evidence only: smokes, calibration and installed acceptance grant no governor qualification and no measured savings.",
+    "Codex CLI JSON and native rollouts record configured model and effort only; served Codex identity and effort are not attested.",
+    "Claude workers launched through the Agent tool use model aliases with no effort control; served models come from forwarded child message models. A configured-effort treatment such as Sonnet 5/low cannot be matched by an Agent launch.",
+    "Two first-attempt Claude smoke reviews (claude and claude-haiku) were rejected by the unchanged assembler verdict format after giving correct verdicts outside the first token; both are preserved, counted and superseded by retries. The smoke reviewer prompt now asks the reviewer to begin with the verdict word.",
+    "Installed acceptance ran on the intermediate consumer folder and pack recorded in folder_freeze; the published pack is recompiled afterward with those records, so no live run of the exact published folder is claimed.",
+    "Codex per-execution USD pricing is unknown (plan credits); Claude rates are official API list prices, not subscription bills.",
+    "OpenAI's docs recommend GPT-6.1 Sol when available; it was not evaluated, and the Codex roles remain gpt-6-sol and gpt-6-luna workers with a gpt-6-astra frontier.",
+    "The Claude 5.5 generation (Opus 5.5, Sonnet 5.5, Haiku 5.5) was not evaluated; the pack's Claude treatments remain claude-opus-5, claude-sonnet-5 and claude-haiku-4-5-20251001, all listed active. Haiku 4.5's earliest possible retirement (2026-10-15) falls inside the entry window; consumers skip unavailable treatments.",
+    "Rendered UI inspection was performed by the maintainer session from headless screenshots and DOM checks, not by a separate counted model execution.",
+    "Raw artifacts remain local under artifacts/renewal-2026-10-09 (gitignored); committed files bind their digests.",
+    "Two Codex child writes were shell heredoc commands in preserved native sessions rather than patch events: search.mjs (codex-hardbug) and store.mjs (codex-fullproject, call call_59225b2925754a528582fa76f1b89319).",
+    "The intermediate pack 357665d4 was compiled with the archived September acceptance file (ca5df227) as a placeholder; it matched no renewed treatment, so every entry in that pack was smoke extrapolation."
+  ]
+}

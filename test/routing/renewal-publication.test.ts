@@ -16,7 +16,7 @@ describe('September renewal publication',()=>{
  });
 
  it('renews every treatment citation and binds a fresh medium review audit',()=>{
-  const observations=read('data/routing/host-observations.json');
+  const observations=read('data/routing/archive/2026-09-11/host-observations.json');
   const old=read('data/routing/archive/2026-09-10/host-observations.json');
   expect(observations.treatments).toHaveLength(6);
   for(const t of observations.treatments){
@@ -24,7 +24,7 @@ describe('September renewal publication',()=>{
    for(const date of [t.evidence.observed_at,t.evidence.availability.checked_at,t.evidence.pricing.checked_at])expect(Date.parse(date)).toBeGreaterThanOrEqual(renewedAfter);
    expect(t.evidence.smoke.execution_digest).not.toBe(previous.evidence.smoke.execution_digest);
   }
-  const audit=read('data/routing/medium-smoke-audit.json');
+  const audit=read('data/routing/archive/2026-09-11/medium-smoke-audit.json');
   expect(audit).toMatchObject({schema_version:'medium_smoke_audit.v1',source_digest:digest(observations),scope:'Zero/nullish quantity-default fixes in local plain JavaScript only.'});
   expect(audit.reviews).toHaveLength(2);
   expect(new Set(audit.reviews.map((r:any)=>r.reviewer_execution_digest)).size).toBe(2);
@@ -63,17 +63,15 @@ describe('September renewal publication',()=>{
   expect(index.execution_index.reduce((n:number,e:any)=>n+e.executions,0)).toBe(index.budget.executions);
  });
 
- it('rederives each admitted reviewer calibration and restricts it to mechanical low',()=>{
-  const index=read('data/routing/reviewer-calibration/admissions.json');
-  const pack=parseRoutingPack(read('skills/delegate/routing-pack.json'));
+ it('rederives each admitted September reviewer calibration',()=>{
+  // The October renewal replaced these admissions and the pack; see renewal-2026-10-publication.test.ts.
+  const index=read('data/routing/archive/2026-09-11/reviewer-calibration/admissions.json');
   expect(index.admissions.map((a:any)=>a.host).sort()).toEqual(['claude','codex']);
   for(const row of index.admissions){
-   const admission=read(`data/routing/reviewer-calibration/${row.host}.json`),report=admission.report;
+   const admission=read(`data/routing/archive/2026-09-11/reviewer-calibration/${row.host}.json`),report=admission.report;
    expect(digest(report)).toBe(row.report_digest);
    expect(reviewerCalibrationGate(report.manifest,report.rows,report.target).admitted).toBe(true);
-   const routes=pack.routes.filter(r=>r.reviewers.some(t=>t.candidate_id===admission.treatment.candidate_id));
-   expect(routes.map(r=>[r.public_task_class,r.stratum.worker_request.risk])).toEqual([['mechanical_work','low']]);
-   expect(pack.routes.some(r=>r.workers.some(t=>t.candidate_id===admission.treatment.candidate_id))).toBe(false);
+   expect(admission).toMatchObject({role:'reviewer',public_task_classes:['mechanical_work'],risk:'low'});
   }
  });
 });
