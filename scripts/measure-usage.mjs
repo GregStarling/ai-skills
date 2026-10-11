@@ -104,7 +104,8 @@ function finish(s){
 }
 function tokens(u){return {input:u.input_tokens??0,output:u.output_tokens??0,cache_read:u.cache_read_input_tokens??0,cache_write:u.cache_creation_input_tokens??0};}
 function cost(model,u,t){
-  const p=prices.models[prices.aliases?.[model]??model];if(!p)return null;
+  let p=prices.models[prices.aliases?.[model]??model];if(!p)return null;
+  if(p.long_prompt&&t.input+t.cache_read+t.cache_write>p.long_prompt.over_tokens)p=p.long_prompt;
   const cc=u.cache_creation;let write;
   if(cc&&typeof cc==='object')write=(cc.ephemeral_5m_input_tokens??0)*p.cache_write_5m+(cc.ephemeral_1h_input_tokens??0)*p.cache_write_1h;
   else{if(t.cache_write>0)assumedTtl++;write=t.cache_write*(prices.default_cache_ttl==='5m'?p.cache_write_5m:p.cache_write_1h);}
