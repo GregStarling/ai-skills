@@ -49,7 +49,7 @@ export async function evaluateCalibration(manifestFile, outputDirectory, ledgerF
    if(fixture.id==='positive'){
     const workerTarget=target.host==='claude'
      ?{host:'claude',provider:'anthropic',model_id:'claude-haiku-4-5-20251001',effort:'not_applicable'}
-     :{host:'codex',provider:'openai',model_id:'gpt-5.5',effort:'low'};
+     :{host:'codex',provider:'openai',model_id:'gpt-6-sol',effort:'low'};
     const id=`${target.host}-calibration-worker`;
     await reserve(ledgerFile,{id,host:target.host,role:'worker',model:workerTarget.model_id,effort:workerTarget.effort,destination:join(destination,'worker')});
     worker=await execute({budgetFile,id,purpose:'reviewer_calibration_worker',target:workerTarget,directory,destination:join(destination,'worker'),write:true,timeoutMs:240000,
