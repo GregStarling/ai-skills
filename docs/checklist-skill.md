@@ -94,6 +94,12 @@ blind adversarial close-out. The maintainer's guiding prompt is preserved in
 
   Correction and waiver wording, and whether a count or version really
   identifies a check, remain close-out judgments.
+- **Check configuration (2026-10-11).** The prompt forbids weakening failing
+  tests. §5 extends that to lint, type, format and CI checks: loosening their
+  configuration or suppressing diagnostics never closes an item. To pass a
+  check, a setting changes or a diagnostic is suppressed only when evidence
+  shows it is wrong, such as a false positive, recorded as a Decision. Debug
+  carries a matching rule.
 
 ## Validation
 

@@ -227,7 +227,11 @@ passing equivalent. For a new feature, run meaningful acceptance checks without
 manufacturing a failing before-state. For external, irreversible or expensive
 actions, use safe verification and inspectable evidence instead of rerunning
 dangerous operations. Never claim an unexecuted check passed, and never weaken,
-delete or skip a legitimate failing test to close an item.
+delete or skip a legitimate failing test to close an item. Likewise, never pass a
+lint, type, format or CI check by loosening its configuration or suppressing its
+diagnostics. Fix the cause. To pass a check, change a setting or suppress a
+diagnostic only when evidence shows it is wrong, such as a false positive, and
+record that as a Decision.
 
 **Freshness.** Evidence covers only what it exercised. When a later change may
 affect a verified item, directly or through shared code such as authentication:
