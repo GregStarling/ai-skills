@@ -1,6 +1,7 @@
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { setTimeout as sleep } from "node:timers/promises";
 import { afterEach, expect, it, vi } from "vitest";
 import { runInNewContext } from 'node:vm';
 import { runProcess } from "../../src/runtime/process.js";
@@ -14,14 +15,27 @@ it("runs real argv/stdin without shell expansion and preserves stdout/stderr dig
   expect(readFileSync(output.stdout_path, "utf8")).toBe("$(touch NEVER) exact stdin"); expect(output.stdout_digest).toBe(hashBytes("$(touch NEVER) exact stdin")); expect(output.stderr_digest).toBe(hashBytes("err"));
 });
 it("terminates an ignoring process and its inherited-group child on timeout", async () => {
-  const script = "const{spawn}=require('node:child_process');const c=spawn(process.execPath,['-e','process.on(\"SIGTERM\",()=>{});setInterval(()=>{},1000)'],{stdio:'ignore'});process.stdout.write(String(c.pid));process.on('SIGTERM',()=>{});setInterval(()=>{},1000)";
-  const output = await runProcess({ executable: process.execPath, args: ["-e", script], cwd: process.cwd(), timeoutMs: 150, outputDirectory: directory() });
-  expect(output.timed_out).toBe(true); expect(output.cleanup).toBe("complete");
+  // The leader writes the child PID only after both processes ignore SIGTERM, so the PID is the readiness signal.
+  const script = "process.on('SIGTERM',()=>{});const{spawn}=require('node:child_process');const c=spawn(process.execPath,['-e','process.on(\"SIGTERM\",()=>{});process.stdout.write(\"ready\");setInterval(()=>{},1000)'],{stdio:['ignore','pipe','ignore']});c.stdout.once('data',()=>process.stdout.write(String(c.pid)));setInterval(()=>{},1000)";
+  // Node startup on a loaded runner is unbounded, so hold runProcess's timeout clock until both processes are ready.
+  vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+  let output: Awaited<ReturnType<typeof runProcess>>;
+  try {
+    const outputDirectory = directory(), stdoutPath = join(outputDirectory, "stdout.jsonl");
+    const run = runProcess({ executable: process.execPath, args: ["-e", script], cwd: process.cwd(), timeoutMs: 150, outputDirectory });
+    while (readFileSync(stdoutPath, "utf8") === "") await sleep(10);
+    vi.advanceTimersByTime(150); // timeout: SIGTERM to the group, which both processes ignore
+    await sleep(100); // real time for SIGTERM to land; a leader that did not ignore it would exit with SIGTERM
+    vi.advanceTimersByTime(250); // escalation: SIGKILL to the group
+    vi.useRealTimers(); // before close handling, whose group settling polls on real timers
+    output = await run;
+  } finally { vi.useRealTimers(); }
+  expect(output.timed_out).toBe(true); expect(output.signal).toBe("SIGKILL"); expect(output.cleanup).toBe("complete");
   const pid = Number(readFileSync(output.stdout_path, "utf8")); expect(pid).toBeGreaterThan(0);
-  // A killed child can briefly be a reparented zombie; it cannot execute further work.
-  let alive = false; try { process.kill(pid, 0); alive = true; } catch { /* absent */ }
-  if (alive) await new Promise((resolve) => setTimeout(resolve, 100));
-  expect(() => process.kill(pid, 0)).toThrow();
+  // A killed child can linger while exiting or as a reparented zombie until reaped, which is slow under load, but it
+  // cannot execute further work. A surviving child keeps this loop polling until the test times out.
+  const exists = () => { try { process.kill(pid, 0); return true; } catch { return false; } };
+  while (exists()) await sleep(10);
 });
 it("retains failure evidence and caps output rather than hanging or allocating indefinitely", async () => {
   const failed = await runProcess({ executable: "governor-nonexistent-executable", args: [], cwd: process.cwd(), timeoutMs: 1000, outputDirectory: directory() });

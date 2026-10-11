@@ -92,17 +92,16 @@ it('rejects mismatched personal install paths and nested model decoys',async()=>
  const b=await fixture(),cfg=b.report.defaults[1]!,bytes=JSON.stringify({model:'fable',nested:{model:'sonnet'}});await writeFile(cfg.path,bytes);cfg.sha256=hash(bytes);await expect(v.validateCompletionReport(b.report,{root:b.root,userRoot:b.userRoot,currentRevision:revision})).rejects.toThrow('DEFAULT_MODEL_MISMATCH');
 });
 
-it('rejects missing, tampered, stale-offline and unreconciled evidence',async()=>{
- for(const scenario of ['missing','tampered','stale','accounting','rollback','source']){
-  const f=await fixture();let error='';
-  if(scenario==='missing'){await rm(join(f.root,'evidence/generic.json'));error='EVIDENCE_MISSING';}
-  if(scenario==='tampered'){await writeFile(join(f.root,'evidence/generic.json'),'changed');error='EVIDENCE_HASH_MISMATCH';}
-  if(scenario==='stale'){const gate=f.get('OFFLINE'),command=gate.objective.commands[0],ref=await f.put(command.evidence.path,{exit_code:0,source_digest:'sha256:'+'0'.repeat(64)});command.evidence=ref;gate.evidence=gate.evidence.map((r:any)=>r.path===ref.path?ref:r);error='OFFLINE_COMMAND_EXIT_MISMATCH';}
-  if(scenario==='accounting'){f.get('ACCOUNTING').objective={};error='BUDGET_EVIDENCE_REQUIRED';}
-  if(scenario==='rollback'){f.get('ROLLBACK').objective.backups.pop();error='ROLLBACK_BACKUPS_REQUIRED';}
-  if(scenario==='source'){await writeFile(join(f.root,'skills/delegate/SKILL.md'),'new source');error='SOURCE_MANIFEST_INCOMPLETE_OR_CHANGED';}
-  await expect(v.validateCompletionReport(f.report,{root:f.root,userRoot:f.userRoot,currentRevision:revision})).rejects.toThrow(error);
- }
+// One case per fixture: each fixture's budget ledger dominates its cost, and six in one test overran the 5 s budget on a loaded runner.
+it.each(['missing','tampered','stale','accounting','rollback','source'])('rejects missing, tampered, stale-offline and unreconciled evidence: %s',async scenario=>{
+ const f=await fixture();let error='';
+ if(scenario==='missing'){await rm(join(f.root,'evidence/generic.json'));error='EVIDENCE_MISSING';}
+ if(scenario==='tampered'){await writeFile(join(f.root,'evidence/generic.json'),'changed');error='EVIDENCE_HASH_MISMATCH';}
+ if(scenario==='stale'){const gate=f.get('OFFLINE'),command=gate.objective.commands[0],ref=await f.put(command.evidence.path,{exit_code:0,source_digest:'sha256:'+'0'.repeat(64)});command.evidence=ref;gate.evidence=gate.evidence.map((r:any)=>r.path===ref.path?ref:r);error='OFFLINE_COMMAND_EXIT_MISMATCH';}
+ if(scenario==='accounting'){f.get('ACCOUNTING').objective={};error='BUDGET_EVIDENCE_REQUIRED';}
+ if(scenario==='rollback'){f.get('ROLLBACK').objective.backups.pop();error='ROLLBACK_BACKUPS_REQUIRED';}
+ if(scenario==='source'){await writeFile(join(f.root,'skills/delegate/SKILL.md'),'new source');error='SOURCE_MANIFEST_INCOMPLETE_OR_CHANGED';}
+ await expect(v.validateCompletionReport(f.report,{root:f.root,userRoot:f.userRoot,currentRevision:revision})).rejects.toThrow(error);
 });
 
 it('holds comparable higher aggregate candidate cost and leaves unknown cost unknown',()=>{
