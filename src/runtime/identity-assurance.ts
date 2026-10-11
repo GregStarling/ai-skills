@@ -41,6 +41,8 @@ export function deriveIdentityAssurance(input:{candidate:Candidate;report:Runtim
   };
   const finish=():DerivedIdentityAssurance=>{
     if(diagnostics.length){model={value:null,assurance:'unverified'};effort={value:null,assurance:'unverified'};}
+    // Every path: an unrequested effort is never attested, whatever a receipt or trace labels it.
+    if(effort.value==='not_applicable'){effort={value:'not_applicable',assurance:'not_applicable'};limitations.push('No effort was requested; the served host-default effort is unobserved.');}
     const overall=overallIdentityAssurance([model,effort]);
     return {overall,model,effort,execution_environment:environment,evidence_digest:digest({candidate_identity:candidateIdentity(candidate),report_digest:digest(report),native_evidence:report.native_evidence??null}),limitations,diagnostics};
   };
@@ -142,7 +144,7 @@ export function deriveIdentityAssurance(input:{candidate:Candidate;report:Runtim
       limitations.push('Served model is not independently exposed by this host trace.');
     }
     if(telemetry.observed_efforts.length)effort={value:telemetry.observed_efforts[0]!,assurance:'runtime_attested'};
-    else limitations.push(candidate.effort==='not_applicable'?'No effort was requested; the served host-default effort is unobserved.':'Served effort is not independently exposed by this host trace.');
+    else if(candidate.effort!=='not_applicable')limitations.push('Served effort is not independently exposed by this host trace.');
     // Caller-written report fields cannot upgrade assurance. Contradictions are
     // still fatal; discarding them would hide known substitution evidence.
   }catch(error){fail('identity_assurance_insufficient',error instanceof Error?error.message:'Native evidence is not derivable.',false);}
