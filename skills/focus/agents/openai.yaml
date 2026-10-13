@@ -1,0 +1,4 @@
+interface:
+  display_name: "Focus"
+  short_description: "Complete the requested task and stop"
+  default_prompt: "Use $focus to complete this request within its scope, verify what matters, and stop."
