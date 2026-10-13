@@ -8,7 +8,7 @@ what needs review, and checking whether the release worked.
 
 **Give your agent a process for those jobs, too.**
 
-AI Skills is a collection of seven independently installable skills for **Codex
+AI Skills is a collection of eight independently installable skills for **Codex
 and Claude Code**. Each owns a specific part of the work, with clear boundaries
 and evidence for its conclusions. Use one to solve the problem in front of you,
 or combine them across a project.
@@ -21,12 +21,13 @@ or combine them across a project.
 | [**Delegate**](skills/delegate/) | “Give this work the reasoning it needs.” | Economical coordination, stronger reasoning where warranted, and required independent review. |
 | [**Design Director**](skills/design-director/) | “Give this interface a direction.” | Design decisions grounded in product evidence, with explicit unknowns and verification criteria. |
 | [**Debug**](skills/debug/) | “Find the cause and prove the fix.” | A faithful reproduction, a scoped correction, and regression evidence. |
+| [**Focus**](skills/focus/) | “Complete this request and stop.” | Scoped execution, proportionate verification, and brief notes about material adjacent findings. |
 | [**Ship**](skills/ship/) | “Get these changes released.” | A verified release, with the revision, check results, and published-result evidence. |
 
 Install the full collection from the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug ship --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus ship --agent codex claude-code --copy
 ```
 
 Every skill is readable source. Inspect the instructions, install only what you
@@ -182,6 +183,26 @@ fix its cause, and verify the CLI and any callers sharing the same logic.
 
 [Explore Debug →](skills/debug/)
 
+## Focus: Complete the Request. Then Stop.
+
+A small request can send an agent into adjacent bugs, refactors, and questions.
+Focus treats your request as the scope and stops when the result and its necessary
+verification are complete. It follows existing conventions, makes reasonable
+assumptions, and expands work only when your result would otherwise be wrong,
+unsafe, or unusable. Each necessary expansion gets a one-line explanation.
+
+Material adjacent findings stay brief notes for you to consider. Plan requests
+produce plans; analysis and recommendations retain depth, relevant alternatives,
+and thoughtful pushback. Required correctness, security, and review checks still
+apply, with valid evidence reused for unchanged work.
+
+```text
+Use Focus to add CSV export to the reports page. Follow existing conventions,
+verify the export, and stop when the requested result is complete.
+```
+
+[Explore Focus →](skills/focus/)
+
 ## Ship: Close the Gap Between Done and Live.
 
 Completed code still needs a release. Ship reviews the intended changes, runs
@@ -208,7 +229,7 @@ required checks, and verify the published result.
 
 ## Choose the Job. Combine the Skills When It Helps.
 
-You do not need all seven for every task. Catchup can brief you without starting
+You do not need all eight for every task. Catchup can brief you without starting
 a build. Checklist can audit finished work without changing it. Debug can resolve
 a defect without releasing it. Ship can publish completed work without requiring
 a CTO plan.
@@ -223,6 +244,7 @@ For a larger project, their responsibilities fit together:
 | Route reasoning, escalation, and required review throughout the work | Delegate |
 | Ground interface decisions and design verification in product evidence | Design Director |
 | Investigate failures and prove scoped corrections | Debug |
+| Keep execution within the request and stop when it is complete | Focus |
 | Execute and verify the authorized release | Ship |
 
 Installing the collection makes these workflows available; it does not start
@@ -247,8 +269,8 @@ npx skills add GregStarling/ai-skills --skill debug --agent codex claude-code --
 # A selection
 npx skills add GregStarling/ai-skills --skill catchup debug ship --agent codex claude-code --copy
 
-# All seven
-npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug ship --agent codex claude-code --copy
+# All eight
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus ship --agent codex claude-code --copy
 ```
 
 | Skill | Install name | Codex | Claude Code |
@@ -259,13 +281,14 @@ npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate des
 | Delegate | `delegate` | `$delegate` | `/delegate` |
 | Design Director | `design-director` | `$design-director` | `/design-director` |
 | Debug | `debug` | `$debug` | `/debug` |
+| Focus | `focus` | `$focus` | `/focus` |
 | Ship | `ship` | `$ship` | `/ship` |
 
 Add `--global` for availability across projects. Remove the agent name you do
 not use. `--copy` installs complete copies of the selected folders.
 
 Node.js runs the installer, Delegate's review helper, and the Checklist and
-Design Director validators. Catchup, CTO, Debug, and Ship are instructions only. Consumer skills
+Design Director validators. Catchup, CTO, Debug, Focus, and Ship are instructions only. Consumer skills
 need no repository build or separate service. They use the tools and authorized
 access available in your existing agent session.
 
@@ -322,7 +345,7 @@ registration file is needed.
 Keep this library checkout inert by installing into your own projects or
 personal directory. [refresh-models](skills/refresh-models/SKILL.md) is a maintainer
 workflow for Delegate's routing pack. Model Governor, policy, fixtures, and
-evaluation history remain maintainer tooling, separate from the seven consumer
+evaluation history remain maintainer tooling, separate from the eight consumer
 skills above.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
