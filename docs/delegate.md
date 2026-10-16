@@ -8,18 +8,25 @@ The coordinator classifies the request, applies a prescribed routing rule, and r
 
 | Host | Starting coordinator | Frontier agents |
 | --- | --- | --- |
-| Codex | `gpt-6.1-sol` · medium reasoning (`gpt-6-sol` where 6.1 is not enabled) | `gpt-6-astra` · high reasoning |
-| Claude Code | `sonnet` | `opus` · supported effort controls |
+| Codex | `gpt-6.1-sol` · medium reasoning (`gpt-6-sol` where 6.1 is not enabled) | `gpt-6.1-sol` · high reasoning |
+| Claude Code | `sonnet` | `opus` (Opus 5.5) · supported effort controls |
+
+Plans, decisions, difficult bugs and independent reviews use this primary frontier. Codex uses
+Astra only for a bounded rescue when a build is stuck after at least two materially different
+approaches by Sol 6.1 at high reasoning, with failing checks and no supported next correction.
+Task size, risk, review requirements, routine retries and access or quota failures do not qualify.
+After rescue, implementation and fresh review return to Sol. Claude Code never uses Fable,
+including for fallback or review; it stays on Opus 5.5 when stuck.
 
 The parent conversation keeps its model. Agents receive bounded assignments, return their results, and the coordinator continues. Routine launches need no extra confirmation within the user's existing permissions. Explicit model choices and restrictions on delegation take precedence; unavailable models or quota limits are reported as blockers.
 
-These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global `~/.claude/CLAUDE.md` (Claude Code) or `~/.codex/AGENTS.md` (Codex), such as `Delegate frontier: <model>`, overrides them, so a new provider model needs one line there rather than a skill update.
+These are the intended host settings. Installing the skill does not change saved models or switch an existing session. An explicit role binding in your global `~/.claude/CLAUDE.md` (Claude Code) or `~/.codex/AGENTS.md` (Codex), such as `Delegate frontier: <model>`, can override the role table within the user's current model policy. Older bindings and routing-pack entries cannot re-enable Fable or bypass the Astra rescue conditions. Independent Sol review uses a separate fresh context even when Sol also coordinates.
 
 ## The Architecture
 
 [![Delegate architecture: economical coordinator, prescribed frontier assignments, independent review, and validated completion](delegate-system.png)](delegate-system.html)
 
-The diagram's model labels predate the 2026-09-22 roles; the table above is current.
+The diagram's model labels are historical; the table above is current.
 
 [Open the interactive map](delegate-system.html) · [Editable Archify source](delegate-system.architecture.json)
 
@@ -39,7 +46,7 @@ The main path stays with the economical coordinator. Frontier assignments and in
 
 Following an accepted plan stays economical. A new consequential choice returns to frontier. A mixed request to read documents and create a plan separates economical evidence gathering from frontier planning.
 
-A hard bug can return to economical execution once there is evidence of the reproduction, root cause, bounded correction, and regression check. Two execution attempts without new evidence or measurable progress trigger escalation; research and PDF failures instead use appropriate economical tools or report the limitation.
+A hard bug can return to economical execution once there is evidence of the reproduction, root cause, bounded correction, and regression check. Two execution attempts without new evidence or measurable progress trigger the primary frontier, not automatic Astra rescue; research and PDF failures instead use appropriate economical tools or report the limitation.
 
 Reviewers return `PASS`, `REPAIR`, or `BLOCKED`. Repairs return to the executor for targeted fixes and retesting, followed by fresh review where required. Two unsuccessful repairs move difficult execution to frontier. Missing required review prevents accepted completion.
 
@@ -99,7 +106,14 @@ Independent investigations and settled workstreams can use bounded workers when 
 
 ## Validation and Rollout Status
 
-**2026-10-11 model currency.** Codex coordinates on `gpt-6.1-sol`, which supersedes `gpt-6-sol` at the same price, and still escalates to `gpt-6-astra`; Claude Code keeps `sonnet` and `opus`, now serving Sonnet 5.5 and Opus 5.5, with Haiku 5.5 workers from Claude Code 2.1.293. The routing pack was renewed on these models; see [the renewal results](delegate-renewal-results-2026-10-11.md). After merge (PR #15, `546acb8`), the maintainer's installed Claude Code and Codex copies were synced to this source (folder `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e`); the previous copies are backed up under `~/.agents/skill-backups/delegate-{claude-code,codex}-before-model-currency-2026-10-11`.
+**2026-10-15 model policy.** The primary frontier is GPT-6.1 Sol at high reasoning on Codex and
+Opus 5.5 on Claude Code. Astra is reserved for documented stuck-build rescue; Fable is prohibited.
+The historical routing pack and benchmark records remain unchanged and do not authorize a model
+that this policy excludes. Evidence-qualified routing needs a permitted observed treatment;
+ordinary frontier routing does not claim that qualification. This repository update does not
+replace personal installations or saved settings.
+
+**2026-10-11 model currency (historical).** Codex coordinates on `gpt-6.1-sol`, which supersedes `gpt-6-sol` at the same price, and still escalates to `gpt-6-astra`; Claude Code keeps `sonnet` and `opus`, now serving Sonnet 5.5 and Opus 5.5, with Haiku 5.5 workers from Claude Code 2.1.293. The routing pack was renewed on these models; see [the renewal results](delegate-renewal-results-2026-10-11.md). After merge (PR #15, `546acb8`), the maintainer's installed Claude Code and Codex copies were synced to this source (folder `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e`); the previous copies are backed up under `~/.agents/skill-backups/delegate-{claude-code,codex}-before-model-currency-2026-10-11`.
 
 **2026-09-22 model roles.** Claude Code escalates from `sonnet` to `opus`; Codex coordinates on `gpt-6-sol` and escalates to `gpt-6-astra`. This revision is installed in the maintainer's personal Claude Code and Codex locations. Saved defaults are unchanged, and it has not been tested in live provider sessions. See the [validation record](validation-status.md). Earlier "not installed" notes below describe their own revisions.
 

@@ -1,13 +1,13 @@
 ---
 name: delegate
-description: Use automatically for implementation, bug fixes, planning, critical decisions, research, PDF analysis, source synthesis, mechanical edits and review. An economical coordinator does routine work directly and brings in the frontier model for plans, consequential decisions, hard bugs and fresh review of implemented behavior at medium risk or above. Simple edits still get a routing/audit decision. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker/reviewer packets.
+description: Use automatically for implementation, bug fixes, planning, critical decisions, research, PDF analysis, source synthesis, mechanical edits and review. An economical coordinator does routine work directly; GPT-6.1 Sol (Codex) or Opus 5.5 (Claude Code) handles frontier decisions and reviews. Astra is reserved for stuck builds; never use Fable. Simple edits still get a routing/audit decision. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker/reviewer packets.
 ---
 
 # Delegate
 
 Choose the least expensive complete path that preserves the requested quality, counting
 coordination, execution, checks, repairs and review together. Direct execution by this session is
-the default. Explicit user model choices and any restriction on delegation take precedence. Never
+the default. The user's current model choices and restrictions on delegation take precedence. Never
 change saved models, permissions or configuration. If you were handed a worker, decision or reviewer
 packet, execute it and return; do not coordinate.
 
@@ -16,14 +16,23 @@ packet, execute it and return; do not coordinate.
 | Role | Claude Code | Codex |
 | --- | --- | --- |
 | Coordinator, this session | `sonnet` | `gpt-6.1-sol`, medium reasoning |
-| Frontier | `opus` through the Agent tool | `gpt-6-astra`, high reasoning |
+| Primary frontier: plans, decisions, hard bugs and reviews | `opus` (Opus 5.5) through the Agent tool | `gpt-6.1-sol`, high reasoning |
+| Rescue for a stuck build | Stay on Opus 5.5; never Fable | `gpt-6-astra`, high reasoning, only under the rescue conditions below |
 | Optional workers | `sonnet` or `haiku` agents | `gpt-6.1-sol` or `gpt-6-luna` agents |
 
 Where GPT-6.1 Sol is not enabled for the account, coordinate on `gpt-6-sol` and use `gpt-6-luna` workers.
+An unavailable primary frontier is a blocker; it does not authorize Astra or Fable as a fallback.
+
+Frontier is a role, not a requirement to switch model families. A separate GPT-6.1 Sol agent at
+high reasoning handles normal Codex frontier work, even when Sol also coordinates. Required
+independent review still needs a fresh context; reviewing your own work in the same context does
+not satisfy it. Risk, task size, planning, hard-bug classification, audits and review requirements
+never by themselves authorize Astra. Never select Fable for any role, fallback, retry or review.
 
 An explicit role binding in the user's global CLAUDE.md or AGENTS.md, such as
-`Delegate frontier: <model>`, overrides this table, so a new provider model needs one line there,
-not a skill update. The CLAUDE.md activation snippet only mirrors this table. Read
+`Delegate frontier: <model>`, can override this table within the user's current model policy.
+Older bindings, inherited defaults and routing-pack entries cannot re-enable Fable or bypass the
+Astra rescue conditions. The CLAUDE.md activation snippet only mirrors this table. Read
 [hosts/claude-code.md](hosts/claude-code.md) or [hosts/codex.md](hosts/codex.md) once for the
 actual launch controls. Bind roles to the models the host really serves. An observed substitution
 rejects that treatment; never relabel it eligible.
@@ -87,11 +96,20 @@ implemented behavior always require frontier review.
 
 ## Escalate and repair
 
-Two attempts without new evidence or measurable progress send eligible execution to the frontier.
+Two attempts without new evidence or measurable progress send eligible execution to the primary frontier.
 Repairs go back to the executor with the concrete failure, the affected artifact, the expected
 correction and the acceptance check; then retest and re-review where review is required. Two failed
-repairs move the work to the frontier. Research and document failures use better tools or a cheaper
-retry, or report the limitation; they never escalate on their own.
+repairs move the work to the primary frontier. These counters alone never authorize Astra.
+Research and document failures use better tools or a cheaper retry, or report the limitation;
+they never escalate on their own.
+
+Astra may receive a bounded rescue assignment only when a build is stuck: GPT-6.1 Sol at high
+reasoning has tried at least two materially different approaches to the same implementation or
+debugging blocker, relevant checks still show no progress, and Sol cannot identify a supported
+next correction. Include the blocker, attempted approaches and failing check results in the
+rescue packet. A first failure, two routine retries, a review request, missing tools, permissions,
+model access or quota are insufficient. After the rescue, return implementation and required
+fresh review to the primary frontier. Claude Code stays on Opus 5.5 even when stuck; never Fable.
 
 ## Workers and reviewers
 
@@ -114,6 +132,10 @@ limitation. Unknown usage stays unknown; never claim measured savings from insid
 - Full `dispatch` provides model/evidence-bound routing for explicit evaluations; pass `host:"claude"` or `host:"codex"`. It does not replace the ordinary `check`.
 - Outcome recording with `node <skill-folder>/scripts/local-learning.mjs complete -` is optional and only for explicit evaluations; see [local learning](local-learning.md). Usage is measured from host transcripts, not from inside the session.
 - Evidence-qualified routing (`route`) is narrow and optional; the assignment must fit `route.scope` literally. See [pack format](pack-format.md).
+
+Evaluation records and routing packs establish evidence, not permission to use a model. Filter
+their candidates through the model policy above before selecting any worker or reviewer. Never
+substitute a different model into recorded evidence or claim an unobserved treatment is qualified.
 
 Further reading when relevant: [context discipline](context-discipline.md), [worker contract](delegation-contract.md),
 [task classes](task-classes.md), [parallel work](swarm-policy.md), [research](research.md),

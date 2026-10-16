@@ -24,6 +24,10 @@ whenever a frontier decision, execution or review is required. Resolve any block
 claiming that stage is complete. Dispatch only selects a route; a reviewer PASS does not replace
 the final `complete` command. Do not run a separate final dispatch-then-observe sequence.
 
+Select the primary frontier from [SKILL.md](SKILL.md#roles): GPT-6.1 Sol at high reasoning for
+Codex and Opus 5.5 for Claude Code. An `escalate` outcome means that role; it does not authorize
+Astra. Astra requires the separate stuck-build rescue conditions. Never select Fable.
+
 Save actual check results to a task-relative evidence file. `check_evidence` is a nonempty array
 of `{path,digest}` with each digest the SHA256 of that file's bytes. All evidence paths are relative
 to `cwd` and may not escape it. The aggregate `artifact_digest` comes from the helper `artifacts`
@@ -45,7 +49,7 @@ Fix completion payload for `node <skill-folder>/scripts/local-learning.mjs compl
 (replace paths/hashes and attempts with executed evidence):
 
 ```json
-{"observation_version":3,"cwd":"/absolute/session-workspace","host":"codex","task_id":"stable-task-id","assignment":"implement_fix","work_type":"routine_fix","risk":"medium","bounded":true,"diagnosis_accepted":true,"implemented_behavior":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6.1-sol","effort":"medium"},"frontier":{"model":"gpt-6-astra","effort":"high"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["nested-repo/src/fix.ts"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":".delegate/checks.txt","digest":"sha256:<file-bytes>"}],"review":{"verdict":"PASS","fresh_context":true,"model":"gpt-6-astra","effort":"high","artifact_digest":"sha256:<same-aggregate>"},"attempts":[{"role":"reviewer","model":"gpt-6-astra","effort":"high","status":"accepted","observed_model":null}],"elapsed_ms":null,"usage":null}
+{"observation_version":3,"cwd":"/absolute/session-workspace","host":"codex","task_id":"stable-task-id","assignment":"implement_fix","work_type":"routine_fix","risk":"medium","bounded":true,"diagnosis_accepted":true,"implemented_behavior":true,"mode":"direct","worker":null,"coordinator":{"model":"gpt-6.1-sol","effort":"medium"},"frontier":{"model":"gpt-6.1-sol","effort":"high"},"acceptance":"accepted","checks":"passed","repairs":0,"artifact_files":["nested-repo/src/fix.ts"],"artifact_digest":"sha256:<aggregate>","check_evidence":[{"path":".delegate/checks.txt","digest":"sha256:<file-bytes>"}],"review":{"verdict":"PASS","fresh_context":true,"model":"gpt-6.1-sol","effort":"high","artifact_digest":"sha256:<same-aggregate>"},"attempts":[{"role":"reviewer","model":"gpt-6.1-sol","effort":"high","status":"accepted","observed_model":null}],"elapsed_ms":null,"usage":null}
 ```
 
 For required frontier decision/execution, include an accepted `frontier` attempt and

@@ -1,5 +1,16 @@
 # AI Skills
 
+## Primary frontier policy — 2026-10-15
+
+The current Delegate update uses `gpt-6.1-sol` at high reasoning as the primary Codex frontier
+for plans, consequential decisions, difficult bugs and independent reviews. `gpt-6-astra` is
+reserved for bounded rescue of a documented stuck build after distinct Sol attempts fail;
+ordinary risk, review and retry rules do not authorize it. Claude Code uses Opus 5.5 and never
+Fable for any role or fallback. This supersedes older model bindings and renewal guidance below.
+Preserve historical evidence and routing-pack bytes; filter evidence candidates through the
+current model policy. Update the portable guidance and validation index, without changing
+personal installations or saved settings as part of this repository edit.
+
 ## Model currency renewal — 2026-10-11
 
 Bring Delegate to the current lineup. Claude Code roles stay `sonnet` coordinating, `opus` frontier and
