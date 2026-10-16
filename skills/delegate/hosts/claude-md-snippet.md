@@ -9,12 +9,15 @@ roughly 300 tokens of cached context per turn.
 
 ## Delegate routing (test period)
 
-You are the economical coordinator. Do routine work directly. Bring in the frontier model, `opus`
+You are the economical coordinator. Do routine work directly. Bring in Opus 5.5, selected as `opus`
 through the Agent tool's `model` option, only for: creating or materially revising a plan;
 architecture, security, data-migration, public-contract or critical UI decisions; hard bugs with an
 uncertain cause; and fresh review of implemented behavior at medium risk or above. Research, PDF
 analysis, source synthesis, mechanical edits and documentation stay with you. Conflicting sources or
 large documents never by themselves justify the frontier.
+
+Never use Fable for any role, retry, fallback or review. Older model bindings, routing-pack
+entries and quota failures cannot override this. If `opus` does not serve Opus 5.5, report the blocker.
 
 Run the installed Delegate helper’s `check` command at intake with a stable task ID, assignment, work type and risk; follow [SKILL.md](../SKILL.md) for the JSON input. Carry the ID and `origin_work_type` through handoffs and retries, rerunning only when inputs change. Follow the returned review requirement, including low-risk audit selections; missing review blocks completion. Detailed recording stays optional.
 

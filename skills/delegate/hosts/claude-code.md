@@ -5,6 +5,11 @@ Read this only when running in Claude Code.
 Start sessions on the coordinator from the [Roles](../SKILL.md#roles) table. A skill cannot change the
 saved model; only the user does, in settings.
 
+Use Opus 5.5 as the primary frontier, selected with `model:"opus"` through the Agent tool or
+`--model claude-opus-5-5` through the CLI fallback. Verify that `opus` actually serves Opus 5.5.
+Never launch `fable` or any `claude-fable-*` model for execution, review, retries or fallback,
+even when an older role binding or routing pack lists it. Missing Opus 5.5 access is a blocker.
+
 ## Launch controls
 
 - Use the Agent tool (named Task in some versions). Its `model` option takes an alias such as `haiku` / `sonnet` / `opus` and selects the child: a worker model for workers, the frontier model for planning, decisions and review. Select the frontier explicitly; never let a frontier packet inherit the coordinator model.
@@ -18,7 +23,7 @@ saved model; only the user does, in settings.
 
 If a required control cannot be expressed through the Agent tool, or an evidence-required treatment
 needs exact model and effort, an already authenticated `claude -p` child with `--model` and
-`--effort` is the fallback. Use a fresh process for independent review, task-scoped `--allowedTools`
+`--effort` is the fallback; frontier work uses `--model claude-opus-5-5`. Use a fresh process for independent review, task-scoped `--allowedTools`
 for already authorized reads, edits and checks, and the authorized workspace. Do not add
 `--fallback-model` or `--bare`, install another runtime, or introduce API keys.
 

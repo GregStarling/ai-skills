@@ -1,6 +1,9 @@
 # Verification by deliverable
 
 Verification depth follows the assignment's declared risk and affected behavior, not repository size.
+Frontier review uses the primary frontier in [SKILL.md](SKILL.md#roles): GPT-6.1 Sol at high
+reasoning on Codex or Opus 5.5 on Claude Code, always in a fresh context when required. Risk,
+audit selection and review failures do not authorize Astra; Fable is never a reviewer or fallback.
 
 | Deliverable | Verification |
 | --- | --- |
