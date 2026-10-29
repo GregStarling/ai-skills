@@ -287,8 +287,9 @@ npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate des
 Add `--global` for availability across projects. Remove the agent name you do
 not use. `--copy` installs complete copies of the selected folders.
 
-Node.js runs the installer, Delegate's review helper, and the Checklist and
-Design Director validators. Catchup, CTO, Debug, Focus, and Ship are instructions only. Consumer skills
+Node.js runs the installer, Delegate's review helper, the Checklist, Design
+Director and CTO ledger validators, Catchup's read-only Git snapshot, and Ship's
+release scan and proof check. Debug and Focus are instructions only. Consumer skills
 need no repository build or separate service. They use the tools and authorized
 access available in your existing agent session.
 

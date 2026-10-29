@@ -32,6 +32,6 @@ return **PASS**, **REPAIR** with concrete findings, or **BLOCKED** with the actu
 targeted repairs to the executor; repeated failure justifies stronger execution. Reverify repairs and
 integration. Any later edit invalidates a review. Stop when acceptance is met.
 
-Ordinary work needs no recording. Explicit evaluations may record outcomes through
-[local learning](local-learning.md); observations and receipts are never proof of savings or
+Ordinary work needs no recording. Explicit evaluations may record outcomes through the optional
+recording that SKILL.md describes; observations and receipts are never proof of savings or
 qualification.

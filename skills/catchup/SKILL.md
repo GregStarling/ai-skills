@@ -1,10 +1,10 @@
 ---
 name: catchup
 description: >-
-  Give a concise, read-only briefing on a repository or project: recent work,
-  current changes, work in flight, and the next supported step. Use for $catchup,
-  /catchup, catch me up on this project, where did we leave off, or project
-  reorientation. Do not activate for general news summaries or instructions
+  Gives a concise, read-only briefing on a repository or project: recent work,
+  current changes, work in flight and the next supported step. Use when the user
+  wants to get reoriented, e.g. "/catchup", "$catchup", "catch me up on this
+  project", "where did we leave off". Do not use for general news summaries or
   to resume implementation.
 ---
 
@@ -38,14 +38,22 @@ run. Preserve any explicit user restrictions on network access or scope.
    not invent a last-visit time from commit dates, file modification times, or
    conversational guesses. A recent log window is a sample, not a complete
    history of the user's absence.
-3. Start with a bounded view of branch or detached HEAD, staged and unstaged
-   changes, untracked filenames, stash summaries, and recent meaningful commits.
-   Read only the diffs and files needed to explain unfinished work. Do not dump
-   large artifacts, secret values, or unrelated stash contents into the report.
-4. Check whether a remote and upstream are configured before comparing refs.
-   Ahead/behind counts from tracking refs describe **locally recorded remote
-   state**. Label that limitation. A missing upstream is not an error or proof
-   that no unpushed work exists. A detached HEAD is a state to report, not repair.
+3. Run the bundled read-only snapshot, resolving the skill directory from this
+   SKILL.md's location:
+
+   ```sh
+   node "<installed-skill-directory>/scripts/snapshot.mjs" "<project-directory>"
+   ```
+
+   It prints branch or detached HEAD, staged, unstaged and untracked counts,
+   stashes, remote and upstream state, recent commits and task records, using
+   only `git --no-optional-locks` reads. Without Node, gather the same with
+   those Git reads. Then read only the diffs and files needed to explain
+   unfinished work. Do not dump large artifacts, secret values, or unrelated
+   stash contents into the report.
+4. Ahead/behind counts describe **locally recorded remote state**; keep that
+   label. A missing upstream is not an error or proof that no unpushed work
+   exists. A detached HEAD is a state to report, not repair.
 
 ## Reconcile work and evidence
 
@@ -65,8 +73,7 @@ explain that SHA, say so rather than inventing ahead/behind counts.
 
 Unavailable credentials, network, provider tools, or task records leave a gap in
 the briefing, not a failed task. Do not infer “no open PRs,” “CI green,” or “fully
-synced” from missing or stale evidence. If remote information was not checked,
-say so once. Skip irrelevant systems instead of adding empty sections.
+synced” from missing or stale evidence. Skip irrelevant systems.
 
 Choose the next action from the user's stated priority or current authoritative
 tracking, considering dependencies and unresolved blockers. If these disagree,
@@ -75,16 +82,18 @@ and its basis; do not invent a task or silently launch it.
 
 ## Deliver the brief
 
-Aim for roughly 20 lines or fewer, with concrete paths, commit/PR links, or other
-small evidence pointers where useful:
+Use exactly this shape: all five lines, every time, each kept to one or two
+lines with concrete paths, commit/PR links, or other small evidence pointers.
+Write the stated fallback rather than dropping a line.
 
-- **Current state:** recent meaningful work, branch, and relevant local changes.
-- **In flight:** unfinished work, stashes, relevant PRs, and current check status.
-- **Next:** the recorded next action, or a clearly labeled inference.
-- **Watch out:** material drift, conflicting records, or unavailable evidence.
+```text
+**Current state** — <branch> @ <short sha>; <n> staged, <n> unstaged, <n> untracked. <recent meaningful work>
+**In flight** — <unfinished work, stashes, PRs with check status>, or "Nothing in flight."
+**Next** — <recorded action> (source: <path>), or "Inferred: <step> (basis: <evidence>)"
+**Watch out** — <drift, conflicting records, unavailable evidence>, or "Nothing material."
+Remote and CI: <checked <what> | not checked: <reason>>
+```
 
-Combine sections when little is happening. A clean local tree can be summarized
-in two sentences while still stating whether remote and CI state were checked.
 Separate observations, recorded claims, and inferences. Do not call a build
 verified or shipped merely because a task record says so.
 

@@ -1,11 +1,13 @@
 ---
 name: ship
 description: >-
-  Release completed repository work: review scoped changes, commit and integrate,
-  push through the required release process, chase CI and publication failures,
-  and verify the published result. Use for $ship, /ship, ship these changes,
-  commit push and chase, or deploy when the user intends publication.
-  Do not activate for deployment advice, preview-only work, or editing this skill.
+  Releases completed repository work: reviews the scoped diff, commits and
+  integrates, pushes through the required release process, chases CI and
+  publication failures, and verifies the published result, ending with a SHIP
+  PROOF or SHIP BLOCKED line. Use when the user intends publication, e.g.
+  "/ship", "$ship", "ship these changes", "commit, push and chase", "deploy
+  this". Do not use for unfinished implementation, deployment advice,
+  preview-only work or editing this skill.
 ---
 
 # Ship
@@ -40,8 +42,15 @@ change saved settings or install services to get around a blocker.
 ## Prepare and publish
 
 1. **Review the release diff.** Include outgoing commits as well as working-tree
-   edits. Check for credentials, local settings, debug artifacts, and accidental
-   generated or large files. Stage only intended changes, using selective staging
+   edits. From the repository root, run
+   `node "<installed-skill-directory>/scripts/scan-release.mjs" <release-target>`,
+   passing the destination branch such as `origin/main`. Without one it tries
+   `origin/HEAD`, `origin/main` and `origin/master`, never the feature branch's
+   own upstream, and asks for the target if none exists. It scans every
+   outgoing commit, staged and unstaged change, and flags likely credentials, local
+   settings, debug leftovers, conflict markers and files over 1 MB. Judge every
+   `HIT` before staging; without Node, check those categories by hand. Look for
+   accidental generated files too. Stage only intended changes, using selective staging
    for mixed files. Preserve unrelated staged work too; inspect the exact commit
    contents before committing. Use isolation when needed rather than clearing
    another person's index or discarding their edits.
@@ -140,10 +149,14 @@ limits. End a completed release with real values and evidence links:
 established destination. Never use it for inaccessible, skipped, failed, or
 unverified required work. Never claim an unrun check passed.
 
-When incomplete, end with `SHIP BLOCKED | stage=<stage> | revision=<known SHA> |
+When incomplete, end with `SHIP BLOCKED | stage=<stage> | revision=<known SHA, or none before any commit> |
 reason=<specific failure or limit> | evidence=<links/results> | next=<needed action>`.
 A PR-only restriction may be fulfilled with a ready PR, but the release remains
 incomplete; report that boundary without a production success proof. For a true
 no-op, say no changes and cite any existing release evidence without claiming a
 new release. If the user stops the work, report the interruption and last verified
 stage plainly.
+
+Before ending with either line, check it with
+`node "<installed-skill-directory>/scripts/validate-proof.mjs" "<line>"` and fix
+every error it reports. It checks the line's fields, not the release itself.

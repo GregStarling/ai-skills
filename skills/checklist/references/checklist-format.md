@@ -1,5 +1,10 @@
 # Checklist format
 
+Contents: [Location](#location) · [Sections](#sections) · [Items](#items) ·
+[States](#states) · [Change Log and corrections](#change-log-and-corrections) ·
+[Close-Out](#close-out) · [Validator](#validator) · [Template](#template) ·
+[Completed example](#completed-example)
+
 The checklist file is the acceptance contract and the handoff record. The
 [validator](../scripts/validate-checklist.mjs) reads exactly this format, so keep
 to it.

@@ -1,5 +1,10 @@
 # Optional recording and evidence controls
 
+Contents: [Ordinary completion](#ordinary-completion-v3) ·
+[Evidence-routed path](#evidence-routed--explicitly-tracked-path) ·
+[What counts](#what-counts-explicit-measurements-only-not-qualification) ·
+[Corrections, settings, reset](#corrections-settings-reset) · [Session reminders](#session-reminders)
+
 Recording is optional. Ordinary tasks use the lightweight `check` described in [SKILL.md](SKILL.md); they do not need the recording protocol below; usage is measured from host transcripts with the repository's measurement script. Use this file when an explicit evaluation asks for recorded outcomes, or for the narrow evidence-required routing path. The helper uses existing Node built-ins, launches no models and uploads nothing. When recording was requested and fails, repair the input locally; if it stays blocked, report the limitation rather than claiming a recorded result.
 
 Run `node <skill-folder>/scripts/local-learning.mjs <command> <input.json | ->` (`-` reads stdin). Use absolute paths. Each command prints one JSON line. Keep input files in local task artifacts, never in the installed folder. State lives in `$DELEGATE_STATE_HOME`, else `$XDG_STATE_HOME/delegate`, else `~/.local/state/delegate`. Git worktrees share project identity; hosts and non-git projects stay isolated; replacing the skill folder preserves state.

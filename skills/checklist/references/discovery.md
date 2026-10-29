@@ -1,5 +1,11 @@
 # Discovering what complete means
 
+Contents: [Perspectives](#perspectives) · [Pass A: explicit](#pass-a-explicit-requirements) ·
+[Pass B: implied](#pass-b-necessary-implied-requirements) ·
+[Pass C: systematic](#pass-c-systematic-completeness-review) ·
+[Pass D: pre-mortem](#pass-d-pre-mortem) · [Keep challenging](#keep-challenging) ·
+[Writing good items](#writing-good-items)
+
 Use this before substantial implementation, and again whenever the work reveals
 something the checklist missed. Inspect the actual system first: requirements
 derived without the real implementation describe generic risks, not this

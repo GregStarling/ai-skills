@@ -17,6 +17,6 @@ Give the worker paths, symbols, commands, constraints and the smallest necessary
 
 Stop an investigator when the question is answered, a consequential decision is needed, access is blocked or searching no longer produces new evidence. Return findings with source locations, checks, uncertainties and the smallest next step. Preserve its useful context for follow-ups; do not restart the search at the frontier. For eligible implementation, escalate a demonstrated reasoning limitation. Research/PDF failures use suitable cheaper tools/workers or report the limitation; a consequential choice becomes a separate frontier decision.
 
-Prefer text/DOM inspection for structure, screenshots for visual judgment. Preserve artifacts by reference and avoid redundant captures. A worker's screenshot verdict cannot replace frontier inspection needed for acceptance. Read [research.md](research.md) for source-based research.
+Prefer text/DOM inspection for structure, screenshots for visual judgment. Preserve artifacts by reference and avoid redundant captures. A worker's screenshot verdict cannot replace frontier inspection needed for acceptance.
 
 At a meaningful delivery boundary, use a short handoff containing objective, constraints, decisions, checkout state, completed checks, evidence and remaining risks. Keep a coherent investigation together when restarting would cause rediscovery; a full-history fork is not a compact handoff. Do not create recording just to trigger session reminders.

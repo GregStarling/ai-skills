@@ -3,8 +3,8 @@
 Select by work kind, surface mode, risk, maturity, and evidence. Product
 category never chooses a visual style.
 
-Each profile selects its relevant defaults from
-[principles.md](principles.md). A host runtime may project the deterministic
+Each profile selects its relevant defaults from the design principles
+reference. A host runtime may project the deterministic
 union for all selected profiles into a task. Apply that union in canonical
 order, without treating profile selection as product evidence or a new
 constitution clause.

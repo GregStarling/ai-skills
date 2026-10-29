@@ -1,12 +1,13 @@
 ---
 name: cto
 description: >-
-  Own a supplied implementation plan through verified shipping. Use for CTO,
-  CTO mode, /cto, ship this plan, implement the plan, build the whole thing,
-  don't stop until it's done, or run this to completion when the user requests
-  complete implementation.
-  Do not activate for ordinary coding questions, isolated edits, plan-only
-  advice, or discussions of a CTO job title.
+  Executes a supplied implementation plan, spec, PRD or task list end to end:
+  keeps a durable ledger, verifies each item, escalates when stuck and carries
+  the work through the authorized release. Use when the user hands over a plan
+  to be built to completion, e.g. "/cto", "CTO mode", "implement this plan",
+  "build the whole thing", "don't stop until it's done". Do not use without a
+  plan to implement, for isolated edits, plan-only advice, status briefings,
+  releasing already-finished work, or discussion of a CTO job title.
 ---
 
 # CTO
@@ -114,6 +115,13 @@ Use only these item states:
 - `blocked-external`: requires genuinely unavailable input, capability, access,
   infrastructure, authorization, or an irreversible business decision.
 
+After changing item states, and before the final report, run
+`node "<installed-skill-directory>/scripts/validate-ledger.mjs" .cto/ledger.md`.
+It rejects other states and `done` items without evidence, and prints whether
+item states and Definition of Shipped criteria permit SHIPPED. It cannot see
+required review or release state; confirm those yourself. Fix every error
+before continuing.
+
 Use an appropriate non-shared branch unless the user or repository requires
 otherwise. Do not modify the primary shared branch directly by default. Prefer
 small verified commits when permitted; otherwise retain durable file checkpoints
@@ -218,4 +226,15 @@ Keep it concise and evidence-backed:
 - **External blockers:** exact remaining action, only if present.
 - **How to run:** shortest useful instructions and ledger location.
 
-Do not bury incomplete work in a success summary. Do not ask whether to continue.
+End with exactly one status line: the last line `validate-ledger.mjs` prints,
+with each `<fill: …>` replaced by a real value. Report `CTO SHIPPED` only when
+required review and every requested release step are also complete; otherwise
+report the unfinished stage. The line takes one of these forms:
+
+```text
+CTO SHIPPED | items=<done>/<total> | destination=<branch, package@version or URL> | review=<role; result> | ledger=.cto/ledger.md | at=<UTC>
+CTO BLOCKED EXTERNALLY | items=<done>/<total> | blocked=<IDs> | need=<exact action> | ledger=.cto/ledger.md
+CTO INTERRUPTED | items=<done>/<total> | last=<last done item> | resume=<next item> | ledger=.cto/ledger.md
+```
+
+Do not bury incomplete work in a success summary.

@@ -17,8 +17,9 @@ npx skills add GregStarling/ai-skills --skill catchup --agent codex claude-code 
 ```
 
 Run from your project; add `--global` for personal installation. Or copy this
-complete folder into your agent's skill directory. No build or runtime helper
-is required. The skill uses your host's existing file and repository read tools.
+complete folder into your agent's skill directory. No build is required. A
+read-only Node snapshot script gathers Git state when Node.js is available;
+otherwise the skill uses your host's existing file and repository read tools.
 
 - Codex: `$catchup`
 - Claude Code: `/catchup`

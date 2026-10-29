@@ -1,0 +1,11 @@
+PASS  catchup  (clean)
+PASS  checklist  (clean)
+PASS  cto  (clean)
+PASS  debug  (clean)
+PASS  delegate  (clean)
+PASS  design-director  (clean)
+PASS  focus  (clean)
+PASS  refresh-models  (clean)
+PASS  ship  (clean)
+
+9 skills, 0 failing, 0 failures, 0 warnings

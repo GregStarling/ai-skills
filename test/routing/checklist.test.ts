@@ -628,6 +628,30 @@ describe('portable Checklist validator: ratchet and usage', () => {
  });
 });
 
+describe('portable Checklist validator: report helpers', () => {
+ it('prints the final status line with real counts, recorded next action and clock time', () => {
+  const done = run(complete, ['--status-line']); expect(done.status, done.stderr).toBe(0);
+  expect(done.stdout).toMatch(/^CHECKLIST VERIFIED COMPLETE \| verified=2\/2 \| review=independent; PASS \| evidence=<fill: location> \| file=checklist\.md \| at=\d{4}-\d{2}-\d{2}T[\d:.]+Z\n$/);
+  const open = run(complete.replace('- [x] C-002', '- [ ] C-002').replace('- State: complete.', '- State: open.\n- Next: publish v1.2.0.'), ['--status-line']);
+  expect(open.stdout, open.stderr).toBe('CHECKLIST OPEN | verified=1/2 | open=C-002 | next=publish v1.2.0. | file=checklist.md\n');
+  const blocked = run(logged(exception('BLOCKED'), '- 2026-10-09T11:00Z C-002 BLOCKED awaiting registry approval.'), ['--status-line']);
+  expect(blocked.stdout).toContain('CHECKLIST BLOCKED | verified=1/2 | blocked=C-002 | reason=C-002: Specific reason for the exception. | next=<fill: specific action>');
+  const pending = run(closeOut('- Notes only.'), ['--status-line']);
+  expect(pending.stdout).toContain('CHECKLIST OPEN | verified=2/2 | open=close-out review |');
+ });
+ it('saves a baseline once and refuses to overwrite it', () => {
+  const cwd = mkdtempSync(join(tmpdir(), 'checklist-validator-')); temporary.push(cwd);
+  writeFileSync(join(cwd, 'task.md'), complete);
+  const first = spawnSync(process.execPath, [validator, 'task.md', '--init-baseline'], {cwd, encoding: 'utf8'});
+  expect(first.status, first.stderr).toBe(0); expect(first.stdout).toBe('BASELINE SAVED | file=task.baseline.md\n');
+  expect(readFileSync(join(cwd, 'task.baseline.md'), 'utf8')).toBe(complete);
+  const again = spawnSync(process.execPath, [validator, 'task.md', '--init-baseline'], {cwd, encoding: 'utf8'});
+  expect(again.status).toBe(1); expect(again.stderr).toContain('never overwritten');
+  writeFileSync(join(cwd, 'empty.md'), '# Checklist\n');
+  expect(spawnSync(process.execPath, [validator, 'empty.md', '--init-baseline'], {cwd, encoding: 'utf8'}).stderr).toContain('no parseable items');
+ });
+});
+
 describe('Checklist format reference', () => {
  // The documented template and example must stay valid for the shipped validator.
  const blocks = [...readFileSync(resolve('skills/checklist/references/checklist-format.md'), 'utf8').matchAll(/^```markdown\n([\s\S]*?)^```$/gm)].map(match => match[1]!);
