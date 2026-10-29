@@ -1,5 +1,20 @@
 # Design principles
 
+Contents: [1 next_action_clarity](#1-next_action_clarity) ·
+[2 progressive_complexity](#2-progressive_complexity) · [3 memory_offloading](#3-memory_offloading) ·
+[4 familiar_behavior](#4-familiar_behavior) · [5 pattern_consistency](#5-pattern_consistency) ·
+[6 semantic_relationships](#6-semantic_relationships) · [7 faithful_simplicity](#7-faithful_simplicity) ·
+[8 scarce_emphasis](#8-scarce_emphasis) · [9 local_targeting](#9-local_targeting) ·
+[10 responsive_feedback](#10-responsive_feedback) ·
+[11 error_prevention_recovery](#11-error_prevention_recovery) ·
+[12 legible_resumable_progress](#12-legible_resumable_progress) ·
+[13 deliberate_beginnings_endings](#13-deliberate_beginnings_endings) ·
+[14 total_user_effort](#14-total_user_effort) · [15 reversible_defaults](#15-reversible_defaults) ·
+[16 bounded_input_tolerance](#16-bounded_input_tolerance) ·
+[17 vital_paths_complete_edges](#17-vital_paths_complete_edges) ·
+[18 honest_completion_distance](#18-honest_completion_distance) ·
+[19 evidence_over_heuristics](#19-evidence_over_heuristics)
+
 These principles are strong, context-sensitive defaults. The floor is mandatory;
 principles are rebuttable; the constitution holds evidence-backed product truth;
 task context narrows the immediate assignment. When a principle conflicts with

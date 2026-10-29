@@ -1,6 +1,14 @@
 ---
 name: design-director
-description: Direct evidence-led product design by deriving, evaluating, analyzing, or amending a product-specific design constitution. Use when making autonomous UX, visual, interaction, motion, content/IA, redesign, or design-review decisions; assess an existing interface; resolve a design conflict; or propose a design_resolution.v1 without substituting trends, product categories, or personal taste for evidence.
+description: >-
+  Makes and reviews product design decisions from evidence by deriving,
+  evaluating, analyzing or amending a product-specific design constitution, and
+  emits a validated design_resolution.v1 proposal. Use when a design choice
+  needs a defensible, evidence-backed decision: autonomous UX, visual,
+  interaction, motion or content/IA choices, assessing an interface against its
+  constitution, or resolving a design conflict. Do not use for hands-on
+  frontend building, styling or polish passes, or for picking a style from
+  trends, product category or taste.
 ---
 
 # Design Director
@@ -29,7 +37,9 @@ only the route-relevant references:
 - Evidence classification or amendment authority:
   [references/evidence-policy.md](references/evidence-policy.md)
 - UX, visual, interaction/motion, content/IA, archaeology, or perception work:
-  [references/practices.md](references/practices.md)
+  [references/practices.md](references/practices.md), plus
+  [references/principles.md](references/principles.md) for the defaults each
+  practice profile selects
 - Artifact evaluation, proof selection, or correction:
   [references/verification.md](references/verification.md)
 - Upstream lineage or licensing:

@@ -56,8 +56,8 @@ blind adversarial close-out. The maintainer's guiding prompt is preserved in
 | §9 Four outcomes, no technical blocker labels, no waivers manufacturing completion, interruptions | SKILL.md §8; validator status |
 | §10 Checkpoint updates, ending a session, no stopping for phase or context length, no repeated asking, no background promise, restart reconciliation | SKILL.md §9 |
 | §11 Counts not impressions, milestone summary, four report lines (verbatim), no invented values or buried work | SKILL.md §9 |
-| Non-negotiable rules 1–15 | SKILL.md: Non-negotiable rules |
-| Final standard and closing statement | SKILL.md: final standard; close-out: Final standard |
+| Non-negotiable rules 1–15 | Each stated where it applies (the separate list was removed as restatement on 2026-10-29): 1 §3; 2 §2 B; 3 §3; 4 §1, §5, §7; 5–6 §4; 7 §5; 8 §6–7; 9 §3, §9; 10 §8–9; 11 §9; 12 §2 B, §3; 13 introduction, §1; 14 §5, §8–9; 15 introduction |
+| Final standard and closing statement | Final standard: close-out, which SKILL.md §7 always sends the reader to. Closing statement: SKILL.md introduction (the bold completion rule) and §9 ("almost finished" is not a status). The SKILL.md copies were removed as restatement on 2026-10-29 |
 
 ## Deliberate adaptations
 

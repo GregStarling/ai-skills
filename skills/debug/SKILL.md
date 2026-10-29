@@ -1,19 +1,19 @@
 ---
 name: debug
 description: >-
-  Investigate a reported software defect, reproduce the failure, fix its cause,
-  and verify the correction with regression evidence. Use for $debug, /debug,
-  debug this bug, reproduce and fix, or a request to diagnose failing behavior.
-  Honor diagnosis-only requests. Do not activate for new features, general
-  programming explanations, or a review without a reported defect.
+  Investigates a reported software defect: reproduces the failure, fixes its
+  demonstrated cause and proves the correction with before-and-after regression
+  evidence, or stops at a diagnosis when only that was asked. Use when a bug,
+  error, failing test or broken behavior is reported, e.g. "/debug", "$debug",
+  "debug this", "reproduce and fix", "why is this failing". Do not use for new
+  features, general programming explanations, or reviews without a reported
+  defect.
 ---
 
 # Debug
 
 Make the failure observable, explain its cause, and prove the correction. A
 plausible hypothesis is a reason to investigate, not evidence that a fix works.
-This is the portable successor to the Repro command; its invocation name is
-`debug`, not `repro`.
 
 ## Establish the problem and authority
 
@@ -123,5 +123,12 @@ Keep the report concise and evidence-backed:
 - **Remaining work:** only material gaps, unrelated findings, or the exact next
   experiment/access needed. Omit if none.
 
-Do not call the issue resolved while required checks or review remain incomplete.
+End with exactly one status line, filled with real values:
+
+```text
+DEBUG <VERIFIED FIX | DIAGNOSIS ONLY | NOT REPRODUCED | VERIFICATION INCOMPLETE> | cause=<mechanism, file:line> | before=<command → observed failure> | after=<command → result> | checks=<surrounding suite results> | env=<tested environment> | next=<remaining gap, or none>
+```
+
+Use `n/a` for `before` or `after` only when that run did not happen, and say
+why in the report. Do not call the issue resolved while required checks or review remain incomplete.
 Leave publication to the authorized release workflow.

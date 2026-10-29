@@ -3,9 +3,10 @@
 // recorded state; it cannot prove that the work itself behaves correctly.
 // The format is deliberately strict: anything that could hide or disguise an
 // entry is rejected rather than interpreted.
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
-const USAGE = 'usage: validate-checklist.mjs <checklist.md> [--baseline <earlier-copy.md>]';
+const USAGE = 'usage: validate-checklist.mjs <checklist.md> [--baseline <earlier-copy.md>] [--status-line]\n' +
+  '       validate-checklist.mjs <checklist.md> --init-baseline';
 const SECTIONS = ['Request', 'Definition of Complete', 'Items', 'Decisions', 'Pre-Mortem',
   'Exclusions', 'Change Log', 'Verification', 'Close-Out', 'Resume'];
 const ENTRY_SECTIONS = ['Items', 'Close-Out'];
@@ -238,7 +239,8 @@ function parse(text, errors, now) {
   }
   const changeLog = inSection('Change Log').map(({ line }) => line.trim()).filter(Boolean);
   const filled = (name) => inSection(name).some(({ line }) => line.trim());
-  return { sections, filled, items, findings: closeOut.result, review: closeOut.top, changeLog };
+  const resume = inSection('Resume').map(({ line }) => line.trim());
+  return { sections, filled, items, findings: closeOut.result, review: closeOut.top, changeLog, resume };
 }
 
 function validate(record, errors, notes) {
@@ -366,18 +368,34 @@ function ratchet(record, baseline, errors) {
 function main(argv) {
   let file = null;
   let baselineFile = null;
+  let statusLine = false;
+  let initBaseline = false;
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
     if (arg === '-h' || arg === '--help') { console.log(USAGE); return 0; }
     if (arg === '--baseline' && argv[index + 1] && !baselineFile) baselineFile = argv[++index];
+    else if (arg === '--status-line' && !statusLine) statusLine = true;
+    else if (arg === '--init-baseline' && !initBaseline) initBaseline = true;
     else if (!arg.startsWith('-') && !file) file = arg;
     else { console.error(`unexpected argument: ${arg}\n${USAGE}`); return 1; }
   }
-  if (!file) { console.error(USAGE); return 1; }
+  if (!file || (initBaseline && (baselineFile || statusLine))) { console.error(USAGE); return 1; }
   const read = (path) => {
     try { return readFileSync(path, 'utf8'); } catch (error) { console.error(`cannot read ${path}: ${error.message}\n${USAGE}`); return null; }
   };
   const text = read(file);
+  // The baseline is written once, when the first items exist, and never overwritten.
+  if (initBaseline) {
+    if (text === null) return 1;
+    if (!parse(text, [], null).items.length) { console.error(`${file} has no parseable items yet; write the first items before saving a baseline`); return 1; }
+    const target = file.replace(/(\.md)?$/i, '.baseline.md');
+    try { writeFileSync(target, text, { flag: 'wx' }); } catch (error) {
+      console.error(error.code === 'EEXIST' ? `${target} already exists; a baseline is never overwritten` : `cannot write ${target}: ${error.message}`);
+      return 1;
+    }
+    console.log(`BASELINE SAVED | file=${target}`);
+    return 0;
+  }
   const earlier = baselineFile === null ? '' : read(baselineFile);
   if (text === null || earlier === null) return 1;
 
@@ -412,9 +430,26 @@ function main(argv) {
     if (blocked.length) status = 'CHECKLIST BLOCKED';
     else status = waived.length ? 'CHECKLIST ACCEPTED WITH EXCEPTIONS' : 'CHECKLIST VERIFIED COMPLETE';
   }
-  console.log([status, `verified=${verified.length}/${required.length}`, `open=${list(open)}`, `blocked=${list(blocked)}`,
-    `waived=${list(waived)}`, `not_applicable=${list(ids('NOT APPLICABLE'))}`, `findings_open=${list(findingsOpen)}`,
-    `review=${review}`, `build=${stage('build')}`, `release=${stage('release')}`, `file=${file}`].join(' | '));
+  if (statusLine) {
+    // The final report line (SKILL.md §9): counts, IDs, file and time come from the record and clock;
+    // only judgment fields the record cannot hold are left as <fill: …> for the reporter.
+    const counts = `verified=${verified.length}/${required.length}`;
+    const recorded = /^[-*+]\s+Next:\s*(.+)$/i.exec(record.resume.find((line) => /^[-*+]\s+Next:/i.test(line)) ?? '')?.[1];
+    const next = `next=${recorded && !/^\{.*\}$/.test(recorded) ? recorded : '<fill: specific action>'}`;
+    const reasons = record.items.filter((item) => item.status === 'BLOCKED').map((item) => `${item.id}: ${item.fields.Reason}`);
+    const passed = `review=${review}; PASS`;
+    const line = {
+      'CHECKLIST VERIFIED COMPLETE': [counts, passed, 'evidence=<fill: location>', `file=${file}`, `at=${new Date().toISOString()}`],
+      'CHECKLIST ACCEPTED WITH EXCEPTIONS': [counts, `waived=${list(waived)}`, passed, `file=${file}`],
+      'CHECKLIST OPEN': [counts, `open=${list([...open, ...findingsOpen, ...(review === 'pending' ? ['close-out review'] : [])])}`, next, `file=${file}`],
+      'CHECKLIST BLOCKED': [counts, `blocked=${list(blocked)}`, `reason=${reasons.join('; ')}`, next, `file=${file}`],
+    }[status];
+    console.log([status, ...line].join(' | '));
+  } else {
+    console.log([status, `verified=${verified.length}/${required.length}`, `open=${list(open)}`, `blocked=${list(blocked)}`,
+      `waived=${list(waived)}`, `not_applicable=${list(ids('NOT APPLICABLE'))}`, `findings_open=${list(findingsOpen)}`,
+      `review=${review}`, `build=${stage('build')}`, `release=${stage('release')}`, `file=${file}`].join(' | '));
+  }
   for (const note of notes) console.error(`note: ${note}`);
   return status === 'CHECKLIST VERIFIED COMPLETE' || status === 'CHECKLIST ACCEPTED WITH EXCEPTIONS' ? 0 : 2;
 }

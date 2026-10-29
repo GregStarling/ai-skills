@@ -1,14 +1,15 @@
 ---
 name: checklist
 description: >-
-  Define what complete means for substantive work, persist a falsifiable
-  acceptance checklist, build or audit against it, and refuse to declare
-  completion until every required item has evidence and survives a blind
-  adversarial close-out. Use for $checklist, /checklist, checklist mode, define
-  done, make sure this is actually complete, prove it is finished, completion
-  audit, or acceptance checklist. Supports BUILD, AUDIT and PLAN modes. Do not
-  activate for writing a checklist as content (packing, onboarding, shopping or
-  launch lists), simple to-do tracking, casual questions, or trivial edits.
+  Defines what complete means as a persisted, falsifiable acceptance checklist,
+  verifies work against it, and refuses to declare completion until every
+  required item has evidence and survives a blind adversarial close-out.
+  Supports BUILD, AUDIT and PLAN modes. Use when the user asks to define or
+  prove done, e.g. "/checklist", "$checklist", "checklist mode", "define done",
+  "make sure this is actually complete", "prove it is finished", "completion
+  audit", "acceptance checklist". Do not use to execute a supplied plan end to
+  end, to write a checklist as content (packing, onboarding, shopping or launch
+  lists), for simple to-do tracking, casual questions or trivial edits.
 ---
 
 # Checklist
@@ -141,7 +142,7 @@ does not by itself prove runtime behavior. Scale detail to the real complexity.
 Aim for complete coverage without unnecessary work, not for fewer items.
 
 Persist the checklist at `.checklists/<task-id>.md` with a stable task ID, so
-that tasks never overwrite each other. Follow the
+that tasks never overwrite each other. When writing or updating it, follow the
 [checklist format](references/checklist-format.md) and its sections: Request,
 Definition of Complete, Items, Decisions, Pre-Mortem, Exclusions, Change Log,
 Verification, Close-Out and Resume.
@@ -346,7 +347,9 @@ node "<installed-skill-directory>/scripts/validate-checklist.mjs" ".checklists/<
 
 To enforce the ratchet, add `--baseline <earlier copy>`. The copy is the last
 committed version or, without commits, `.checklists/<task-id>.baseline.md`.
-Save that file as soon as the first items are written, and never edit it. If no
+Save that file as soon as the first items are written by running the validator
+with `--init-baseline`, which refuses to overwrite an existing baseline; never
+edit it. If no
 early copy exists, say so; never present a later copy as the baseline. The
 baseline check
 rejects removed or changed items and findings that lack a new Change Log entry
@@ -363,7 +366,7 @@ The validator checks the following:
 - that the review was recorded with a passing result.
 
 It prints the status with real counts. That line is a gate result, not the final
-report: carry its counts and IDs into the status line in §9. The validator
+report; §9's line comes from `--status-line`. The validator
 proves the record is consistent, not that the work behaves correctly.
 
 If the validator cannot run, parse the entries and their fields with another
@@ -424,7 +427,10 @@ milestones, summarize:
 - blockers and the actions they need.
 
 Do not interrupt useful authorized work merely to report. End with exactly one
-status line, filled with real values:
+status line. Generate it with the validator's `--status-line` option, which
+fills counts, IDs, the recorded next action, the file and the time from the
+record and the clock; replace each remaining `<fill: …>` with a real value.
+Without the validator, fill the same form by hand:
 
 ```text
 CHECKLIST VERIFIED COMPLETE | verified=<n>/<n> | review=<independent or self; result> | evidence=<location> | file=<path> | at=<UTC timestamp>
@@ -462,46 +468,3 @@ their rules.
 - **Ship** performs authorized publication, and its proof is the evidence for
   `[release]` items.
 - **Ponytail** simplifies the means, never the accepted outcome.
-
-## Non-negotiable rules
-
-1. **Define complete before building.** Never start substantial work without a
-   finish line.
-2. **Discover what the request forgot.** Repeating the user's words is not
-   enough.
-3. **Make every requirement falsifiable.** A check that cannot fail proves
-   nothing.
-4. **Inspect reality.** Code, running behavior, results and artifacts outrank
-   assumptions and agent assertions.
-5. **Protect the scope.** Difficult requirements do not disappear, and
-   acceptance does not weaken without legitimate justification and authority.
-6. **Maintain the ratchet.** Add missing work, preserve history and reopen
-   invalidated claims.
-7. **Verify continuously,** not at the end.
-8. **Challenge your own definition of complete,** preferably with blind,
-   independent re-derivation and adversarial review.
-9. **Use evidence, not optimism.** Checked means demonstrated, not attempted.
-10. **Be honest about limits.** Blocked, waived, skipped and unverified work is
-    never presented as verified.
-11. **Keep working when authorized and able.** A progress update is not a
-    finish.
-12. **Optimize for the delivered outcome.** Avoid unnecessary work, meaningless
-    tests and scope added only for appearance.
-13. **Respect actual authority.** Completion discipline never overrides
-    restrictions, permissions, safety boundaries or execution limits.
-14. **Never manufacture success.** Do not fake tests, fabricate evidence, hide
-    defects or redefine done.
-15. **Finish the work, not merely the list.** Every checked item must be real,
-    verifiable behavior or a genuinely satisfied requirement.
-
-**Final standard.** Before declaring completion, ask: *"If a competent engineer
-who never saw my checklist started with the user's original request, inspected
-the delivered result, and attempted to prove it incomplete, would they find any
-required functionality missing, broken, or unverified?"* If the evidence shows a
-material gap, reopen the checklist and resolve it. If the review is inconclusive,
-report the uncertainty instead of claiming proof.
-
-Completion is not a feeling, a percentage, a passing build or the absence of
-obvious bugs. It is a defensible claim that every required outcome has been
-delivered and verified, and the work is not complete until that claim survives
-verification and adversarial review.

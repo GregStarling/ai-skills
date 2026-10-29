@@ -176,7 +176,7 @@ it('discovers new skills and rejects missing or escaped references in any consum
   await mkdir(join(root,'docs'));
   await cp(resolve('docs/validation-status.md'),join(root,'docs/validation-status.md'));
   const added=join(root,'skills/example');await mkdir(added);
-  const entry='---\nname: example\ndescription: A portable example skill used to verify collection discovery.\n---\n\nDo the requested example task.\n';
+  const entry='---\nname: example\ndescription: Verifies collection discovery with a portable example skill. Use when testing the packaging check.\n---\n\nDo the requested example task.\n';
   await writeFile(join(added,'SKILL.md'),entry);
   const run=()=>spawnSync(process.execPath,['scripts/verify/skills.mjs'],{cwd:resolve('.'),encoding:'utf8',env:{...process.env,SKILLS_ROOT:root}});
   const valid=run();expect(valid.status,valid.stderr).toBe(0);
@@ -186,6 +186,9 @@ it('discovers new skills and rejects missing or escaped references in any consum
   expect(run().stderr).toContain('Missing copied reference: missing.md');
   await writeFile(join(added,'SKILL.md'),entry+'\n[Outside](../../docs/validation-status.md)\n');
   expect(run().stderr).toContain('External consumer dependency: ../../docs/validation-status.md');
+  await writeFile(join(added,'SKILL.md'),entry);
+  await writeFile(join(added,'SKILL.md'),entry.replace(' Use when testing the packaging check.',''));
+  expect(run().stderr).toContain('Skill lint failed:\nexample: [description-when]');
   await writeFile(join(added,'SKILL.md'),entry);
   await rm(join(root,'skills/cto/references/escalation.md'));
   expect(run().stderr).toContain('Missing copied reference: references/escalation.md');
@@ -247,7 +250,7 @@ it('keeps the assignment review floor even with a contradictory mechanical label
 
 it('discovers mechanical work independently of whether a worker is useful',async()=>{
  const skill=await readFile(resolve('skills/delegate/SKILL.md'),'utf8');
- const description=skill.split('\n').find(line=>line.startsWith('description:'))!;
+ const description=(/^description:([\s\S]*?)\n---/m.exec(skill)?.[1]??'').replace(/\s+/g,' ');
  expect(description).toContain('mechanical edits');expect(description).toMatch(/routing(?: and |\/)audit decision/);
  expect(skill).toContain('scripts/local-learning.mjs complete -');
 });

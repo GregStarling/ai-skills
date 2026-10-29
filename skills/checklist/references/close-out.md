@@ -1,5 +1,11 @@
 # Blind adversarial close-out
 
+Contents: [Phase A: re-derive blind](#phase-a-re-derive-the-requirements-blind) ·
+[Phase B: compare](#phase-b-compare-requirements) ·
+[Phase C: challenge the evidence](#phase-c-challenge-the-evidence) ·
+[Phase D: reconcile](#phase-d-final-reconciliation) ·
+[The completion gate](#the-completion-gate) · [Final standard](#final-standard)
+
 Run this when every required implementation item appears complete. Release
 items still awaiting publication and `BLOCKED` items may remain open. In AUDIT
 mode, run it once every item has a recorded result. The central question is:
@@ -125,7 +131,7 @@ after they close. Release evidence needs the same challenge as build evidence.
 ## The completion gate
 
 Read the persisted checklist; do not rely on a statement that every box is
-checked. Run the validator described in the [format reference](checklist-format.md#validator),
+checked. Run the validator described in the format reference's Validator section,
 with `--baseline` when an earlier version exists. Confirm by inspection that:
 
 1. every required item has a unique, stable ID;
@@ -144,7 +150,7 @@ The validator covers some of these points mechanically:
 | Points | What the validator does |
 | --- | --- |
 | 1–3, 5 and 9 | Checks the recorded structure |
-| 4 (partly) | Rejects placeholder or unrecorded evidence, bare assertions, and evidence with no anchor once common date and time forms are set aside (see the [format reference](checklist-format.md#states)). A count, version or file name still satisfies it, so "Tested 1 time" passes |
+| 4 (partly) | Rejects placeholder or unrecorded evidence, bare assertions, and evidence with no anchor once common date and time forms are set aside (see the format reference's States section). A count, version or file name still satisfies it, so "Tested 1 time" passes |
 | 6 | Rejects checked evidence marked `STALE` or `FAILED` |
 | 7 and 8 | Require a recorded review whose Result starts with `PASS`, and no open finding |
 

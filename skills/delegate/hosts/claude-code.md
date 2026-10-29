@@ -34,4 +34,4 @@ The mandatory ordinary `check` needs no host/model fields or saved state; see [S
 ## Activation
 
 The skill description drives automatic discovery. For a guaranteed second path during a test
-period, add the [CLAUDE.md snippet](claude-md-snippet.md) to the user's global CLAUDE.md.
+period, add the CLAUDE.md activation snippet linked from SKILL.md to the user's global CLAUDE.md.

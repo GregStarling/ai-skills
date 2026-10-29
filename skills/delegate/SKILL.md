@@ -1,6 +1,15 @@
 ---
 name: delegate
-description: Use automatically for implementation, bug fixes, planning, critical decisions, research, PDF analysis, source synthesis, mechanical edits and review. An economical coordinator does routine work directly; GPT-6.1 Sol (Codex) or Opus 5.5 (Claude Code) handles frontier decisions and reviews. Astra is reserved for stuck builds; never use Fable. Simple edits still get a routing/audit decision. Exclude casual conversation, simple factual answers, creative drafting, voice-sensitive editing, and worker/reviewer packets.
+description: >-
+  Routes substantive work to the least expensive path that keeps the requested
+  quality. This session does routine work directly; a frontier model takes
+  plans, consequential decisions, hard bugs and required reviews; a bundled
+  check decides which review is mandatory. Use automatically at the start of
+  implementation, bug fixes, planning, consequential decisions, research, PDF
+  or source analysis, review, and mechanical edits (which still get a routing
+  and audit decision), alongside any task-specific skill. Do not use for
+  casual conversation, simple factual answers, creative drafting,
+  voice-sensitive editing, or when executing a worker or reviewer packet.
 ---
 
 # Delegate
@@ -131,12 +140,18 @@ limitation. Unknown usage stays unknown; never claim measured savings from insid
 
 - Full `dispatch` provides model/evidence-bound routing for explicit evaluations; pass `host:"claude"` or `host:"codex"`. It does not replace the ordinary `check`.
 - Outcome recording with `node <skill-folder>/scripts/local-learning.mjs complete -` is optional and only for explicit evaluations; see [local learning](local-learning.md). Usage is measured from host transcripts, not from inside the session.
-- Evidence-qualified routing (`route`) is narrow and optional; the assignment must fit `route.scope` literally. See [pack format](pack-format.md).
+- Before using evidence-qualified routing (`route`), read [pack format](pack-format.md). It is narrow and optional; the assignment must fit `route.scope` literally.
 
 Evaluation records and routing packs establish evidence, not permission to use a model. Filter
 their candidates through the model policy above before selecting any worker or reviewer. Never
 substitute a different model into recorded evidence or claim an unobserved treatment is qualified.
 
-Further reading when relevant: [context discipline](context-discipline.md), [worker contract](delegation-contract.md),
-[task classes](task-classes.md), [parallel work](swarm-policy.md), [research](research.md),
-[verification policy](verification-policy.md), [CLAUDE.md activation snippet](hosts/claude-md-snippet.md).
+Read each of these only when its condition applies:
+
+- Unfamiliar or large repositories, cross-package changes, investigation or visual inspection: [context discipline](context-discipline.md)
+- Writing a worker or investigator packet: [worker contract](delegation-contract.md)
+- Assigning an evidence-required route's workstream class: [task classes](task-classes.md)
+- Considering more than one concurrent worker: [parallel work](swarm-policy.md)
+- Research, PDF analysis, source comparison or synthesis: [research](research.md)
+- Choosing verification depth for a deliverable: [verification policy](verification-policy.md)
+- Making these routing rules present on every turn, even when the skill does not trigger: [CLAUDE.md activation snippet](hosts/claude-md-snippet.md)

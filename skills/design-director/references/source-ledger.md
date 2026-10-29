@@ -3,6 +3,12 @@
 Design Director's language and contracts are original. This ledger records
 ideas studied, not copied command systems or upstream runtime code.
 
+Local divergence from the standalone bundle (2026-10-29, ai-skills skill audit):
+the description was rewritten to separate it from frontend-polish skills, the
+principles reference gained a table of contents, and the practices reference now
+names the principles reference in prose instead of linking it, so every
+reference is reached from SKILL.md.
+
 ## Human-factors laws and principles
 
 The design principles reference synthesizes Hick's Law, Fitts's Law, Jakob's

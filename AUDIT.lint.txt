@@ -1,0 +1,40 @@
+FAIL  catchup
+  FAIL [description-person] description uses first or second person ('me')
+  WARN [description-voice] description opens imperative ('Give'), not third person
+FAIL  checklist
+  WARN [description-voice] description opens imperative ('Define'), not third person
+  FAIL [reference-toc] references/checklist-format.md is 505 lines with no table of contents at the top
+  FAIL [reference-when] SKILL.md names references/checklist-format.md without saying when to read it
+  FAIL [reference-toc] references/close-out.md is 176 lines with no table of contents at the top
+  FAIL [reference-depth] references/close-out.md points to another reference, references/checklist-format.md
+  FAIL [reference-toc] references/discovery.md is 132 lines with no table of contents at the top
+PASS  cto
+  WARN [description-voice] description opens imperative ('Own'), not third person
+PASS  debug
+  WARN [description-voice] description opens imperative ('Investigate'), not third person
+FAIL  delegate
+  WARN [description-voice] description opens imperative ('Use'), not third person
+  FAIL [reference-when] SKILL.md names context-discipline.md without saying when to read it
+  FAIL [reference-depth] context-discipline.md points to another reference, research.md
+  FAIL [reference-when] SKILL.md names delegation-contract.md without saying when to read it
+  FAIL [reference-depth] hosts/claude-code.md points to another reference, hosts/claude-md-snippet.md
+  FAIL [reference-when] SKILL.md names hosts/claude-md-snippet.md without saying when to read it
+  FAIL [reference-toc] local-learning.md is 151 lines with no table of contents at the top
+  FAIL [reference-when] SKILL.md names pack-format.md without saying when to read it
+  FAIL [reference-when] SKILL.md names research.md without saying when to read it
+  FAIL [reference-when] SKILL.md names swarm-policy.md without saying when to read it
+  FAIL [reference-when] SKILL.md names task-classes.md without saying when to read it
+  FAIL [reference-when] SKILL.md names verification-policy.md without saying when to read it
+  FAIL [reference-depth] verification-policy.md points to another reference, local-learning.md
+FAIL  design-director
+  WARN [description-voice] description opens imperative ('Direct'), not third person
+  FAIL [reference-depth] references/practices.md points to another reference, references/principles.md
+  FAIL [reference-toc] references/principles.md is 183 lines with no table of contents at the top
+PASS  focus
+  WARN [description-voice] description opens imperative ('Keep'), not third person
+PASS  refresh-models
+  WARN [description-voice] description opens imperative ('Maintain'), not third person
+PASS  ship
+  WARN [description-voice] description opens imperative ('Release'), not third person
+
+9 skills, 4 failing, 20 failures, 9 warnings

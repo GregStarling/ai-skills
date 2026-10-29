@@ -1,11 +1,12 @@
 ---
 name: focus
 description: >-
-  Keep execution within the user's requested scope and stop when the result is
-  complete. Use for $focus, /focus, stay on task, don't expand scope, or execution
-  work involving code, documents, edits, and tasks. Honor plan-only requests;
-  preserve depth, relevant alternatives, and thoughtful pushback for analysis
-  and recommendations.
+  Keeps execution inside the user's requested scope and stops when the
+  deliverable and its necessary checks are done, noting adjacent findings
+  instead of acting on them. Honors plan-only requests and keeps depth and
+  pushback in analysis. Use when the user asks for it, e.g. "/focus", "$focus",
+  "stay on task", "don't expand scope", "just do what I asked". Do not use as a
+  reason to skip required checks or to shorten analysis and recommendations.
 ---
 
 # Focus

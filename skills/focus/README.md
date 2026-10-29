@@ -29,6 +29,14 @@ and needs no build or runtime helper.
 - Plan only: “Use Focus to plan the migration. Do not start implementing it.”
 - Natural language: “Stay on task. Complete this edit and stop.”
 
+Focus loads when you ask for it. To apply it to every execution task, add this
+line to your global `CLAUDE.md` or `AGENTS.md`, since a skill description
+cannot make a skill load on every request:
+
+```text
+For execution work (code, documents, edits, tasks), follow the Focus skill: keep to the requested scope, note adjacent findings instead of acting on them, and stop when the deliverable and its necessary checks are done.
+```
+
 ## Composition
 
 Focus bounds the work while other skills provide their relevant procedures.

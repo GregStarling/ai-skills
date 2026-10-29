@@ -4,6 +4,7 @@ import {resolve,join,dirname,relative,isAbsolute} from 'node:path';
 import {tmpdir} from 'node:os';
 import {parse} from 'yaml';
 import {folderDigest} from '../../skills/delegate/scripts/local-learning.mjs';
+import {lintSkills} from '../lint-skills.mjs';
 const root=resolve(process.env.SKILLS_ROOT||resolve(import.meta.dirname,'../..'));
 const skillNames=readdirSync(resolve(root,'skills'),{withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=>entry.name).sort();
 assert.ok(skillNames.length,'No skills found');
@@ -61,4 +62,7 @@ try{
  for(const [what,value] of [['pack content_digest',pack.content_digest],['consumer folder digest',shipped]])assert.ok(status.includes(value),`docs/validation-status.md must cite the current ${what} ${value}`);
 }finally{rmSync(temporary,{recursive:true,force:true});}
 }
+// Structural lint (size, reference hygiene, name and description rules) runs after the closure checks so their errors surface first; warnings do not fail.
+const lintFailures=lintSkills(resolve(root,'skills')).flatMap(({skill,findings})=>findings.filter(f=>f.level==='FAIL').map(f=>`${skill}: [${f.rule}] ${f.message}`));
+assert.equal(lintFailures.length,0,`Skill lint failed:\n${lintFailures.join('\n')}`);
 console.log(JSON.stringify({schema_version:'portable_skills_check.v1',status:'passed',skills:skillNames,inert:true,copied_consumer_files:packages,scope:'source_structure_and_reference_closure_only',behavioral_validation_required:true}));
