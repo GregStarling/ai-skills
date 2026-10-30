@@ -1,15 +1,46 @@
 #!/usr/bin/env node
 // Structural lint for skill folders: size, reference hygiene, name and description rules.
-// Usage: node scripts/lint-skills.mjs [skills-dir]   (default: ./skills). Exit 1 when any FAIL is found.
+// Usage: node lint-skills.mjs [path ...]   Each path is a skill folder or a folder of skills (searched three levels
+// deep, default ./skills). Exit 1 when any FAIL is found. Dependency-free so it runs from an installed copy.
 import {readFileSync,readdirSync,existsSync,statSync} from 'node:fs';
 import {resolve,join,relative,basename} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {parse} from 'yaml';
 
 // Files that are human overviews or bundled assets, not guidance Claude loads on demand.
 const notReference=new Set(['SKILL.md','README.md','LICENSE.md','CHANGELOG.md']);
 const whenCue=/\b(when|whenever|before|after|if|during|once|while|unless|for)\b/i;
 const vagueCue=/\bwhen relevant\b|\bas needed\b|\bif needed\b|\bfurther reading\b/i;
+
+// Top-level scalar keys of the frontmatter block: plain, quoted, folded (>) and literal (|) values.
+// Nested maps and lists are skipped; skill rules only read name and description.
+export function frontmatter(source){
+ const match=/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(source);
+ if(!match)return null;
+ const meta={},lines=match[1].split(/\r?\n/);
+ for(let i=0;i<lines.length;i++){
+  const key=/^([A-Za-z0-9_-]+):\s*(.*)$/.exec(lines[i]);if(!key)continue;
+  let value=key[2].trim();const block=/^([>|])[-+]?$/.exec(value),continued=[];
+  while(i+1<lines.length&&(/^\s+\S/.test(lines[i+1])||(!lines[i+1].trim()&&block)))continued.push(lines[++i].trim());
+  if(block)value=block[1]==='|'?continued.join('\n'):continued.join(' ').replace(/ {2,}/g,'\n');
+  // An empty value followed by "key:" or "- " lines is a nested map or list; other indented lines are its scalar.
+  else if(continued.length&&!value&&continued.some(line=>/^(- |[A-Za-z0-9_-]+:(\s|$))/.test(line)))continue;
+  else if(continued.length)value=[value,...continued].filter(Boolean).join(' ');
+  const quoted=/^(["'])([\s\S]*)\1$/.exec(value);
+  meta[key[1]]=quoted?(quoted[1]==='"'?quoted[2].replace(/\\"/g,'"'):quoted[2].replace(/''/g,"'")):block?value:value.replace(/\s+#.*$/,'');
+ }
+ return {meta,body:source.slice(match[0].length)};
+}
+
+// Skill folders under `path`: the path itself when it holds SKILL.md, else descendants up to `depth` levels down.
+// Hidden folders are skipped except .claude and .agents, where hosts keep project skills.
+export function findSkills(path,depth=3){
+ if(existsSync(join(path,'SKILL.md')))return [path];
+ if(depth===0||!existsSync(path))return [];
+ return readdirSync(path).filter(name=>(!name.startsWith('.')||name==='.claude'||name==='.agents')&&name!=='node_modules').sort().flatMap(name=>{
+  const child=join(path,name);
+  try{return statSync(child).isDirectory()?findSkills(child,depth-1):[];}catch{return [];}
+ });
+}
 
 function markdownFiles(directory){
  const out=[];
@@ -50,9 +81,9 @@ export function lintSkill(folder){
  const findings=[],add=(level,rule,message)=>findings.push({level,rule,message});
  const skillPath=join(folder,'SKILL.md');
  if(!existsSync(skillPath)){add('FAIL','missing-skill-md','No SKILL.md');return findings;}
- const source=readFileSync(skillPath,'utf8'),match=/^---\n([\s\S]+?)\n---\n?/.exec(source);
- if(!match){add('FAIL','frontmatter','SKILL.md has no YAML frontmatter');return findings;}
- const meta=parse(match[1])??{},body=source.slice(match[0].length);
+ const parsed=frontmatter(readFileSync(skillPath,'utf8'));
+ if(!parsed){add('FAIL','frontmatter','SKILL.md has no YAML frontmatter');return findings;}
+ const {meta,body}=parsed;
  const bodyLines=body.replace(/\n$/,'').split('\n').length;
  if(bodyLines>500)add('FAIL','body-length',`SKILL.md body is ${bodyLines} lines (limit 500)`);
 
@@ -65,16 +96,19 @@ export function lintSkill(folder){
  const description=String(meta.description??'').replace(/\s+/g,' ').trim();
  if(!description)add('FAIL','description','description is missing');
  if(description.length>1024)add('FAIL','description',`description is ${description.length} characters (limit 1024)`);
+ if(/<\/?[A-Za-z][\w-]*[^>]*>/.test(description))add('FAIL','description','description contains an XML tag');
  // Quoted trigger phrases ("catch me up") are the user's words, not the description's voice.
- const person=description.replace(/"[^"]*"|“[^”]*”|`[^`]*`/g,'').match(/\b(I|I'm|I'll|me|my|we|our|you|your|you're)\b/);
+ const person=description.replace(/"[^"]*"|“[^”]*”|`[^`]*`/g,'').match(/\b(I|I'm|I'll|me|my|we|our|you|your|you're)\b/i);
  if(person)add('FAIL','description-person',`description uses first or second person ('${person[0]}')`);
  const sentences=description.split(/(?<=[.!?])\s+/);
- const when=/\b(use (it |this )?(when|whenever|for|to|automatically|before|after)|trigger(s|ed)? (on|when)|when the user)\b/i.test(description);
+ const when=/\b(use (it |this |(this|the) skill )?(only )?(when|whenever|for|to|automatically|before|after)|trigger(s|ed)? (on|when)|when the user)\b/i.test(description);
  const what=sentences.some(s=>!/^(use|do not|don't|trigger|activate)\b/i.test(s)&&s.split(' ').length>=4);
  if(!when)add('FAIL','description-when','description does not say when to use the skill');
  if(!what)add('FAIL','description-what','description does not say what the skill does');
  // Guidance asks for third person ("Reviews code..."). Imperative openers ("Review code...") still trigger, so this only warns.
  if(description&&/^[A-Z][a-z]+\b/.test(description)&&!/^[A-Z][a-z]+s\b/.test(description))add('WARN','description-voice',`description opens imperative ('${description.split(' ')[0]}'), not third person`);
+ // Without a boundary, a broad description competes with neighbouring skills; whether one is needed is a judgment call.
+ if(description&&!/\b(do not|don't|never|not for|not when)\b/i.test(description))add('WARN','description-exclusions','description names no exclusions ("Do not use for ...")');
 
  const references=markdownFiles(folder).filter(path=>!notReference.has(basename(path))||relative(folder,path).includes('/'));
  const refRels=references.map(path=>relative(folder,path));
@@ -89,13 +123,18 @@ export function lintSkill(folder){
  return findings;
 }
 
+// Each skill is labelled by its path relative to the root, so nested copies with the same name stay distinct.
 export function lintSkills(root){
- return readdirSync(root).filter(name=>{const path=join(root,name);return statSync(path).isDirectory()&&existsSync(join(path,'SKILL.md'));}).sort()
-  .map(name=>({skill:name,findings:lintSkill(join(root,name))}));
+ return findSkills(root).map(folder=>({skill:relative(root,folder)||basename(folder),findings:lintSkill(folder)}));
 }
 
-if(import.meta.url===pathToFileURL(process.argv[1]).href){
- const root=resolve(process.argv[2]??'skills'),results=lintSkills(root);
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
+ const roots=process.argv.slice(2).length?process.argv.slice(2):['skills'];
+ const results=roots.flatMap(root=>{
+  const path=resolve(root);
+  if(!existsSync(path)){console.log(`MISSING  ${root}`);return [];}
+  return roots.length>1?lintSkills(path).map(r=>({...r,skill:join(root,r.skill)})):lintSkills(path);
+ });
  let fails=0,warns=0;
  for(const {skill,findings} of results){
   const f=findings.filter(x=>x.level==='FAIL').length;fails+=f;warns+=findings.length-f;

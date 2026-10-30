@@ -4,13 +4,13 @@ import {resolve,join,dirname,relative,isAbsolute} from 'node:path';
 import {tmpdir} from 'node:os';
 import {parse} from 'yaml';
 import {folderDigest} from '../../skills/delegate/scripts/local-learning.mjs';
-import {lintSkills} from '../lint-skills.mjs';
+import {lintSkills} from '../../skills/skill-audit/scripts/lint-skills.mjs';
 const root=resolve(process.env.SKILLS_ROOT||resolve(import.meta.dirname,'../..'));
 const skillNames=readdirSync(resolve(root,'skills'),{withFileTypes:true}).filter(entry=>entry.isDirectory()).map(entry=>entry.name).sort();
 assert.ok(skillNames.length,'No skills found');
 for(const name of skillNames){
  const source=readFileSync(resolve(root,'skills',name,'SKILL.md'),'utf8'),match=/^---\n([\s\S]+?)\n---\n/.exec(source);assert.ok(match);
- const metadata=parse(match[1]);assert.deepEqual(Object.keys(metadata).sort(),['description','name']);assert.equal(metadata.name,name);assert.ok(metadata.description.length>30);assert.ok(!/\[INSERT|\[TODO/.test(source));
+ const metadata=parse(match[1]);assert.deepEqual(Object.keys(metadata).filter(key=>key!=='disable-model-invocation').sort(),['description','name']);assert.equal(metadata.name,name);assert.ok(metadata.description.length>30);assert.ok(!/\[INSERT|\[TODO/.test(source));
 }
 for(const path of ['.claude/skills','.codex/skills','.agents/skills'])assert.equal(existsSync(resolve(root,path)),false,'Library source must stay inert in this checkout.');
 // Copy only the consumer directory, so a link cannot accidentally depend on the maintainer checkout.

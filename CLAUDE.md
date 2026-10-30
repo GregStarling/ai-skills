@@ -1,5 +1,16 @@
 # AI Skills
 
+## Skill Audit skill — 2026-10-29
+
+Add a portable, manually invoked Skill Audit skill that audits a whole skill
+collection and checks skill-creator output in one pass: lint, inventory with
+report-only detection, collision mapping, mechanical fixes, an approval stop,
+then approved changes with isolated before/after trigger tests. The repository
+lint now lives in skills/skill-audit/scripts and still gates
+scripts/verify/skills.mjs. Update the catalog and install guide to nine skills.
+This request authorizes a branch and pull request; personal installations and
+saved settings stay unchanged. See docs/skill-audit-skill.md.
+
 ## Primary frontier policy — 2026-10-15
 
 The current Delegate update uses `gpt-6.1-sol` at high reasoning as the primary Codex frontier
