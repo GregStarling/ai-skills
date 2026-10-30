@@ -8,9 +8,11 @@ skill-creator arrives with a "pushy" description, no exclusions and long
 reference files without a contents list. Each skill can look fine on its own
 while the collection misfires.
 
-Skill Audit checks the whole collection and every skill in it in one pass. It
-lints each skill against Anthropic's authoring guidance, maps descriptions that
-compete for the same request, and fixes reference hygiene on the spot. Then it
+Point Skill Audit at one skill, typically the one skill-creator just made, or
+let it check everything you have installed. Either way it checks the scope
+against every installed skill. It lints against Anthropic's authoring
+guidance, finds descriptions that compete for the same request and names that
+would shadow each other, and fixes reference hygiene on the spot. Then it
 writes AUDIT.md with numbered proposals for everything that changes how a skill
 triggers or what it says, and stops for your approval.
 
@@ -32,7 +34,10 @@ lint, inventory and trigger-test scripts; they have no dependencies.
 ## Use
 
 - Codex: `$skill-audit`
-- Claude Code: `/skill-audit`, optionally followed by the folders to audit
+- Claude Code: `/skill-audit`
+- One skill: `/skill-audit .claude/skills/my-new-skill`, checked against
+  everything installed
+- Everything installed: `/skill-audit` with no folder
 
 Skill Audit runs only through those commands. Asking in plain words does not
 load it, by design. It does not create new skills; use skill-creator for that,
@@ -49,6 +54,9 @@ tests are reported as not run.
 - Names, description length and voice, what-and-when, exclusions.
 - SKILL.md under 500 lines; references one level deep, named with a reason to
   read them, and with a contents list past 100 lines.
-- Collisions between descriptions across every installed skill.
+- Collisions between the audited skills and every installed skill, and
+  same-named skills where only one would load.
+- For a skill you name, whether adding it takes requests away from the skills you
+  already have (trigger tests with and without it).
 - Procedures that should be scripts and outputs that should be templates.
 - The places where skill-creator's advice differs from the guidance.

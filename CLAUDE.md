@@ -10,6 +10,9 @@ lint now lives in skills/skill-audit/scripts and still gates
 scripts/verify/skills.mjs. Update the catalog and install guide to nine skills.
 This request authorizes a branch and pull request; personal installations and
 saved settings stay unchanged. See docs/skill-audit-skill.md.
+2026-10-30: auditing one named skill (the common case) still checks it against
+every installed skill for collisions, same-name clashes and trigger theft; this
+request authorizes /ship and reinstalling skill-audit in Claude Code and Codex.
 
 ## Primary frontier policy — 2026-10-15
 

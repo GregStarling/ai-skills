@@ -23,7 +23,7 @@ or combine them across a project.
 | [**Debug**](skills/debug/) | “Find the cause and prove the fix.” | A faithful reproduction, a scoped correction, and regression evidence. |
 | [**Focus**](skills/focus/) | “Complete this request and stop.” | Scoped execution, proportionate verification, and brief notes about material adjacent findings. |
 | [**Ship**](skills/ship/) | “Get these changes released.” | A verified release, with the revision, check results, and published-result evidence. |
-| [**Skill Audit**](skills/skill-audit/) | “Check my skills, including the new ones.” | A linted, collision-mapped collection, approved fixes, and before/after trigger results. |
+| [**Skill Audit**](skills/skill-audit/) | “Check this new skill, or all of them.” | Lint and approved fixes, collisions and name clashes against every installed skill, and before/after trigger results. |
 
 Install the full collection from the project where you use your agent:
 
@@ -235,10 +235,12 @@ descriptions claim the same request, a reference grows past the point anyone
 reads it, or a skill fresh from skill-creator arrives with a "pushy"
 description and no exclusions.
 
-Skill Audit checks the collection and every skill in it in one pass. It lints
-each skill against Anthropic's authoring guidance, maps competing descriptions,
-fixes reference hygiene on the spot, and writes numbered proposals for
-everything else. Generated, synced and installed copies are reported to their
+Point Skill Audit at the skill you just made, or at everything you have
+installed. Either way it checks against every installed skill, so a new skill
+cannot quietly take another skill's requests or shadow its name. It lints
+against Anthropic's authoring guidance, maps competing descriptions, fixes
+reference hygiene on the spot, and writes numbered proposals for everything
+else. Generated, synced and installed copies are reported to their
 owners, never edited.
 
 **A description change has to prove it helped.** After you approve the
@@ -247,8 +249,13 @@ prompts before and after, in isolated Claude Code sessions. It runs only when
 you invoke it.
 
 ```text
-/skill-audit my installed skills. Fix what is mechanical, propose the rest, and
-test triggering before and after.
+/skill-audit .claude/skills/release-notes
+```
+
+Or audit everything installed:
+
+```text
+/skill-audit
 ```
 
 [Explore Skill Audit →](skills/skill-audit/)
