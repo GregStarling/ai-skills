@@ -1,0 +1,6 @@
+interface:
+  display_name: "Skill Audit"
+  short_description: "Audit and fix a skill collection against authoring best practices"
+  default_prompt: "Use $skill-audit to audit my installed skills, fix what is mechanical, and propose the rest for approval."
+policy:
+  allow_implicit_invocation: false
