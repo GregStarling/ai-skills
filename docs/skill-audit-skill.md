@@ -104,6 +104,63 @@ A second pass found four more problems, all fixed:
 - The template's example plan pointed `before` at the snapshot; it now points
   at an assembled flat folder.
 
+## One skill, checked against everything — 2026-10-30
+
+The most common run is a single new skill, usually fresh from skill-creator.
+Its scope used to be only the named folder, so collisions with installed skills
+went unchecked. Now a named scope still reads every installed skill as a
+read-only neighbour:
+
+- **Collisions:** the inventory reports collision pairs involving the scoped
+  skills. Matching adds a coverage measure (shared words over the shorter
+  description), so a short new description is caught inside a long existing
+  one. Example: a skill-creator-style `release-it` ("ship it", deploy, push,
+  publish) against the installed `ship`, which word-overlap alone scored 0.09
+  and missed.
+- **Same-name clashes:** the inventory reports another skill that shares a
+  name with a scoped skill but differs from it. Two skills count as copies of
+  one skill only on evidence: identical content, or a description or SKILL.md
+  body that mostly matches (word Jaccard ≥ 0.5). The body check matters
+  because an audit's usual change is a description rewrite, after which the
+  stale install keeps the same body. The line names the effect:
+  - a stale installed copy (reinstall);
+  - a named copy of a repository skill (report-only, fix the source);
+  - drifted copies (ask which is the source);
+  - only the name shared with a repository skill (ask: stale copy or different
+    skill);
+  - a different skill with the same name (propose a rename, never reinstall
+    over it);
+  - namespaced plugin or synced skills (both load).
+  
+  The status lines use the same rule in both modes, so they and the same-name
+  lines agree.
+  
+  An unrelated neighbour never makes the scoped skill report-only. Identical
+  installed copies are listed as `copies`, to reinstall after edits.
+- **Trigger tests:** a named scope always adds a `without` set (neighbours
+  alone), which shows whether the scoped skill takes requests from existing
+  skills.
+
+Live check (one headless Opus session, isolated environment): `/skill-audit
+.claude/skills/release-it` on a skill-creator-style release skill.
+- The inventory read 72 installed skills as neighbours and flagged
+  `release-it <> ship` (cover 0.38).
+- Reading descriptions, the agent also found that "publish" would compete with
+  the installed LinkedIn and voice skills.
+- It reported no same-name clash, made a per-root snapshot and a branch, edited
+  nothing, proposed retiring the skill in favour of `ship` (or three fixes if
+  kept), and stopped for approval.
+- Its trigger plan had only before and after sets, because it did not treat a
+  skill already in `.claude/skills` as "new". SKILL.md now requires the
+  `without` set for every named scope.
+
+An earlier attempt was run with a Bash allowlist that rejected the agent's first
+compound command. The agent then had no Bash, checked the lint rules by
+reading, marked the script results NOT RUN, and still found the collision.
+
+With no folder named, the audit still covers everything installed. Editing
+remains limited to the scope.
+
 ## Limits
 
 Collision candidates come from shared words and quoted triggers; the agent

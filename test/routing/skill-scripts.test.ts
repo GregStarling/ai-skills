@@ -122,12 +122,13 @@ describe('skill-audit inventory and trigger tests', () => {
   execFileSync('git', ['init', '-q'], {cwd: join(root, 'repo')});
   return root;
  }
- const inventory = (cwd: string, ...roots: string[]) => node(script('skill-audit', 'inventory.mjs'), roots.map((r) => join(cwd, r)), cwd);
+ // HOME points inside the fixture, so the real installed skills never become neighbours.
+ const inventory = (cwd: string, ...roots: string[]) => spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs'), ...roots.map((r) => join(cwd, r))], {cwd, encoding: 'utf8', env: {...process.env, HOME: join(cwd, 'home')}});
  it('marks generated, synced and installed copies report-only and finds shared triggers', () => {
   const root = collection();
   const result = inventory(root, 'installed', 'repo/skills', 'home/.claude/skills');
   expect(result.status, result.stderr).toBe(0);
-  expect(result.stdout).toContain('INVENTORY | roots=3/3 | skills=6 | names=5 | editable=3 | report-only=3');
+  expect(result.stdout).toContain('INVENTORY | scope=named | roots=3/3 | skills=6 | editable=3 | report-only=3 | neighbours=0 | names=5');
   expect(result.stdout).toMatch(/skill notes \| report-only: installed copy of .*repo\/skills\/notes \(identical\)/);
   expect(result.stdout).toContain('skill voice | report-only: generated');
   expect(result.stdout).toContain('skill shared | report-only: synced or plugin-managed');
@@ -156,6 +157,54 @@ describe('skill-audit inventory and trigger tests', () => {
   const result = inventory(root, 'installed', 'home');
   expect(result.stdout).toMatch(/skill changelog \| report-only: also installed at .*home\/changelog/);
   expect(result.stdout).toContain('skill proto | editable');
+ });
+ it('checks one named skill against every installed skill without editing or pairing the neighbours', () => {
+  const root = collection();
+  const write = (path: string, text: string) => { mkdirSync(join(root, path, '..'), {recursive: true}); writeFileSync(join(root, path), text); };
+  write('home/.claude/skills/ship/SKILL.md', skillFile('ship', 'Releases completed repository work: reviews the scoped diff, commits and integrates, pushes through the required release process, chases CI and publication failures, and verifies the published result. Use when the user intends publication, e.g. "/ship".'));
+  write('home/.agents/skills/notes/SKILL.md', skillFile('notes', 'Older notes helper. Use when asked for notes.', 'Summarises meeting transcripts into owners and action items.\n'));
+  write('home/.claude/skills/deployer/SKILL.md', skillFile('deployer', 'Releases repository work through the required release process and verifies the published result. Use when the user intends publication.'));
+  write('new/release-it/SKILL.md', skillFile('release-it', 'Releases finished work. Make sure to use this skill whenever the user says "ship it", deploy, push, publish or release.'));
+  write('new/notes/SKILL.md', skillFile('notes', 'Writes release notes from merged pull requests. Use when the user asks for "release notes".', 'Group merged pull requests by label and write one line each.\n'));
+  const result = inventory(root, 'new/release-it', 'new/notes');
+  expect(result.status, result.stderr).toBe(0);
+  // The unrelated installed "notes" does not make the new one report-only; the same-name line carries the clash.
+  expect(result.stdout).toMatch(/^INVENTORY \| scope=named \| roots=2\/2 \| skills=2 \| editable=2 \| report-only=0 \| neighbours=[1-9]/m);
+  expect(result.stdout).toContain('neighbours (read-only): ');
+  expect(result.stdout).not.toMatch(/^skill (ship|changelog) /m);
+  // A short description inside a long one is caught by coverage of the shorter description.
+  expect(result.stdout).toMatch(/collision (release-it <> ship|ship <> release-it) \| overlap=[\d.]+ \| cover=0\.[5-9]/);
+  expect(result.stdout).toMatch(/same-name notes \| .*new\/notes \| differs from .*home\/\.agents\/skills\/notes \| different skill with the same name; only one loads per host; propose a rename/);
+  // A repository skill with an identical install and an older, drifted install of itself.
+  const toolDescription = 'Formats SQL queries in the project style. Use when the user asks to "format this SQL".';
+  write('repo/skills/tool/SKILL.md', skillFile('tool', toolDescription, 'Current steps.\n'));
+  cpSync(join(root, 'repo/skills/tool'), join(root, 'home/.claude/skills/tool'), {recursive: true});
+  write('home/.agents/skills/tool/SKILL.md', skillFile('tool', toolDescription, 'Old steps.\n'));
+  const repoRun = inventory(root, 'repo/skills/tool');
+  expect(repoRun.stdout).toContain('skill tool | editable');
+  expect(repoRun.stdout).toMatch(/copies tool \| .*repo\/skills\/tool \| identical at .*home\/\.claude\/skills\/tool \| reinstall after edits/);
+  expect(repoRun.stdout).toMatch(/same-name tool \| .*repo\/skills\/tool \| differs from .*home\/\.agents\/skills\/tool \| stale installed copy of this repository skill/);
+  // Naming the drifted install itself, with the repository in view, keeps it report-only: edits belong in the source.
+  const named = spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs'), join(root, 'home/.agents/skills/tool')], {cwd: join(root, 'repo'), encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}});
+  expect(named.stdout).toMatch(/skill tool \| report-only: installed copy of .*repo\/skills\/tool \(diverged\)/);
+  expect(named.stdout).toMatch(/same-name tool \| .*\.agents\/skills\/tool \| differs from .*repo\/skills\/tool \| installed copy of a repository skill; fix it there and reinstall/);
+  // After an audit rewrites the source description, the install keeps the old one but the same body: still a copy.
+  const steps = '1. Parse the query.\n2. Apply the project keyword casing and indentation.\n3. Print the formatted query.\n';
+  write('repo/skills/fmt/SKILL.md', skillFile('fmt', 'Cuts formatted SQL for review. Use when the user asks to "tidy this query". Do not use for schema changes.', steps));
+  write('home/.claude/skills/fmt/SKILL.md', skillFile('fmt', 'Make sure to use this skill whenever SQL appears anywhere, even if not asked.', steps));
+  const rewritten = spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs'), join(root, 'repo/skills/fmt')], {cwd: join(root, 'repo'), encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}});
+  expect(rewritten.stdout).toMatch(/same-name fmt \| .*repo\/skills\/fmt \| differs from .*\.claude\/skills\/fmt \| stale installed copy of this repository skill/);
+  const full = spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs')], {cwd: join(root, 'repo'), encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}});
+  expect(full.stdout).toMatch(/skill fmt \| report-only: installed copy of .*repo\/skills\/fmt \(diverged\)/);
+  // Nothing in common but the name, against a repository skill: the user decides.
+  write('home/.agents/skills/fmt/SKILL.md', skillFile('fmt', 'Formats Markdown tables. Use when asked to align a table.', 'Align pipes and pad cells.\n'));
+  expect(spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs'), join(root, 'repo/skills/fmt')], {cwd: join(root, 'repo'), encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}}).stdout)
+   .toMatch(/same-name fmt \| .*repo\/skills\/fmt \| differs from .*\.agents\/skills\/fmt \| shares only the name with the repository skill; ask the user/);
+  // deployer and ship compete with each other, but neither is in scope.
+  expect(result.stdout).not.toMatch(/collision (deployer <> ship|ship <> deployer)/);
+  expect(spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs'), join(root, 'home/.claude/skills/deployer')], {cwd: root, encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}}).stdout).toMatch(/collision (deployer <> ship|ship <> deployer)/);
+  const all = spawnSync(process.execPath, [script('skill-audit', 'inventory.mjs')], {cwd: join(root, 'repo'), encoding: 'utf8', env: {...process.env, HOME: join(root, 'home')}});
+  expect(all.stdout).toMatch(/^INVENTORY \| scope=all installed \| .*\| neighbours=0 \|/m);
  });
  it('plans sessions, stops at the first Skill call and scores hits with a stripped environment', () => {
   const root = collection(), bin = join(root, 'bin'); mkdirSync(bin);
