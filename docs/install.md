@@ -1,11 +1,11 @@
 # Install skills
 
-Catchup, Checklist, CTO, Delegate, Design Director, Debug, Focus, Ship, and Skill Audit are
-independent skills. Install any combination. Copy the complete folder, including references,
-metadata and any scripts. None needs the repository's build or Model Governor engine.
+Catchup, Checklist, CTO, Delegate, Design Director, Debug, Focus, Prompt Improve,
+Ship, and Skill Audit are independent skills. Install any combination. Copy the complete
+folder, including references, metadata and any scripts. None needs the repository's build or Model Governor engine.
 Node.js runs the bundled scripts of Catchup, Checklist, CTO, Delegate, Design Director, Ship
-and Skill Audit; Debug and Focus are instructions only. Ship uses the project's existing
-release tools. Skill Audit's trigger tests need the `claude` CLI. refresh-models is a
+and Skill Audit. Debug, Focus, and Prompt Improve are instructions only. Ship uses
+the project's existing release tools. Skill Audit's trigger tests need the `claude` CLI. refresh-models is a
 repository maintenance workflow, not a standalone consumer skill.
 
 ## Skills CLI
@@ -13,7 +13,7 @@ repository maintenance workflow, not a standalone consumer skill.
 From the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus ship skill-audit --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus prompt-improve ship skill-audit --agent codex claude-code --copy
 ```
 
 Choose skills and agents by omitting the names you do not need. Add `--global` for a
@@ -44,8 +44,9 @@ mkdir -p ~/.claude/skills
 test ! -e ~/.claude/skills/cto && test ! -L ~/.claude/skills/cto && cp -R skills/cto ~/.claude/skills/cto
 ```
 
-Replace each `cto` with `catchup`, `checklist`, `delegate`, `design-director`, `debug`, `focus`, `ship`, or `skill-audit`
-to install that skill. The guards refuse an existing file, folder or symlink; use the update
+Replace each `cto` with `catchup`, `checklist`, `delegate`, `design-director`, `debug`,
+`focus`, `prompt-improve`, `ship`, or `skill-audit` to install that skill.
+The guards refuse an existing file, folder or symlink; use the update
 procedure below instead of nesting a new copy inside an old installation.
 
 For project scope, use `<your-project>/.agents/skills/<name>` for Codex or
@@ -55,7 +56,9 @@ library checkout: its `skills/` source stays inert.
 ## Invoke and check discovery
 
 Start a fresh session. Use `$catchup`, `$checklist`, `$cto`, `$delegate`, `$design-director`,
-`$debug`, `$focus`, `$ship`, or `$skill-audit` in Codex; use the corresponding `/name` invocation in Claude Code.
+`$debug`, `$focus`, `$prompt-improve`, `$ship`, or `$skill-audit` in Codex.
+Use the corresponding `/name` invocation in Claude Code.
+For Prompt Improve, follow the name with your draft or explicitly ask to improve it.
 Skill Audit runs only when invoked by name.
 Codex also exposes skills through its skill selector. Keep Claude
 project settings enabled for project-scope discovery. A personal Claude skill
@@ -63,8 +66,8 @@ with the same name takes precedence over a project copy; update or remove the
 personal copy when switching versions ([host precedence rules](https://code.claude.com/docs/en/skills#resolve-skills-that-share-a-name)).
 
 The shared SKILL.md is authoritative for either host; optional metadata does not
-create a separate behavioral implementation. Each skill's own README explains
-its triggers and composition with other skills.
+create a separate behavioral implementation. See the [skill catalog](../README.md)
+for each skill's triggers and how the skills work together.
 
 ## Migrating from claude-commands
 
