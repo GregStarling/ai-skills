@@ -1,25 +1,25 @@
 {
   "schema_version": "medium_smoke_audit.v1",
-  "source_digest": "sha256:e7a0a4e4ea496f4e9796836c638af363a3237086acf126317e98ae97f4e5ab02",
+  "source_digest": "sha256:33a96f499cd0916e348c0cce8a83e327d92f0cf22349717e5cc531989b09bbf9",
   "scope": "Zero/nullish quantity-default fixes in local plain JavaScript only.",
   "reviews": [
     {
-      "run_id": "renewal-smoke-claude-haiku-1791755522027",
-      "run_digest": "sha256:b3ea97f0274845a6db71aa059a7014e4b82023504900f5c12df8495417e25fb4",
-      "worker_identity": "sha256:cbac4789c15bf259ba11c8dd5db1bc0586e260c2ef798cae385f8fcc78e22f8d",
+      "run_id": "renewal-smoke-claude-1795409903282",
+      "run_digest": "sha256:3f222f3f5373975dc469d2f9b7076e0b3bccf76778d316a722411934b43cf3ac",
+      "worker_identity": "sha256:e80f666dbe96e57b528ca26549d93d929669bd91b0b172249668d7d34cb8579b",
       "reviewer_identity": "sha256:2e5d2d9be307179f9f625d613072026aaae35fbad87de2801b07704fbc30f653",
-      "reviewer_request_digest": "sha256:dc24b4bb5a1ae7ed3d02bc35692626050708664059a824e417cfb432b8010cf1",
-      "reviewer_execution_digest": "sha256:ec1a82eff23fab939dc1c1dec2c80bb553feaac54d3236edbfde94793bce9601",
+      "reviewer_request_digest": "sha256:a8b9c386085f72bbd33eab3b2663c5918b172affa04040131ca62603b18c1d56",
+      "reviewer_execution_digest": "sha256:5fbd17fa1cb57ba27bfa26496eca8e39fd33c225e559d5d2e7bdf5d35c4ef2ac",
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
       "fresh_artifact_only_context": true
     },
     {
-      "run_id": "renewal-smoke-claude-1791755541700",
-      "run_digest": "sha256:d74b863b637fc2f47de91d3f6495769f7de12e302545157270ac68d1cac6b1d2",
-      "worker_identity": "sha256:e80f666dbe96e57b528ca26549d93d929669bd91b0b172249668d7d34cb8579b",
+      "run_id": "renewal-smoke-claude-haiku-1795410028099",
+      "run_digest": "sha256:501a634a5b667c3a5850b794c4d4eb874e9dff3a03eafb43484f0c3be3137d69",
+      "worker_identity": "sha256:cbac4789c15bf259ba11c8dd5db1bc0586e260c2ef798cae385f8fcc78e22f8d",
       "reviewer_identity": "sha256:2e5d2d9be307179f9f625d613072026aaae35fbad87de2801b07704fbc30f653",
-      "reviewer_request_digest": "sha256:da26ab20f67b3c1bbfc045d3f9a3b62701c112df1c0226020bb44b8c9c747376",
-      "reviewer_execution_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+      "reviewer_request_digest": "sha256:107d405783241862047006777d698e090e981f9b97025307022160406edca828",
+      "reviewer_execution_digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7",
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
       "fresh_artifact_only_context": true
     }

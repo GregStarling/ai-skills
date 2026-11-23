@@ -6,10 +6,11 @@ import {requireFrontierRefresh} from '../../src/routing/frontier-refresh.js';
 import {reviewerCalibrationGate} from '../../src/routing/reviewer-calibration.js';
 
 const read=(path:string)=>JSON.parse(readFileSync(path,'utf8'));
+const readOctoberPublication=(file:string)=>read(`data/routing/archive/2026-10-11/${file}`);
 const renewedAfter=Date.parse('2026-10-11T00:00:00Z');
 const index=read('docs/evidence/delegate-renewal-2026-10-11/evidence.json');
-const pack=parseRoutingPack(read('skills/delegate/routing-pack.json'));
-const observations=read('data/routing/host-observations.json');
+const pack=parseRoutingPack(readOctoberPublication('routing-pack.json'));
+const observations=readOctoberPublication('host-observations.json');
 const legacy=/claude-opus-5"|claude-sonnet-5"|claude-haiku-4-5|gpt-5\.5|"gpt-6-sol"/;
 
 describe('2026-10-11 model-currency renewal publication',()=>{
@@ -34,16 +35,16 @@ describe('2026-10-11 model-currency renewal publication',()=>{
   const haiku=observations.treatments.find((t:any)=>t.model_id==='claude-haiku-5-5');
   expect(haiku.evidence.control_limitations.some((s:string)=>s.startsWith('Haiku 5.5 supports adaptive-thinking effort'))).toBe(true);
   expect(observations.treatments.filter((t:any)=>t.frontier).map((t:any)=>t.candidate_id).sort()).toEqual(['claude-claude-opus-5-5-high','codex-gpt-6-astra-high']);
-  const audit=read('data/routing/medium-smoke-audit.json');
+  const audit=readOctoberPublication('medium-smoke-audit.json');
   expect(audit).toMatchObject({schema_version:'medium_smoke_audit.v1',source_digest:digest(observations),scope:'Zero/nullish quantity-default fixes in local plain JavaScript only.'});
   expect(new Set(audit.reviews.map((r:any)=>r.reviewer_execution_digest)).size).toBe(2);
  });
 
  it('binds a fresh reviewed probe of each current frontier',()=>{
-  const targets=read('data/routing/frontier-targets.json'),probes=read('data/routing/frontier-probes.json'),evidence=read('data/routing/frontier-identity-evidence.json');
+  const targets=readOctoberPublication('frontier-targets.json'),probes=readOctoberPublication('frontier-probes.json'),evidence=readOctoberPublication('frontier-identity-evidence.json');
   expect(targets.targets.map((t:any)=>t.model_id).sort()).toEqual(['claude-fable-5-1','gpt-6-astra']);
   expect(Date.parse(targets.discovered_at)).toBeGreaterThanOrEqual(renewedAfter);
-  const reviews=read('data/routing/frontier-probe-reviews.json').reviews;
+  const reviews=readOctoberPublication('frontier-probe-reviews.json').reviews;
   expect(reviews).toHaveLength(1);expect(digest(reviews[0].bound)).toBe(reviews[0].bound_digest);
   expect(reviews[0].review_artifact.reviewer).toMatchObject({configured_model:'claude-opus-5-5',observed_models:['claude-opus-5-5']});
   for(const probe of probes.probes)expect(probe.evaluation).toMatchObject({status:'passed',review_digest:reviews[0].bound_digest});
@@ -52,9 +53,9 @@ describe('2026-10-11 model-currency renewal publication',()=>{
  });
 
  it('admits only the recalibrated Fable reviewer, restricted to mechanical low',()=>{
-  const admissions=read('data/routing/reviewer-calibration/admissions.json').admissions;
+  const admissions=readOctoberPublication('reviewer-calibration/admissions.json').admissions;
   expect(admissions.map((a:any)=>a.host)).toEqual(['claude']);
-  const admission=read('data/routing/reviewer-calibration/claude.json');
+  const admission=readOctoberPublication('reviewer-calibration/claude.json');
   expect(digest(admission.report)).toBe(admissions[0].report_digest);
   expect(reviewerCalibrationGate(admission.report.manifest,admission.report.rows,admission.report.target).admitted).toBe(true);
   expect(Date.parse(admission.treatment.evidence.observed_at)).toBeGreaterThanOrEqual(renewedAfter);
@@ -76,7 +77,7 @@ describe('2026-10-11 model-currency renewal publication',()=>{
  });
 
  it('publishes only maintainer-reviewed passing cases and reconciles the bounded budget',()=>{
-  const acceptance=read('data/routing/installed-acceptance.json');
+  const acceptance=readOctoberPublication('installed-acceptance.json');
   expect(index.cases).toHaveLength(14);
   expect(acceptance.cases.map((c:any)=>c.id).sort()).toEqual([...index.accepted_case_ids].sort());
   for(const c of acceptance.cases){

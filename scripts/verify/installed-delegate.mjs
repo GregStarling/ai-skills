@@ -10,7 +10,7 @@ import {ordinaryWorkflow,validateWorkflow,ordinaryInstructions} from './ordinary
 
 const root=resolve(import.meta.dirname,'../..');
 // Acceptance coordinators are the frontier reviewer treatments whose verification the records bind.
-const coordinator={claude:'claude-opus-5-5',codex:'gpt-6-astra'};
+const coordinator={claude:'claude-opus-5-5',codex:'gpt-6.1-sol'};
 
 export const installedCaseNames=[...caseNames,'research'];
 async function createInstalledCase(name,directory){

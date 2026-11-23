@@ -1,0 +1,1417 @@
+{
+  "schema_version": "delegate_renewal_evidence.v1",
+  "recorded_at": "2026-11-23T05:27:02.611Z",
+  "scope": "Full November renewal of the existing 15 provisional Delegate routes on Codex and Claude Code.",
+  "qualification_authority": false,
+  "folder_freeze": {
+    "skill_folder_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+    "guidance_digest": "sha256:9ea52dff8acedcff7d3595f5566934249dad4279a9bf66630fb84036c94afd9e",
+    "pack_content_digest": "sha256:266bb4d4c8549246877361a63775a17103152562cc46aac11dbf39ae85187762",
+    "recorded_at": "2026-11-23T05:01:35.481Z",
+    "routes": 15,
+    "expires_at": "2026-12-23T05:01:35.409Z"
+  },
+  "published": {
+    "content_digest": "sha256:707241633a83f35dc4cc4f7b0b6024719e31cab4caab8d128e8b1a7c092bb941",
+    "skill_folder_digest": "sha256:015d0b89b3b299704efaa02699e30e01b21edd3f209f24bb913ab06094ba7c2a",
+    "guidance_digest": "sha256:9ea52dff8acedcff7d3595f5566934249dad4279a9bf66630fb84036c94afd9e",
+    "generated_at": "2026-11-23T05:27:02.548Z",
+    "refresh_after": "2026-11-30T05:27:02.548Z",
+    "expires_at": "2026-12-23T05:27:02.548Z",
+    "earliest_entry_expiry": "2026-12-23T04:51:30.027Z"
+  },
+  "frontier": {
+    "targets": {
+      "path": "data/routing/frontier-targets.json",
+      "digest": "sha256:089014e89af37bcbb21b5348ca9e3f316aa325f260fd9f76982e00dc4bce0b2f"
+    },
+    "probes": {
+      "path": "data/routing/frontier-probes.json",
+      "digest": "sha256:0d9545a1f6afec243ba7c9168a20c45fe2f09113f5e8c0ff9e485ccc286b733e"
+    },
+    "identity": {
+      "path": "data/routing/frontier-identity-evidence.json",
+      "digest": "sha256:9875a589ec305cfb196700ea561003bd9fbdca9bc81b37f1ea3af55d0ef5589c"
+    },
+    "independent_review": {
+      "path": "data/routing/frontier-probe-reviews.json",
+      "digest": "sha256:d67865e0ab9f11334514b8856a3d6e9bde5370e2f768a563e572287a9f579220"
+    },
+    "superseded_review": {
+      "capture": {
+        "path": "artifacts/renewal-2026-11-23/frontier-probes/independent-review/review.json",
+        "digest": "sha256:fb31c62e0a89173b652c9c664af1e337c8979349a11ef482cdc8fa4b4b639c3a"
+      },
+      "reason": "The first independent review did not commit its ordered input manifest in its native request. The replacement reviewed the original diagnostic captures with that binding."
+    }
+  },
+  "archive": {
+    "path": "data/routing/archive/2026-10-11/preservation.json",
+    "digest": "sha256:3bb776fed7c32a1b31b9e452db1b1757d0864c62a244333acbd5762d7b955a6d"
+  },
+  "metadata": [
+    {
+      "id": "codex-models",
+      "url": "https://learn.chatgpt.com/docs/models.md",
+      "checked_at": "2026-11-23T04:51:30.027Z",
+      "content_digest": "sha256:2ca411d02af5e803e25d60eedcac752c7a6153c2c6dffafdbd854aff61f4277c",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/codex-models.source"
+    },
+    {
+      "id": "codex-pricing",
+      "url": "https://learn.chatgpt.com/docs/pricing.md",
+      "checked_at": "2026-11-23T04:51:30.064Z",
+      "content_digest": "sha256:83c9e06d02f40b0974ccefc151a30d11420bad88bb6128e75f948c1956ebc42d",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/codex-pricing.source"
+    },
+    {
+      "id": "openai-gpt-6.1-sol",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+      "checked_at": "2026-11-23T04:51:30.158Z",
+      "content_digest": "sha256:5e97e512e0e3b341ea776e1b103583e24bcab5f05e66d7e192e231dc66daf0e2",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6.1-sol.source"
+    },
+    {
+      "id": "openai-gpt-6-luna",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+      "checked_at": "2026-11-23T04:51:30.195Z",
+      "content_digest": "sha256:c91b290a625032429e118b978f1d929eda8dbbf0157e19447cd2427f122f8158",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6-luna.source"
+    },
+    {
+      "id": "openai-gpt-6.2-astra",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.2-astra",
+      "checked_at": "2026-11-23T04:51:30.149Z",
+      "content_digest": "sha256:9f2514d9f660bdaa3f646844e5a77a04b4519f7d548584104d5c50a8e77ec70e",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6.2-astra.source"
+    },
+    {
+      "id": "claude-models",
+      "url": "https://platform.claude.com/docs/en/models/overview.md",
+      "checked_at": "2026-11-23T04:51:30.030Z",
+      "content_digest": "sha256:41f5ac40ac7890dc6983142312f31f0719430c3c242fc93a3fc5bc63e3816641",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-models.source"
+    },
+    {
+      "id": "claude-pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+      "checked_at": "2026-11-23T04:51:30.071Z",
+      "content_digest": "sha256:488e03e9cc17c794593348133aa9869d650964d599af58604a9838a0ae47e816",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-pricing.source"
+    },
+    {
+      "id": "claude-deprecations",
+      "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations.md",
+      "checked_at": "2026-11-23T04:51:30.023Z",
+      "content_digest": "sha256:4293738873aa27f7e8260440a52dbafd4858565ae2a2c559d00b4177b85c7dff",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-deprecations.source"
+    },
+    {
+      "id": "claude-code-model-config",
+      "url": "https://code.claude.com/docs/en/model-config.md",
+      "checked_at": "2026-11-23T04:51:30.015Z",
+      "content_digest": "sha256:0eb85bfd05da194833d741b15172de8430cee5920a4ecd11ec07787db8d2c0cf",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-code-model-config.source"
+    }
+  ],
+  "smokes": [
+    {
+      "run_id": "renewal-smoke-codex-1795409718788",
+      "host": "codex",
+      "worker": [
+        "gpt-6-luna",
+        "low"
+      ],
+      "reviewer": [
+        "gpt-6.1-sol",
+        "high"
+      ],
+      "outcome": "ACCEPTED",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex/result.json",
+        "digest": "sha256:c4b8af8938bcdc690c21eee2753afae990cddcfe0aced8c5037d0743eddd2ccf"
+      },
+      "worker_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex/worker/stdout.jsonl",
+        "digest": "sha256:882d5e797fca65cfab8874d6d195070db44cd5540447c44d68865f6383e29273"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex/reviewer/stdout.jsonl",
+        "digest": "sha256:92f36e9489c3a7f6cbeb489a0d75e4e15391853b4b886f9322aa9e8f083f150a"
+      }
+    },
+    {
+      "run_id": "renewal-smoke-codex-standard-1795409741843",
+      "host": "codex-standard",
+      "worker": [
+        "gpt-6.1-sol",
+        "low"
+      ],
+      "reviewer": [
+        "gpt-6.1-sol",
+        "high"
+      ],
+      "outcome": "ACCEPTED",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex-standard/result.json",
+        "digest": "sha256:064484a50a0642324c4f345ee569e0cb4a8c8351568b6dd0ff1ec09a8514558c"
+      },
+      "worker_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex-standard/worker/stdout.jsonl",
+        "digest": "sha256:487d467c17ff81a33f3ae2dc9656ad5091cf4d3d7c7c38ce7e1e5fbbabbeae7a"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex-standard/reviewer/stdout.jsonl",
+        "digest": "sha256:ad6413216190bdf30dbca221ce5e8896054b526cafe8252fc69d19ace76f6b72"
+      }
+    },
+    {
+      "run_id": "renewal-smoke-claude-1795409903282",
+      "host": "claude",
+      "worker": [
+        "claude-sonnet-5-5",
+        "low"
+      ],
+      "reviewer": [
+        "claude-opus-5-5",
+        "high"
+      ],
+      "outcome": "ACCEPTED",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude/result.json",
+        "digest": "sha256:ca74a920153ee33b1e8142dbe7220eba8e3a6d36876ab8a2bfe7b233bdd28254"
+      },
+      "worker_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude/worker/stdout.jsonl",
+        "digest": "sha256:b41b70a2f161e34bd154452142c0cf736a11a6a4638ecfab226db5cedb1d7a9e"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude/reviewer/stdout.jsonl",
+        "digest": "sha256:5fbd17fa1cb57ba27bfa26496eca8e39fd33c225e559d5d2e7bdf5d35c4ef2ac"
+      }
+    },
+    {
+      "run_id": "renewal-smoke-claude-haiku-1795409921108",
+      "host": "claude-haiku",
+      "worker": [
+        "claude-haiku-5-5",
+        null
+      ],
+      "reviewer": [
+        "claude-opus-5-5",
+        "high"
+      ],
+      "outcome": "EXCLUDED_COMBINED_READ",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku/result.json",
+        "digest": "sha256:0336163c803f934e0fd96acf5b63771d4de35a65dab1c6cd170322633329f8ab"
+      },
+      "worker_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku/worker/stdout.jsonl",
+        "digest": "sha256:ab67e082ebfe657799a23b0e92ec0cd5d6abb34b64bd3ac1057d0c56d95a52f5"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku/reviewer/stdout.jsonl",
+        "digest": "sha256:03e4a1d0ef7319ef4a38212256d9b87eeff3e757ce68c9df510ddbac5be1c354"
+      }
+    },
+    {
+      "run_id": "renewal-smoke-claude-haiku-1795410028099",
+      "host": "claude-haiku",
+      "worker": [
+        "claude-haiku-5-5",
+        null
+      ],
+      "reviewer": [
+        "claude-opus-5-5",
+        "high"
+      ],
+      "outcome": "ACCEPTED",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku-retry1/result.json",
+        "digest": "sha256:b7275fb0c8523f55bc7e135f0455d1640faa6603ef32c7d71e7323587d115229"
+      },
+      "worker_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku-retry1/worker/stdout.jsonl",
+        "digest": "sha256:cc34baaabc45fdc05c24aa1293e3c3d34fb6327895ede67fd441459bcd69b12f"
+      },
+      "reviewer_trace": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku-retry1/reviewer/stdout.jsonl",
+        "digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7"
+      }
+    }
+  ],
+  "observations": {
+    "path": "data/routing/host-observations.json",
+    "digest": "sha256:48ef87288600cf8ff1ed91b448c4028fca455508d3384dd7236832d1ddbf7600"
+  },
+  "medium_audit": {
+    "path": "data/routing/medium-smoke-audit.json",
+    "digest": "sha256:f9f83282f487bf55c3a969f1da6c4212b4d010ab6be310a606dee4e814421f71"
+  },
+  "admissions": {
+    "path": "data/routing/reviewer-calibration/admissions.json",
+    "digest": "sha256:a20a89f6566ace72129c48bc6f3288ba361c539f606680d5031f7896ad930aab"
+  },
+  "installed_acceptance": {
+    "path": "data/routing/installed-acceptance.json",
+    "digest": "sha256:d79eabbadf7374eaf7f26f0ae88db9a65b8b2285fd75340dc40923f75d799794"
+  },
+  "cases": [
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-tinybug",
+      "host": "codex",
+      "case": "tinybug",
+      "verdict": "PASS",
+      "reason": "The reducer starts at zero and uses quantity ?? 1, preserving an explicit zero and defaulting only null or undefined. Worker evidence: gpt-6-luna / low / quantity.mjs. Final coordinator reads: quantity.mjs (item_16). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/result.json",
+        "digest": "sha256:c2e00edc17db01f20ad8849dbdc864af4255201d8248bac370e95ebb7da8d1f4"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:cf8770527fe8fe0485b4c340e7a0ab7d6aeb8058755de191c6d544a455409f23"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/maintainer-review-final.json",
+        "digest": "sha256:78684fd63de9d09218b494814a60660b7baca579c263cfa24a48a7e9d9b2d30f"
+      },
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:96f52956af23c41db1a732cc83e7f6b2877d8dd6bc79601ccd408419e22bf5f1"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_16"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/preserved/sessions/rollout-2026-11-22T23-02-03-01a206c8-575a-7b03-b354-cdf3d9497432.jsonl",
+          "digest": "sha256:c50c29bc323280729e041575314eba5d0aa0833e6498f80e2cd5b47b5616f31e"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/preserved/sessions/rollout-2026-11-22T23-02-50-01a206c9-10cd-7971-96a8-3bfcc0447697.jsonl",
+          "digest": "sha256:181eaddf282810f6f89b4cf6c4bb5e6cc7d79bf657f9e576dd69fc669fee8b41"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-mechanical",
+      "host": "codex",
+      "case": "mechanical",
+      "verdict": "PASS",
+      "reason": "Both modules use the new normalizeSlug export, and the only consumer retains its /items/ prefix. The trim, lowercase and whitespace replacement are intact, and behavior checks passed before and after the rename. Worker evidence: gpt-6-luna / low / slug.mjs, link.mjs. Final coordinator reads: slug.mjs (item_27), link.mjs (item_28). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/result.json",
+        "digest": "sha256:9a58cb32b3d7d3b9d1a52b1f7537b5375aef4ac6ad0aed1e571e0b279427f78d"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:1bb7413a6ec35898b3374912169ff698007f2ce4124beb438408531b8414630c"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/maintainer-review-final.json",
+        "digest": "sha256:29b91b2f9a860fa054ee24027fc7381ef08ab4ff0b42459b86f533aecbe1c591"
+      },
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:5a6e121e50f129e2bafd1b83c780b80d6ef498d8fd46561d033d595246828f12"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_27",
+        "item_28"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/preserved/sessions/rollout-2026-11-22T23-04-05-01a206ca-3456-73c0-a08a-425096c8c5a0.jsonl",
+          "digest": "sha256:9428a496de30e2dd3819f2d1a4ea677e0005a358a078ed76e58d67b1a35c60aa"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/preserved/sessions/rollout-2026-11-22T23-04-44-01a206ca-ce4d-7e03-87ca-cdc27cd8fa79.jsonl",
+          "digest": "sha256:1a3569513cc304819baab77acce8a1b5d029cdb92d512f60377d72b2b9e109a4"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-backend",
+      "host": "codex",
+      "case": "backend",
+      "verdict": "PASS",
+      "reason": "The implementation validates page and pageSize separately, defaults to 1 and 10, calculates ceil(total/pageSize), and slices the input for the result. The external checks cover empty and out-of-range pages and input immutability. Worker evidence: gpt-6-luna / low / paginate.mjs. Final coordinator reads: paginate.mjs (item_17). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/result.json",
+        "digest": "sha256:5a6fc6b8e747d7da7e3ed231520e030da761c279c4257bcd6224be33bc883a1c"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:26e43a5b8b2b632b6f4b1d425e418122095c0f15af5394cdee4bcc502ed758c6"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/maintainer-review-final.json",
+        "digest": "sha256:f2c2645e35ab7a78c48ff947a74b7439498fc0a55aa37ad3fa65af528a521b52"
+      },
+      "artifact_digests": {
+        "paginate.mjs": "sha256:b1a22cdc679d978892b149021f14d2b1e48626ba7a86cbae069bff2037f22f58"
+      },
+      "receipt_digests": [
+        "sha256:4592fcc35e85632342b850a85d14dcbbcffb97fa8b1d25773a82945f7da160d9"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_17"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/preserved/sessions/rollout-2026-11-22T23-05-59-01a206cb-f1dd-7433-9367-ae953d4da7d9.jsonl",
+          "digest": "sha256:f06d79c7d248e380510b4ba0254394aa89c07c6a423bb5af3dad856421c2d769"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/preserved/sessions/rollout-2026-11-22T23-06-45-01a206cc-a8bf-7ee0-92ac-5b741328d746.jsonl",
+          "digest": "sha256:6d7fc8581bd769342227bf0f661eb3ca4f0e4fb64632b8571fa9f0a6b048171c"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-ui",
+      "host": "codex",
+      "case": "ui",
+      "verdict": "PASS",
+      "reason": "At 320px the rounded card fits the viewport, the focused field is outlined, and the full-width Add task button sits above the two task rows. At 1280px the button sits beside the input and every checkbox and label is visible. Ten DOM checks passed at each width. Worker evidence: gpt-6-luna / low / index.html. Final coordinator reads: index.html (item_22). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/result.json",
+        "digest": "sha256:ecc19874cbd1d1e2bdc60b550dc7ea64b3e5184bea5110679b284758e3b35586"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:e551017140895317d193a43008dfa7aad984547fe1216791cf3d5e7b4e132043"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/maintainer-review-final.json",
+        "digest": "sha256:1561772efa16591a54cec0cbaa6e9086d2f6ff41978eff15a45e012793c3cda3"
+      },
+      "artifact_digests": {
+        "index.html": "sha256:af133ec2ca1ad01a5a9a6d324fee45ee8a6eac7f61feb63b1146a18a72afd0aa"
+      },
+      "receipt_digests": [
+        "sha256:95c85d1885cbc50d4b9b784e991b41618db840a76c399e5d3f8d5e33d482dc1d"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_22"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/preserved/sessions/rollout-2026-11-22T23-08-02-01a206cd-d309-7261-8ea6-b174a6544b66.jsonl",
+          "digest": "sha256:40e6eff802f1a01fe43479011aaa676d271520143f3df1aa21397a4d1963eeec"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/preserved/sessions/rollout-2026-11-22T23-08-54-01a206ce-a1a6-7f73-b2f8-7a0bb2066781.jsonl",
+          "digest": "sha256:3b111c818539a7b4b1bdf6fc8a7b1a513d485d616cae6f4c3fea32b8c815bc74"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ],
+      "browser": {
+        "capture": {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/browser/browser-checks.json",
+          "digest": "sha256:5828d41559b63ae03ea52e3466b63e5784cc7d4837424a3e634bc00afb4ba3d4"
+        },
+        "screenshots": [
+          {
+            "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/browser/320.png",
+            "digest": "sha256:8b5cdfefca7e282f9b91a19689d008e4b62e9058826847862a42e4883c0e7ca7"
+          },
+          {
+            "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/browser/1280.png",
+            "digest": "sha256:bf1a6a3e1c2bd6ed579eb5dc8f098698f8e25c8153673c214017a1ed518cd111"
+          }
+        ],
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-hardbug",
+      "host": "codex",
+      "case": "hardbug",
+      "verdict": "PASS",
+      "reason": "Each search stores its own Symbol token. Only the latest may call onResult, the latest rejection propagates, and stale rejections return undefined. The fixture allows stale successful values to resolve to their original caller. Independent checks confirmed latest-only publication and overlapping requests. Worker evidence: gpt-6-luna / low / search.mjs. Final coordinator reads: search.mjs (item_24). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/result.json",
+        "digest": "sha256:f05ea5d5aabd419c9dbb5bfd96495018e10df8dcaf6a40188b2da9274032ea61"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:28081fa44d378b8f453c57a63a384ce289fa2019a1b942a74ea208244b8e8f87"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/maintainer-review-final.json",
+        "digest": "sha256:b29f628528b7a5b746e45f04f9e2b8e3731b339c9db04197faa0ca210332db3e"
+      },
+      "artifact_digests": {
+        "search.mjs": "sha256:91ce46eb49775359e71b07130abc876dc0edca94fe1bcbac48762ef6957a5caf"
+      },
+      "receipt_digests": [
+        "sha256:713b039f59818427e22c342278275033bcd54c1b981da123416cd11a31976db9"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_24"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/preserved/sessions/rollout-2026-11-22T23-11-05-01a206d0-9db6-7d82-8e8f-614811c47362.jsonl",
+          "digest": "sha256:4b1ceb0be6106dc2679ddfae11f6ad54e0a131cf40ff54a2294b6049a9f74661"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/preserved/sessions/rollout-2026-11-22T23-12-47-01a206d2-2e98-7531-b22f-744eeb0a2ae4.jsonl",
+          "digest": "sha256:8a3a04babb62f2102f62482cc40ec1f63a414cc09253f69f8ecf7ec3059b7917"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-multicomponent-retry1",
+      "host": "codex",
+      "case": "multicomponent",
+      "verdict": "PASS",
+      "reason": "The replacement checks ID length and preserves the original ID verbatim. Its service and view both use the shared normalizer, duplicate checks preserve the original list, and the summary uses the normalized title. The expanded grader and separate checks of whitespace-only and padded IDs all passed. Worker evidence: gpt-6-luna / low / task.mjs, service.mjs, view.mjs. Final coordinator reads: task.mjs (item_15), service.mjs (item_16), view.mjs (item_17). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/result.json",
+        "digest": "sha256:abb854c8e887a48ab71282f33fc98c27b2d795b274a048945746efc479ba593c"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/coordinator/stdout.jsonl",
+        "digest": "sha256:702242d3c8a7394babc04995f73b0d7d414969bc9fae65ec9f4b26586d398a10"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/maintainer-review-final.json",
+        "digest": "sha256:b9dbfa9cc08dc4c5b1d82a9632602783b0bb35035d015bdfe2ccab6f7dd518c1"
+      },
+      "artifact_digests": {
+        "task.mjs": "sha256:2069e1a8b0a3be68aeb13e6dc0a26f3d87b60d48adb1edbaf7fe5f5517356e48",
+        "service.mjs": "sha256:ca000c39be9681ad76bb54fb2f6a1182ac5a6d4fb4dac5f84018cc64dbb2753f",
+        "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+      },
+      "receipt_digests": [
+        "sha256:499ef164169118ada25d07f30653524dde0027ffdb0e77c15aecd8c4181b711b"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "item_15",
+        "item_16",
+        "item_17"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/preserved/sessions/rollout-2026-11-22T23-21-43-01a206da-5a38-70e1-8e3a-00d8cdb8b2ab.jsonl",
+          "digest": "sha256:b7caff2b0e2be1502e1c87492bd01c1c87930f361b6257ecb3c5fc1f0a6c0c79"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/preserved/sessions/rollout-2026-11-22T23-22-36-01a206db-2bea-7a43-84a1-ca45df3122c0.jsonl",
+          "digest": "sha256:f10d449c7d737b8e150b3a0463b5fb9c377ca81109fa114981aef201d3cc498d"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-fullproject",
+      "host": "codex",
+      "case": "fullproject",
+      "verdict": "PASS",
+      "reason": "Two Luna workers had disjoint store and view edits. The store trims titles, assigns unique string IDs, rejects invalid operations and returns independent copies. The view escapes titles and nests each checkbox in its label. The coordinator integrated app.mjs and inspected all three files together. Worker evidence: gpt-6-luna / low / store.mjs and gpt-6-luna / low / view.mjs. Final coordinator reads: store.mjs (item_18), view.mjs (item_19), app.mjs (item_20). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 3,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/result.json",
+        "digest": "sha256:af85f76cd0918a965b9795d89573eaa2fa47586ae42a781fac597036f1a82965"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:aff949ccffd633f9fce9fad27334baa5c4e489ccc5f4c564e660720094a704c3"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/maintainer-review-final.json",
+        "digest": "sha256:04fbb7d29b4c560dbab30c7cb77f0e890f866f3bdb937b3dd2196c8e67ffd794"
+      },
+      "artifact_digests": {
+        "store.mjs": "sha256:f3e2e5fee2be6481b2447b0c4b1842431cad2d9344d2f078257197bcdc5e9eb8",
+        "view.mjs": "sha256:7fe3e87cf365c02b0c6b98fff5ec6e1ab68373c8496dfc6587e716b45ff14c79",
+        "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
+      },
+      "receipt_digests": [
+        "sha256:96445a936b55423d92a8db53435baee0b6c20d1afbbef343d06bb53eef9570ca"
+      ],
+      "worker_count": 2,
+      "inspection_tool_ids": [
+        "item_18",
+        "item_19",
+        "item_20"
+      ],
+      "native_worker_traces": [
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/preserved/sessions/rollout-2026-11-22T23-16-55-01a206d5-f553-7092-8f78-1542731bc3e5.jsonl",
+          "digest": "sha256:7cc3e297de3b237231a6f1d6e581fad4d4d00eb0d854234f8494c0ab7d8dddcb"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/preserved/sessions/rollout-2026-11-22T23-17-58-01a206d6-ec9d-7ba3-baf5-88c543577fc6.jsonl",
+          "digest": "sha256:f675e0e4405f846dd8ee541727c55d6f5b1e6757ec7370bbd1b472cf4b12a407"
+        },
+        {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/preserved/sessions/rollout-2026-11-22T23-18-06-01a206d7-0aad-73f3-b2bb-d60e6af5fba9.jsonl",
+          "digest": "sha256:dfc891dd310784947a1b3917253354a283420cd48c96a06deaff61bf7b36c909"
+        }
+      ],
+      "limitations": [
+        "Codex exposes the configured worker model and effort in native turn_context. Served model and effort are unavailable."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-tinybug",
+      "host": "claude",
+      "case": "tinybug",
+      "verdict": "PASS",
+      "reason": "The reducer starts at zero and uses quantity ?? 1, preserving an explicit zero and defaulting only null or undefined. Worker evidence: haiku / uncontrolled effort / quantity.mjs. Final coordinator reads: quantity.mjs (toolu_016MUJhozqTKCRPV8smYFdFz). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-tinybug/result.json",
+        "digest": "sha256:d25f58b11dd56d021dcb872a8a295f42e80f6e4a737ff073fcd9b4c2d9e1e59b"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-tinybug/coordinator/stdout.jsonl",
+        "digest": "sha256:775e4ffcd6f031af45a8aab05b434f548b638e18e4de8c813887bc5b7613034f"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-tinybug/maintainer-review-final.json",
+        "digest": "sha256:b0d4808aaa0566c2831777312b728b8f7796cd3f17b3b3beb895d5c9b97c535f"
+      },
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_digests": [
+        "sha256:69da5c38f7045ab16788b06ed2ebadc96627431fe5cc65bb74d3e224d4b2e34a"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_016MUJhozqTKCRPV8smYFdFz"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-mechanical",
+      "host": "claude",
+      "case": "mechanical",
+      "verdict": "PASS",
+      "reason": "Both modules use the new normalizeSlug export, and the only consumer retains its /items/ prefix. The trim, lowercase and whitespace replacement are intact, and behavior checks passed before and after the rename. Worker evidence: haiku / uncontrolled effort / slug.mjs, link.mjs. Final coordinator reads: slug.mjs (toolu_01AP5pQf4HTudSeSzDTyBTbg), link.mjs (toolu_013Tyx93XmsdZPJeqwtT4wTw). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-mechanical/result.json",
+        "digest": "sha256:81aed525e3f52bbca07c1efdc180123d29ae8b29ab923b7ef69c872a4235433c"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-mechanical/coordinator/stdout.jsonl",
+        "digest": "sha256:4d59cf3cf5e95f4b153d00c59081c42aaaf211d9997bdce7967e52e5af47584d"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-mechanical/maintainer-review-final.json",
+        "digest": "sha256:9141c414f45487561ce02db617c944c8d120fded6aa49619b6b2d552880eaecc"
+      },
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_digests": [
+        "sha256:bfab7bfab9b97d8989b2e66e5d3a418486a41bfebde6915e0f0ef5fe8b31fd6c"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01AP5pQf4HTudSeSzDTyBTbg",
+        "toolu_013Tyx93XmsdZPJeqwtT4wTw"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-backend",
+      "host": "claude",
+      "case": "backend",
+      "verdict": "PASS",
+      "reason": "paginate validates both positive integer arguments, rejects invalid values with RangeError, and returns a new sliced array with total, page, pageSize and ceil-derived totalPages. Empty and out-of-range inputs satisfy the fixture. Worker evidence: haiku / uncontrolled effort / paginate.mjs. Final coordinator reads: paginate.mjs (toolu_01HPVrHEVuSybG9CE42ZceKs). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-backend/result.json",
+        "digest": "sha256:48a808c5acb30f9cad2f36eeebb755bdbca62ad66fb56f8cb7e98d5440c71cdc"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-backend/coordinator/stdout.jsonl",
+        "digest": "sha256:18fda8b7363d5883f02b47329693fe1d02e62c9fa9edd0536044de1efede81c1"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-backend/maintainer-review-final.json",
+        "digest": "sha256:e9afc3a6058736991b68555a49bc88f858a0d130ae889cbd744f362459af12ec"
+      },
+      "artifact_digests": {
+        "paginate.mjs": "sha256:5f71086fbe98d6b57c51549593763aeacb5669e801e563b89bd0c77a58aacc77"
+      },
+      "receipt_digests": [
+        "sha256:4d09abf49b143bccfce14cca8c41921000e8c43579cfdffe46f6a3905b9fe290"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01HPVrHEVuSybG9CE42ZceKs"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "verdict": "PASS",
+      "reason": "At 320px the Add task button wraps below the field. At 1280px it aligns beside it. Both images show a visible orange focus outline and fully visible Plan and Build checkboxes. All ten DOM checks passed on the reviewed HTML at each width. Worker evidence: haiku / uncontrolled effort / index.html. Final coordinator reads: index.html (toolu_019uXxVqXNdX4dYcTCPiU5JJ). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/result.json",
+        "digest": "sha256:e5b088795013641eea19bc30b31ab036056e0be896c573923115f3a7ffa0a864"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/coordinator/stdout.jsonl",
+        "digest": "sha256:486e68c67c5d0d549d24970cd4a0ffb170e6d786da2ffd97151d0beaa120393b"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/maintainer-review-final.json",
+        "digest": "sha256:6e054cf0fdddeb8d0b2923d048e30f3161fa1165b10ebd35ee79f6e63c3e12d6"
+      },
+      "artifact_digests": {
+        "index.html": "sha256:7accf7b340dc422da6517412de32d0bd2ecf7df6832c8970bd208e8cf9cbd9a0"
+      },
+      "receipt_digests": [
+        "sha256:4cd8248dc27fbb72bf0d4575da2c54852a7284b8f5b60c7707db2ee7469eaa16"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_019uXxVqXNdX4dYcTCPiU5JJ"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ],
+      "browser": {
+        "capture": {
+          "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/browser/browser-checks.json",
+          "digest": "sha256:a8666acc1170f5c856415ba975e49e3eddc6b4fd17e4a6bd2a902a3eb8658c8c"
+        },
+        "screenshots": [
+          {
+            "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/browser/320.png",
+            "digest": "sha256:b02cd3c1f5b3518879c29df3f5658cdb86d4f5305cc765bef37fef8ae10bd992"
+          },
+          {
+            "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/browser/1280.png",
+            "digest": "sha256:6a87e10383426a5008341871866b03c54cec8587538032e87c2b3a38989f9ad4"
+          }
+        ],
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ]
+      }
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-hardbug",
+      "host": "claude",
+      "case": "hardbug",
+      "verdict": "PASS",
+      "reason": "The coordinator identified the missing request sequencing before dispatch. The worker assigned each invocation a monotonically increasing ID, suppresses stale outcomes on both paths, propagates the latest error and permits searches to run concurrently. Worker evidence: haiku / uncontrolled effort / search.mjs. Final coordinator reads: search.mjs (toolu_01J1diPPQSSCQqEc7N7rTGMF). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-hardbug/result.json",
+        "digest": "sha256:55eadc53e65e3e90123b89f06d8fab4ffc1b9339db52d99f051aa563516dc901"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-hardbug/coordinator/stdout.jsonl",
+        "digest": "sha256:cdfdfaf8d898adfc854c6e1cb6690fe3b25096777cc5524920e2802e13c18502"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-hardbug/maintainer-review-final.json",
+        "digest": "sha256:9b13db2745c7d0cac3f21ac5e43799afb06e68c6529824a71af705e491d65b10"
+      },
+      "artifact_digests": {
+        "search.mjs": "sha256:926405c3b24c5f51be27464d82097b59fc551fdce056716b39fe8e7ad434f7e6"
+      },
+      "receipt_digests": [
+        "sha256:86313770a6b2f21899fac9cbbb2982d0d580b8877af1068d055f05a71cc75f07"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_01J1diPPQSSCQqEc7N7rTGMF"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-multicomponent",
+      "host": "claude",
+      "case": "multicomponent",
+      "verdict": "PASS",
+      "reason": "The worker implemented the shared normalization contract and imported it from the service and view. The service refuses duplicate IDs and returns a new list. Summaries use the trimmed title and normalized done flag. The coordinator checked all three finished modules. Worker evidence: haiku / uncontrolled effort / task.mjs, service.mjs, view.mjs. Final coordinator reads: task.mjs (toolu_014Me6KfG53vpM7qGoJ3JXDL), service.mjs (toolu_01WRPcLJrt2y1gLAegRnd9i2), view.mjs (toolu_01Darc2HVTen1gkjrVfZW4yo). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 2,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-multicomponent/result.json",
+        "digest": "sha256:3180de80264673a0ae796a1d7bfff667d6e89c75535a03491fbaa3cffcd5af49"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:7f8b6a507c81bfae68e7b3b92da1f1818735d38b0936589aeb9e931f45a9e7c7"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:a49cd3d608b1cb6c3e5c17f739b27e2bbf0ec6d3c399aaedc90c431fc0b4684e"
+      },
+      "artifact_digests": {
+        "task.mjs": "sha256:1b6fff31d6e492b20869f5b5a1a3bd57d1b90b318ab8165ab8201e55b4856e9b",
+        "service.mjs": "sha256:e883186a7b3de2dcea687fad96292f6943e63573583dcfd7189fb6b9fdfe5292",
+        "view.mjs": "sha256:a1c72c3a177900964cd83592858d3b1480c5c4f9c6559cd5d63b14da404fe382"
+      },
+      "receipt_digests": [
+        "sha256:0e264b4e9cb368d507d357d1319d4e865aa619368117b4cf44f8e37e0c7ec5ef"
+      ],
+      "worker_count": 1,
+      "inspection_tool_ids": [
+        "toolu_014Me6KfG53vpM7qGoJ3JXDL",
+        "toolu_01WRPcLJrt2y1gLAegRnd9i2",
+        "toolu_01Darc2HVTen1gkjrVfZW4yo"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    },
+    {
+      "run_id": "renewal-2026-11-23-installed-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "verdict": "PASS",
+      "reason": "Two Haiku workers edited the store and view separately. The store enforces trimmed titles, unique string IDs, independent copies, and RangeError for an unknown toggle. The view escapes IDs and titles and pairs each checkbox with a matching label. A coordinator Write created app.mjs and three final reads covered integration. Worker evidence: haiku / uncontrolled effort / store.mjs and haiku / uncontrolled effort / view.mjs. Final coordinator reads: store.mjs (toolu_01Nc7iMijmVZF6RBtdxTWEXE), view.mjs (toolu_01EwNJnRgwdEUqqQL832ifNL), app.mjs (toolu_018R58sXF96W75NkuhjsQnGs). The external grader passed.",
+      "original_process": {
+        "exit_code": 0,
+        "timed_out": false
+      },
+      "external_grader_passed": true,
+      "executions": 3,
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-fullproject/result.json",
+        "digest": "sha256:bfafb5aa2ec7eacb66babaa824502c6520387ba328a69ee7b4ff08c68385cf7a"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-fullproject/coordinator/stdout.jsonl",
+        "digest": "sha256:9008a65f4660f2bdaabfe1eb3191dd3d06111973b61e0124226aa7a500aaf77e"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-fullproject/maintainer-review-final.json",
+        "digest": "sha256:ed88b33359e0878e6947f7583bddd8d066f15595c03b3231e15ea3292ea1bfe5"
+      },
+      "artifact_digests": {
+        "store.mjs": "sha256:aafed394c835c39d8c24cf6fb49d11a8808e3f34e6344a066518ce2818fe69b3",
+        "view.mjs": "sha256:e35031a5a5c8278ab8a6719fc43748522dd7135d83d6448493fd13ba3310a850",
+        "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
+      },
+      "receipt_digests": [
+        "sha256:a0b16e7133ea080c9746d70e62709065545c6282f2ec1930cc61b2fae0ef4465"
+      ],
+      "worker_count": 2,
+      "inspection_tool_ids": [
+        "toolu_01Nc7iMijmVZF6RBtdxTWEXE",
+        "toolu_01EwNJnRgwdEUqqQL832ifNL",
+        "toolu_018R58sXF96W75NkuhjsQnGs"
+      ],
+      "native_worker_traces": [],
+      "limitations": [
+        "Claude forwarded child messages identify the worker model. The Agent tool exposes no selectable or observed worker effort."
+      ]
+    }
+  ],
+  "excluded_attempts": [
+    {
+      "run_id": "renewal-2026-11-23-installed-codex-multicomponent",
+      "host": "codex",
+      "case": "multicomponent",
+      "verdict": "REJECTED",
+      "reason": "The original external grader passed, but direct inspection and the supplemental check show normalizeTask rejects the one-space ID. The fixture requires a nonempty string and only trims the title. This attempt is excluded.",
+      "result": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent/result.json",
+        "digest": "sha256:9aa3cdd0e2a576a87e05a0d36d81594fc5f69813f3046fdd1a5e4f3b3ed464b2"
+      },
+      "trace": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent/coordinator/stdout.jsonl",
+        "digest": "sha256:c1114d913c9e416712e85e8793b2cab4d3717c8e6b09e9f82e46c1cab2c895c9"
+      },
+      "review": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent/maintainer-review-final.json",
+        "digest": "sha256:7efe4e2441ee8a2bef94d9ac7601992a0fe5bbf9c392a953fe2edaf95f606a9b"
+      },
+      "original_grader_passed": true,
+      "supplemental_grader": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent/supplemental-id-check.json",
+        "digest": "sha256:dd534db7a0176c23710cc865fc61dcc8ba780e0715bacda75f6fe2603724f057"
+      },
+      "supplemental_grader_passed": false,
+      "replacement_run_id": "renewal-2026-11-23-installed-codex-multicomponent-retry1"
+    }
+  ],
+  "budget": {
+    "snapshot_scope": "Through the first release review and repaired diagnostic evaluation, before final release review.",
+    "ceiling": 62,
+    "executions": 55,
+    "reserved": 0,
+    "halted": false,
+    "stopped_hosts": []
+  },
+  "execution_index": [
+    {
+      "id": "renewal-plan-reviewer-policy",
+      "host": "codex",
+      "purpose": "renewal_planning_decision",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-plan.json",
+        "digest": "sha256:5bd11f5d6cebe259a73fab3ba548b6f01dc71ddfe5ac364f84df2856050055e7"
+      }
+    },
+    {
+      "id": "m4-preflight-codex-1",
+      "host": "codex",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/preflight-codex-2026-11-23T04-54-18.228Z/result.json",
+        "digest": "sha256:6df5b5ba290e1ba8c95fd8e24eba1c63753b2e791946b8edaae6fd1d3b85c526"
+      }
+    },
+    {
+      "id": "renewal-frontier-contract-worker",
+      "host": "codex",
+      "purpose": "renewal_contract_implementation",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/contract-worker-accounting.json",
+        "digest": "sha256:5f79a4631f21f3f81890ccc5a7638a9ae4f98086515cb7fe5000d08f71fb5dee"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-1795409718788-worker",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex/worker/summary.json",
+        "digest": "sha256:566b2d4bc5419b2f429e35d858bbe292f9c32f326147db4f38242b5c24cdddfe"
+      }
+    },
+    {
+      "id": "renewal-evidence-preparation",
+      "host": "codex",
+      "purpose": "renewal_evidence_assembly_implementation",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/evidence-helper-accounting.json",
+        "digest": "sha256:71514924de913542748093e38499cb36c18d76d248173806bf344d2ea96b6da3"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-1795409718788-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex/reviewer/summary.json",
+        "digest": "sha256:3744f7ef1c49bd7ae67b803534e70e2a0ebd93509c912c54f66e024da6697734"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1795409741843-worker",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex-standard/worker/summary.json",
+        "digest": "sha256:e0b984c9deff67f15774494693b37dc4a2ec44f0142630ee84a0b5a064f02fa8"
+      }
+    },
+    {
+      "id": "renewal-smoke-codex-standard-1795409741843-reviewer",
+      "host": "codex",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-codex-standard/reviewer/summary.json",
+        "digest": "sha256:4add9168f9b2daa419c6a6b2be9db5852d9060a06bb0b2076493d1f950be7435"
+      }
+    },
+    {
+      "id": "renewal-frontier-probe-codex",
+      "host": "codex",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/probe-codex/codex/accounting.json",
+        "digest": "sha256:ad40c2e8f255634ba170dab934a20b176ab37c255e705dd9c1ff1b467da2d10a"
+      }
+    },
+    {
+      "id": "prompt-improve-claude-three-examples",
+      "host": "claude",
+      "purpose": "prompt_skill_claude_examples_during_campaign",
+      "executions": 3,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/claude-prompt-examples.json",
+        "digest": "sha256:e0fa9ff4727e03bd6faa4a84ba6c9b713e973882d887e2b0d799c80b83c82cd8"
+      }
+    },
+    {
+      "id": "m4-preflight-claude-1",
+      "host": "claude",
+      "purpose": "capacity_preflight",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/preflight-claude-2026-11-23T04-58-11.170Z/result.json",
+        "digest": "sha256:2444f9f71b5b60793544a8db1e2d054dc6e01071f8883897eda96fd037af3200"
+      }
+    },
+    {
+      "id": "renewal-frontier-probe-claude",
+      "host": "claude",
+      "purpose": "renewal_frontier_probe",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/probe-claude/claude/accounting.json",
+        "digest": "sha256:5a60e3b4ee161a23613ce882a94307b563ea0550e76e1ff9ad8a8fd42f2a8011"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-1795409903282-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude/worker/summary.json",
+        "digest": "sha256:710419a273ba6374d7936b106fac21fc7fae69ae33a52cebe7ed9398b24c3175"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-1795409903282-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude/reviewer/summary.json",
+        "digest": "sha256:80e1fcac9a82edb4d8e61dc75d31440ecab6d449e74c01bdfbb7d9ddcda6bbbd"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1795409921108-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku/worker/summary.json",
+        "digest": "sha256:dcfb56cc773ed10cd520a71d87615d99c1d50d6983ea5b880ebde3180c7765e8"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1795409921108-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku/reviewer/summary.json",
+        "digest": "sha256:ad4a93f6f7a8858da479471c9970a51a57b397611b3c70d2db1c14ff05b3a75e"
+      }
+    },
+    {
+      "id": "renewal-frontier-probe-review",
+      "host": "claude",
+      "purpose": "renewal_frontier_review",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/frontier-probes/independent-review/accounting.json",
+        "digest": "sha256:199d8c6fc9dc6abbac9500a2f95c9a1845ecffb2c13937fdc18b8cbe332c8386"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1795410028099-worker",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku-retry1/worker/summary.json",
+        "digest": "sha256:7047dab305804a2e236e6ca8165ac4a4afa300e5e6c1362b9dc35e72e59d204d"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-haiku-1795410028099-reviewer",
+      "host": "claude",
+      "purpose": "renewal_smoke",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/smoke-claude-haiku-retry1/reviewer/summary.json",
+        "digest": "sha256:271b388cea0c3f8e745b72c41397fb49b06e318824878cf73245aaadd172bf60"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-tinybug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-tinybug/result.json",
+        "digest": "sha256:d25f58b11dd56d021dcb872a8a295f42e80f6e4a737ff073fcd9b4c2d9e1e59b"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-tinybug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-tinybug/result.json",
+        "digest": "sha256:c2e00edc17db01f20ad8849dbdc864af4255201d8248bac370e95ebb7da8d1f4"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-mechanical",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-mechanical/result.json",
+        "digest": "sha256:81aed525e3f52bbca07c1efdc180123d29ae8b29ab923b7ef69c872a4235433c"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-mechanical",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-mechanical/result.json",
+        "digest": "sha256:9a58cb32b3d7d3b9d1a52b1f7537b5375aef4ac6ad0aed1e571e0b279427f78d"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-backend",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-backend/result.json",
+        "digest": "sha256:48a808c5acb30f9cad2f36eeebb755bdbca62ad66fb56f8cb7e98d5440c71cdc"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-backend",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-backend/result.json",
+        "digest": "sha256:5a6fc6b8e747d7da7e3ed231520e030da761c279c4257bcd6224be33bc883a1c"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-ui",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-ui/result.json",
+        "digest": "sha256:e5b088795013641eea19bc30b31ab036056e0be896c573923115f3a7ffa0a864"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-ui",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-ui/result.json",
+        "digest": "sha256:ecc19874cbd1d1e2bdc60b550dc7ea64b3e5184bea5110679b284758e3b35586"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-hardbug",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-hardbug/result.json",
+        "digest": "sha256:55eadc53e65e3e90123b89f06d8fab4ffc1b9339db52d99f051aa563516dc901"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-multicomponent",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-multicomponent/result.json",
+        "digest": "sha256:3180de80264673a0ae796a1d7bfff667d6e89c75535a03491fbaa3cffcd5af49"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-hardbug",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-hardbug/result.json",
+        "digest": "sha256:f05ea5d5aabd419c9dbb5bfd96495018e10df8dcaf6a40188b2da9274032ea61"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-multicomponent",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent/result.json",
+        "digest": "sha256:9aa3cdd0e2a576a87e05a0d36d81594fc5f69813f3046fdd1a5e4f3b3ed464b2"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-fullproject",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-fullproject/result.json",
+        "digest": "sha256:af85f76cd0918a965b9795d89573eaa2fa47586ae42a781fac597036f1a82965"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-fullproject",
+      "host": "claude",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 3,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-claude-fullproject/result.json",
+        "digest": "sha256:bfafb5aa2ec7eacb66babaa824502c6520387ba328a69ee7b4ff08c68385cf7a"
+      }
+    },
+    {
+      "id": "renewal-2026-11-23-installed-codex-multicomponent-retry1",
+      "host": "codex",
+      "purpose": "renewal_installed_acceptance",
+      "executions": 2,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/renewal-2026-11-23-installed-codex-multicomponent-retry1/result.json",
+        "digest": "sha256:abb854c8e887a48ab71282f33fc98c27b2d795b274a048945746efc479ba593c"
+      }
+    },
+    {
+      "id": "renewal-final-review-1",
+      "host": "codex",
+      "purpose": "independent_release_review",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/independent-release-review-1.json",
+        "digest": "sha256:12de44ef56c5bc97ec35eef62929af933fd6f6b0c4f90368e03388e6f26b854d"
+      }
+    },
+    {
+      "id": "renewal-frontier-probe-review-manifest-retry1",
+      "host": "claude",
+      "purpose": "renewal_frontier_review",
+      "executions": 1,
+      "provider_limit": false,
+      "uncertain": false,
+      "source": {
+        "path": "artifacts/renewal-2026-11-23/frontier-review-retry1/independent-review/accounting.json",
+        "digest": "sha256:91007e1464db1b1e4d821d4c41758184eb9f137f8d2bf881fb99b1ed9df48bba"
+      }
+    }
+  ]
+}
