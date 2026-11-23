@@ -1,0 +1,69 @@
+{
+  "schema_version": "frontier_historical_preservation.v1",
+  "source_revision": "83d34e7df65c9d9c6528364a63ce5b8dfef60aa6",
+  "status": "preserved",
+  "files": [
+    {
+      "original_path": "data/routing/frontier-targets.json",
+      "archived_path": "data/routing/archive/2026-10-11/frontier-targets.json",
+      "content_digest": "sha256:264b291ac93a65c0991f4b5b182b87956217c122b7902a673b7471899d0f3225",
+      "git_blob_sha": "83c6803bed91b250c414901ab4f19a31a7002f9d"
+    },
+    {
+      "original_path": "data/routing/frontier-probes.json",
+      "archived_path": "data/routing/archive/2026-10-11/frontier-probes.json",
+      "content_digest": "sha256:92c5821130a6f3b170c5efb2cdb94d5565b4c5210ff279077073b391d5f2d163",
+      "git_blob_sha": "2369400f58fe1e8839acfc4e05142af26e6d26d3"
+    },
+    {
+      "original_path": "data/routing/frontier-identity-evidence.json",
+      "archived_path": "data/routing/archive/2026-10-11/frontier-identity-evidence.json",
+      "content_digest": "sha256:e449cc04141a36af640be39470746ddd7c442395fd851cf042a570b59cdf4fc9",
+      "git_blob_sha": "9a00fab67b0ffe09feb90cfeaeba600bd84ceba1"
+    },
+    {
+      "original_path": "data/routing/frontier-probe-reviews.json",
+      "archived_path": "data/routing/archive/2026-10-11/frontier-probe-reviews.json",
+      "content_digest": "sha256:ca09f31aaaf44eb8d7037d02a142f6b3fce71d30d1ad13f4bf21d15b36e7eea7",
+      "git_blob_sha": "aca4051a618ad181ecb9808c98dd4a196faa7523"
+    },
+    {
+      "original_path": "data/routing/host-observations.json",
+      "archived_path": "data/routing/archive/2026-10-11/host-observations.json",
+      "content_digest": "sha256:7f671894f0927b8bcb6cb6ff199b1779cb89707a4d8b4753afbde199f8156d42",
+      "git_blob_sha": "be7ec4529099036ae7b6f41ecaeda34d5d7418e2"
+    },
+    {
+      "original_path": "data/routing/medium-smoke-audit.json",
+      "archived_path": "data/routing/archive/2026-10-11/medium-smoke-audit.json",
+      "content_digest": "sha256:4d62ec5d5ef84127e001c71bca72fd7815aef255cd011055a96bcc7855da2b5e",
+      "git_blob_sha": "a1170393633904f067a464636e96cecaf0917626"
+    },
+    {
+      "original_path": "data/routing/installed-acceptance.json",
+      "archived_path": "data/routing/archive/2026-10-11/installed-acceptance.json",
+      "content_digest": "sha256:9c10792eb7d7e02e4654055973f95bea7b0872e0278bdcb449a776fd97f3aa1e",
+      "git_blob_sha": "14046ff6a9c90262bb49d07970e1bb6a40d5c207"
+    },
+    {
+      "original_path": "data/routing/reviewer-calibration/admissions.json",
+      "archived_path": "data/routing/archive/2026-10-11/reviewer-calibration/admissions.json",
+      "content_digest": "sha256:e4b3d11bfc4ca35b332cda28a327962fc746c0bc976add9d275e0ba4d5be0852",
+      "git_blob_sha": "76bd1716e96f48dd681e63a44c82051bb7fcecf9"
+    },
+    {
+      "original_path": "data/routing/reviewer-calibration/claude.json",
+      "archived_path": "data/routing/archive/2026-10-11/reviewer-calibration/claude.json",
+      "content_digest": "sha256:ced7f2ae64205917b0350fffd971da447b36f5b82db7289282a3ff4739bd57a5",
+      "git_blob_sha": "45ebc1c8a1235d0aa2df95b808007c1e3324d034"
+    },
+    {
+      "original_path": "skills/delegate/routing-pack.json",
+      "archived_path": "data/routing/archive/2026-10-11/routing-pack.json",
+      "content_digest": "sha256:c509f1dd3fe1f00794efadca05eb91c2fea1bcf6e364d84819aa2b9ed1c62cd3",
+      "git_blob_sha": "22b1431216d6b4f991b756c8162bc18522108457"
+    }
+  ],
+  "preserved_at": "2026-11-23T04:52:28.806Z",
+  "qualification_authority": false
+}

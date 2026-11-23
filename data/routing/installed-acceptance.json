@@ -1,80 +1,24 @@
 {
   "schema_version": "installed_delegate_acceptance.v1",
-  "validated_at": "2026-10-11T22:22:42.972Z",
-  "final_consumer_folder_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+  "validated_at": "2026-11-23T05:24:39.146Z",
+  "final_consumer_folder_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
   "host_versions": {
     "claude": "2.1.296 (Claude Code)",
     "codex": "codex-cli 0.162.1"
   },
   "cases": [
     {
-      "id": "renewal-2026-10-11-installed-claude-tinybug",
-      "host": "claude",
-      "case": "tinybug",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T21:56:13.542Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 70811
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "quantity.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 1
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:521f98052f5f65251b071f2b685c5ecbfb6fe185652a945c516da0606d7385c7"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:1bdbb62876e98c2a3e044659d59ba581c4857ed80861609e6fe086b8baf05c8a"
-      ],
-      "result_digest": "sha256:b2dddb07f946efd6b55e69c1e7b75e84d1f76d414d9e65ea193fa9f99dc78bbb"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-codex-tinybug",
+      "id": "renewal-2026-11-23-installed-codex-tinybug",
       "host": "codex",
       "case": "tinybug",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T21:56:13.519Z",
+        "started_at": "2026-11-23T05:02:02.417Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 101393
+        "duration_ms": 122087
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
@@ -97,7 +41,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -111,85 +55,27 @@
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:18ea7c0a6c8c8cf0efa7f3a2f5bd2610fbde4c1a595dee44f26e06f3214bda3d"
+        "sha256:96f52956af23c41db1a732cc83e7f6b2877d8dd6bc79601ccd408419e22bf5f1"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:51ff295842105c172082c1ec6a7c90cf51d7d1fd64782f5b8aa490552d08573c"
+        "sha256:cf8770527fe8fe0485b4c340e7a0ab7d6aeb8058755de191c6d544a455409f23"
       ],
-      "result_digest": "sha256:b0ef16e48c3eac6eb9fa164ce1c9b4d3b74c523dfe4b7539d0c3b0fa307dab3f"
+      "result_digest": "sha256:c2e00edc17db01f20ad8849dbdc864af4255201d8248bac370e95ebb7da8d1f4"
     },
     {
-      "id": "renewal-2026-10-11-installed-claude-mechanical",
-      "host": "claude",
-      "case": "mechanical",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T21:57:24.479Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 58475
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "slug.mjs",
-            "link.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 2
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
-        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:7ea315f3728863cacc3a219fc2e34b8678a605d70d454c7c4d0428c52e1dff16"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:34497ef0d672ce1e981f6dcd6a9b15a410b4a515b89b18bd6bf97c506d7e5a71"
-      ],
-      "result_digest": "sha256:d126b724721337f351b19d11d7a331a778b740e85a514b7568afbe0940276c57"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-codex-mechanical",
+      "id": "renewal-2026-11-23-installed-codex-mechanical",
       "host": "codex",
       "case": "mechanical",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T21:57:55.050Z",
+        "started_at": "2026-11-23T05:04:04.631Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 111973
+        "duration_ms": 113928
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
@@ -213,7 +99,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -228,83 +114,27 @@
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:afb560c937e21a9bdce3a5e58ddc5eab400bc3acd086186385fbb3c2f17973ef"
+        "sha256:5a6e121e50f129e2bafd1b83c780b80d6ef498d8fd46561d033d595246828f12"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:b3a6c217a855000471e61d5a9c1dfe65bef9496a71cbdeae689cdec636ac8e40"
+        "sha256:1bb7413a6ec35898b3374912169ff698007f2ce4124beb438408531b8414630c"
       ],
-      "result_digest": "sha256:9025cb6b0d1dd55cf480d82e7e4d1ff8692b8c02f736545e2fbd68ca55dcde51"
+      "result_digest": "sha256:9a58cb32b3d7d3b9d1a52b1f7537b5375aef4ac6ad0aed1e571e0b279427f78d"
     },
     {
-      "id": "renewal-2026-10-11-installed-claude-backend",
-      "host": "claude",
-      "case": "backend",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T21:58:23.090Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 70766
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "paginate.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 1
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "paginate.mjs": "sha256:de2dbcdedeb8b9228eb081381bd0d08c9bf4002b559fdeb03fdecd3f7ad29f25"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:330ee59463c5a4e5efb8a5fe72c8758474f744959625d3434d8a6ecfd2d03d57"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:ddb35e96430f96d55d29d0ce775e73d748eebe1ab4d2b5cfcd5fccdc457e2a64"
-      ],
-      "result_digest": "sha256:84a65ec819615c35d5f419b5eac22903135dfe20125e32a092d650f73d9f7916"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-codex-backend",
+      "id": "renewal-2026-11-23-installed-codex-backend",
       "host": "codex",
       "case": "backend",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T21:59:47.153Z",
+        "started_at": "2026-11-23T05:05:58.687Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 103178
+        "duration_ms": 123071
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
@@ -327,7 +157,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -341,70 +171,71 @@
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:be3ccf765614dc0e5d9d720271ad86ac5ccde813bee9cc40a9d4befa468e575d"
+        "sha256:4592fcc35e85632342b850a85d14dcbbcffb97fa8b1d25773a82945f7da160d9"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:1039a3ebaafad067df9a124407589a18c756b90dc9123ee6f9c06d6bc4573fd2"
+        "sha256:26e43a5b8b2b632b6f4b1d425e418122095c0f15af5394cdee4bcc502ed758c6"
       ],
-      "result_digest": "sha256:620470b73111eaea44ad33d8aa20daa6edb40be7697a9c483620f6c8191fe2d2"
+      "result_digest": "sha256:5a6fc6b8e747d7da7e3ed231520e030da761c279c4257bcd6224be33bc883a1c"
     },
     {
-      "id": "renewal-2026-10-11-installed-claude-ui",
-      "host": "claude",
+      "id": "renewal-2026-11-23-installed-codex-ui",
+      "host": "codex",
       "case": "ui",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T21:59:33.961Z",
+        "started_at": "2026-11-23T05:08:01.856Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 121855
+        "duration_ms": 182864
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
           ],
+          "observed_message_models": [],
           "observed_written_files": [
             "index.html"
           ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
         }
       ],
       "frontier": {
         "configuration": [
           {
-            "model": "claude-opus-5-5",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
+        "observed_message_models": [],
         "actual_artifact_inspected": true,
         "check_count": 1
       },
       "external_grader_passed": true,
       "artifact_digests": {
-        "index.html": "sha256:97af1146fc4bd979f61fca74f1a2661993727a36c4f3b4566c40a66964433890"
+        "index.html": "sha256:af133ec2ca1ad01a5a9a6d324fee45ee8a6eac7f61feb63b1146a18a72afd0aa"
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:6a069afc7849cde90e02da04aaf62d8b97f12faa57810822683d69dc47b03dea"
+        "sha256:95c85d1885cbc50d4b9b784e991b41618db840a76c399e5d3f8d5e33d482dc1d"
       ],
       "recovery": null,
       "browser": {
         "verdict": "PASS",
-        "artifact_digest": "sha256:97af1146fc4bd979f61fca74f1a2661993727a36c4f3b4566c40a66964433890",
+        "artifact_digest": "sha256:af133ec2ca1ad01a5a9a6d324fee45ee8a6eac7f61feb63b1146a18a72afd0aa",
         "current_artifact_matches": true,
-        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
+        "reviewer": "Coordinating Codex maintainer inspected the two actual screenshots and DOM checks.",
         "viewports": [
           {
             "width": 320,
@@ -430,314 +261,32 @@
         "screenshots": [
           {
             "path": "320.png",
-            "digest": "sha256:028a98809ca8a044c5b0c00b11950fc3391d46e44c1527fbc3acb18032c81719"
+            "digest": "sha256:8b5cdfefca7e282f9b91a19689d008e4b62e9058826847862a42e4883c0e7ca7"
           },
           {
             "path": "1280.png",
-            "digest": "sha256:e24c6da0f1fc73f6bc7a3dfdbe71726108c7ac72486feff5a26dd0d796652270"
+            "digest": "sha256:bf1a6a3e1c2bd6ed579eb5dc8f098698f8e25c8153673c214017a1ed518cd111"
           }
         ],
-        "browser_checks_digest": "sha256:e2a569ae409ae89fa834cad7a50eef75a02d1324b5b66a76118267ea9271bc99"
+        "browser_checks_digest": "sha256:5828d41559b63ae03ea52e3466b63e5784cc7d4837424a3e634bc00afb4ba3d4"
       },
       "trace_digests": [
-        "sha256:0fd5079a34e09c3336c7d572554ec1d5831ac16e8772f40267b1362ceb478064"
+        "sha256:e551017140895317d193a43008dfa7aad984547fe1216791cf3d5e7b4e132043"
       ],
-      "result_digest": "sha256:b58fd63746fd581877aeeb989c4e18b5b14e1bdf25aaa6ec8994913ab503cc6d"
+      "result_digest": "sha256:ecc19874cbd1d1e2bdc60b550dc7ea64b3e5184bea5110679b284758e3b35586"
     },
     {
-      "id": "renewal-2026-10-11-installed-claude-hardbug",
-      "host": "claude",
-      "case": "hardbug",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T22:01:35.938Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 90953
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "search.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 1
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "search.mjs": "sha256:d0c3ec3c62dc4d06063f954ddf7a9da5febe099a2adf33e6270ca3825cb619e3"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:de3783eb50a6ff5cc12919a03ecee550b129ddb15d2a4cf309206af9a7f54b08"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:3bd3b175df02a5956f8f643a0a8001f1a5f366de6211893cfc2c7de07e887f92"
-      ],
-      "result_digest": "sha256:1574bb2d77c2e9dc787969e069670c46c144bb5345cc28012de04199b8fbf7bd"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-claude-multicomponent",
-      "host": "claude",
-      "case": "multicomponent",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T22:03:07.011Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 81731
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "task.mjs",
-            "service.mjs",
-            "view.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 3
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "task.mjs": "sha256:ca9d6188efaec64c1fd113e458707155de4521ded84887ee6452b874202e43ac",
-        "service.mjs": "sha256:7494fc89b603d2376cdc3e6cc6d35b77078e4b6af66e05306bef7b84c36b93bb",
-        "view.mjs": "sha256:52fd56699e7786d31fc50be289b8d2a792facb3a6d091a6bb05e0cb0b3229e54"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:1fe5e0e7ab23927e6905aab89128b7629ed46f2d2f5155c4fc7de7bd9f18fc59"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:0b0894557e4365a2b79dc18e3325429236274db4bd55c9af1acc297051c32ba7"
-      ],
-      "result_digest": "sha256:fd37fa3c846fe0ee09796d43a5e1261fdfba4bf472f4679f9b37660e60c9a9fb"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-codex-ui",
-      "host": "codex",
-      "case": "ui",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T22:01:30.441Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 155799
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 1,
-      "workers": [
-        {
-          "requested_model": "gpt-6-luna",
-          "requested_effort": "low",
-          "configured_model_effort": [
-            {
-              "model": "gpt-6-luna",
-              "effort": "low"
-            }
-          ],
-          "observed_message_models": [],
-          "observed_written_files": [
-            "index.html"
-          ],
-          "identity_source": "preserved native turn_context configuration",
-          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "gpt-6-astra",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [],
-        "actual_artifact_inspected": true,
-        "check_count": 1
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "index.html": "sha256:6c4aca207cbb015f0cd120671087f7a5a6044fcf5529614a147184724feae608"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:83b15b6567bf4fce25314a4434891e339ac6af683bcbf0d055e3899aee71f4f6"
-      ],
-      "recovery": null,
-      "browser": {
-        "verdict": "PASS",
-        "artifact_digest": "sha256:6c4aca207cbb015f0cd120671087f7a5a6044fcf5529614a147184724feae608",
-        "current_artifact_matches": true,
-        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
-        "viewports": [
-          {
-            "width": 320,
-            "height": 900
-          },
-          {
-            "width": 1280,
-            "height": 900
-          }
-        ],
-        "checks": [
-          "title",
-          "heading",
-          "single_main",
-          "form",
-          "task_input",
-          "checkbox_labels",
-          "tasks",
-          "submit",
-          "no_horizontal_overflow",
-          "keyboard_focus"
-        ],
-        "screenshots": [
-          {
-            "path": "320.png",
-            "digest": "sha256:da44697ef2268eaa9cf7d402d93d9630b9be9ea8b72c91e262fc97098bcdadde"
-          },
-          {
-            "path": "1280.png",
-            "digest": "sha256:d8385b613fc1a8b08c846bbfd8cca23d776dc85d8cf065feaf48fa6820eed3c7"
-          }
-        ],
-        "browser_checks_digest": "sha256:6ee183191184706bc2bb80e8b7da035369f256cd91d820602222a90675328a89"
-      },
-      "trace_digests": [
-        "sha256:4c97e65aaa7e90c7e82f1bfab9164e86ec65a562988d05cce21ba7c70ed9ba73"
-      ],
-      "result_digest": "sha256:33d1ede2b2d27d0d5fac88d0129cd0e76e1de93f59a2114d2e91c825362c0157"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-claude-fullproject",
-      "host": "claude",
-      "case": "fullproject",
-      "acceptance": "PASS",
-      "original_attempt": {
-        "started_at": "2026-10-11T22:04:28.888Z",
-        "exit_code": 0,
-        "timed_out": false,
-        "duration_ms": 90037
-      },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
-      "worker_count": 2,
-      "workers": [
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "store.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        },
-        {
-          "requested_model": "haiku",
-          "requested_effort": null,
-          "configured_model_effort": null,
-          "observed_message_models": [
-            "claude-haiku-5-5"
-          ],
-          "observed_written_files": [
-            "view.mjs"
-          ],
-          "identity_source": "forwarded subagent assistant message model",
-          "write_attribution": "forwarded child Edit/Write tool events"
-        }
-      ],
-      "frontier": {
-        "configuration": [
-          {
-            "model": "claude-opus-5-5",
-            "effort": "high"
-          }
-        ],
-        "observed_message_models": [
-          "claude-opus-5-5"
-        ],
-        "actual_artifact_inspected": true,
-        "check_count": 3
-      },
-      "external_grader_passed": true,
-      "artifact_digests": {
-        "store.mjs": "sha256:c0a43f0ad2f8b4701721882678e7f4be67fcf47723edb991e0175a9341793058",
-        "view.mjs": "sha256:9864896db7c52b194af3cbe43bf2335704af22b57442ca8bd3f64b3d94404fc2",
-        "app.mjs": "sha256:54c88a3a2e1437cc012d68c8f3f17f371e144cdfb0337c72a6c958a42da52afa"
-      },
-      "receipt_count": 1,
-      "receipt_digests": [
-        "sha256:3fcda3a90e00e31c4d52ef3141ae71fb423c8d098249c2ddf5f9848d6a5be7ba"
-      ],
-      "recovery": null,
-      "browser": null,
-      "trace_digests": [
-        "sha256:7827a50c4eab9d9958a39d4d17e15437d7beb03093c85307b742f12a688a3c34"
-      ],
-      "result_digest": "sha256:40c35fc8f2e1b15eebcf8fcc5096a43f122f113fbf01a5c40e0869aacafb59ea"
-    },
-    {
-      "id": "renewal-2026-10-11-installed-codex-hardbug",
+      "id": "renewal-2026-11-23-installed-codex-hardbug",
       "host": "codex",
       "case": "hardbug",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T22:04:06.365Z",
+        "started_at": "2026-11-23T05:11:04.824Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 124200
+        "duration_ms": 210500
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
@@ -760,7 +309,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -770,31 +319,31 @@
       },
       "external_grader_passed": true,
       "artifact_digests": {
-        "search.mjs": "sha256:69ed5d0e2a860bf194c54a1f164163c3aad8dd99e2c4397a7c5d438f21567620"
+        "search.mjs": "sha256:91ce46eb49775359e71b07130abc876dc0edca94fe1bcbac48762ef6957a5caf"
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:af195c3ac42c736c6ef1b2a7f498fee4bc2888f334a5ea878d8ecd96da241663"
+        "sha256:713b039f59818427e22c342278275033bcd54c1b981da123416cd11a31976db9"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:578cb9f19911b3fd2f4ce77ba6c2e9bb8eef5bb76eeaee6b95a9a4af513b26da"
+        "sha256:28081fa44d378b8f453c57a63a384ce289fa2019a1b942a74ea208244b8e8f87"
       ],
-      "result_digest": "sha256:be82219f77b1b1509d486b12200df38ce35df9faae7bd5b9d8fd334091675afb"
+      "result_digest": "sha256:f05ea5d5aabd419c9dbb5bfd96495018e10df8dcaf6a40188b2da9274032ea61"
     },
     {
-      "id": "renewal-2026-10-11-installed-codex-multicomponent",
+      "id": "renewal-2026-11-23-installed-codex-multicomponent-retry1",
       "host": "codex",
       "case": "multicomponent",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T22:06:10.673Z",
+        "started_at": "2026-11-23T05:21:42.895Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 107132
+        "duration_ms": 165106
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 1,
       "workers": [
         {
@@ -819,7 +368,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -829,33 +378,33 @@
       },
       "external_grader_passed": true,
       "artifact_digests": {
-        "task.mjs": "sha256:5cdc99db2ace1bf739c3d12898b6036eb3cbf23eada9542102ad2fee3f081992",
-        "service.mjs": "sha256:e06029048487a39f8af7a7e8bf44af16fb65fbd66e46b9faccef82ba9691069b",
+        "task.mjs": "sha256:2069e1a8b0a3be68aeb13e6dc0a26f3d87b60d48adb1edbaf7fe5f5517356e48",
+        "service.mjs": "sha256:ca000c39be9681ad76bb54fb2f6a1182ac5a6d4fb4dac5f84018cc64dbb2753f",
         "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:fa2f2c1de1ce5c7302c4416553215345e0defb1285ebab24b86a74e124ba97e6"
+        "sha256:499ef164169118ada25d07f30653524dde0027ffdb0e77c15aecd8c4181b711b"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:d0eca838829112bfc406c9b9da3566f36f10166b0d6c93ae34ffb3af49f944a0"
+        "sha256:702242d3c8a7394babc04995f73b0d7d414969bc9fae65ec9f4b26586d398a10"
       ],
-      "result_digest": "sha256:0c502d7a75d6cf071908f4e4b9a75c7877c5eb2618d1c7a612ba1c6624823971"
+      "result_digest": "sha256:abb854c8e887a48ab71282f33fc98c27b2d795b274a048945746efc479ba593c"
     },
     {
-      "id": "renewal-2026-10-11-installed-codex-fullproject",
+      "id": "renewal-2026-11-23-installed-codex-fullproject",
       "host": "codex",
       "case": "fullproject",
       "acceptance": "PASS",
       "original_attempt": {
-        "started_at": "2026-10-11T22:07:57.921Z",
+        "started_at": "2026-11-23T05:16:54.913Z",
         "exit_code": 0,
         "timed_out": false,
-        "duration_ms": 118885
+        "duration_ms": 171301
       },
-      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
       "worker_count": 2,
       "workers": [
         {
@@ -894,7 +443,7 @@
       "frontier": {
         "configuration": [
           {
-            "model": "gpt-6-astra",
+            "model": "gpt-6.1-sol",
             "effort": "high"
           }
         ],
@@ -904,20 +453,471 @@
       },
       "external_grader_passed": true,
       "artifact_digests": {
-        "store.mjs": "sha256:1ff83942afbff03c7204bd08261b6fa355b53ad53a2b749557a0db3696b6df88",
-        "view.mjs": "sha256:020c16d5170e0219d02bf7edef8b49d812894b9b0aafe04d7cdbc862064fd387",
+        "store.mjs": "sha256:f3e2e5fee2be6481b2447b0c4b1842431cad2d9344d2f078257197bcdc5e9eb8",
+        "view.mjs": "sha256:7fe3e87cf365c02b0c6b98fff5ec6e1ab68373c8496dfc6587e716b45ff14c79",
         "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
       },
       "receipt_count": 1,
       "receipt_digests": [
-        "sha256:9a9fbf33e870f85df4e716170495c5f07d2a2847e7b961ff7e314686d78e7cac"
+        "sha256:96445a936b55423d92a8db53435baee0b6c20d1afbbef343d06bb53eef9570ca"
       ],
       "recovery": null,
       "browser": null,
       "trace_digests": [
-        "sha256:242a786e764b7b4f80776f84b8acddf109e728f3902f10569d845678a4748744"
+        "sha256:aff949ccffd633f9fce9fad27334baa5c4e489ccc5f4c564e660720094a704c3"
       ],
-      "result_digest": "sha256:07870a84f7148fbc6d40f8965ed43c783d2ee216e753a48c097c79943bafc5ca"
+      "result_digest": "sha256:af85f76cd0918a965b9795d89573eaa2fa47586ae42a781fac597036f1a82965"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-tinybug",
+      "host": "claude",
+      "case": "tinybug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:02:01.983Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 103141
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "quantity.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:69da5c38f7045ab16788b06ed2ebadc96627431fe5cc65bb74d3e224d4b2e34a"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:775e4ffcd6f031af45a8aab05b434f548b638e18e4de8c813887bc5b7613034f"
+      ],
+      "result_digest": "sha256:d25f58b11dd56d021dcb872a8a295f42e80f6e4a737ff073fcd9b4c2d9e1e59b"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-mechanical",
+      "host": "claude",
+      "case": "mechanical",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:03:45.257Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 65915
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "slug.mjs",
+            "link.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 2
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:bfab7bfab9b97d8989b2e66e5d3a418486a41bfebde6915e0f0ef5fe8b31fd6c"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:4d59cf3cf5e95f4b153d00c59081c42aaaf211d9997bdce7967e52e5af47584d"
+      ],
+      "result_digest": "sha256:81aed525e3f52bbca07c1efdc180123d29ae8b29ab923b7ef69c872a4235433c"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-backend",
+      "host": "claude",
+      "case": "backend",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:04:51.301Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 73791
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "paginate.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "paginate.mjs": "sha256:5f71086fbe98d6b57c51549593763aeacb5669e801e563b89bd0c77a58aacc77"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:4d09abf49b143bccfce14cca8c41921000e8c43579cfdffe46f6a3905b9fe290"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:18fda8b7363d5883f02b47329693fe1d02e62c9fa9edd0536044de1efede81c1"
+      ],
+      "result_digest": "sha256:48a808c5acb30f9cad2f36eeebb755bdbca62ad66fb56f8cb7e98d5440c71cdc"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:06:05.198Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 169638
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "index.html"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "index.html": "sha256:7accf7b340dc422da6517412de32d0bd2ecf7df6832c8970bd208e8cf9cbd9a0"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:4cd8248dc27fbb72bf0d4575da2c54852a7284b8f5b60c7707db2ee7469eaa16"
+      ],
+      "recovery": null,
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:7accf7b340dc422da6517412de32d0bd2ecf7df6832c8970bd208e8cf9cbd9a0",
+        "current_artifact_matches": true,
+        "reviewer": "Coordinating Codex maintainer inspected the two actual screenshots and DOM checks.",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "title",
+          "heading",
+          "single_main",
+          "form",
+          "task_input",
+          "checkbox_labels",
+          "tasks",
+          "submit",
+          "no_horizontal_overflow",
+          "keyboard_focus"
+        ],
+        "screenshots": [
+          {
+            "path": "320.png",
+            "digest": "sha256:b02cd3c1f5b3518879c29df3f5658cdb86d4f5305cc765bef37fef8ae10bd992"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:6a87e10383426a5008341871866b03c54cec8587538032e87c2b3a38989f9ad4"
+          }
+        ],
+        "browser_checks_digest": "sha256:a8666acc1170f5c856415ba975e49e3eddc6b4fd17e4a6bd2a902a3eb8658c8c"
+      },
+      "trace_digests": [
+        "sha256:486e68c67c5d0d549d24970cd4a0ffb170e6d786da2ffd97151d0beaa120393b"
+      ],
+      "result_digest": "sha256:e5b088795013641eea19bc30b31ab036056e0be896c573923115f3a7ffa0a864"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-hardbug",
+      "host": "claude",
+      "case": "hardbug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:08:54.951Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 104637
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "search.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "search.mjs": "sha256:926405c3b24c5f51be27464d82097b59fc551fdce056716b39fe8e7ad434f7e6"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:86313770a6b2f21899fac9cbbb2982d0d580b8877af1068d055f05a71cc75f07"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:cdfdfaf8d898adfc854c6e1cb6690fe3b25096777cc5524920e2802e13c18502"
+      ],
+      "result_digest": "sha256:55eadc53e65e3e90123b89f06d8fab4ffc1b9339db52d99f051aa563516dc901"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-multicomponent",
+      "host": "claude",
+      "case": "multicomponent",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:10:39.698Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 82772
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "task.mjs": "sha256:1b6fff31d6e492b20869f5b5a1a3bd57d1b90b318ab8165ab8201e55b4856e9b",
+        "service.mjs": "sha256:e883186a7b3de2dcea687fad96292f6943e63573583dcfd7189fb6b9fdfe5292",
+        "view.mjs": "sha256:a1c72c3a177900964cd83592858d3b1480c5c4f9c6559cd5d63b14da404fe382"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:0e264b4e9cb368d507d357d1319d4e865aa619368117b4cf44f8e37e0c7ec5ef"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:7f8b6a507c81bfae68e7b3b92da1f1818735d38b0936589aeb9e931f45a9e7c7"
+      ],
+      "result_digest": "sha256:3180de80264673a0ae796a1d7bfff667d6e89c75535a03491fbaa3cffcd5af49"
+    },
+    {
+      "id": "renewal-2026-11-23-installed-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-11-23T05:19:46.452Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 116086
+      },
+      "copied_skill_digest": "sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52",
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "store.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        },
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "view.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "store.mjs": "sha256:aafed394c835c39d8c24cf6fb49d11a8808e3f34e6344a066518ce2818fe69b3",
+        "view.mjs": "sha256:e35031a5a5c8278ab8a6719fc43748522dd7135d83d6448493fd13ba3310a850",
+        "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:a0b16e7133ea080c9746d70e62709065545c6282f2ec1930cc61b2fae0ef4465"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:9008a65f4660f2bdaabfe1eb3191dd3d06111973b61e0124226aa7a500aaf77e"
+      ],
+      "result_digest": "sha256:bfafb5aa2ec7eacb66babaa824502c6520387ba328a69ee7b4ff08c68385cf7a"
     }
   ]
 }

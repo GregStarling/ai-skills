@@ -1,0 +1,923 @@
+{
+  "schema_version": "installed_delegate_acceptance.v1",
+  "validated_at": "2026-10-11T22:22:42.972Z",
+  "final_consumer_folder_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+  "host_versions": {
+    "claude": "2.1.296 (Claude Code)",
+    "codex": "codex-cli 0.162.1"
+  },
+  "cases": [
+    {
+      "id": "renewal-2026-10-11-installed-claude-tinybug",
+      "host": "claude",
+      "case": "tinybug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:56:13.542Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 70811
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "quantity.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:521f98052f5f65251b071f2b685c5ecbfb6fe185652a945c516da0606d7385c7"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:1bdbb62876e98c2a3e044659d59ba581c4857ed80861609e6fe086b8baf05c8a"
+      ],
+      "result_digest": "sha256:b2dddb07f946efd6b55e69c1e7b75e84d1f76d414d9e65ea193fa9f99dc78bbb"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-tinybug",
+      "host": "codex",
+      "case": "tinybug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:56:13.519Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 101393
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "quantity.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "quantity.mjs": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:18ea7c0a6c8c8cf0efa7f3a2f5bd2610fbde4c1a595dee44f26e06f3214bda3d"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:51ff295842105c172082c1ec6a7c90cf51d7d1fd64782f5b8aa490552d08573c"
+      ],
+      "result_digest": "sha256:b0ef16e48c3eac6eb9fa164ce1c9b4d3b74c523dfe4b7539d0c3b0fa307dab3f"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-mechanical",
+      "host": "claude",
+      "case": "mechanical",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:57:24.479Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 58475
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "slug.mjs",
+            "link.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 2
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:7ea315f3728863cacc3a219fc2e34b8678a605d70d454c7c4d0428c52e1dff16"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:34497ef0d672ce1e981f6dcd6a9b15a410b4a515b89b18bd6bf97c506d7e5a71"
+      ],
+      "result_digest": "sha256:d126b724721337f351b19d11d7a331a778b740e85a514b7568afbe0940276c57"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-mechanical",
+      "host": "codex",
+      "case": "mechanical",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:57:55.050Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 111973
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "slug.mjs",
+            "link.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 2
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "slug.mjs": "sha256:b695ae1e1b3e8eacef520d47dcc5d3b6f242e2ae1fe5396ee42ddb51ab61d611",
+        "link.mjs": "sha256:f030a276cb8ed82961dad3fb2c0e52afef4a8625d716721458b7722bdc279fff"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:afb560c937e21a9bdce3a5e58ddc5eab400bc3acd086186385fbb3c2f17973ef"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:b3a6c217a855000471e61d5a9c1dfe65bef9496a71cbdeae689cdec636ac8e40"
+      ],
+      "result_digest": "sha256:9025cb6b0d1dd55cf480d82e7e4d1ff8692b8c02f736545e2fbd68ca55dcde51"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-backend",
+      "host": "claude",
+      "case": "backend",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:58:23.090Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 70766
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "paginate.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "paginate.mjs": "sha256:de2dbcdedeb8b9228eb081381bd0d08c9bf4002b559fdeb03fdecd3f7ad29f25"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:330ee59463c5a4e5efb8a5fe72c8758474f744959625d3434d8a6ecfd2d03d57"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:ddb35e96430f96d55d29d0ce775e73d748eebe1ab4d2b5cfcd5fccdc457e2a64"
+      ],
+      "result_digest": "sha256:84a65ec819615c35d5f419b5eac22903135dfe20125e32a092d650f73d9f7916"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-backend",
+      "host": "codex",
+      "case": "backend",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:59:47.153Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 103178
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "paginate.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "paginate.mjs": "sha256:b1a22cdc679d978892b149021f14d2b1e48626ba7a86cbae069bff2037f22f58"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:be3ccf765614dc0e5d9d720271ad86ac5ccde813bee9cc40a9d4befa468e575d"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:1039a3ebaafad067df9a124407589a18c756b90dc9123ee6f9c06d6bc4573fd2"
+      ],
+      "result_digest": "sha256:620470b73111eaea44ad33d8aa20daa6edb40be7697a9c483620f6c8191fe2d2"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-ui",
+      "host": "claude",
+      "case": "ui",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T21:59:33.961Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 121855
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "index.html"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "index.html": "sha256:97af1146fc4bd979f61fca74f1a2661993727a36c4f3b4566c40a66964433890"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:6a069afc7849cde90e02da04aaf62d8b97f12faa57810822683d69dc47b03dea"
+      ],
+      "recovery": null,
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:97af1146fc4bd979f61fca74f1a2661993727a36c4f3b4566c40a66964433890",
+        "current_artifact_matches": true,
+        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "title",
+          "heading",
+          "single_main",
+          "form",
+          "task_input",
+          "checkbox_labels",
+          "tasks",
+          "submit",
+          "no_horizontal_overflow",
+          "keyboard_focus"
+        ],
+        "screenshots": [
+          {
+            "path": "320.png",
+            "digest": "sha256:028a98809ca8a044c5b0c00b11950fc3391d46e44c1527fbc3acb18032c81719"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:e24c6da0f1fc73f6bc7a3dfdbe71726108c7ac72486feff5a26dd0d796652270"
+          }
+        ],
+        "browser_checks_digest": "sha256:e2a569ae409ae89fa834cad7a50eef75a02d1324b5b66a76118267ea9271bc99"
+      },
+      "trace_digests": [
+        "sha256:0fd5079a34e09c3336c7d572554ec1d5831ac16e8772f40267b1362ceb478064"
+      ],
+      "result_digest": "sha256:b58fd63746fd581877aeeb989c4e18b5b14e1bdf25aaa6ec8994913ab503cc6d"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-hardbug",
+      "host": "claude",
+      "case": "hardbug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:01:35.938Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 90953
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "search.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "search.mjs": "sha256:d0c3ec3c62dc4d06063f954ddf7a9da5febe099a2adf33e6270ca3825cb619e3"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:de3783eb50a6ff5cc12919a03ecee550b129ddb15d2a4cf309206af9a7f54b08"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:3bd3b175df02a5956f8f643a0a8001f1a5f366de6211893cfc2c7de07e887f92"
+      ],
+      "result_digest": "sha256:1574bb2d77c2e9dc787969e069670c46c144bb5345cc28012de04199b8fbf7bd"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-multicomponent",
+      "host": "claude",
+      "case": "multicomponent",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:03:07.011Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 81731
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "task.mjs": "sha256:ca9d6188efaec64c1fd113e458707155de4521ded84887ee6452b874202e43ac",
+        "service.mjs": "sha256:7494fc89b603d2376cdc3e6cc6d35b77078e4b6af66e05306bef7b84c36b93bb",
+        "view.mjs": "sha256:52fd56699e7786d31fc50be289b8d2a792facb3a6d091a6bb05e0cb0b3229e54"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:1fe5e0e7ab23927e6905aab89128b7629ed46f2d2f5155c4fc7de7bd9f18fc59"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:0b0894557e4365a2b79dc18e3325429236274db4bd55c9af1acc297051c32ba7"
+      ],
+      "result_digest": "sha256:fd37fa3c846fe0ee09796d43a5e1261fdfba4bf472f4679f9b37660e60c9a9fb"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-ui",
+      "host": "codex",
+      "case": "ui",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:01:30.441Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 155799
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "index.html"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "index.html": "sha256:6c4aca207cbb015f0cd120671087f7a5a6044fcf5529614a147184724feae608"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:83b15b6567bf4fce25314a4434891e339ac6af683bcbf0d055e3899aee71f4f6"
+      ],
+      "recovery": null,
+      "browser": {
+        "verdict": "PASS",
+        "artifact_digest": "sha256:6c4aca207cbb015f0cd120671087f7a5a6044fcf5529614a147184724feae608",
+        "current_artifact_matches": true,
+        "reviewer": "Claude Code maintainer session (claude-opus-5-5): viewed both actual screenshots and the DOM check results",
+        "viewports": [
+          {
+            "width": 320,
+            "height": 900
+          },
+          {
+            "width": 1280,
+            "height": 900
+          }
+        ],
+        "checks": [
+          "title",
+          "heading",
+          "single_main",
+          "form",
+          "task_input",
+          "checkbox_labels",
+          "tasks",
+          "submit",
+          "no_horizontal_overflow",
+          "keyboard_focus"
+        ],
+        "screenshots": [
+          {
+            "path": "320.png",
+            "digest": "sha256:da44697ef2268eaa9cf7d402d93d9630b9be9ea8b72c91e262fc97098bcdadde"
+          },
+          {
+            "path": "1280.png",
+            "digest": "sha256:d8385b613fc1a8b08c846bbfd8cca23d776dc85d8cf065feaf48fa6820eed3c7"
+          }
+        ],
+        "browser_checks_digest": "sha256:6ee183191184706bc2bb80e8b7da035369f256cd91d820602222a90675328a89"
+      },
+      "trace_digests": [
+        "sha256:4c97e65aaa7e90c7e82f1bfab9164e86ec65a562988d05cce21ba7c70ed9ba73"
+      ],
+      "result_digest": "sha256:33d1ede2b2d27d0d5fac88d0129cd0e76e1de93f59a2114d2e91c825362c0157"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-claude-fullproject",
+      "host": "claude",
+      "case": "fullproject",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:04:28.888Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 90037
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "store.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        },
+        {
+          "requested_model": "haiku",
+          "requested_effort": null,
+          "configured_model_effort": null,
+          "observed_message_models": [
+            "claude-haiku-5-5"
+          ],
+          "observed_written_files": [
+            "view.mjs"
+          ],
+          "identity_source": "forwarded subagent assistant message model",
+          "write_attribution": "forwarded child Edit/Write tool events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "claude-opus-5-5",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [
+          "claude-opus-5-5"
+        ],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "store.mjs": "sha256:c0a43f0ad2f8b4701721882678e7f4be67fcf47723edb991e0175a9341793058",
+        "view.mjs": "sha256:9864896db7c52b194af3cbe43bf2335704af22b57442ca8bd3f64b3d94404fc2",
+        "app.mjs": "sha256:54c88a3a2e1437cc012d68c8f3f17f371e144cdfb0337c72a6c958a42da52afa"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:3fcda3a90e00e31c4d52ef3141ae71fb423c8d098249c2ddf5f9848d6a5be7ba"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:7827a50c4eab9d9958a39d4d17e15437d7beb03093c85307b742f12a688a3c34"
+      ],
+      "result_digest": "sha256:40c35fc8f2e1b15eebcf8fcc5096a43f122f113fbf01a5c40e0869aacafb59ea"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-hardbug",
+      "host": "codex",
+      "case": "hardbug",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:04:06.365Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 124200
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "search.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 1
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "search.mjs": "sha256:69ed5d0e2a860bf194c54a1f164163c3aad8dd99e2c4397a7c5d438f21567620"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:af195c3ac42c736c6ef1b2a7f498fee4bc2888f334a5ea878d8ecd96da241663"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:578cb9f19911b3fd2f4ce77ba6c2e9bb8eef5bb76eeaee6b95a9a4af513b26da"
+      ],
+      "result_digest": "sha256:be82219f77b1b1509d486b12200df38ce35df9faae7bd5b9d8fd334091675afb"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-multicomponent",
+      "host": "codex",
+      "case": "multicomponent",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:06:10.673Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 107132
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 1,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "task.mjs",
+            "service.mjs",
+            "view.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "task.mjs": "sha256:5cdc99db2ace1bf739c3d12898b6036eb3cbf23eada9542102ad2fee3f081992",
+        "service.mjs": "sha256:e06029048487a39f8af7a7e8bf44af16fb65fbd66e46b9faccef82ba9691069b",
+        "view.mjs": "sha256:4f7df182c779e6f798840c4c9c5d47c10aea5739344b184450dcd9c46853bf37"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:fa2f2c1de1ce5c7302c4416553215345e0defb1285ebab24b86a74e124ba97e6"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:d0eca838829112bfc406c9b9da3566f36f10166b0d6c93ae34ffb3af49f944a0"
+      ],
+      "result_digest": "sha256:0c502d7a75d6cf071908f4e4b9a75c7877c5eb2618d1c7a612ba1c6624823971"
+    },
+    {
+      "id": "renewal-2026-10-11-installed-codex-fullproject",
+      "host": "codex",
+      "case": "fullproject",
+      "acceptance": "PASS",
+      "original_attempt": {
+        "started_at": "2026-10-11T22:07:57.921Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "duration_ms": 118885
+      },
+      "copied_skill_digest": "sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4",
+      "worker_count": 2,
+      "workers": [
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "store.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        },
+        {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "low",
+          "configured_model_effort": [
+            {
+              "model": "gpt-6-luna",
+              "effort": "low"
+            }
+          ],
+          "observed_message_models": [],
+          "observed_written_files": [
+            "view.mjs"
+          ],
+          "identity_source": "preserved native turn_context configuration",
+          "write_attribution": "preserved child patch, shell heredoc or python write_text events"
+        }
+      ],
+      "frontier": {
+        "configuration": [
+          {
+            "model": "gpt-6-astra",
+            "effort": "high"
+          }
+        ],
+        "observed_message_models": [],
+        "actual_artifact_inspected": true,
+        "check_count": 3
+      },
+      "external_grader_passed": true,
+      "artifact_digests": {
+        "store.mjs": "sha256:1ff83942afbff03c7204bd08261b6fa355b53ad53a2b749557a0db3696b6df88",
+        "view.mjs": "sha256:020c16d5170e0219d02bf7edef8b49d812894b9b0aafe04d7cdbc862064fd387",
+        "app.mjs": "sha256:e5137cc0dcfd281d69ff04cf141d435a35870b70b31ae7d33fd7c85c01060144"
+      },
+      "receipt_count": 1,
+      "receipt_digests": [
+        "sha256:9a9fbf33e870f85df4e716170495c5f07d2a2847e7b961ff7e314686d78e7cac"
+      ],
+      "recovery": null,
+      "browser": null,
+      "trace_digests": [
+        "sha256:242a786e764b7b4f80776f84b8acddf109e728f3902f10569d845678a4748744"
+      ],
+      "result_digest": "sha256:07870a84f7148fbc6d40f8965ed43c783d2ee216e753a48c097c79943bafc5ca"
+    }
+  ]
+}

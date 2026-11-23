@@ -16,11 +16,17 @@ const admissions=existsSync(admissionsPath)?JSON.parse(readFileSync(admissionsPa
  return entry;
 }):[];
 const provisional=buildProvisionalPilotRoutes(observations,acceptance,mediumAudit,{routingPack:policy.routing_pack,admissions});
+const frontierTargets=JSON.parse(readFileSync('data/routing/frontier-targets.json','utf8'));
+if(frontierTargets.schema_version!=='frontier_targets.v2')throw Error('FRONTIER_POLICY_SCOPED_TARGETS_REQUIRED');
+const frontierReviews=JSON.parse(readFileSync('data/routing/frontier-probe-reviews.json','utf8'));
+if(frontierReviews.schema_version!=='frontier_probe_reviews.v2')throw Error('FRONTIER_REVIEW_EVIDENCE_REQUIRED');
 requireFrontierRefresh(
-  JSON.parse(readFileSync('data/routing/frontier-targets.json','utf8')),
+  frontierTargets,
   JSON.parse(readFileSync('data/routing/frontier-probes.json','utf8')),
   new Date().toISOString(),policy.routing_pack.refresh_after_days,
   JSON.parse(readFileSync('data/routing/frontier-identity-evidence.json','utf8')),
+  readFileSync('skills/delegate/SKILL.md'),
+  frontierReviews.evidence,
 );
 const pack=validateRoutingPackPublication(compileRoutingPack({mode:'production',policy,strata:[],provisional}));
 if(!process.argv.includes('--allow-short-entries'))assertEntriesOutlivePack(pack,24);

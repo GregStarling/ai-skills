@@ -6,12 +6,15 @@ import {parseArgs} from 'node:util';
 import {executeBudgetedFrontier} from './verify/budgeted-frontier.mjs';
 
 // Maintainer-only probes. Output remains staged until independent evidence review.
-export async function probeFrontiers({budgetFile,targetsPath='data/routing/frontier-targets.json',outputDirectory=null}={}){
+export async function probeFrontiers({budgetFile,targetsPath='data/routing/frontier-targets.json',outputDirectory=null,host=null}={}){
+if(host!==null&&!['codex','claude'].includes(host))throw Error('INVALID_FRONTIER_PROBE_HOST');
 if(!budgetFile)throw Error('APPROVED_BUDGET_REQUIRED');
-const {frontierTargetsSchema,frontierProbesSchema}=await import('../dist/routing/frontier-refresh.js');
+const {frontierTargetsSchema,frontierProbesSchema,requireFrontierTargetPolicy,requireCurrentFrontierDiscovery}=await import('../dist/routing/frontier-refresh.js');
 const {digest,hashBytes}=await import('../dist/core/canonical.js');
 const root=resolve(import.meta.dirname,'..');
 const targets=frontierTargetsSchema.parse(JSON.parse(await readFile(resolve(targetsPath),'utf8')));
+requireFrontierTargetPolicy(targets,await readFile(join(root,'skills/delegate/SKILL.md')));
+requireCurrentFrontierDiscovery(targets);
 const artifactRoot=outputDirectory??join(root,'artifacts/frontier-probes',String(Date.now()));
 await mkdir(dirname(artifactRoot),{recursive:true});await mkdir(artifactRoot);
 const errorMessage=value=>{
@@ -20,7 +23,7 @@ const errorMessage=value=>{
 };
 const identityEvidence={};
 const probes=[];
-for(const target of targets.targets){
+for(const target of targets.targets.filter(target=>host===null||target.host===host)){
   const directory=await mkdtemp(join(tmpdir(),`frontier-probe-${target.host}-`));
   await writeFile(join(directory,'quantity.mjs'),'export const totalQuantity = items => items.reduce((n, item) => n + (item.quantity || 1), 0);\n');
   await writeFile(join(directory,'quantity.test.mjs'),"import assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\nassert.equal(totalQuantity([{quantity:0},{quantity:2}]),2);\n");
@@ -47,7 +50,7 @@ await writeFile(join(artifactRoot,'report.json'),JSON.stringify(report,null,2)+'
 return {artifactRoot,report,identityEvidence};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href){
- const {values}=parseArgs({options:{budget:{type:'string'},targets:{type:'string'},output:{type:'string'}}});
- const result=await probeFrontiers({budgetFile:values.budget,targetsPath:values.targets,outputDirectory:values.output});
+ const {values}=parseArgs({options:{budget:{type:'string'},targets:{type:'string'},output:{type:'string'},host:{type:'string'}}});
+ const result=await probeFrontiers({budgetFile:values.budget,targetsPath:values.targets,outputDirectory:values.output,host:values.host});
  console.log(JSON.stringify({artifactRoot:result.artifactRoot,probes:result.report.probes}));
 }

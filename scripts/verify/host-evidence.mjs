@@ -11,9 +11,9 @@ import { finished } from 'node:stream/promises';
 // Maintainer-only native CLI experiment; deliberately grants no qualification.
 const output = resolve('artifacts/portable-host-evidence');
 const modelRuns = {
-  // 2026-10-11 renewal: the Claude 5.5 generation replaced Opus 5, Sonnet 5 and Haiku 4.5 (now legacy), and GPT-6.1 Sol superseded GPT-6 Sol.
-  codex: { worker: ['gpt-6-luna', 'low'], reviewer: ['gpt-6-astra', 'high'] },
-  'codex-standard': { worker: ['gpt-6.1-sol', 'low'], reviewer: ['gpt-6-astra', 'high'] },
+  // Use the primary frontier for fresh routine reviews.
+  codex: { worker: ['gpt-6-luna', 'low'], reviewer: ['gpt-6.1-sol', 'high'] },
+  'codex-standard': { worker: ['gpt-6.1-sol', 'low'], reviewer: ['gpt-6.1-sol', 'high'] },
   claude: { worker: ['claude-sonnet-5-5', 'low'], reviewer: ['claude-opus-5-5', 'high'] },
   'claude-haiku': { worker: ['claude-haiku-5-5', null], reviewer: ['claude-opus-5-5', 'high'] },
 };
@@ -134,7 +134,7 @@ export async function runSmoke(host,{budgetFile,outputDirectory=null,workerCaptu
   await writeFile(join(directory, 'quantity.test.mjs'), `import test from 'node:test';\nimport assert from 'node:assert/strict';\nimport {totalQuantity} from './quantity.mjs';\ntest('preserves zero and defaults only absent quantities', () => {\n assert.equal(totalQuantity([{quantity:0},{quantity:2},{}]),3);\n assert.equal(totalQuantity([{quantity:null},{quantity:undefined}]),2);\n assert.equal(totalQuantity([]),0);\n});\n`);
   await writeFile(join(directory, 'AGENTS.md'), 'This is a disposable bounded fixture. Modify only quantity.mjs. Do not install, access the network, change configuration, or edit tests. Run node --test quantity.test.mjs.\n');
   }
-  const prompt = 'Fix totalQuantity in quantity.mjs so explicit zero is preserved and only null/undefined quantities default to one. Do not edit tests or other files. Read the existing files, implement the smallest fix, run node --test quantity.test.mjs, and report the change and result.';
+  const prompt = 'Fix totalQuantity in quantity.mjs so explicit zero is preserved and only null/undefined quantities default to one. Do not edit tests or other files. Read quantity.mjs and quantity.test.mjs with separate file reads or standalone cat commands so each read appears in the trace. Implement the smallest fix, run node --test quantity.test.mjs as a standalone command, and report the change and result.';
   const args = (model, effort, review = false) => host.startsWith('codex')
     ? ['exec', '--ignore-user-config', '--ignore-rules', '--ephemeral', '--skip-git-repo-check', '-C', directory, '-s', review ? 'read-only' : 'workspace-write', '-m', model, '-c', `model_reasoning_effort="${effort}"`, '--json', '-']
     : ['-p', '--model', model, ...(effort ? ['--effort', effort] : []), '--output-format', 'stream-json', '--verbose', '--no-session-persistence', '--setting-sources', '', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}', '--permission-mode', 'dontAsk', '--tools', review ? 'Read,Bash' : 'Read,Edit,Write,Bash', '--allowedTools', review ? 'Read,Bash(node --test *)' : 'Read,Edit,Write,Bash(node --test *)', '--max-budget-usd', '2'];
