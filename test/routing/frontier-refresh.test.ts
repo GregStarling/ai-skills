@@ -29,7 +29,8 @@ describe('frontier refresh publication preflight',()=>{
 // Checked-in real captures exercise publication proof without any provider calls.
 function nativeFixture(){
   const read=(path:string)=>JSON.parse(readFileSync(path,'utf8'));
-  const targets=read('data/routing/frontier-targets.json'),probes=read('data/routing/frontier-probes.json'),evidence=read('data/routing/frontier-identity-evidence.json');
+  const base='data/routing/archive/2026-10-11';
+  const targets=read(`${base}/frontier-targets.json`),probes=read(`${base}/frontier-probes.json`),evidence=read(`${base}/frontier-identity-evidence.json`);
   const now=new Date(Math.max(...probes.probes.map((p:any)=>Date.parse(p.attempted_at)))+1000).toISOString();
   for(const probe of probes.probes){probe.evaluation.status='passed';probe.evaluation.review_digest=sha;}
   return {targets,probes,evidence,now};

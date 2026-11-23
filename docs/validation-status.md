@@ -7,15 +7,18 @@ The single current-state index. It is updated with every pack recompile and ever
 | Field | Value |
 | --- | --- |
 | Schema, mode | `routing_pack.v3`, production |
-| `content_digest` | `sha256:37377985353aaa510aa7ebd65593e1f2fe254d4f50c5d8106333d5b3b09efa1d` |
-| `generated_at` | 2026-10-11T22:22:43.174Z (2026-10-11 model-currency renewal) |
-| `refresh_after` | 2026-10-18T22:22:43.174Z |
-| `expires_at` | 2026-11-10T22:22:43.174Z |
-| Earliest route-entry expiry | 2026-11-10T21:46:04.000Z; publication guard requires no entry to expire more than 24 hours before the pack |
-| Routes | 15 (14 low risk, 1 medium: Claude `mechanical_work`); qualified entries 0. Claude treatments are `claude-haiku-5-5` and `claude-sonnet-5-5`/low workers with a `claude-opus-5-5`/high reviewer and the calibrated `claude-fable-5-1`/high mechanical reviewer; Codex treatments are `gpt-6-luna`/low and `gpt-6.1-sol`/low workers with a `gpt-6-astra`/high reviewer |
-| Free recompile window | until 2026-10-18T21:46:04.000Z (fresh frontier metadata age); a later refresh requires counted probes |
+| `content_digest` | `sha256:707241633a83f35dc4cc4f7b0b6024719e31cab4caab8d128e8b1a7c092bb941` |
+| `generated_at` | 2026-11-23T05:27:02.548Z |
+| `refresh_after` | 2026-11-30T05:27:02.548Z |
+| `expires_at` | 2026-12-23T05:27:02.548Z |
+| Earliest route-entry expiry | 2026-12-23T04:51:30.027Z |
+| Routes | 15 provisional routes (14 low risk, 1 medium risk). Workers span Luna, Sol, Haiku and Sonnet. The reviewers are Sol/high and Opus/high. |
+| Recompile deadline using all current evidence | 2026-11-24T04:51:30.027Z under the 24-hour entry lifetime guard |
+| Frontier metadata freshness deadline | 2026-11-30T04:51:30.027Z |
 
 ## Current consumer folder
+
+The November 23 renewal compiled the current pack from four accepted smoke runs and 14 reviewed installed cases. Both hosts used the same frozen consumer folder. The final compilation adds the resulting acceptance references. [November renewal results](delegate-renewal-results-2026-11-23.md)
 
 Primary-frontier policy (2026-10-15): Codex uses `gpt-6.1-sol` at high reasoning for plans,
 decisions, hard bugs and fresh reviews. Astra is reserved for bounded rescue of a stuck build
@@ -46,7 +49,7 @@ The current canonical source uses a mandatory stateless `check` at intake and wh
 
 | Current source digest | Value |
 | --- | --- |
-| Helper `folderDigest` (16 consumer files) | `sha256:b2ad09815bb21157133c1f3dbc0de047945a91240f3ffd84635791af8b237218` |
+| Helper `folderDigest` (16 consumer files) | `sha256:015d0b89b3b299704efaa02699e30e01b21edd3f209f24bb913ab06094ba7c2a` |
 | Guidance without `routing-pack.json` | `sha256:9ea52dff8acedcff7d3595f5566934249dad4279a9bf66630fb84036c94afd9e` |
 
 Previous revision (2026-09-12 release verification, 14 consumer files): folder `sha256:c367463c799ef41948052bd15e359f6f27b57e37d003a5df4b31bf547e9996f7`, guidance `sha256:dc9276529090d55202b099f72881db2835aa036b265e7bea56fd44018cef1730`.
@@ -80,7 +83,9 @@ Ordinary dispatch supports bounded location, source analysis, reproduction, twea
 
 Revision checks: 772 tests across 44 files, typecheck, build, portable packaging/reachability, ordinary CLI dispatch and pack publication validation passed. A bounded independent usability forward-test in the real Foreman TypeScript repository completed ordinary dispatch, one read-only worker investigation, coordinator source verification and one outcome observation with usage null. Requested native worker controls were `gpt-5.6-luna`, medium effort, no history fork; served controls were not exposed. The investigator found the separate run-plan retry and dispatch requeue mechanisms and returned affected metadata, serial/parallel callers, tests and unresolved feature semantics. Verification corrected a minor repeated-failure/same-diagnosis conflation. No Foreman edits or broad test runs occurred. This tests investigation usability, not implementation quality, massive-repository generalization, model qualification or allowance savings. A wording fix afterward clarifies that configurable controls are checked before launch and observations afterward.
 
-**Current acceptance: 14 of 14 cases from the 2026-10-11 model-currency renewal**, all on folder `beba70c3` with Claude Code 2.1.296 and Codex CLI 0.162.1; see the [2026-10-11 results](delegate-renewal-results-2026-10-11.md). The October records are archived byte-identically under `data/routing/archive/2026-10-09/`, and the September records under `data/routing/archive/2026-09-11/`. Recompilation changes the pack after capture; no exact-published-folder live run is claimed. Earlier: eleven original September records plus three follow-up runs on repaired folder `3b5f56fe`; the three original failed run IDs remain preserved in the [September renewal results](delegate-renewal-results.md). M4's four earlier matched pairs passed quality checks, with direct execution faster in all four.
+**Current acceptance** covers 14 of 14 cases from November 23 on frozen folder `sha256:aed17d14`. [November evidence index](evidence/delegate-renewal-2026-11-23/evidence.json)
+
+**October acceptance covered 14 of 14 cases in the 2026-10-11 renewal**, all on folder `beba70c3` with Claude Code 2.1.296 and Codex CLI 0.162.1; see the [2026-10-11 results](delegate-renewal-results-2026-10-11.md). The October records are archived byte-identically under `data/routing/archive/2026-10-09/`, and the September records under `data/routing/archive/2026-09-11/`. Recompilation changes the pack after capture; no exact-published-folder live run is claimed. Earlier: eleven original September records plus three follow-up runs on repaired folder `3b5f56fe`; the three original failed run IDs remain preserved in the [September renewal results](delegate-renewal-results.md). M4's four earlier matched pairs passed quality checks, with direct execution faster in all four.
 
 ## Measured helper overhead
 
@@ -105,6 +110,8 @@ These timings used the M1 folder before renewal. The current Claude mechanical l
 
 ## Renewal decision
 
+On November 22 (America/Chicago), Greg approved a separate full renewal with a ceiling of 62 model calls. The November 23 UTC evidence snapshot accounts for 55 calls through the repaired release candidate, before its final independent review. [Dated results](delegate-renewal-results-2026-11-23.md)
+
 Renewal decision (2026-10-11): Greg authorized the Delegate model-currency workstream ("work through this entire workstream, use /cto mode and /ship when complete") after a live look found the pack's Claude treatments on legacy Opus 5, Sonnet 5 and Haiku 4.5 and a newer GPT-6.1 Sol superseding GPT-6 Sol; the campaign reused the October ceiling of 62 model executions and used 46: 3 frontier probe and review, 2 capacity preflights, 4 Fable calibration, 7 smoke executions (the Haiku smoke reused the calibration worker) and 30 for the 14 installed cases, all of which passed maintainer trace review. Treatments moved to Claude Opus 5.5, Sonnet 5.5 and Haiku 5.5 and Codex GPT-6.1 Sol; Luna, Astra and the Fable 5.1 mechanical_work/low reviewer were renewed. No scope was broadened and no qualification or savings are claimed.
 
 Renewal decision (2026-10-09): Greg approved a full renewal ("option 3") with a ceiling of 62 model executions after official Codex documentation showed `gpt-5.3-codex-spark` retired (2026-09-14) and `gpt-5.5` leaving Codex sign-in on 2026-10-14. The campaign used 49/62: 3 frontier probe and review, 2 capacity preflights, 4 Fable calibration, 10 smoke executions (including 3 for two retried reviews whose correct verdicts missed the assembler's format) and 30 for the 14 installed cases, all of which passed maintainer trace review. The Codex treatments moved to `gpt-6-luna`/`gpt-6-sol` workers and a `gpt-6-astra` reviewer; Fable remains an additional mechanical_work/low reviewer. No scope was broadened and no qualification or savings are claimed.
@@ -126,11 +133,13 @@ Every row carries its own folder digest and origin; none carries qualification a
 | 6. Reliability follow-up | 2026-09-11 | Claude 2.1.267, Codex 0.154.0 | captured `sha256:3b5f56fefda262915fd11d6dd0914ff1f2b0568bfd372d9dc5567857628ea391`; published `sha256:603f405245b835466650a577657805970a2b0ae0da1c6792f00588cd6b3e0725` | captured `0dc26099`; published `sha256:ebda991b38d0a2eaba7434fbd577d447d5288412c9f195a9206cbc2498685619` | three new passing runs; prior eleven records unchanged; multiple iterations; qualification_authority false |
 | 7. October full renewal | 2026-10-09 to 2026-10-10 | Claude 2.1.292, Codex 0.156.1 | captured `sha256:04e3edbeac507502bdedbd31a491ceb457d10c418edf719d23dc2a8b4ec408d5`; published `sha256:76a6864a9d3073b70dff532a3a97cc0303f7f03e5875e4a68fa8178631fafc74` | captured `357665d4`; published `sha256:348739dd236a4e9690061edfd4c7e70c25ac1cb88cb46f77cb7695fe1f7fb260` | 14/14 acceptance; Codex treatments replaced with GPT-6 Luna/Sol/Astra; fresh smokes, probes and Fable calibration; qualification_authority false |
 | 8. Model-currency renewal | 2026-10-11 | Claude 2.1.296, Codex 0.162.1 | captured `sha256:beba70c31427f5e3e2bf08475ad011af4a00d3fb5a6c634dd0427302c0c9caf4`; published `sha256:3df782b9d08c5b9290d8cac996646ecd7765bb06f9a5f47338f3664585884a2e` | captured `6e135a0c`; published `sha256:37377985353aaa510aa7ebd65593e1f2fe254d4f50c5d8106333d5b3b09efa1d` | 14/14 acceptance; treatments moved to Claude 5.5 and GPT-6.1 Sol; fresh smokes, probes and Fable calibration; qualification_authority false |
+| 9. Policy-aligned renewal | 2026-11-23 | Claude 2.1.296, Codex 0.162.1 | captured `sha256:aed17d145f3ec7f86f259c982c371cebf988762bc9f71d690d72d6daa1824b52`, published `sha256:015d0b89b3b299704efaa02699e30e01b21edd3f209f24bb913ab06094ba7c2a` | captured `266bb4d4`, published `sha256:707241633a83f35dc4cc4f7b0b6024719e31cab4caab8d128e8b1a7c092bb941` | 14/14 installed cases accepted, 15 provisional routes |
 
 ## Historical reports
 
 Immutable except dated append-only addenda.
 
+- [November 23 renewal and evidence](delegate-renewal-results-2026-11-23.md).
 - [delegate-renewal-results-2026-10-11.md](delegate-renewal-results-2026-10-11.md), 2026-10-11, pack `37377985`, with [its evidence index](evidence/delegate-renewal-2026-10-11/evidence.json).
 - [delegate-renewal-results-2026-10-09.md](delegate-renewal-results-2026-10-09.md), 2026-10-09, pack `348739dd`, with [its evidence index](evidence/delegate-renewal-2026-10-09/evidence.json).
 - [v5-validation.md](v5-validation.md), 2026-09-10, pack `e65c17c8`, 9-file folder before PR #5; machine-readable result frozen at `data/routing/v5-validation.json`; later release-proof runs are written once under `docs/evidence/v5-validation/`.

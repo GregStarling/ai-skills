@@ -1,29 +1,71 @@
 {
-  "schema_version": "frontier_targets.v1",
-  "discovered_at": "2026-10-11T21:46:04.000Z",
+  "schema_version": "frontier_targets.v2",
+  "discovered_at": "2026-11-23T04:56:54.464Z",
+  "model_policy": {
+    "path": "skills/delegate/SKILL.md",
+    "content_digest": "sha256:3cf3ad0dc906dead7d63ca28e511b2e0a807d05e039d61a08bdb1c594ee85672"
+  },
   "targets": [
     {
       "provider": "openai",
       "host": "codex",
-      "model_id": "gpt-6-astra",
+      "model_id": "gpt-6.1-sol",
       "effort": "high",
       "source": {
-        "url": "https://learn.chatgpt.com/docs/models",
-        "checked_at": "2026-10-11T21:46:04.000Z",
-        "content_digest": "sha256:66ceb21b2cc23c4ea68e99782854f5b0115e61ce6f9ae9c5a4106f7abf2df160",
-        "claim": "Official Codex model guidance identifies Astra as its most capable model and lists Codex CLI availability; GPT-6.1 Sol, which supersedes GPT-6 Sol, is described as near-Astra performance at lower cost, not as more capable."
+        "url": "https://learn.chatgpt.com/docs/models.md",
+        "checked_at": "2026-11-23T04:51:30.027Z",
+        "content_digest": "sha256:2ca411d02af5e803e25d60eedcac752c7a6153c2c6dffafdbd854aff61f4277c",
+        "claim": "OpenAI lists GPT-6.1 Sol for Codex. The repository selects that model at high reasoning for ordinary frontier work."
       }
     },
     {
       "provider": "anthropic",
       "host": "claude",
-      "model_id": "claude-fable-5-1",
+      "model_id": "claude-opus-5-5",
       "effort": "high",
       "source": {
-        "url": "https://platform.claude.com/docs/en/models/overview",
-        "checked_at": "2026-10-11T21:46:04.000Z",
-        "content_digest": "sha256:400903df0cebdd220170a14a804e89136ee2466310dd5c733192bcfc067708f4",
-        "claim": "Official model overview identifies Fable 5.1 for demanding reasoning and long-horizon agentic work, with Opus 5.5 the starting point for most workloads; Claude Mythos 5.1 appears only in pricing as limited availability."
+        "url": "https://platform.claude.com/docs/en/models/overview.md",
+        "checked_at": "2026-11-23T04:51:30.030Z",
+        "content_digest": "sha256:41f5ac40ac7890dc6983142312f31f0719430c3c242fc93a3fc5bc63e3816641",
+        "claim": "Anthropic lists claude-opus-5-5 as the model for long-running agentic coding. The repository selects Opus 5.5 for Claude frontier work."
+      }
+    }
+  ],
+  "vendor_frontiers": [
+    {
+      "provider": "openai",
+      "host": "codex",
+      "model_id": "gpt-6.2-astra",
+      "effort": "high",
+      "source": {
+        "url": "https://learn.chatgpt.com/docs/models.md",
+        "checked_at": "2026-11-23T04:51:30.027Z",
+        "content_digest": "sha256:2ca411d02af5e803e25d60eedcac752c7a6153c2c6dffafdbd854aff61f4277c",
+        "claim": "OpenAI identifies GPT-6.2 Astra for its most demanding coding and multi-step projects."
+      },
+      "selection": "excluded",
+      "reason": "The repository binds ordinary Codex frontier roles to GPT-6.1 Sol at high reasoning. A newer Astra is outside that binding, and this renewal is not a stuck-build rescue.",
+      "selected_target": {
+        "model_id": "gpt-6.1-sol",
+        "effort": "high"
+      }
+    },
+    {
+      "provider": "anthropic",
+      "host": "claude",
+      "model_id": "claude-fable-5-2",
+      "effort": "high",
+      "source": {
+        "url": "https://platform.claude.com/docs/en/models/overview.md",
+        "checked_at": "2026-11-23T04:51:30.030Z",
+        "content_digest": "sha256:41f5ac40ac7890dc6983142312f31f0719430c3c242fc93a3fc5bc63e3816641",
+        "claim": "Anthropic identifies Fable 5.2 for its most demanding reasoning and long-horizon agentic work."
+      },
+      "selection": "excluded",
+      "reason": "The repository prohibits Fable for every role and binds the Claude frontier to Opus 5.5.",
+      "selected_target": {
+        "model_id": "claude-opus-5-5",
+        "effort": "high"
       }
     }
   ]

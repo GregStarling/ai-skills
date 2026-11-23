@@ -1,8 +1,3 @@
 {
-  "admissions": [
-    {
-      "host": "claude",
-      "report_digest": "sha256:4cfb64bb02ba5a8f347b57af112061a12ab305f09a782be699fe577f62486f53"
-    }
-  ]
+  "admissions": []
 }

@@ -1,69 +1,76 @@
 {
   "sources": [
     {
-      "id": "claude-models",
-      "url": "https://platform.claude.com/docs/en/models/overview",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:400903df0cebdd220170a14a804e89136ee2466310dd5c733192bcfc067708f4",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-models.html"
-    },
-    {
-      "id": "claude-pricing",
-      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:16f501c115d32d94fb914470114a58e879aae34ddfca0076f3c2770b70daaac6",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-pricing.html"
-    },
-    {
-      "id": "claude-deprecations",
-      "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:02329118b56616de58be0a1223c8d8121ac722beed18cc7e0f68610190ebf32f",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/claude-deprecations.html"
-    },
-    {
       "id": "codex-models",
-      "url": "https://learn.chatgpt.com/docs/models",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:66ceb21b2cc23c4ea68e99782854f5b0115e61ce6f9ae9c5a4106f7abf2df160",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-models.html"
+      "url": "https://learn.chatgpt.com/docs/models.md",
+      "checked_at": "2026-11-23T04:51:30.027Z",
+      "content_digest": "sha256:2ca411d02af5e803e25d60eedcac752c7a6153c2c6dffafdbd854aff61f4277c",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/codex-models.source"
     },
     {
       "id": "codex-pricing",
-      "url": "https://learn.chatgpt.com/docs/pricing",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:e5da05fb88c1181cb74220e58786deba2702bb4c6cda0b3e0fc81975df2b35fa",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-pricing.html"
-    },
-    {
-      "id": "openai-gpt-6-astra",
-      "url": "https://developers.openai.com/api/docs/models/gpt-6-astra",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:2d3d6b7a5178c26f161412d5662bc1b1162238efe77ebb6a1ad89b06a9055ebc",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6-astra.html"
+      "url": "https://learn.chatgpt.com/docs/pricing.md",
+      "checked_at": "2026-11-23T04:51:30.064Z",
+      "content_digest": "sha256:83c9e06d02f40b0974ccefc151a30d11420bad88bb6128e75f948c1956ebc42d",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/codex-pricing.source"
     },
     {
       "id": "openai-gpt-6.1-sol",
       "url": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:9545afdc715766fe39244037a6a370ea937d533aec85b6dd3e63da174d783f76",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6.1-sol.html"
+      "checked_at": "2026-11-23T04:51:30.158Z",
+      "content_digest": "sha256:5e97e512e0e3b341ea776e1b103583e24bcab5f05e66d7e192e231dc66daf0e2",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6.1-sol.source"
     },
     {
       "id": "openai-gpt-6-luna",
       "url": "https://developers.openai.com/api/docs/models/gpt-6-luna",
-      "checked_at": "2026-10-11T21:46:04.000Z",
-      "content_digest": "sha256:64d8d02410935518bb626622fba5b8563e676be84439a37b384a70ed8acb97bd",
-      "artifact": "artifacts/renewal-2026-10-11/metadata/openai-gpt-6-luna.html"
+      "checked_at": "2026-11-23T04:51:30.195Z",
+      "content_digest": "sha256:c91b290a625032429e118b978f1d929eda8dbbf0157e19447cd2427f122f8158",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6-luna.source"
+    },
+    {
+      "id": "openai-gpt-6.2-astra",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.2-astra",
+      "checked_at": "2026-11-23T04:51:30.149Z",
+      "content_digest": "sha256:9f2514d9f660bdaa3f646844e5a77a04b4519f7d548584104d5c50a8e77ec70e",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/openai-gpt-6.2-astra.source"
+    },
+    {
+      "id": "claude-models",
+      "url": "https://platform.claude.com/docs/en/models/overview.md",
+      "checked_at": "2026-11-23T04:51:30.030Z",
+      "content_digest": "sha256:41f5ac40ac7890dc6983142312f31f0719430c3c242fc93a3fc5bc63e3816641",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-models.source"
+    },
+    {
+      "id": "claude-pricing",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+      "checked_at": "2026-11-23T04:51:30.071Z",
+      "content_digest": "sha256:488e03e9cc17c794593348133aa9869d650964d599af58604a9838a0ae47e816",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-pricing.source"
+    },
+    {
+      "id": "claude-deprecations",
+      "url": "https://platform.claude.com/docs/en/about-claude/model-deprecations.md",
+      "checked_at": "2026-11-23T04:51:30.023Z",
+      "content_digest": "sha256:4293738873aa27f7e8260440a52dbafd4858565ae2a2c559d00b4177b85c7dff",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-deprecations.source"
+    },
+    {
+      "id": "claude-code-model-config",
+      "url": "https://code.claude.com/docs/en/model-config.md",
+      "checked_at": "2026-11-23T04:51:30.015Z",
+      "content_digest": "sha256:0eb85bfd05da194833d741b15172de8430cee5920a4ecd11ec07787db8d2c0cf",
+      "artifact": "artifacts/renewal-2026-11-23/metadata/claude-code-model-config.source"
     }
   ],
   "treatments": [
     {
-      "candidate_id": "claude-claude-haiku-5-5-not_applicable",
-      "provider": "anthropic",
-      "model_id": "claude-haiku-5-5",
+      "candidate_id": "codex-gpt-6-luna-low",
+      "provider": "openai",
+      "model_id": "gpt-6-luna",
       "snapshot_id": null,
-      "effort": "not_applicable",
+      "effort": "low",
       "serving": {
         "fallback": "disabled",
         "tool_use": "host_tools",
@@ -73,45 +80,45 @@
         "fallback",
         "tool_use"
       ],
-      "family": "haiku",
+      "family": "gpt-6-luna",
       "frontier": false,
       "capabilities": [
         "terminal"
       ],
-      "context_window_tokens": 1000000,
+      "context_window_tokens": null,
       "evidence": {
-        "observed_at": "2026-10-11T21:50:38.524Z",
-        "host": "claude",
-        "host_version": "2.1.296 (Claude Code)",
-        "observed_model_id": "claude-haiku-5-5",
+        "observed_at": "2026-11-23T04:55:18.802Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.162.1",
+        "observed_model_id": "gpt-6-luna",
         "observed_effort": null,
-        "configured_effort": "not_applicable",
-        "effort_source": "not_applicable",
-        "identity_source": "runtime",
+        "configured_effort": "low",
+        "effort_source": "requested_configuration",
+        "identity_source": "host_configuration",
         "control_limitations": [
           "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
           "No explicit fallback was requested; provider-side rerouting is not independently attested.",
           "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "Haiku 5.5 supports adaptive-thinking effort, but neither this smoke (no --effort flag) nor the Claude Code Agent tool (no effort option) requests one, so the host default applies. not_applicable records the absence of an effort request, not that the model lacks effort; served effort is unobserved.",
-          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown.",
-          "Haiku 5.5 list price rises from $0.10/$0.50 to $0.50/$2.50 per million tokens for a request whose prompt exceeds 100,000 tokens; the recorded price is the lower tier."
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal.",
+          "Captured Luna API model page documents a 1,050,000 token maximum; current captured host documentation does not establish the effective Luna host context size. Host context remains null, rather than inferring that the API maximum is configured."
         ],
         "availability": {
-          "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-11T21:46:04.000Z"
+          "url": "https://learn.chatgpt.com/docs/models.md",
+          "checked_at": "2026-11-23T04:51:30.027Z"
         },
         "pricing": {
-          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
-          "input_usd_per_million": 0.1,
-          "output_usd_per_million": 0.5,
-          "unknown_reason": null
+          "url": "https://learn.chatgpt.com/docs/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.064Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Subscription execution USD cost is unobserved; API list prices are not subscription cost."
         },
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:b52ba13a8882199b5e27f0fc6873f2517ab90b089b63ad4c4ddbeb79d4c81a99",
-          "review_digest": "sha256:ec1a82eff23fab939dc1c1dec2c80bb553feaac54d3236edbfde94793bce9601",
+          "execution_digest": "sha256:882d5e797fca65cfab8874d6d195070db44cd5540447c44d68865f6383e29273",
+          "review_digest": "sha256:92f36e9489c3a7f6cbeb489a0d75e4e15391853b4b886f9322aa9e8f083f150a",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -119,9 +126,9 @@
       }
     },
     {
-      "candidate_id": "claude-claude-opus-5-5-high",
-      "provider": "anthropic",
-      "model_id": "claude-opus-5-5",
+      "candidate_id": "codex-gpt-6.1-sol-high",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
       "snapshot_id": null,
       "effort": "high",
       "serving": {
@@ -133,44 +140,105 @@
         "fallback",
         "tool_use"
       ],
-      "family": "opus",
+      "family": "gpt-6.1-sol",
       "frontier": true,
       "capabilities": [
         "terminal"
       ],
-      "context_window_tokens": 1000000,
+      "context_window_tokens": 500000,
       "evidence": {
-        "observed_at": "2026-10-11T21:52:32.025Z",
-        "host": "claude",
-        "host_version": "2.1.296 (Claude Code)",
-        "observed_model_id": "claude-opus-5-5",
+        "observed_at": "2026-11-23T04:56:02.318Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.162.1",
+        "observed_model_id": "gpt-6.1-sol",
         "observed_effort": null,
         "configured_effort": "high",
         "effort_source": "requested_configuration",
-        "identity_source": "runtime",
+        "identity_source": "host_configuration",
         "control_limitations": [
           "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
           "CLI effort was configured, but served effort is not attested in the event stream.",
           "No explicit fallback was requested; provider-side rerouting is not independently attested.",
           "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal.",
+          "Current Codex documentation states 500,000 default host context; API maxima and larger configured contexts are not assumed."
         ],
         "availability": {
-          "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-11T21:46:04.000Z"
+          "url": "https://learn.chatgpt.com/docs/models.md",
+          "checked_at": "2026-11-23T04:51:30.027Z"
         },
         "pricing": {
-          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
-          "input_usd_per_million": 4,
-          "output_usd_per_million": 20,
-          "unknown_reason": null
+          "url": "https://learn.chatgpt.com/docs/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.064Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Subscription execution USD cost is unobserved; API list prices are not subscription cost."
         },
         "smoke": {
           "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
-          "review_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+          "execution_digest": "sha256:ad6413216190bdf30dbca221ce5e8896054b526cafe8252fc69d19ace76f6b72",
+          "review_digest": "sha256:ad6413216190bdf30dbca221ce5e8896054b526cafe8252fc69d19ace76f6b72",
+          "accepted": true,
+          "frontier_reviewed": true
+        },
+        "qualification_failure": null
+      }
+    },
+    {
+      "candidate_id": "codex-gpt-6.1-sol-low",
+      "provider": "openai",
+      "model_id": "gpt-6.1-sol",
+      "snapshot_id": null,
+      "effort": "low",
+      "serving": {
+        "fallback": "disabled",
+        "tool_use": "host_tools",
+        "json_schema": false
+      },
+      "material_serving_settings": [
+        "fallback",
+        "tool_use"
+      ],
+      "family": "gpt-6.1-sol",
+      "frontier": false,
+      "capabilities": [
+        "terminal"
+      ],
+      "context_window_tokens": 500000,
+      "evidence": {
+        "observed_at": "2026-11-23T04:55:41.868Z",
+        "host": "codex",
+        "host_version": "codex-cli 0.162.1",
+        "observed_model_id": "gpt-6.1-sol",
+        "observed_effort": null,
+        "configured_effort": "low",
+        "effort_source": "requested_configuration",
+        "identity_source": "host_configuration",
+        "control_limitations": [
+          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
+          "CLI effort was configured, but served effort is not attested in the event stream.",
+          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
+          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
+          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal.",
+          "Current Codex documentation states 500,000 default host context; API maxima and larger configured contexts are not assumed."
+        ],
+        "availability": {
+          "url": "https://learn.chatgpt.com/docs/models.md",
+          "checked_at": "2026-11-23T04:51:30.027Z"
+        },
+        "pricing": {
+          "url": "https://learn.chatgpt.com/docs/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.064Z",
+          "input_usd_per_million": null,
+          "output_usd_per_million": null,
+          "unknown_reason": "Subscription execution USD cost is unobserved; API list prices are not subscription cost."
+        },
+        "smoke": {
+          "task": "tinybug: preserve zero and default only null/undefined quantities",
+          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+          "execution_digest": "sha256:487d467c17ff81a33f3ae2dc9656ad5091cf4d3d7c7c38ce7e1e5fbbabbeae7a",
+          "review_digest": "sha256:ad6413216190bdf30dbca221ce5e8896054b526cafe8252fc69d19ace76f6b72",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -199,7 +267,7 @@
       ],
       "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-11T21:52:21.715Z",
+        "observed_at": "2026-11-23T04:58:23.300Z",
         "host": "claude",
         "host_version": "2.1.296 (Claude Code)",
         "observed_model_id": "claude-sonnet-5-5",
@@ -215,12 +283,12 @@
           "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
         ],
         "availability": {
-          "url": "https://platform.claude.com/docs/en/models/overview",
-          "checked_at": "2026-10-11T21:46:04.000Z"
+          "url": "https://platform.claude.com/docs/en/models/overview.md",
+          "checked_at": "2026-11-23T04:51:30.030Z"
         },
         "pricing": {
-          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.071Z",
           "input_usd_per_million": 2,
           "output_usd_per_million": 10,
           "unknown_reason": null
@@ -228,8 +296,8 @@
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:548c331125facf0ce2b6705b77ecd505c390ddfafeff897b18acb712282b83ec",
-          "review_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+          "execution_digest": "sha256:b41b70a2f161e34bd154452142c0cf736a11a6a4638ecfab226db5cedb1d7a9e",
+          "review_digest": "sha256:5fbd17fa1cb57ba27bfa26496eca8e39fd33c225e559d5d2e7bdf5d35c4ef2ac",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -237,68 +305,9 @@
       }
     },
     {
-      "candidate_id": "codex-gpt-6-luna-low",
-      "provider": "openai",
-      "model_id": "gpt-6-luna",
-      "snapshot_id": null,
-      "effort": "low",
-      "serving": {
-        "fallback": "disabled",
-        "tool_use": "host_tools",
-        "json_schema": false
-      },
-      "material_serving_settings": [
-        "fallback",
-        "tool_use"
-      ],
-      "family": "gpt-6-luna",
-      "frontier": false,
-      "capabilities": [
-        "terminal"
-      ],
-      "context_window_tokens": 1050000,
-      "evidence": {
-        "observed_at": "2026-10-11T21:53:14.590Z",
-        "host": "codex",
-        "host_version": "codex-cli 0.162.1",
-        "observed_model_id": "gpt-6-luna",
-        "observed_effort": null,
-        "configured_effort": "low",
-        "effort_source": "requested_configuration",
-        "identity_source": "host_configuration",
-        "control_limitations": [
-          "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
-          "CLI effort was configured, but served effort is not attested in the event stream.",
-          "No explicit fallback was requested; provider-side rerouting is not independently attested.",
-          "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal."
-        ],
-        "availability": {
-          "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-11T21:46:04.000Z"
-        },
-        "pricing": {
-          "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
-          "input_usd_per_million": null,
-          "output_usd_per_million": null,
-          "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
-        },
-        "smoke": {
-          "task": "tinybug: preserve zero and default only null/undefined quantities",
-          "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:48c7d893109702650456bc9180ed0c2fc76e04b658afddaa4a01788810b4274d",
-          "review_digest": "sha256:3eb469f0c63f350ad6730440b3cb7a29beaa6144c81d5aeece5df7c1397e3cc4",
-          "accepted": true,
-          "frontier_reviewed": true
-        },
-        "qualification_failure": null
-      }
-    },
-    {
-      "candidate_id": "codex-gpt-6-astra-high",
-      "provider": "openai",
-      "model_id": "gpt-6-astra",
+      "candidate_id": "claude-claude-opus-5-5-high",
+      "provider": "anthropic",
+      "model_id": "claude-opus-5-5",
       "snapshot_id": null,
       "effort": "high",
       "serving": {
@@ -310,44 +319,44 @@
         "fallback",
         "tool_use"
       ],
-      "family": "gpt-6-astra",
+      "family": "opus",
       "frontier": true,
       "capabilities": [
         "terminal"
       ],
-      "context_window_tokens": 1050000,
+      "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-11T21:54:17.806Z",
-        "host": "codex",
-        "host_version": "codex-cli 0.162.1",
-        "observed_model_id": "gpt-6-astra",
+        "observed_at": "2026-11-23T05:00:35.406Z",
+        "host": "claude",
+        "host_version": "2.1.296 (Claude Code)",
+        "observed_model_id": "claude-opus-5-5",
         "observed_effort": null,
         "configured_effort": "high",
         "effort_source": "requested_configuration",
-        "identity_source": "host_configuration",
+        "identity_source": "runtime",
         "control_limitations": [
           "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
           "CLI effort was configured, but served effort is not attested in the event stream.",
           "No explicit fallback was requested; provider-side rerouting is not independently attested.",
           "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal."
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown."
         ],
         "availability": {
-          "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-11T21:46:04.000Z"
+          "url": "https://platform.claude.com/docs/en/models/overview.md",
+          "checked_at": "2026-11-23T04:51:30.030Z"
         },
         "pricing": {
-          "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
-          "input_usd_per_million": null,
-          "output_usd_per_million": null,
-          "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.071Z",
+          "input_usd_per_million": 4,
+          "output_usd_per_million": 20,
+          "unknown_reason": null
         },
         "smoke": {
           "task": "independently inspect the quantity artifact, execute its tests and return ACCEPT or REPAIR",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
-          "review_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
+          "execution_digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7",
+          "review_digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -355,11 +364,11 @@
       }
     },
     {
-      "candidate_id": "codex-gpt-6.1-sol-low",
-      "provider": "openai",
-      "model_id": "gpt-6.1-sol",
+      "candidate_id": "claude-claude-haiku-5-5-not_applicable",
+      "provider": "anthropic",
+      "model_id": "claude-haiku-5-5",
       "snapshot_id": null,
-      "effort": "low",
+      "effort": "not_applicable",
       "serving": {
         "fallback": "disabled",
         "tool_use": "host_tools",
@@ -369,44 +378,46 @@
         "fallback",
         "tool_use"
       ],
-      "family": "gpt-6.1-sol",
+      "family": "haiku",
       "frontier": false,
       "capabilities": [
         "terminal"
       ],
-      "context_window_tokens": 1050000,
+      "context_window_tokens": 1000000,
       "evidence": {
-        "observed_at": "2026-10-11T21:54:03.399Z",
-        "host": "codex",
-        "host_version": "codex-cli 0.162.1",
-        "observed_model_id": "gpt-6.1-sol",
+        "observed_at": "2026-11-23T05:00:28.116Z",
+        "host": "claude",
+        "host_version": "2.1.296 (Claude Code)",
+        "observed_model_id": "claude-haiku-5-5",
         "observed_effort": null,
-        "configured_effort": "low",
-        "effort_source": "requested_configuration",
-        "identity_source": "host_configuration",
+        "configured_effort": "not_applicable",
+        "effort_source": "not_applicable",
+        "identity_source": "runtime",
         "control_limitations": [
           "Evidence is one tinybug smoke; it is not governor qualification or proof for other task classes. Broader provisional use is an explicit extrapolation requiring acceptance trials.",
-          "CLI effort was configured, but served effort is not attested in the event stream.",
           "No explicit fallback was requested; provider-side rerouting is not independently attested.",
           "Worker and review ran as separate fresh CLI processes, not via an installed copied skill or native subagent tool.",
-          "CLI JSONL does not expose served model identity. Model identity here records the explicit successful CLI configuration, supported by the official Codex model guidance captured for this renewal."
+          "Haiku 5.5 supports adaptive-thinking effort, but neither this smoke (no --effort flag) nor the Claude Code Agent tool (no effort option) requests one, so the host default applies. not_applicable records the absence of an effort request, not that the model lacks effort; served effort is unobserved.",
+          "CLI total cost is a client estimate and modelUsage may include auxiliary Haiku requests. Subscription billed cost remains unknown.",
+          "Haiku 5.5 list price rises from $0.10/$0.50 to $0.50/$2.50 per million tokens for a request whose prompt exceeds 100,000 tokens; the recorded price is the lower tier.",
+          "Published Haiku prices are $0.10/$0.50 input/output per million through 100,000 prompt tokens and $0.50/$2.50 above; metadata records the lower tier. Effort not_applicable means no configured effort, not unsupported effort."
         ],
         "availability": {
-          "url": "https://learn.chatgpt.com/docs/models",
-          "checked_at": "2026-10-11T21:46:04.000Z"
+          "url": "https://platform.claude.com/docs/en/models/overview.md",
+          "checked_at": "2026-11-23T04:51:30.030Z"
         },
         "pricing": {
-          "url": "https://learn.chatgpt.com/docs/pricing",
-          "checked_at": "2026-10-11T21:46:04.000Z",
-          "input_usd_per_million": null,
-          "output_usd_per_million": null,
-          "unknown_reason": "Codex plan usage is metered in credits and plan limits, not an authoritative per-execution USD cost; subscription token rates are not inferred from API pricing."
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+          "checked_at": "2026-11-23T04:51:30.071Z",
+          "input_usd_per_million": 0.1,
+          "output_usd_per_million": 0.5,
+          "unknown_reason": null
         },
         "smoke": {
           "task": "tinybug: preserve zero and default only null/undefined quantities",
           "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-          "execution_digest": "sha256:41ab39bd8ab93fb9ff583759e8388550db979144651fba7e8dda9041981ab473",
-          "review_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
+          "execution_digest": "sha256:cc34baaabc45fdc05c24aa1293e3c3d34fb6327895ede67fd441459bcd69b12f",
+          "review_digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7",
           "accepted": true,
           "frontier_reviewed": true
         },
@@ -416,31 +427,49 @@
   ],
   "runs": [
     {
-      "id": "renewal-smoke-claude-haiku-1791755522027",
-      "host": "claude",
+      "id": "renewal-smoke-codex-1795409718788",
+      "host": "codex",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:b52ba13a8882199b5e27f0fc6873f2517ab90b089b63ad4c4ddbeb79d4c81a99",
-      "reviewer_stdout_digest": "sha256:ec1a82eff23fab939dc1c1dec2c80bb553feaac54d3236edbfde94793bce9601",
+      "worker_stdout_digest": "sha256:882d5e797fca65cfab8874d6d195070db44cd5540447c44d68865f6383e29273",
+      "reviewer_stdout_digest": "sha256:92f36e9489c3a7f6cbeb489a0d75e4e15391853b4b886f9322aa9e8f083f150a",
       "worker": {
-        "model": "claude-haiku-5-5",
-        "configured_effort": "not_applicable"
+        "model": "gpt-6-luna",
+        "configured_effort": "low"
       },
       "reviewer": {
-        "model": "claude-opus-5-5",
+        "model": "gpt-6.1-sol",
         "configured_effort": "high",
         "verdict": "ACCEPT"
       }
     },
     {
-      "id": "renewal-smoke-claude-1791755541700",
+      "id": "renewal-smoke-codex-standard-1795409741843",
+      "host": "codex",
+      "scope": "tinybug: zero/nullish quantity default only",
+      "objective_passed": true,
+      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
+      "worker_stdout_digest": "sha256:487d467c17ff81a33f3ae2dc9656ad5091cf4d3d7c7c38ce7e1e5fbbabbeae7a",
+      "reviewer_stdout_digest": "sha256:ad6413216190bdf30dbca221ce5e8896054b526cafe8252fc69d19ace76f6b72",
+      "worker": {
+        "model": "gpt-6.1-sol",
+        "configured_effort": "low"
+      },
+      "reviewer": {
+        "model": "gpt-6.1-sol",
+        "configured_effort": "high",
+        "verdict": "ACCEPT"
+      }
+    },
+    {
+      "id": "renewal-smoke-claude-1795409903282",
       "host": "claude",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:548c331125facf0ce2b6705b77ecd505c390ddfafeff897b18acb712282b83ec",
-      "reviewer_stdout_digest": "sha256:4543ee8e10a8281492bc7065f296cfa547926065539e92523bcc5f2d0f515ae8",
+      "worker_stdout_digest": "sha256:b41b70a2f161e34bd154452142c0cf736a11a6a4638ecfab226db5cedb1d7a9e",
+      "reviewer_stdout_digest": "sha256:5fbd17fa1cb57ba27bfa26496eca8e39fd33c225e559d5d2e7bdf5d35c4ef2ac",
       "worker": {
         "model": "claude-sonnet-5-5",
         "configured_effort": "low"
@@ -452,37 +481,19 @@
       }
     },
     {
-      "id": "renewal-smoke-codex-1791755594551",
-      "host": "codex",
+      "id": "renewal-smoke-claude-haiku-1795410028099",
+      "host": "claude",
       "scope": "tinybug: zero/nullish quantity default only",
       "objective_passed": true,
       "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:48c7d893109702650456bc9180ed0c2fc76e04b658afddaa4a01788810b4274d",
-      "reviewer_stdout_digest": "sha256:3eb469f0c63f350ad6730440b3cb7a29beaa6144c81d5aeece5df7c1397e3cc4",
+      "worker_stdout_digest": "sha256:cc34baaabc45fdc05c24aa1293e3c3d34fb6327895ede67fd441459bcd69b12f",
+      "reviewer_stdout_digest": "sha256:6726b7ed62d7d40011fa820eebf259b1468aca0ed03cf6634d9ee0ccfa217bd7",
       "worker": {
-        "model": "gpt-6-luna",
-        "configured_effort": "low"
+        "model": "claude-haiku-5-5",
+        "configured_effort": "not_applicable"
       },
       "reviewer": {
-        "model": "gpt-6-astra",
-        "configured_effort": "high",
-        "verdict": "ACCEPT"
-      }
-    },
-    {
-      "id": "renewal-smoke-codex-standard-1791755643376",
-      "host": "codex",
-      "scope": "tinybug: zero/nullish quantity default only",
-      "objective_passed": true,
-      "artifact_digest": "sha256:1984b836f65f116d463a795cd90b4bf2291a6180725eff56b1d8212e173cfb58",
-      "worker_stdout_digest": "sha256:41ab39bd8ab93fb9ff583759e8388550db979144651fba7e8dda9041981ab473",
-      "reviewer_stdout_digest": "sha256:49bdcbc2f78de23c81449780aecce28a6d6e71cf061b4eb7a5c61d539a51b71a",
-      "worker": {
-        "model": "gpt-6.1-sol",
-        "configured_effort": "low"
-      },
-      "reviewer": {
-        "model": "gpt-6-astra",
+        "model": "claude-opus-5-5",
         "configured_effort": "high",
         "verdict": "ACCEPT"
       }

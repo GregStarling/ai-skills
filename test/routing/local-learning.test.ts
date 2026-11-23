@@ -160,17 +160,16 @@ describe('lookup',()=>{
  });
  it('lets a coordinator verify only from inside the reviewer lane',async()=>{
   for(const route of pack.routes)expect(await lookup({host:hostOf(route),task_class:route.public_task_class,risk:route.stratum.worker_request.risk,coordinator:{model:'unlisted-reviewer',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'coordinator_not_in_reviewer_lane'});
-  expect((await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-fable-5-1',effort:'high'}},{now})).coordinator_may_verify).toBe(true);
+  expect(await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-fable-5-1',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'coordinator_not_in_reviewer_lane'});
   expect((await lookup({host:'claude',task_class:'mechanical_work',risk:'low',coordinator:{model:'claude-opus-5-5',effort:'high'}},{now})).coordinator_may_verify).toBe(true);
   // The medium route requires a fresh reviewer process, so the coordinator may not verify inside its own context even though Opus is its reviewer.
   expect(await lookup({host:'claude',task_class:'mechanical_work',risk:'medium',coordinator:{model:'claude-opus-5-5',effort:'high'}},{now})).toMatchObject({coordinator_may_verify:null,coordinator_verify_reason:'fresh_process_required'});
  });
  it('returns a compact defaulted-roster answer with verbatim limitations and no evidence objects',async()=>{
   const found=await lookup({host:'claude',task_class:'mechanical_work',risk:'low'},{now}),text=JSON.stringify(found);
-  // Renewal adds the calibrated reviewer and its verbatim scope limitations (4,157 bytes).
   expect(Buffer.byteLength(text)).toBeLessThan(5120);
   expect(found.workers.map((w:any)=>w.candidate_id)).toEqual(['claude-claude-haiku-5-5-not_applicable','claude-claude-sonnet-5-5-low']);
-  expect(found.reviewers.map((r:any)=>r.candidate_id)).toEqual(['claude-claude-opus-5-5-high','claude-claude-fable-5-1-high']);
+  expect(found.reviewers.map((r:any)=>r.candidate_id)).toEqual(['claude-claude-opus-5-5-high']);
   expect(found).toMatchObject({host_verified:false,host_checks:['model selectable'],gap:null,route:{shape:'single worker',tools:['terminal']},workers:[{effort:'not_applicable'},{effort:'low'}]});
   for(const key of ['task_evidence','provisional','qualification','economics'])expect(text).not.toContain(`"${key}":`);
   const published=new Set<string>();for(const route of pack.routes)for(const x of [...route.workers,...route.reviewers]){for(const l of x.task_evidence?.limitations??[])published.add(l);for(const l of pack.treatments[x.candidate_identity].provisional?.control_limitations??[])published.add(l);}
@@ -191,7 +190,7 @@ describe('lookup',()=>{
  });
  it('applies a local preference only within the same task-evidence basis',async()=>{
   const sonnet=(route:any)=>({pack_content_digest:pack.content_digest,stratum_digest:route.stratum_digest,host:'claude',preferred_worker_identity:route.workers[1].candidate_identity});
-  // Both research workers extrapolate from smoke; renewed mechanical acceptance is Haiku-only.
+  // Both research workers extrapolate from smoke; the hard-debugging acceptance worker is Haiku.
   const same=await lookup({host:'claude',task_class:'research',risk:'low',localPreferences:sonnet(routeOf(pack,'claude','research'))},{now});
   expect(same.workers[0].candidate_id).toBe('claude-claude-sonnet-5-5-low');expect(same.ranking_basis.worker).toBe('local_preference_within_task_evidence');
   const cross=await lookup({host:'claude',task_class:'hard_debugging',risk:'low',localPreferences:sonnet(routeOf(pack,'claude','hard_debugging'))},{now});
