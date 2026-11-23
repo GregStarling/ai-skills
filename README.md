@@ -8,7 +8,7 @@ what needs review, and checking whether the release worked.
 
 **Give your agent a process for those jobs, too.**
 
-AI Skills is a collection of nine independently installable skills for **Codex
+AI Skills is a collection of ten independently installable skills for **Codex
 and Claude Code**. Each owns a specific part of the work, with clear boundaries
 and evidence for its conclusions. Use one to solve the problem in front of you,
 or combine them across a project.
@@ -22,13 +22,14 @@ or combine them across a project.
 | [**Design Director**](skills/design-director/) | “Give this interface a direction.” | Design decisions grounded in product evidence, with explicit unknowns and verification criteria. |
 | [**Debug**](skills/debug/) | “Find the cause and prove the fix.” | A faithful reproduction, a scoped correction, and regression evidence. |
 | [**Focus**](skills/focus/) | “Complete this request and stop.” | Scoped execution, proportionate verification, and brief notes about material adjacent findings. |
+| [**Prompt Improve**](skills/prompt-improve/SKILL.md) | “Help me tighten this prompt.” | A copy-ready prompt in your voice, or one question if a missing detail would change the task. |
 | [**Ship**](skills/ship/) | “Get these changes released.” | A verified release, with the revision, check results, and published-result evidence. |
 | [**Skill Audit**](skills/skill-audit/) | “Check this new skill, or all of them.” | Lint and approved fixes, collisions and name clashes against every installed skill, and before/after trigger results. |
 
 Install the full collection from the project where you use your agent:
 
 ```sh
-npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus ship skill-audit --agent codex claude-code --copy
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus prompt-improve ship skill-audit --agent codex claude-code --copy
 ```
 
 Every skill is readable source. Inspect the instructions, install only what you
@@ -204,6 +205,22 @@ verify the export, and stop when the requested result is complete.
 
 [Explore Focus →](skills/focus/)
 
+## Prompt Improve
+
+Ask explicitly to improve a draft you want to run later. Prompt Improve edits
+the wording and keeps the task, voice, and constraints yours. A clear short
+prompt can come back exactly as you wrote it.
+
+To use it across projects, copy the same file to the path for each agent you use.
+Replace `<draft>` with your text in the agent's input.
+
+| Agent | User-level install path | Invocation |
+| --- | --- | --- |
+| Codex | `~/.agents/skills/prompt-improve/SKILL.md` | `$prompt-improve <draft>` |
+| Claude Code | `~/.claude/skills/prompt-improve/SKILL.md` | `/prompt-improve <draft>` |
+
+[Read Prompt Improve →](skills/prompt-improve/SKILL.md)
+
 ## Ship: Close the Gap Between Done and Live.
 
 Completed code still needs a release. Ship reviews the intended changes, runs
@@ -262,7 +279,7 @@ Or audit everything installed:
 
 ## Choose the Job. Combine the Skills When It Helps.
 
-You do not need all nine for every task. Catchup can brief you without starting
+You do not need all ten for every task. Catchup can brief you without starting
 a build. Checklist can audit finished work without changing it. Debug can resolve
 a defect without releasing it. Ship can publish completed work without requiring
 a CTO plan.
@@ -278,6 +295,7 @@ For a larger project, their responsibilities fit together:
 | Ground interface decisions and design verification in product evidence | Design Director |
 | Investigate failures and prove scoped corrections | Debug |
 | Keep execution within the request and stop when it is complete | Focus |
+| Rewrite a draft prompt before running it | Prompt Improve |
 | Execute and verify the authorized release | Ship |
 | Keep the skills themselves precise and non-overlapping | Skill Audit |
 
@@ -303,8 +321,8 @@ npx skills add GregStarling/ai-skills --skill debug --agent codex claude-code --
 # A selection
 npx skills add GregStarling/ai-skills --skill catchup debug ship --agent codex claude-code --copy
 
-# All nine
-npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus ship skill-audit --agent codex claude-code --copy
+# All ten
+npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate design-director debug focus prompt-improve ship skill-audit --agent codex claude-code --copy
 ```
 
 | Skill | Install name | Codex | Claude Code |
@@ -316,6 +334,7 @@ npx skills add GregStarling/ai-skills --skill catchup checklist cto delegate des
 | Design Director | `design-director` | `$design-director` | `/design-director` |
 | Debug | `debug` | `$debug` | `/debug` |
 | Focus | `focus` | `$focus` | `/focus` |
+| Prompt Improve | `prompt-improve` | `$prompt-improve` | `/prompt-improve` |
 | Ship | `ship` | `$ship` | `/ship` |
 | Skill Audit | `skill-audit` | `$skill-audit` | `/skill-audit` |
 
@@ -325,7 +344,7 @@ not use. `--copy` installs complete copies of the selected folders.
 Node.js runs the installer, Delegate's review helper, the Checklist, Design
 Director and CTO ledger validators, Catchup's read-only Git snapshot, Ship's
 release scan and proof check, and Skill Audit's lint, inventory and trigger tests.
-Debug and Focus are instructions only. Consumer skills
+Debug, Focus, and Prompt Improve are instructions only. Consumer skills
 need no repository build or separate service. They use the tools and authorized
 access available in your existing agent session.
 
@@ -373,9 +392,10 @@ The records keep those limits explicit:
 <details>
 <summary><strong>For Skill Authors and Maintainers</strong></summary>
 
-Add `skills/<name>/SKILL.md` with `name` and `description` frontmatter, a short
-README, and only the resources it needs. Keep consumer references inside that
-folder and installation paths out of portable behavior. Add the skill to the
+Add `skills/<name>/SKILL.md` with `name` and `description` frontmatter and only
+the resources it needs. Include a short README if the skill needs an overview
+beyond the catalog. Keep consumer references inside the skill folder and
+installation paths out of portable behavior. Add the skill to the
 catalog and install table, then run `node scripts/verify/skills.mjs` after
 `npm ci`; it includes Skill Audit's lint. Consumer skills are checked from isolated copies; no central
 registration file is needed.
@@ -383,7 +403,7 @@ registration file is needed.
 Keep this library checkout inert by installing into your own projects or
 personal directory. [refresh-models](skills/refresh-models/SKILL.md) is a maintainer
 workflow for Delegate's routing pack. Model Governor, policy, fixtures, and
-evaluation history remain maintainer tooling, separate from the nine consumer
+evaluation history remain maintainer tooling, separate from the ten consumer
 skills above.
 
 Repository checks: `npm test`, `npm run typecheck`, `npm run build`, and
