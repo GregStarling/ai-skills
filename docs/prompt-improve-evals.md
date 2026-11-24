@@ -24,3 +24,54 @@ held-out cart tests and grade the decision against the offers. Compare results
 within each host. Gate the release on better downstream results on
 context-dependent tasks in both hosts, preserved strong prompts, and zero
 observed draft execution or invented authority in the final candidate.
+
+## Reproducing the comparison
+
+[The fixture data](evidence/prompt-improve-context/cases.json) contains the
+exact drafts, earlier user messages, local files, and held-out cart checks.
+Use the same fixture for every version within each host. For chat cases, send
+the earlier user message, request a one-word acknowledgment, then resume that
+session with only the draft and the skill invocation. For repository cases,
+seed disposable tracking refs before setting the GitHub-shaped origin URL,
+disable HTTPS transport, and snapshot the worktree files, refs, and fetch state
+before and after the rewrite.
+
+Use a clean project installation of each skill version. For downstream runs,
+start over in a new project with the offers or cart files and the rewritten
+prompt as the entire task. Keep the cart checks and the decision criteria
+outside the executor's workspace. Allow the cart executor to change only
+the fixture. Award one point each for recommending Cedar, applying the
+mandatory offline CSV criterion, explaining the annual price tradeoff, giving
+the decision deadline, citing both offers, and sticking to supported facts.
+
+## Results for November 24, 2026
+
+Each cell counts full-credit outcomes. Each host used fresh sessions on the
+same fixtures. A separate grader scored the rewrites in shuffled order with
+the version hidden. The downstream column counts tasks that met every
+criterion in their own fresh execution.
+
+| Host | Installed baseline rewrites | Context only | Shipped rewrites | Downstream baseline → context only → shipped |
+| --- | ---: | ---: | ---: | ---: |
+| Codex | 4/9 | 6/9 | 8/9 | 1/2 → 2/2 → 2/2 |
+| Claude Code | 6/9 | 6/9 | 9/9 | 0/2 → 2/2 → 2/2 |
+
+The shipped skill preserved the strong prompt verbatim in both hosts and
+asked which worktrees to update. All 18 rewrite fixtures retained their
+files and Git refs. The tool traces showed only context reads. Codex received
+partial credit on the short cart symptom because it returned the original
+draft with the intended one-per-add increment still implicit.
+
+Both downstream cart fixes passed all seven held-out behavior checks. Both
+renewal decisions satisfied all six criteria. The context-only version also
+passed those four downstream tasks. One execution per host, arm, and case
+supports a comparison on these fixtures. More cases would be needed to
+isolate the effect of the initiative instruction.
+
+[The recorded outputs and grades](evidence/prompt-improve-context/results.json)
+include exact skill digests, the context-only comparison text, per-case tool
+counts, and downstream outcomes. Early development trials caught an unnecessary
+attachment lookup and unapproved branch selection. Two harness corrections
+excluded a cart trial that directed the executor to edit and Git trials with
+a local-path remote. The reported runs use the corrected fixtures and neutral
+downstream framing throughout.
