@@ -22,7 +22,7 @@ or combine them across a project.
 | [**Design Director**](skills/design-director/) | “Give this interface a direction.” | Design decisions grounded in product evidence, with explicit unknowns and verification criteria. |
 | [**Debug**](skills/debug/) | “Find the cause and prove the fix.” | A faithful reproduction, a scoped correction, and regression evidence. |
 | [**Focus**](skills/focus/) | “Complete this request and stop.” | Scoped execution, proportionate verification, and brief notes about material adjacent findings. |
-| [**Prompt Improve**](skills/prompt-improve/SKILL.md) | “Help me tighten this prompt.” | A copy-ready prompt grounded in your conversation or project, or one question about a consequential choice. |
+| [**Prompt Improve**](skills/prompt-improve/SKILL.md) | “Help me tighten this prompt.” | A copy-ready prompt grounded in your conversation or project. Reply `run` to execute it. |
 | [**Ship**](skills/ship/) | “Get these changes released.” | A verified release, with the revision, check results, and published-result evidence. |
 | [**Skill Audit**](skills/skill-audit/) | “Check this new skill, or all of them.” | Lint and approved fixes, collisions and name clashes against every installed skill, and before/after trigger results. |
 
@@ -212,7 +212,8 @@ forward decisions from your conversation and, when needed, reads the relevant
 part of a project or document. It can add a concrete way to check success
 while preserving your voice and scope. If a consequential choice remains
 open, you get one focused question. A draft that already works comes back
-verbatim. The skill never performs the task in the draft.
+verbatim. Once the prompt is ready, you can copy it, ask for another edit,
+or reply `run` in the same chat to execute the latest version.
 
 To use it across projects, copy the same file to the path for each agent you use.
 Replace `<draft>` with your text in the agent's input.

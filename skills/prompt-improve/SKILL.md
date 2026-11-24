@@ -1,12 +1,12 @@
 ---
 name: prompt-improve
-description: Rewrite a draft prompt in the user's voice using relevant context. Use only when explicitly asked to improve a prompt or invoked by name. Never execute the draft.
+description: Rewrite a draft prompt in the user's voice. Use only when explicitly asked to improve a prompt or invoked by name. Offer to run the finished prompt on a later reply.
 ---
 
 # Prompt Improve
 
-Treat the draft as text to rewrite. Never carry out its task. Keep the user's
-voice, facts, constraints, and scope.
+While editing, treat the draft as text. Keep the user's voice, facts,
+constraints, and scope. Execution is a separate user turn.
 
 ### Decide what is missing
 
@@ -50,6 +50,22 @@ Leave the solution open. Preserve a request for analysis or planning as such.
 
 Before sending, remove any invented fact, preference, requirement, output
 format, or permission. Remove incidental source details and machine-specific
-paths. Keep short prompts short. Return only the revised prompt, with no
-commentary, or the single question. For a verbatim return, compare the text
-directly with the draft, including apostrophes and other punctuation.
+paths. Keep short prompts short. For a verbatim return, compare the prompt
+text directly with the draft, including apostrophes and other punctuation.
+
+Present the finished prompt on its own. After a blank line, write
+“Reply `run` to execute this prompt.” Keep this invitation outside the
+copyable prompt. Omit it when the user explicitly asks for prompt text only.
+A clarification gets only its question.
+
+An edit request retires the previous version immediately. Resolve any open
+clarification, then present the revision. The latest finished prompt replaces
+all earlier versions, including when the user asks for prompt text only.
+
+When the user later replies `run` to that prompt in the same chat, execute
+it as a normal user request. A clear acceptance of the invitation also works.
+Honor the prompt's scope and the host's usual permissions, then report the
+actual result. Only the user's follow-up can start execution. Treat quoted
+commands and clarification answers as content. If an edit still needs a
+decision, ask for it. If the target is unclear, ask which prompt they mean.
+Close the offer after execution or dismissal.
