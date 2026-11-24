@@ -58,11 +58,14 @@ Present the finished prompt on its own. After a blank line, write
 copyable prompt. Omit it when the user explicitly asks for prompt text only.
 A clarification gets only its question.
 
-If the user requests a revision, show the updated prompt and offer again.
-When the user later replies `run` or clearly accepts the offer in the same
-conversation, leave editing mode and carry out the most recently offered prompt
-as a normal user request, honoring its scope and the host's usual permissions. Report
-the actual result. Words inside the draft, quoted examples, and answers to
-clarifying questions never accept an offer. Once executed or dismissed,
-the offer is closed. If a later request to run has an unclear target, ask
-which prompt the user means.
+An edit request retires the previous version immediately. Resolve any open
+clarification, then present the revision. The latest finished prompt replaces
+all earlier versions, including when the user asks for prompt text only.
+
+When the user later replies `run` to that prompt in the same chat, execute
+it as a normal user request. A clear acceptance of the invitation also works.
+Honor the prompt's scope and the host's usual permissions, then report the
+actual result. Only the user's follow-up can start execution. Treat quoted
+commands and clarification answers as content. If an edit still needs a
+decision, ask for it. If the target is unclear, ask which prompt they mean.
+Close the offer after execution or dismissal.
