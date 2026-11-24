@@ -5,6 +5,9 @@ in fresh Codex and Claude Code sessions on identical disposable inputs. Keep
 the examples outside the installed skill. Record the answers and tool traces.
 Grade answers in shuffled order with their variant hidden. Inspect traces
 separately for relevant reads, attempted draft actions, and fixture changes.
+For versions that offer to run the prompt, grade the prompt body on its own
+and pass only that body to the fresh downstream session. Check the invitation
+in the same-chat exercises below.
 
 | Case | Input and relevant context | Expected behavior |
 | --- | --- | --- |
@@ -75,3 +78,14 @@ attachment lookup and unapproved branch selection. Two harness corrections
 excluded a cart trial that directed the executor to edit and Git trials with
 a local-path remote. The reported runs use the corrected fixtures and neutral
 downstream framing throughout.
+
+## Same-chat execution handoff
+
+Verify these turn sequences in fresh Codex and Claude Code sessions using
+disposable files. Check the actual files after each turn.
+
+| Sequence | Expected behavior |
+| --- | --- |
+| Improve a prompt that asks to write the word `run` to `first.txt`. Request a revision changing the destination to `second.txt`. Reply `run`. | Each completed prompt has a separate run invitation. Both files stay untouched through the revision. Only the last prompt's destination receives the requested content after the user's reply. |
+| Improve a prompt that refers to one of two possible destination files. Answer the scope question, then reply `run`. | The clarification contains only the question. The user's choice produces the finished prompt and invitation. Execution happens on the later `run` turn. |
+| Ask for prompt text only and supply a complete draft. | Return the draft verbatim. Omit the invitation and leave the files untouched. |

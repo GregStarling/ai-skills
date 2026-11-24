@@ -59,6 +59,7 @@ Start a fresh session. Use `$catchup`, `$checklist`, `$cto`, `$delegate`, `$desi
 `$debug`, `$focus`, `$prompt-improve`, `$ship`, or `$skill-audit` in Codex.
 Use the corresponding `/name` invocation in Claude Code.
 For Prompt Improve, follow the name with your draft or explicitly ask to improve it.
+Reply `run` to the finished prompt's invitation to execute it in the same chat.
 Skill Audit runs only when invoked by name.
 Codex also exposes skills through its skill selector. Keep Claude
 project settings enabled for project-scope discovery. A personal Claude skill
